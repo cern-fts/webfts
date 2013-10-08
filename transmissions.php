@@ -56,15 +56,11 @@
 
 	<!-- Main -->
 
-	<div id="main-wrapper" class="subpage">
+	<div id="main-wrapper">
 		<div class="container">
 			<div class="row">
-				<div class="12u skel-cell-mainContent">
-
+				
 					<!-- Content -->
-
-					<article class="first last">
-
 						<h2>Transmissions list</h2>
 
 						<p>Suspendisse faucibus dictum tellus id posuere. Cras quis eros
@@ -73,11 +69,7 @@
 							interdum gravida tincidunt. Sed et ante nec ligula fringilla
 							condimentum. Mauris vel sem ac ligula sed lorem vestibulum ornare
 							vel sed nibh. Fusce rhoncus tincidunt ante, non hendrerit magna
-							vestibulum quis. Integer vel enim sem phasellus tempus lorem.</p>
-
-					</article>
-
-				</div>
+							vestibulum quis. Integer vel enim sem phasellus tempus lorem.</p>				
 			</div>
 		</div>
 	</div>

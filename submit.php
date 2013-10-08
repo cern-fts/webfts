@@ -97,13 +97,11 @@
 	</div>
 
 	<!-- Main -->
-	<div id="main-wrapper" class="subpage">
+	<div id="main-wrapper" >
 		<div class="container">
 			<div class="row">
-				<div class="12u skel-cell-mainContent">
 					<!-- Content -->
-					<div id="includedContentTransfer"></div>
-				</div>
+					<div id="includedContentTransfer"></div>				
 			</div>
 		</div>
 	</div>

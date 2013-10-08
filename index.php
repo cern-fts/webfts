@@ -63,22 +63,18 @@
 			<!-- Banner -->
 
 			<div class="row">
-				<div class="12u">
-					<div id="banner">
-						<div class="caption">
-							<?php
-							foreach($_SERVER as $h=>$v)
-							if ($h == "SSL_CLIENT_S_DN_CN_2")
-								echo "<span>You are authenticated as <strong>$v</strong></span>";
-							echo '<a href="#" class="button">See the complete DN</a>';
-							header('Content-type: text/html');
-							?>
-						</div>
-						<a href="#"><img src="img/banner.jpg" alt="" /> </a>
-						<div class="caption">
-							<span><strong>webFTS</strong> FTS web interface for file
-								transfering</span> <a href="#" class="button">More about FTS</a>
-						</div>
+				<div id="banner">
+					<div class="caption">
+						<?php
+						foreach($_SERVER as $h=>$v)
+						if ($h == "SSL_CLIENT_S_DN_CN_2")
+							echo "<span>You are authenticated as <strong>$v</strong></span>";
+						?>
+					</div>
+					<a href="#"><img src="img/banner.jpg" alt="" /> </a>
+					<div class="caption">
+						<span><strong>webFTS</strong> FTS web interface for file
+							transfering</span> <a href="#" class="button">More about FTS</a>
 					</div>
 				</div>
 			</div>
