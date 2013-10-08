@@ -11,9 +11,7 @@
 <link rel="shortcut icon" href="img/ico/favicon.png">
 <meta name="description" content="" />
 <meta name="keywords" content="" />
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700"
-	rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700" rel="stylesheet" />
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
@@ -100,8 +98,10 @@
 	<div id="main-wrapper" >
 		<div class="container">
 			<div class="row">
+				<div class="12u">
 					<!-- Content -->
-					<div id="includedContentTransfer"></div>				
+					<div id="includedContentTransfer"></div>
+				</div>					
 			</div>
 		</div>
 	</div>
