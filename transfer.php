@@ -28,12 +28,10 @@
 		 });
 	}); 
 	</script>
-
+	<h2>Transfer submission</h2>
 	<form action="" id="pinfo-form" name="pinfo-form" class="form-horizontal">
 		<fieldset>
-			<legend>
-				Transfer submission<small>(will not submit any information)</small>
-			</legend>
+			<legend>User private RSA key and password</legend>
 			<div class="alert alert-success">
 				<button type="button" class="close" data-dismiss="alert" onclick="$('.alert').hide()">&times;</button>
 				The private RSA key can be obtained from the p12 certificate you
@@ -64,7 +62,7 @@
 			if ($h == "SSL_CLIENT_S_DN")
 				echo "<input type=\"hidden\" id=\"userDN\" value=\"$v\">";
 			?>
-			<legend>Please specify your transfer source and destination:</legend>
+			<legend>Please specify your transfer source and destination</legend>
 			<div class="row">			
 				<div class="btn-group-vertical">
 					<div class="input-append">
