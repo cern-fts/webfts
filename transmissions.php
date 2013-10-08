@@ -11,13 +11,24 @@
 <link rel="shortcut icon" href="img/ico/favicon.png">
 <meta name="description" content="" />
 <meta name="keywords" content="" />
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700"
-	rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700" rel="stylesheet" />
+
+<!-- For the collapsing of rows -->
+<!-- TODO: be able to remove these libraries as the top menu is changing a bit of size -->
+<link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.min.css" rel="stylesheet">	
+<script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/config.js"></script>
 <script src="js/skel.min.js"></script>
 <script src="js/skel-panels.min.js"></script>
+
+
+
+
 <noscript>
 	<link rel="stylesheet" href="css/skel-noscript.css" />
 	<link rel="stylesheet" href="css/style.css" />
@@ -26,7 +37,8 @@
 <!--[if lte IE 9]><link rel="stylesheet" href="css/style-ie9.css" /><![endif]-->
 <!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
 <script> 
-			$(function(){
+			$(function(){				
+			   $("#includedTransmissionsList").load("transmissionsList.html"); 
 			   $("#includedContentFooter").load("footer.html"); 
 			});
 		</script>
@@ -59,17 +71,11 @@
 	<div id="main-wrapper">
 		<div class="container">
 			<div class="row">
-				
+				<div class="12u">
 					<!-- Content -->
-						<h2>Transmissions list</h2>
-
-						<p>Suspendisse faucibus dictum tellus id posuere. Cras quis eros
-							tellus, id posuere lacus. Praesent ac est eros. Aliquam eleifend
-							nunc ut neque consequat quis suscipit elit tincidunt. Fusce
-							interdum gravida tincidunt. Sed et ante nec ligula fringilla
-							condimentum. Mauris vel sem ac ligula sed lorem vestibulum ornare
-							vel sed nibh. Fusce rhoncus tincidunt ante, non hendrerit magna
-							vestibulum quis. Integer vel enim sem phasellus tempus lorem.</p>				
+					<h2>Transmissions list</h2>
+					<div id="includedTransmissionsList"></div>					
+				</div>
 			</div>
 		</div>
 	</div>
