@@ -1,0 +1,108 @@
+<div class="pagination pagination-centered">
+	<ul>
+		<li class="disabled"><a href="#">&laquo;</a>
+		</li>
+		<li class="active"><a href="#">1</a>
+		</li>
+		<li><a href="#">2</a>
+		</li>
+		<li><a href="#">3</a>
+		</li>
+		<li><a href="#">4</a>
+		</li>
+		<li><a href="#">5</a>
+		</li>
+		<li><a href="#">&raquo;</a>
+		</li>
+	</ul>
+</div>
+<table class="table table-bordered table-hover">
+	<thead>
+		<tr>
+			<th>JOB ID</th>
+			<th>SUBMIT TIME</th>
+			<th>VO</th>
+			<th>SOURCE SE</th>
+			<th>DEST SE</th>
+			<th>DEST SPACE TOKEN</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr class="success" class="accordion-body collapse in">
+			<td><button type="button" class="btn">Jobs</button> 
+				<script>
+					$(".btn").click(function() {
+					    if($("#collapseme").hasClass("out")) {
+					        $("#collapseme").addClass("in");
+					        $("#collapseme").removeClass("out");
+					    } else {
+					        $("#collapseme").addClass("out");
+					        $("#collapseme").removeClass("in");
+					    }
+					});
+				</script> 6925425e-302f-11e3-9f75-02163e00a1a1</td>
+			<td>2013-10-08T17:38:50</td>
+			<td>atlas</td>
+			<td>mock://dummyhost1</td>
+			<td>mock://dummyhost2</td>
+			<td>no_spacetoken</td>
+		</tr>
+		<tr id="collapseme" class="collapse out">
+			<td colspan="7">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th></th>
+							<th>JOB ID</th>
+							<th>DEST SPACE TOKEN</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="success">
+							<td></td>
+							<td>123123123</td>
+							<td>XXXX</td>
+						</tr>
+						<tr class="success">
+							<td></td>
+							<td>1231231234123</td>
+							<td>XXXXX</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+		<tr class="success">
+			<td>6925425e-302f-11e3-9f75-02163e00a1a2</td>
+			<td>2013-10-08T17:38:50</td>
+			<td>dteam</td>
+			<td>mock://dummyhost1</td>
+			<td>mock://dummyhost2</td>
+			<td>no_spacetoken</td>
+		</tr>
+		<tr class="error">
+			<td>6925425e-302f-11e3-9f75-02163e00a1a3</td>
+			<td>2013-10-08T17:38:50</td>
+			<td>atlas</td>
+			<td>mock://dummyhost1</td>
+			<td>mock://dummyhost2</td>
+			<td>no_spacetoken</td>
+		</tr>
+		<tr class="info">
+			<td>6925425e-302f-11e3-9f75-02163e00a1a4</td>
+			<td>2013-10-08T17:38:50</td>
+			<td>atlas</td>
+			<td>mock://dummyhost1</td>
+			<td>mock://dummyhost2</td>
+			<td>no_spacetoken</td>
+		</tr>
+		<tr class="success">
+			<td>6925425e-302f-11e3-9f75-02163e00a1a5</td>
+			<td>2013-10-08T17:38:50</td>
+			<td>atlas</td>
+			<td>mock://dummyhost1</td>
+			<td>mock://dummyhost2</td>
+			<td>no_spacetoken</td>
+		</tr>
+	</tbody>
+</table>
