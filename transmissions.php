@@ -13,13 +13,9 @@
 <meta name="keywords" content="" />
 <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700" rel="stylesheet" />
 
-<!-- For the collapsing of rows -->
-<!-- TODO: be able to remove these libraries as the top menu is changing a bit of size -->
-<link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
-
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet"> 
 <link href="css/bootstrap-responsive.min.css" rel="stylesheet">	
+
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/config.js"></script>
