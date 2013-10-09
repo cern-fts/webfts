@@ -16,7 +16,7 @@
 		</li>
 	</ul>
 </div>
-<table class="table table-bordered table-hover">
+<table class="table table-bordered table-hover" id="mainResults" name="mainResults">
 	<thead>
 		<tr>
 			<th>JOB ID</th>
@@ -28,17 +28,17 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr class="success" class="accordion-body collapse in">
-			<td><button type="button" class="btn">Jobs</button> 
+		<tr class="success" class="accordion-body collapse in" id="row1" name="row1">
+			<td>
 				<script>
-					$(".btn").click(function() {
-					    if($("#collapseme").hasClass("out")) {
-					        $("#collapseme").addClass("in");
-					        $("#collapseme").removeClass("out");
-					    } else {
-					        $("#collapseme").addClass("out");
-					        $("#collapseme").removeClass("in");
-					    }
+					$(document).ready(function() {
+						$('#mainResults #row1').click(function() {
+							if ($('#collapseme').css('display') == 'none') {
+								$('#collapseme').show();
+							} else {
+								$('#collapseme').hide();
+							}
+						});
 					});
 				</script> 6925425e-302f-11e3-9f75-02163e00a1a1</td>
 			<td>2013-10-08T17:38:50</td>
@@ -47,7 +47,7 @@
 			<td>mock://dummyhost2</td>
 			<td>no_spacetoken</td>
 		</tr>
-		<tr id="collapseme" class="collapse out">
+		<tr id="collapseme" class="collapse out" style="display: none;">
 			<td colspan="7">
 				<table class="table table-bordered table-hover">
 					<thead>
