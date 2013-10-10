@@ -28,7 +28,7 @@
 		 });
 	}); 
 	</script>
-	<h2>Transfer submission</h2>
+	<h2>Transfer files</h2>
 	<form action="" id="pinfo-form" name="pinfo-form" class="form-horizontal">
 		<fieldset>
 			<legend>User private RSA key and password</legend>
@@ -62,13 +62,23 @@
 			if ($h == "SSL_CLIENT_S_DN")
 				echo "<input type=\"hidden\" id=\"userDN\" value=\"$v\">";
 			?>
+			<div>
+				<legend>Selected files to be tranfered</legend> 
+				 <table class="table table-hover table-bordered filelist">
+						<tr><td><button class="btn btn-small btn-danger" type="button"><i class="icon-file"/> Remove transfer</button>&nbsp;SE1:/Test/path/file&nbsp;<i class="icon-arrow-right" style="vertical-align: middle;"/>&nbsp;<span style=" vertical-align: middle;">SE2:/Path/to/here/</span></td></tr>
+						<tr><td><button class="btn btn-small btn-danger" type="button"><i class="icon-folder-open"/> Remove transfer</button>&nbsp;SE3:/Test/path&nbsp;<i class="icon-arrow-left" style="vertical-align: middle;"/>&nbsp;<span>SE2:/Path/to/here/</span></td></tr>
+						<tr><td><button class="btn btn-small btn-danger" type="button"><i class="icon-file"/> Remove transfer</button>&nbsp;SE1:/Test/path/file2&nbsp;<i class="icon-arrow-right" style="vertical-align: middle;"/>&nbsp;SE2:/Path/to/here/</td></tr>											
+				 </table>
+				<button class="btn btn-primary btn-large span5" type="button" id="load-left">Transfer!</button>				
+			</div>
 			<legend>Please specify your transfer source and destination</legend>
 			<div class="row">			
 				<div class="btn-group-vertical">
 					<div class="input-append">
 						<input class="span5" id="rightEndpoint" type="text" placeholder="Endpoint path">				
-						<button class="btn" type="button" id="load-left">Load</button>
+						<button class="btn btn-primary" type="button" id="load-left">Load</button>
 					</div>					
+
 					<table class="table table-hover table-bordered filelist">
 						<tr>
 							<td>/Test/path</td>
@@ -77,18 +87,18 @@
 				</div>
 					
 				<div class="btn-group btn-group-vertical">
-					<button type="submit" class="btn" name="submit" id="submit"	value="transfer-from-left">
-						<i class="icon-chevron-right"></i>
+					<button type="submit" class="btn btn-primary" name="submit" id="submit"	value="transfer-from-left">
+						<i class="icon-chevron-right icon-white"></i>
 					</button>
-					<button type="submit" class="btn" name="submit" id="submit" value="transfer-from-right">
-						<i class="icon-chevron-left"></i>
+					<button type="submit" class="btn btn-primary" name="submit" id="submit" value="transfer-from-right">
+						<i class="icon-chevron-left icon-white"></i>
 					</button>
 				</div>							
 		
 				<div class="btn-group-vertical">
 					<div class="input-append">
 						<input class="span5 " id="rightEndpoint" type="text" placeholder="Endpoint path">
-						<button class="btn" type="button" id="load-right">Load</button>
+						<button class="btn btn-primary" type="button" id="load-right">Load</button>
 					</div>
 					<table class="table table-hover table-bordered filelist "
 						id="right-list">
