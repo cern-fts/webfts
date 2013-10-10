@@ -21,3 +21,56 @@ function runTransfer(){
       var userDN = document.getElementById('userDN').value;
       ftsTransferRequest(theData, userPrivatePEM, userPEMPass, userDN);
 }
+
+function addTransmissionLine(tableId,fromPath, type, toPath){		
+	var line ='<tr><td><input type="checkbox" class="transferCheckId" value=' 
+			+ fromPath + '@@@TO@@@' + toPath + ' id="transferCheckId">&nbsp;' + fromPath + '&nbsp;<i class="icon-arrow-right img-middle"/>&nbsp;';
+	
+	if (type === "folder"){
+		line += '<i class="icon-folder-close img-middle"/>';
+	} else {
+		line += '<i class="icon-file img-middle"/>';
+	}
+	line += '&nbsp;<i class="icon-arrow-right img-middle"/>&nbsp;<span style=" vertical-align: middle;">' + toPath; 
+	$('#' + tableId + ' > tbody:last').append(line);
+	checkTableVisibility();
+}
+
+function checkTableVisibility(){
+	 if ($('#transfersTable tr').length >0){
+		 $('#selectedFiles').show();
+	 }
+}
+
+function getLeft(){
+	//TODO: add right path
+	return '/left/path';	
+}
+
+function getRight(){
+	//TODO: add right path
+	return '/right/path';	
+}
+
+function getType(){
+	//TODO: add right type
+	var a = Math.floor((Math.random()*2));
+	if (a == 0)
+		return 'file';
+	return 'folder';
+}
+
+function select(op){
+	//op have to be true or false	
+     $('.transferCheckId').each(function () {    	 
+    	 $(this).prop('checked', op);                         
+     });
+}
+
+function removeSelected(){
+	$('.transferCheckId').each(function () {   		
+   	 if ($(this).prop('checked')){
+   		$(this).parent().parent().remove();
+   	 }                            	 
+    });
+}

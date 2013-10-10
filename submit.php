@@ -16,6 +16,7 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 <link href="css/validation.css" rel="stylesheet">
+<link href="css/manual.css" rel="stylesheet">
 
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.validate.min.js"></script>
