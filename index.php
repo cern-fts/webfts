@@ -1,87 +1,89 @@
 <!DOCTYPE HTML>
-<!--
-	HTML TEMPLATE INFO:
-	Arcana 2.0 by HTML5 UP
-	html5up.net | @n33co
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
+<html lang="en">
 <head>
-<title>webFTS</title>
+<title>webFTS - Submit</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="shortcut icon" href="img/ico/favicon.png">
 <meta name="description" content="" />
 <meta name="keywords" content="" />
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700"
-	rel="stylesheet" />
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="css/justified-nav.css" rel="stylesheet">
+<link href="css/validation.css" rel="stylesheet">
+
 <script src="js/jquery.min.js"></script>
-<script src="js/config.js"></script>
-<script src="js/skel.min.js"></script>
-<script src="js/skel-panels.min.js"></script>
-<noscript>
-	<link rel="stylesheet" href="css/skel-noscript.css" />
-	<link rel="stylesheet" href="css/style.css" />
-	<link rel="stylesheet" href="css/style-desktop.css" />
-</noscript>
-<!--[if lte IE 9]><link rel="stylesheet" href="css/style-ie9.css" /><![endif]-->
-<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
-<script> 
-			$(function(){
-			   $("#includedContentFooter").load("footer.html"); 
-			});
-		</script>
+<script src="js/jquery.validate.min.js"></script>
 </head>
+
 <body>
 
-	<!-- Header -->
+	<div class="container">
 
-	<div id="header-wrapper">
-		<header class="container" id="site-header">
-			<div class="row">
-				<div class="12u">
-					<div id="logo">
-						<h1>webFTS</h1>
-					</div>
-					<nav id="nav">
-						<ul>
-							<li class="current_page_item"><a href="index.php">Homepage</a></li>
-							<li><a href="transmissions.php">My transmissions</a></li>
-							<li><a href="submit.php">Submit a transfer</a></li>
-						</ul>
-					</nav>
-				</div>
+		<div class="masthead">
+			<h3 class="text-muted">webFTS</h3>
+			<ul class="nav nav-justified">
+				<li class="active"><a href="#">Home</a></li>
+				<li><a href="transmissions.php">My jobs</a></li>
+				<li><a href="submit.php">Submit a transfer</a></li>
+			</ul>
+		</div>
+
+		<div>
+			<?php
+			foreach($_SERVER as $h=>$v)
+			if ($h == "SSL_CLIENT_S_DN_CN_2")
+				echo "<span>You are authenticated as <strong>$v</strong></span>";
+			?>
+	
+			<a href="#"><img src="img/banner.jpg" alt="" /> </a>
+	
+			<span><strong>webFTS</strong> FTS web interface for file transfering</span>
+			<a href="#" class="button">More about FTS</a>
+		</div>
+
+		<!-- Example row of columns -->
+		<div class="row">
+			<div class="col-lg-4">
+				<h2>Heading</h2>
+				<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
+					tellus ac cursus commodo, tortor mauris condimentum nibh, ut
+					fermentum massa justo sit amet risus. Etiam porta sem malesuada
+					magna mollis euismod. Donec sed odio dui.</p>
+				<p>
+					<a class="btn btn-primary" href="#">View details &raquo;</a>
+				</p>
 			</div>
-		</header>
-	</div>
-
-	<!-- Main -->
-
-	<div id="main-wrapper">
-		<div class="container">
-
-			<!-- Banner -->
-
-			<div class="row">
-				<div id="banner">
-					<div class="caption">
-						<?php
-						foreach($_SERVER as $h=>$v)
-						if ($h == "SSL_CLIENT_S_DN_CN_2")
-							echo "<span>You are authenticated as <strong>$v</strong></span>";
-						?>
-					</div>
-					<a href="#"><img src="img/banner.jpg" alt="" /> </a>
-					<div class="caption">
-						<span><strong>webFTS</strong> FTS web interface for file
-							transfering</span> <a href="#" class="button">More about FTS</a>
-					</div>
-				</div>
+			<div class="col-lg-4">
+				<h2>Heading</h2>
+				<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
+					tellus ac cursus commodo, tortor mauris condimentum nibh, ut
+					fermentum massa justo sit amet risus. Etiam porta sem malesuada
+					magna mollis euismod. Donec sed odio dui.</p>
+				<p>
+					<a class="btn btn-primary" href="#">View details &raquo;</a>
+				</p>
+			</div>
+			<div class="col-lg-4">
+				<h2>Heading</h2>
+				<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in,
+					egestas eget quam. Vestibulum id ligula porta felis euismod semper.
+					Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum
+					nibh, ut fermentum massa.</p>
+				<p>
+					<a class="btn btn-primary" href="#">View details &raquo;</a>
+				</p>
 			</div>
 		</div>
-	</div>
 
-	<!-- Footer -->
-	<div id="includedContentFooter"></div>
+		<!-- Site footer -->
+		<div class="footer">
+			<p>&copy; Company 2013</p>
+		</div>
+
+	</div>
 </body>
 </html>
+
+
+
