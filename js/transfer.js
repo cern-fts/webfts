@@ -33,7 +33,8 @@ function addTransmissionLine(tableId,fromPath, type, toPath){
 	}
 	line += '&nbsp;<i class="glyphicon glyphicon-arrow-right"/>&nbsp;<span style=" vertical-align: middle;">' + toPath; 
 	$('#' + tableId + ' > tbody:last').append(line);
-	checkTableVisibility();
+	updateNumber();	
+	checkTableVisibility();	
 }
 
 function checkTableVisibility(){
@@ -73,4 +74,9 @@ function removeSelected(){
    		$(this).parent().parent().remove();
    	 }                            	 
     });
+	updateNumber();
+}
+
+function updateNumber(){
+	$('.filesNumber').text($('#transfersTable tr').length);
 }

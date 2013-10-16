@@ -58,6 +58,11 @@
 </head>
 <body>
 	<div class="container">
+		<?php
+		foreach($_SERVER as $h=>$v)
+		if ($h == "SSL_CLIENT_S_DN_CN_2")
+			echo "<span class=\"pull-right\">You are authenticated as <strong>$v</strong></span>";
+		?>
 		<div class="masthead">
 			<h3 class="text-muted">webFTS</h3>
 			<ul class="nav nav-justified">

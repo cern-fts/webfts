@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<title>webFTS - Submit</title>
+<title>webFTS</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="shortcut icon" href="img/ico/favicon.png">
 <meta name="description" content="" />
@@ -19,9 +19,13 @@
 <body>
 
 	<div class="container">
-
+		<?php
+			foreach($_SERVER as $h=>$v)
+			if ($h == "SSL_CLIENT_S_DN_CN_2")
+				echo "<span class=\"pull-right\">You are authenticated as <strong>$v</strong></span>";
+		?>
 		<div class="masthead">
-			<h3 class="text-muted">webFTS</h3>
+			<h3 class="text-muted">webFTS</h3>			
 			<ul class="nav nav-justified">
 				<li class="active"><a href="#">Home</a></li>
 				<li><a href="transmissions.php">My jobs</a></li>
@@ -30,13 +34,9 @@
 		</div>
 
 		<div>
-			<?php
-			foreach($_SERVER as $h=>$v)
-			if ($h == "SSL_CLIENT_S_DN_CN_2")
-				echo "<span>You are authenticated as <strong>$v</strong></span>";
-			?>
+			<span>webFTS: welcome!!!</span>
 	
-			<a href="#"><img src="img/banner.jpg" alt="" /> </a>
+			<a href="#"><img src="img/banner.jpg" alt="" class="img-responsive"/> </a>
 	
 			<span><strong>webFTS</strong> FTS web interface for file transfering</span>
 			<a href="#" class="button">More about FTS</a>

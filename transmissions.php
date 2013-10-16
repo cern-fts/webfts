@@ -6,7 +6,7 @@
 -->
 <html>
 <head>
-<title>webFTS - Transmissions</title>
+<title>webFTS - Jobs</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="shortcut icon" href="img/ico/favicon.png">
 <meta name="description" content="" />
@@ -30,7 +30,11 @@
 </head>
 <body>
 	<div class="container">
-	
+		<?php
+			foreach($_SERVER as $h=>$v)
+			if ($h == "SSL_CLIENT_S_DN_CN_2")
+				echo "<span class=\"pull-right\">You are authenticated as <strong>$v</strong></span>";
+		?>
 		<div class="masthead">
 			<h3 class="text-muted">webFTS</h3>
 			<ul class="nav nav-justified">

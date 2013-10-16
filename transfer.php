@@ -69,16 +69,14 @@ $(function() {
 					<button class="btn btn-primary btn-sm" type="button" id="selectNoneTransfers" onclick="select(false)">Select none</button>
 				</div>
 				<button class="btn btn-danger btn-sm" type="button" id="removeSelectedTransfers" onclick="removeSelected()">
-					<i class="glyphicon glyphicon-trash glyphicon-white" />&nbsp;Cancel
-					selected
+					<i class="glyphicon glyphicon-trash glyphicon-white" />&nbsp;Cancel	selected
 				</button>
 				<button class="btn btn-success btn-sm" type="submit" name="submit" id="submit">
-					<i class="glyphicon glyphicon-play glyphicon-white" />&nbsp;Start
-					transfer!
+					<i class="glyphicon glyphicon-play glyphicon-white" />&nbsp;Start transfer!
 				</button>
+				<span class="pull-right">Files to be transfered <span class="filesNumber badge">42</span></span>
 			</div>
-			<table class="table table-hover table-bordered filelist"
-				id="transfersTable">
+			<table class="table table-hover table-bordered filelist" id="transfersTable">
 				<tbody></tbody>
 			</table>
 		</div>
@@ -106,8 +104,9 @@ $(function() {
 							</button>
 						</div>
 						<div class="btn-group">
-							<input type="text" class="form-control" placeholder="Filter">
+							<input type="text" class="form-control input-sm" placeholder="Filter">
 						</div>
+						&nbsp; <i class="glyphicon glyphicon-info-sign"/>
 					</div>
 				</div>
 				<ol class="breadcrumb">
@@ -153,8 +152,9 @@ $(function() {
 							</button>
 						</div>
 						<div class="btn-group">
-							<input type="text" class="form-control"placeholder="Filter">
+							<input type="text" class="form-control input-sm" placeholder="Filter">							
 						</div>
+						&nbsp; <i class="glyphicon glyphicon-info-sign"/>
 					</div>
 				</div>
 				<ol class="breadcrumb">
