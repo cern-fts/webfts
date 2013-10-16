@@ -24,14 +24,14 @@ function runTransfer(){
 
 function addTransmissionLine(tableId,fromPath, type, toPath){		
 	var line ='<tr><td><input type="checkbox" class="transferCheckId" value=' 
-			+ fromPath + '@@@TO@@@' + toPath + ' id="transferCheckId">&nbsp;' + fromPath + '&nbsp;<i class="icon-arrow-right img-middle"/>&nbsp;';
+			+ fromPath + '@@@TO@@@' + toPath + ' id="transferCheckId">&nbsp;' + fromPath + '&nbsp;<i class="glyphicon glyphicon-arrow-right"/>&nbsp;';
 	
 	if (type === "folder"){
-		line += '<i class="icon-folder-close img-middle"/>';
+		line += '<i class="glyphicon glyphicon-folder-close"/>';
 	} else {
-		line += '<i class="icon-file img-middle"/>';
+		line += '<i class="glyphicon glyphicon-file"/>';
 	}
-	line += '&nbsp;<i class="icon-arrow-right img-middle"/>&nbsp;<span style=" vertical-align: middle;">' + toPath; 
+	line += '&nbsp;<i class="glyphicon glyphicon-arrow-right"/>&nbsp;<span style=" vertical-align: middle;">' + toPath; 
 	$('#' + tableId + ' > tbody:last').append(line);
 	checkTableVisibility();
 }
