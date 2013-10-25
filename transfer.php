@@ -1,8 +1,9 @@
 <script>
-$(function() {											
+$(function(event) {											
 	 $('#pinfo-form').validate(
 	  {
 	   submitHandler: function (form) {
+		    event.preventDefault();  
 			runTransfer();
      },
 	  rules: {
@@ -28,8 +29,7 @@ $(function() {
 }); 
 </script>
 <h2>Transfer files</h2>
-<form action="" id="pinfo-form" name="pinfo-form"
-	class="form-horizontal" method="post">
+<!-- <form action="" id="pinfo-form" name="pinfo-form" class="form-horizontal" method="post"> -->
 
 	<legend>User private RSA key and password</legend>
 	<div class="well">
@@ -120,14 +120,22 @@ $(function() {
 				</div>
 			</div>
 		</div>
-
+		<script>
+		$( "#transfer-from-left" ).click(function( event ) {
+		  event.preventDefault();
+		  runTransfer();
+		  return false;
+		});
+		</script>
 		<div class="btn-group btn-group-vertical col-md-2">
-			<button type="button" class="btn btn-primary btn-block"	name="transfer-from-left" id="transfer-from-left"
-				onclick="addTransmissionLine('transfersTable', getLeft(), getType(), getRight())">
+			<button type="button" class="btn btn-primary btn-block"	name="transfer-from-left" id="transfer-from-left"> 
+<!-- 			onclick="runTransfer()"> -->
+<!-- 				onclick="addTransmissionLine('transfersTable', getLeft(), getType(), getRight())"> -->
 				<i class="glyphicon glyphicon-chevron-right"></i>
 			</button>
-			<button type="button" class="btn btn-primary btn-block" name="transfer-from-left" id="transfer-from-left"
-				onclick="addTransmissionLine('transfersTable', getRight(), getType(), getLeft())">
+			<button type="button" class="btn btn-primary btn-block" name="transfer-from-right" id="transfer-from-right"> 
+<!-- 			onclick="runTransfer()"> -->
+<!-- 				onclick="addTransmissionLine('transfersTable', getRight(), getType(), getLeft())"> -->
 				<i class="glyphicon glyphicon-chevron-left glyphicon-white"></i>
 			</button>
 		</div>
@@ -171,4 +179,4 @@ $(function() {
 		</div>
 	</div>
 
-</form>
+<!-- </form> -->

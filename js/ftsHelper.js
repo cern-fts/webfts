@@ -1,4 +1,4 @@
-var ftsEndpoint = "https://fts3-pilot.cern.ch:8446";
+var ftsEndpoint = "https://fts3devel01.cern.ch:8446";//"https://fts3-pilot.cern.ch:8446";
 var certHours = 2; // Hours of live of the certificate
 
 function showError(jqXHR, textStatus, errorThrown, message) {
@@ -23,37 +23,55 @@ function ftsTransfer(theData) {
 	outPut = $.ajax({
 		url : urlE,
 		type : "POST",
-		contentType : "application/json",
-		dataType : 'json',
+		contentType : "application/json; charset=UTF-8",
+		//contentType: 'text/javascript',
 		data : JSON.stringify(theData),
-		async : false,
+		dataType : 'jsonp',
+		crossDomain : true,
+		//async : false,
+		//jsonp: false,
+		//processData : false,
 		beforeSend : function(xhr) {
 			xhr.withCredentials = true;
-
 		},
-
+		xhrFields : {
+			withCredentials : true
+		},
+		/*url : urlEndp,									
+		type : "POST",
+		contentType : "text/plain; charset=UTF-8",
+		crossDomain : true,
+		dataType : 'text/plain',
+		//data : escape(x509Proxy),
+		data: x509Proxy,
+		processData : false,
+		jsonp: false,
+		//jsonpCallback:"callback",
+		beforeSend : function(xhr) {
+			xhr.withCredentials = true;
+		},
+		xhrFields : {
+			withCredentials : true
+		},*/
+		
 		success : function(x, status, xhr) {
 			console.log("OK: " + JSON.stringify(x));
 			// alert("OK: " + JSON.stringify(x));
 			console.log("    Status: " + status);
 		},
-
 		error : function(xhr, textStatus, errorThrown) {
-			console.log("fts connect failed");
-			console.log(xhr);
-			console.log("ERROR: " + JSON.stringify(xhr));
-			// alert("ERROR: " +JSON.stringify(xhr));
-			console.log(textStatus + "," + errorThrown);
-		},
-
-		xhrFields : {
-			withCredentials : true
-		},
-		crossDomain : true,
+			showError(xhr, textStatus, errorThrown, "fts(5) transfer failed");			
+		}
 	});
+	return false;
 }
 
-function signRequest(sCert, userPrivateKeyPEM, userPassword, userDN) {
+function signRequest(sCert, userPrivateKeyPEM, userPassword, userDN) {	
+	var Re = new RegExp(",","g");
+	userDN = userDN.replace(Re,"/");
+	var issuer = '/' + userDN;
+	var subject = issuer + '/CN=proxy';
+	
 	var reHex = /^\s*(?:[0-9A-Fa-f][0-9A-Fa-f]\s*)+$/;
 	try {
 		var der = reHex.test(sCert) ? Hex.decode(sCert) : Base64E
@@ -76,10 +94,10 @@ function signRequest(sCert, userPrivateKeyPEM, userPassword, userDN) {
 			'name' : 'SHA1withRSA'
 		});
 		tbsc.setIssuerByParam({
-			'str' : userDN
+			'str' : issuer
 		});
 		tbsc.setSubjectByParam({
-			'str' : userDN + '/CN=proxy'
+			'str' : subject
 		});
 		// Public key from server (from CSR)
 		tbsc.setSubjectPublicKeyByParam({
@@ -121,8 +139,9 @@ function signRequest(sCert, userPrivateKeyPEM, userPassword, userDN) {
 		// new one is not later than the others
 		cert.sign();
 
-		console.log(cert.getPEMString());
-		return cert.getPEMString();
+		var pemCert = cert.getPEMString();
+		console.log(pemCert);
+		return pemCert;
 	} catch (e) {
 		console.log("ERROR signing the CSR response: " + e);
 	}
@@ -134,11 +153,16 @@ function signRequest(sCert, userPrivateKeyPEM, userPassword, userDN) {
 function ftsTransferRequest(endpoints, userPrivateKeyPEM, userPassword, userDN) {
 	var urlEndp = ftsEndpoint + "/whoami";
 	// Call 1: get user delegate_id
+	jQuery.support.cors = true;
 	$.ajax({
 		url : urlEndp,
 		type : "GET",
 		dataType : 'json',
-
+		xhrFields : {
+			withCredentials : true
+		},
+		crossDomain : true,
+		
 		success : function(data1, status) {
 			delegationID = data1.delegation_id;
 			urlEndp = ftsEndpoint + "/delegation/" + delegationID;
@@ -148,13 +172,15 @@ function ftsTransferRequest(endpoints, userPrivateKeyPEM, userPassword, userDN) 
 				url : urlEndp,
 				type : "GET",
 				dataType : 'json',
-
+				xhrFields : {
+					withCredentials : true
+				},
+				crossDomain : true,
+				
 				success : function(data2, status) {
-					if ((data2 != null)
-							&& ((Date
-									.parse(data2.termination_time) - (new Date()
-									.getTime())) >= 999999)) {
+					if ((data2 != null) && ((Date.parse(data2.termination_time) - (new Date().getTime())) >= 999999)) {
 						// Call 3:There is already a valid proxy certificate. Do the transfer
+						console.log ("DIRECT CALL");
 						ftsTransfer(endpoints);
 					} else {
 						urlEndp = urlEndp + "/request";
@@ -162,92 +188,58 @@ function ftsTransferRequest(endpoints, userPrivateKeyPEM, userPassword, userDN) 
 						$.ajax({
 							url : urlEndp,
 							type : "GET",
-
-							success : function(data3,
-									status) {
-								var x509Proxy = signRequest(
-										data3,
-										userPrivateKeyPEM,
-										userPassword,
-										userDN);
-								urlEndp = ftsEndpoint
-										+ "/delegation/"
-										+ delegationID
-										+ '/credential';
-								// Call 4: Delegating the signed new proxy certificate
-								$.ajax({
-									url : urlEndp,
-									type : "PUT",
-									data : x509Proxy,
-									dataType : "text",
-									async : false,
-									beforeSend : function(
-											xhr) {
-										xhr.withCredentials = true;
-									},
-
-									success : function(
-											data4,
-											status) {
-										// Call 5: Make the transfer
-										ftsTransfer(endpoints);
-									},
-									error : function(
-											jqXHR,
-											textStatus,
-											errorThrown) {
-										showError(
-												jqXHR,
-												textStatus,
-												errorThrown,
-												"fts(4) delegation with proxy cert failed");
-									},
-
-									xhrFields : {
-										withCredentials : true
-									},
-									crossDomain : true,
-								});
-							},
-
-							error : function(jqXHR,
-									textStatus,
-									errorThrown) {
-								showError(jqXHR,
-										textStatus,
-										errorThrown,
-										"fts(3) delegation + id + request failed");
-							},
-
 							xhrFields : {
 								withCredentials : true
 							},
 							crossDomain : true,
+							
+							success : function(data3, status) {
+								var x509Proxy = signRequest(data3, userPrivateKeyPEM, userPassword, userDN);
+								urlEndp = ftsEndpoint + "/delegation/" + delegationID + '/credential';
+								// Call 4: Delegating the signed new proxy certificate
+								$.ajax({
+									url : urlEndp,									
+									type : "POST",
+									contentType : "text/plain; charset=UTF-8", 
+									crossDomain : true,
+									dataType : 'text',
+									//dataType : 'text/plain',
+									//data : escape(x509Proxy),
+									data: x509Proxy,
+									processData : false,
+									jsonp: false,
+									//jsonpCallback:"callback",
+									//async : false,  //<---????????????
+									beforeSend : function(xhr) {
+										xhr.withCredentials = true;
+									},
+									xhrFields : {
+										withCredentials : true
+									},
+											
+									success : function(data4, status) {
+										// Call 5: Make the transfer
+										ftsTransfer(endpoints);
+									},
+									error : function(jqXHR, textStatus,	errorThrown) {
+										showError(jqXHR, textStatus, errorThrown, "fts(4) delegation with proxy cert failed");
+									}
+								});
+							},
+							error : function(jqXHR, textStatus, errorThrown) {
+								showError(jqXHR, textStatus, errorThrown, "fts(3) delegation + id + request failed");
+							}
 						});
 					}
 				},
-
 				error : function(jqXHR, textStatus, errorThrown) {
-					showError(jqXHR, textStatus, errorThrown,
-							"fts(2) delegation + id failed");
-				},
-
-				xhrFields : {
-					withCredentials : true
-				},
-				crossDomain : true,
+					showError(jqXHR, textStatus, errorThrown, "fts(2) delegation + id failed");
+				}
 			});
 		},
-
 		error : function(jqXHR, textStatus, errorThrown) {
-			showError(jqXHR, textStatus, errorThrown,
-					"fts(1) whoami failed");
-		},
-
-		xhrFields : {
-			withCredentials : true
-		},
-		crossDomain : true,
+			showError(jqXHR, textStatus, errorThrown, "fts(1) whoami failed");
+		}
 	});
 }
 

@@ -1,4 +1,4 @@
-function runTransfer(){
+function runTransfer(){	  
       console.log("Call to FTS");
       
       theData = {
@@ -11,15 +11,16 @@ function runTransfer(){
                                  "http://lxfsra10a01.cern.ch/dpm/cern.ch/home/dteam/andresTest"
                             ]
                         }
-                      ],
-                   "params": {
-                      }
+                        ]
+                      ,
+                   "params": { "job_metadata": null }
                 };
 
       var userPrivatePEM = document.getElementById('pemPkey').value;
       var userPEMPass = document.getElementById('pemPass').value;
       var userDN = document.getElementById('userDN').value;
       ftsTransferRequest(theData, userPrivatePEM, userPEMPass, userDN);
+      return false;
 }
 
 function addTransmissionLine(tableId,fromPath, type, toPath){		
@@ -34,7 +35,7 @@ function addTransmissionLine(tableId,fromPath, type, toPath){
 	line += '&nbsp;<i class="glyphicon glyphicon-arrow-right"/>&nbsp;<span style=" vertical-align: middle;">' + toPath; 
 	$('#' + tableId + ' > tbody:last').append(line);
 	updateNumber();	
-	checkTableVisibility();	
+	checkTableVisibility();		
 }
 
 function checkTableVisibility(){
