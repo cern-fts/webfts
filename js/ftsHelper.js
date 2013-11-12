@@ -1,4 +1,4 @@
-var ftsEndpoint = "https://fts3devel01.cern.ch:8446";//"https://fts3-pilot.cern.ch:8446";
+var ftsEndpoint = "https://fts3devel03.cern.ch:8446";//"https://fts3-pilot.cern.ch:8446";
 var certHours = 2; // Hours of live of the certificate
 
 function showError(jqXHR, textStatus, errorThrown, message) {
@@ -20,57 +20,36 @@ function getUTCDate(time) {
 // Call to make the transfer between two endpoints
 function ftsTransfer(theData) {
 	var urlE = ftsEndpoint + "/jobs";
+	theData = JSON.stringify(theData);
 	outPut = $.ajax({
 		url : urlE,
 		type : "POST",
-		contentType : "application/json; charset=UTF-8",
-		//contentType: 'text/javascript',
-		data : JSON.stringify(theData),
-		dataType : 'jsonp',
-		crossDomain : true,
-		//async : false,
-		//jsonp: false,
-		//processData : false,
-		beforeSend : function(xhr) {
-			xhr.withCredentials = true;
-		},
-		xhrFields : {
-			withCredentials : true
-		},
-		/*url : urlEndp,									
-		type : "POST",
-		contentType : "text/plain; charset=UTF-8",
-		crossDomain : true,
-		dataType : 'text/plain',
-		//data : escape(x509Proxy),
-		data: x509Proxy,
+		data : theData,
+		contentType : "text/plain; charset=UTF-8", 
+		dataType : 'text',
 		processData : false,
-		jsonp: false,
-		//jsonpCallback:"callback",
 		beforeSend : function(xhr) {
 			xhr.withCredentials = true;
 		},
 		xhrFields : {
 			withCredentials : true
-		},*/
-		
+		},
 		success : function(x, status, xhr) {
-			console.log("OK: " + JSON.stringify(x));
-			// alert("OK: " + JSON.stringify(x));
+			console.log("OK: " + JSON.stringify(x));			
 			console.log("    Status: " + status);
 		},
 		error : function(xhr, textStatus, errorThrown) {
 			showError(xhr, textStatus, errorThrown, "fts(5) transfer failed");			
 		}
-	});
+	});	
 	return false;
 }
+
 
 function signRequest(sCert, userPrivateKeyPEM, userPassword, userDN) {	
 	var Re = new RegExp(",","g");
 	userDN = userDN.replace(Re,"/");
-	var issuer = '/' + userDN;
-	var subject = issuer + '/CN=proxy';
+	var subject = userDN + '/CN=proxy';
 	
 	var reHex = /^\s*(?:[0-9A-Fa-f][0-9A-Fa-f]\s*)+$/;
 	try {
@@ -94,7 +73,7 @@ function signRequest(sCert, userPrivateKeyPEM, userPassword, userDN) {
 			'name' : 'SHA1withRSA'
 		});
 		tbsc.setIssuerByParam({
-			'str' : issuer
+			'str' : userDN
 		});
 		tbsc.setSubjectByParam({
 			'str' : subject
@@ -148,7 +127,6 @@ function signRequest(sCert, userPrivateKeyPEM, userPassword, userDN) {
 }
 
 
-
 // Get proxy certificate (if needed) and make the transfer between the endpoints
 function ftsTransferRequest(endpoints, userPrivateKeyPEM, userPassword, userDN) {
 	var urlEndp = ftsEndpoint + "/whoami";
@@ -161,7 +139,6 @@ function ftsTransferRequest(endpoints, userPrivateKeyPEM, userPassword, userDN) 
 		xhrFields : {
 			withCredentials : true
 		},
-		crossDomain : true,
 		
 		success : function(data1, status) {
 			delegationID = data1.delegation_id;
@@ -175,7 +152,6 @@ function ftsTransferRequest(endpoints, userPrivateKeyPEM, userPassword, userDN) 
 				xhrFields : {
 					withCredentials : true
 				},
-				crossDomain : true,
 				
 				success : function(data2, status) {
 					if ((data2 != null) && ((Date.parse(data2.termination_time) - (new Date().getTime())) >= 999999)) {
@@ -191,7 +167,6 @@ function ftsTransferRequest(endpoints, userPrivateKeyPEM, userPassword, userDN) 
 							xhrFields : {
 								withCredentials : true
 							},
-							crossDomain : true,
 							
 							success : function(data3, status) {
 								var x509Proxy = signRequest(data3, userPrivateKeyPEM, userPassword, userDN);
@@ -201,15 +176,9 @@ function ftsTransferRequest(endpoints, userPrivateKeyPEM, userPassword, userDN) 
 									url : urlEndp,									
 									type : "POST",
 									contentType : "text/plain; charset=UTF-8", 
-									crossDomain : true,
 									dataType : 'text',
-									//dataType : 'text/plain',
-									//data : escape(x509Proxy),
 									data: x509Proxy,
 									processData : false,
-									jsonp: false,
-									//jsonpCallback:"callback",
-									//async : false,  //<---????????????
 									beforeSend : function(xhr) {
 										xhr.withCredentials = true;
 									},
