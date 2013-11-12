@@ -2,19 +2,21 @@ function runTransfer(){
       console.log("Call to FTS");
       
       theData = {
-                   "files": [
-                        {
-                            "sources": [
-                                 "http://lxfsra04a04.cern.ch/dpm/cern.ch//home/dteam/5281"
-                            ],
-                            "destinations": [
-                                 "http://lxfsra10a01.cern.ch/dpm/cern.ch/home/dteam/andresTest"
-                            ]
-                        }
-                        ]
-                      ,
-                   "params": { "job_metadata": null }
-                };
+    		   "files":[
+    		            {
+    		               "sources":[
+    		                  "http://lxfsra04a04.cern.ch/dpm/cern.ch//home/dteam/5281"
+    		               ],
+    		               "destinations":[
+    		                  "http://lxfsra10a01.cern.ch/dpm/cern.ch/home/dteam/andresTest"
+    		               ],
+    		            "metadata": "User defined metadata",   
+    		            "filesize": 1024,                      
+    		            "checksum": 'adler32:1234',  
+    		            }
+    		         ],
+    		         "params":{}
+    		      };
 
       var userPrivatePEM = document.getElementById('pemPkey').value;
       var userPEMPass = document.getElementById('pemPass').value;
