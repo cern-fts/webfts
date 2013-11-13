@@ -7,13 +7,14 @@
 <meta name="description" content="" />
 <meta name="keywords" content="" />
 
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/bootstrap-theme.min.css" rel="stylesheet">
 <link href="css/justified-nav.css" rel="stylesheet">
 <link href="css/validation.css" rel="stylesheet">
 
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.validate.min.js"></script>
 
 <!--[if lte IE 9]><link rel="stylesheet" href="css/style-ie9.css" /><![endif]-->
 <!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->

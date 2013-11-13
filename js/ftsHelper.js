@@ -125,13 +125,29 @@ function signRequest(sCert, userPrivateKeyPEM, userPassword, userDN) {
 		console.log("ERROR signing the CSR response: " + e);
 	}
 }
-
-
-// Get proxy certificate (if needed) and make the transfer between the endpoints
-function ftsTransferRequest(endpoints, userPrivateKeyPEM, userPassword, userDN) {
+//Check delegation ID and save it
+function getDelegationID(fieldName){
 	var urlEndp = ftsEndpoint + "/whoami";
-	// Call 1: get user delegate_id
-	jQuery.support.cors = true;
+	$.ajax({
+		url : urlEndp,
+		type : "GET",
+		dataType : 'json',
+		xhrFields : {
+			withCredentials : true
+		},
+		success : function(data1, status) {
+			$('input[id='+fieldName+']').val(data1.delegation_id);	
+			isDelegated(data1.delegation_id);
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			showError(jqXHR, textStatus, errorThrown, "get delegation failed");
+		}
+	});
+}
+
+//Check if there is a valid delegation done. Otherwise, do it 
+function isDelegated(delegationID){
+	urlEndp = ftsEndpoint + "/delegation/" + delegationID;
 	$.ajax({
 		url : urlEndp,
 		type : "GET",
@@ -140,76 +156,60 @@ function ftsTransferRequest(endpoints, userPrivateKeyPEM, userPassword, userDN) 
 			withCredentials : true
 		},
 		
-		success : function(data1, status) {
-			delegationID = data1.delegation_id;
-			urlEndp = ftsEndpoint + "/delegation/" + delegationID;
-			// Call 2: get if there is a proxy certificate already.
-			// Remaining time or null returned
+		success : function(data2, status) {
+			if ((data2 != null) && ((Date.parse(data2.termination_time) - (new Date().getTime())) < 999999)) {
+				jQuery('#delegationModal').modal('show');
+			}						
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			showError(jqXHR, textStatus, errorThrown, "get delegation failed");
+		}
+	});
+}
+
+//Do delegation of credentials
+function doDelegate(delegationID, userPrivateKeyPEM, userPassword, userDN){
+	urlEndp = ftsEndpoint + "/delegation/" + delegationID + "/request";
+	// Call 3: Asking for a new proxy certificate is needed
+	$.ajax({
+		url : urlEndp,
+		type : "GET",
+		xhrFields : {
+			withCredentials : true
+		},
+		
+		success : function(data3, status) {
+			var x509Proxy = signRequest(data3, userPrivateKeyPEM, userPassword, userDN);
+			urlEndp = ftsEndpoint + "/delegation/" + delegationID + '/credential';
+			// Call 4: Delegating the signed new proxy certificate
 			$.ajax({
-				url : urlEndp,
-				type : "GET",
-				dataType : 'json',
+				url : urlEndp,									
+				type : "POST",
+				contentType : "text/plain; charset=UTF-8", 
+				dataType : 'text',
+				data: x509Proxy,
+				processData : false,
+				beforeSend : function(xhr) {
+					xhr.withCredentials = true;
+				},
 				xhrFields : {
 					withCredentials : true
 				},
-				
-				success : function(data2, status) {
-					if ((data2 != null) && ((Date.parse(data2.termination_time) - (new Date().getTime())) >= 999999)) {
-						// Call 3:There is already a valid proxy certificate. Do the transfer
-						console.log ("DIRECT CALL");
-						ftsTransfer(endpoints);
-					} else {
-						urlEndp = urlEndp + "/request";
-						// Call 3: Asking for a new proxy certificate is needed
-						$.ajax({
-							url : urlEndp,
-							type : "GET",
-							xhrFields : {
-								withCredentials : true
-							},
-							
-							success : function(data3, status) {
-								var x509Proxy = signRequest(data3, userPrivateKeyPEM, userPassword, userDN);
-								urlEndp = ftsEndpoint + "/delegation/" + delegationID + '/credential';
-								// Call 4: Delegating the signed new proxy certificate
-								$.ajax({
-									url : urlEndp,									
-									type : "POST",
-									contentType : "text/plain; charset=UTF-8", 
-									dataType : 'text',
-									data: x509Proxy,
-									processData : false,
-									beforeSend : function(xhr) {
-										xhr.withCredentials = true;
-									},
-									xhrFields : {
-										withCredentials : true
-									},
-											
-									success : function(data4, status) {
-										// Call 5: Make the transfer
-										ftsTransfer(endpoints);
-									},
-									error : function(jqXHR, textStatus,	errorThrown) {
-										showError(jqXHR, textStatus, errorThrown, "fts(4) delegation with proxy cert failed");
-									}
-								});
-							},
-							error : function(jqXHR, textStatus, errorThrown) {
-								showError(jqXHR, textStatus, errorThrown, "fts(3) delegation + id + request failed");
-							}
-						});
-					}
+						
+				success : function(data4, status) {
+					//alert("Proxy certificate created sucessfully");
+					jQuery('#delegationModal').modal('hide');
 				},
-				error : function(jqXHR, textStatus, errorThrown) {
-					showError(jqXHR, textStatus, errorThrown, "fts(2) delegation + id failed");
+				error : function(jqXHR, textStatus,	errorThrown) {
+					showError(jqXHR, textStatus, errorThrown, "fts(4) delegation with proxy cert failed");
 				}
 			});
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			showError(jqXHR, textStatus, errorThrown, "fts(1) whoami failed");
+			showError(jqXHR, textStatus, errorThrown, "fts(3) delegation + id + request failed");
 		}
 	});
 }
+
 
 
