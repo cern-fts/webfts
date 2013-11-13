@@ -125,7 +125,7 @@ function signRequest(sCert, userPrivateKeyPEM, userPassword, userDN) {
 		console.log("ERROR signing the CSR response: " + e);
 	}
 }
-//Check delegation ID and save it
+//Check delegation ID, save it and check if there is a valid proxy 
 function getDelegationID(fieldName){
 	var urlEndp = ftsEndpoint + "/whoami";
 	$.ajax({
@@ -137,7 +137,7 @@ function getDelegationID(fieldName){
 		},
 		success : function(data1, status) {
 			$('input[id='+fieldName+']').val(data1.delegation_id);	
-			isDelegated(data1.delegation_id);
+			isDelegated(data1.delegation_id, null);
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			showError(jqXHR, textStatus, errorThrown, "get delegation failed");
@@ -145,8 +145,16 @@ function getDelegationID(fieldName){
 	});
 }
 
-//Check if there is a valid delegation done. Otherwise, do it 
 function isDelegated(delegationID){
+	return checkAndTransfer(delegationID, null);
+}
+
+function runDataTransfer(delegationID, transferData){
+	return checkAndTransfer(delegationID, transferData);
+}
+
+//Check if there is a valid delegation done. Otherwise, do it 
+function checkAndTransfer(delegationID, transferData){
 	urlEndp = ftsEndpoint + "/delegation/" + delegationID;
 	$.ajax({
 		url : urlEndp,
@@ -159,6 +167,8 @@ function isDelegated(delegationID){
 		success : function(data2, status) {
 			if ((data2 != null) && ((Date.parse(data2.termination_time) - (new Date().getTime())) < 999999)) {
 				jQuery('#delegationModal').modal('show');
+			} else if (transferData != null){
+				ftsTransfer(transferData);
 			}						
 		},
 		error : function(jqXHR, textStatus, errorThrown) {

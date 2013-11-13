@@ -16,12 +16,9 @@ function runTransfer(){
     		            }
     		         ],
     		         "params":{}
-    		      };
-
-      var userPrivatePEM = document.getElementById('pemPkey').value;
-      var userPEMPass = document.getElementById('pemPass').value;
-      var userDN = document.getElementById('userDN').value;
-      ftsTransferRequest(theData, userPrivatePEM, userPEMPass, userDN);
+    		      };      
+      runDataTransfer(theData);
+      //ftsTransferRequest(theData, userPrivatePEM, userPEMPass, userDN);
       return false;
 }
 

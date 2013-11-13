@@ -14,6 +14,7 @@
 <link href="css/bootstrap-theme.min.css" rel="stylesheet">
 <link href="css/justified-nav.css" rel="stylesheet">
 <link href="css/validation.css" rel="stylesheet">
+<link href="css/custom.css" rel="stylesheet">
 
 <script src="js/bootstrap.min.js"></script> 
 

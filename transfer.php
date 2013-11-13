@@ -2,10 +2,6 @@
 $(function(event) {											
 	 $('#pinfo-form').validate(
 	  {
-	   submitHandler: function (form) {
-		    event.preventDefault();  
-			runTransfer();
-     },
 	  rules: {
 	    pemPkey: {
 	      minlength: 1024,
@@ -28,93 +24,68 @@ $(function(event) {
 	 });
 }); 
 
-//jQuery.noConflict();
-//$.noConflict();
-//jQuery( document ).ready(function( $ ) {
-// (function ($) {
-//  $('#delegationModal').modal('show');
-//  }
-// )(jQuery);
-
-$( document ).ready(function() {
+$( document ).ready(function() {	
 	getDelegationID("delegation_id");
 	console.log( "ready!" );	
 });
 
-$( "#delegateButton" ).click(function( event ) {
-	  event.preventDefault();	  
-	  doDelegate(document.getElementById('delegation_id').value, document.getElementById('pemPkey').value, document.getElementById('pemPass').value, document.getElementById('userDN').value);
-	  return false;
-	});
+$("#pinfo-form").submit(function(event){
+  event.preventDefault();	
+  doDelegate(document.getElementById('delegation_id').value, document.getElementById('pemPkey').value, document.getElementById('pemPass').value, document.getElementById('userDN').value);
+  return false;
+});
+
+$( "#delegateButton" ).click(function() {
+	$( "#pinfo-form" ).submit();
+});
+		
+$('#popoverDelegate').popover();
 </script>
 <h2>Transfer files</h2>
-<!-- <form action="" id="pinfo-form" name="pinfo-form" class="form-horizontal" method="post"> -->
-
-		
-<div class="modal fade" id="delegationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Credentials delegation</h4>
-        There is not an existing valid proxy. Please delegate your credentials to create a new one. 
-      </div>
-      <div class="modal-body">        
-		<div class="well">
-			<div class="alert alert-success" id="obtainkeyAlert">
-				<button type="button" class="close" data-dismiss="alert" onclick="$('obtainkeyAlert').hide()">&times;</button>
-				The private RSA key can be obtained from the p12 certificate you have
-				installed in your browser by using:<br /> <i>&nbsp;&nbsp;&nbsp;openssl
-					pkcs12 -in yourCert.p12 -nocerts -nodes | openssl rsa </i>
-			</div>
-			<div class="alert alert-danger">
-				<strong>DISCLAIMER</strong>: <small>the private key and
-					password WILL NOT BE TRANSMITTED ANYWHERE. They are only used locally
-					(within the user's browser) to generate the proxies needed to have
-					access to the FTS web services.</small>   
-			</div>
+	<div class="modal fade" id="delegationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <form action="" id="pinfo-form" name="pinfo-form" class="form-horizontal" method="post">
+		     <div class="modal-body">		          	      	     
+				    <h4 class="modal-title">
+				        Credentials delegation	        
+		        		<a id="popoverDelegate" class="btn" href="#" data-content="There is not an existing valid proxy. Please delegate your credentials to create a new one." rel="popover" data-placement="right" data-trigger="hover">?</a>
+					</h4>
+					<div class="alert alert-success" id="obtainkeyAlert">
+						<button type="button" class="close" data-dismiss="alert" onclick="$('obtainkeyAlert').hide()">&times;</button>
+						<small>The private RSA key can be obtained from the p12 certificate you have
+						installed in your browser by using:<br /> <i>&nbsp;&nbsp;&nbsp;openssl
+							pkcs12 -in yourCert.p12 -nocerts -nodes | openssl rsa </i></small>
+					</div>
+					<div class="alert alert-danger">
+						<strong>DISCLAIMER</strong>: <small>the private key and
+							password WILL NOT BE TRANSMITTED ANYWHERE. They are only used locally
+							(within the user's browser) to generate the proxies needed to have
+							access to the FTS web services.</small>   
+					</div>
+			
+					<div class="row control-group">			
+						<label class="control-label" for="privateKey">Private key</label>
+						<textarea id="pemPkey" name="pemPkey" class="field form-control" rows="5" placeholder="RSA private key"></textarea>
+					</div>
+					
+					<div class="row control-group">
+						<label class="control-label" for="privateKeyPass">Private key password</label> 
+						<input class="form-control" type="password"	name="pemPass" id="pemPass" placeholder="Password">					
+					</div>								
+					
+					<input type="hidden" id="delegation_id" value="">			
 	
-			<div class="row control-group">			
-				<label class="control-label" for="privateKey">Private key</label>
-				<textarea id="pemPkey" name="pemPkey" class="field form-control" rows="7" placeholder="RSA private key"></textarea>
-			</div>
-			<div class="row control-group">
-				<label class="control-label" for="privateKeyPass">Private key password</label> 
-				<input class="form-control" type="password"	name="pemPass" id="pemPass" placeholder="Password">
-			</div>
-			<input type="hidden" id="delegation_id" value="">
-		</div>
-      </div>
-      <div class="modal-footer">
-      	<button type="button" class="btn btn-primary" name="delegateButton" id="delegateButton">Delegate</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- 	<legend>User private RSA key and password</legend> -->
-<!-- 	<div class="well"> -->
-<!-- 		<div class="alert alert-success"> -->
-<!-- 			<button type="button" class="close" data-dismiss="alert" onclick="$('.alert').hide()">&times;</button> -->
-				
-<!-- 			The private RSA key can be obtained from the p12 certificate you have -->
-<!-- 			installed in your browser by using:<br /> <i>&nbsp;&nbsp;&nbsp;openssl -->
-<!-- 				pkcs12 -in yourCert.p12 -nocerts -nodes | openssl rsa </i> -->
-<!-- 		</div> -->
-<!-- 		<span class="label label-danger">DISCLAIMER: the private key and -->
-<!-- 			password WILL NOT BE TRANSMITTED ANYWHERE. They are only used locally -->
-<!-- 			(within the user's browser) to generate the proxies needed to have -->
-<!-- 			access to the FTS web services </span> -->
-
-<!-- 		<div class="row control-group"> -->
-<!-- 			<label class="control-label" for="privateKey">Private key</label> -->
-<!-- 			<textarea id="pemPkey" name="pemPkey" class="field form-control" rows="7" placeholder="RSA private key"></textarea> -->
-<!-- 		</div> -->
-<!-- 		<div class="row control-group"> -->
-<!-- 			<label class="control-label" for="privateKeyPass">Private key password</label>  -->
-<!-- 			<input class="form-control" type="password"	name="pemPass" id="pemPass" placeholder="Password"> -->
-<!-- 		</div> -->
-<!-- 		<input type="hidden" id="delegation_id" value="">		 -->
-<!-- 	</div> -->
+		      </div>
+		      <div class="modal-footer ">
+		      	<div class="controls center">
+		      		<button type="button" class="btn btn-primary" name="delegateButton" id="delegateButton">Delegate</button>
+		      	</div>
+		      </div>	      
+	      </form>
+		</div>					   
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 
 	<div id="selectedFiles" style="display: none">
 		<?php
@@ -184,7 +155,7 @@ $( "#delegateButton" ).click(function( event ) {
 		<script>
 		$( "#transfer-from-left" ).click(function( event ) {
 		  event.preventDefault();
-		  runTransfer();
+		  //runTransfer();
 		  return false;
 		});
 
