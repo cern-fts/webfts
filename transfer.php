@@ -42,9 +42,15 @@ $( "#delegateButton" ).click(function() {
 });
 		
 $('#popoverDelegate').popover();
+
+//To prevent the modal window to be closed by pressing ESC or clicking outside
+$('#delegationModal').modal({
+	  backdrop: 'static',
+	  keyboard: false
+	})
 </script>
 <h2>Transfer files</h2>
-	<div class="modal fade" id="delegationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="delegationModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <form action="" id="pinfo-form" name="pinfo-form" class="form-horizontal" method="post">
