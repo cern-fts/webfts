@@ -31,7 +31,9 @@ $( document ).ready(function() {
 
 $("#pinfo-form").submit(function(event){
   event.preventDefault();	
-  doDelegate(document.getElementById('delegation_id').value, document.getElementById('pemPkey').value, document.getElementById('pemPass').value, document.getElementById('userDN').value);
+  if ($("#pinfo-form").valid()){ 
+  	doDelegate(document.getElementById('delegation_id').value, document.getElementById('pemPkey').value, document.getElementById('pemPass').value, document.getElementById('userDN').value);
+  }	
   return false;
 });
 
@@ -49,7 +51,7 @@ $('#popoverDelegate').popover();
 		     <div class="modal-body">		          	      	     
 				    <h4 class="modal-title">
 				        Credentials delegation	        
-		        		<a id="popoverDelegate" class="btn" href="#" data-content="There is not an existing valid proxy. Please delegate your credentials to create a new one." rel="popover" data-placement="right" data-trigger="hover">?</a>
+		        		<a id="popoverDelegate" class="btn" href="#" data-content="There is not an existing valid proxy. You have to delegate your credentials to create a new one." rel="popover" data-placement="right" data-trigger="hover">?</a>
 					</h4>
 					<div class="alert alert-success" id="obtainkeyAlert">
 						<button type="button" class="close" data-dismiss="alert" onclick="$('obtainkeyAlert').hide()">&times;</button>
