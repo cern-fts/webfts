@@ -46,7 +46,7 @@ function ftsTransfer(theData) {
 }
 
 
-function signRequest(sCert, userPrivateKeyPEM, userPassword, userDN) {	
+function signRequest(sCert, userPrivateKeyPEM, userDN) {	
 	var Re = new RegExp(",","g");
 	userDN = userDN.replace(Re,"/");
 	var subject = userDN + '/CN=proxy';
@@ -59,8 +59,13 @@ function signRequest(sCert, userPrivateKeyPEM, userPassword, userDN) {
 		var asn1 = ASN11.decode(der);
 		var pos = asn1.getCSRPubKey();
 
+		console.log(sCert);
+		
 		var rsakey = new RSAKey();
-		rsakey.setPublic(pos.modulus, pos.exponent);
+		//The replace is because other wise something like this was 
+		//found "01 00 01" and only the last part, "01", was converted. 
+		//It was returning 1 instead of 65537
+		rsakey.setPublic(pos.modulus.replace(/ /g, ''), pos.exponent.replace(/ /g, ''));
 
 		// TODO: verify sign
 		var tbsc = new KJUR.asn1.x509.TBSCertificate();
@@ -92,25 +97,17 @@ function signRequest(sCert, userPrivateKeyPEM, userPassword, userDN) {
 			'str' : getUTCDate(ctime)
 		});
 
-		tbsc.appendExtension(new KJUR.asn1.x509.BasicConstraints({
-			'cA' : false
-		}));
-		tbsc.appendExtension(new KJUR.asn1.x509.KeyUsage({
-			'bin' : '11'
-		}));
-
 		// Sign and get PEM certificate with CA private key
 		var userPrivateKey = new RSAKey();
 
-		// The private RSA key can be obtained from the p12 certificate by
-		// using:
-		// openssl pkcs12 -in yourCert.p12 -nocerts -nodes | openssl rsa >
-		// id_rsa
+		// The private RSA key can be obtained from the p12 certificate by using:
+		// openssl pkcs12 -in yourCert.p12 -nocerts -nodes | openssl rsa 
 		userPrivateKey.readPrivateKeyFromPEMString(userPrivateKeyPEM);
+		
 		var cert = new KJUR.asn1.x509.Certificate({
 			'tbscertobj' : tbsc,
 			'rsaprvkey' : userPrivateKey,
-			'rsaprvpas' : userPassword
+			'rsaprvpas' : "empty"
 		});
 
 		// TODO check times in all certificates involved to check that the
@@ -119,8 +116,10 @@ function signRequest(sCert, userPrivateKeyPEM, userPassword, userDN) {
 		cert.sign();
 
 		var pemCert = cert.getPEMString();
-		console.log(pemCert);
-		return pemCert;
+		//console.log(pemCert.replace(/^\s*$[\n\r]{1,}/gm, "\n"));
+		
+		//In case blank new lines...
+		return pemCert.replace(/^\s*$[\n\r]{1,}/gm, "\n");
 	} catch (e) {
 		console.log("ERROR signing the CSR response: " + e);
 	}
@@ -165,11 +164,20 @@ function checkAndTransfer(delegationID, transferData){
 		},
 		
 		success : function(data2, status) {
-			if ((data2 != null) && ((Date.parse(data2.termination_time) - (new Date().getTime())) < 999999)) {
+			if (data2 == null){
 				jQuery('#delegationModal').modal('show');
-			} else if (transferData != null){
-				ftsTransfer(transferData);
-			}						
+			} else {
+				remainingTime = Date.parse(data2.termination_time) - (new Date().getTime());
+				console.log(millisecondsToStr(remainingTime));			
+				if (remainingTime < 999999) {
+					jQuery('#delegationModal').modal('show');
+				} else {
+					showRemainingProxyTime(millisecondsToStr(remainingTime));
+					if (transferData != null){				
+						ftsTransfer(transferData);
+					}
+				}						
+			}	
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			showError(jqXHR, textStatus, errorThrown, "get delegation failed");
@@ -178,7 +186,8 @@ function checkAndTransfer(delegationID, transferData){
 }
 
 //Do delegation of credentials
-function doDelegate(delegationID, userPrivateKeyPEM, userPassword, userDN){
+//function doDelegate(delegationID, userPrivateKeyPEM, userPassword, userDN, certChain0, certChain1){
+function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT){
 	urlEndp = ftsEndpoint + "/delegation/" + delegationID + "/request";
 	// Call 3: Asking for a new proxy certificate is needed
 	$.ajax({
@@ -189,7 +198,9 @@ function doDelegate(delegationID, userPrivateKeyPEM, userPassword, userDN){
 		},
 		
 		success : function(data3, status) {
-			var x509Proxy = signRequest(data3, userPrivateKeyPEM, userPassword, userDN);
+			var x509Proxy = signRequest(data3, userPrivateKeyPEM, userDN); 
+			x509Proxy += "" + userCERT;
+			console.log(x509Proxy);
 			urlEndp = ftsEndpoint + "/delegation/" + delegationID + '/credential';
 			// Call 4: Delegating the signed new proxy certificate
 			$.ajax({
@@ -222,4 +233,56 @@ function doDelegate(delegationID, userPrivateKeyPEM, userPassword, userDN){
 }
 
 
+function getEndpointContent(endpointpath){
+	urlEndp = ftsEndpoint + "/dm/stat" + endpointpath;
+	$.ajax({
+		url : urlEndp,
+		type : "GET",
+		dataType : 'text',
+		xhrFields : {
+			withCredentials : true
+		},
+		
+		success : function(data2, status) {
+			alert('Done');					
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			showError(jqXHR, textStatus, errorThrown, "stat endpoint failed");
+		}
+	});
+} 
 
+function millisecondsToStr (milliseconds) {
+    // TIP: to find current time in milliseconds, use:
+    // var  current_time_milliseconds = new Date().getTime();
+
+    // This function does not deal with leap years, however,
+    // it should not be an issue because the output is aproximated.
+
+    function numberEnding (number) { //todo: replace with a wiser code
+        return (number > 1) ? 's' : '';
+    }
+
+    var temp = milliseconds / 1000;
+    var years = Math.floor(temp / 31536000);
+    if (years) {
+        return years + ' year' + numberEnding(years);
+    }
+    var days = Math.floor((temp %= 31536000) / 86400);
+    if (days) {
+        return days + ' day' + numberEnding(days);
+    }
+    var hours = Math.floor((temp %= 86400) / 3600);
+    if (hours) {
+        return hours + ' hour' + numberEnding(hours);
+    }
+    var minutes = Math.floor((temp %= 3600) / 60);
+    if (minutes) {
+        return minutes + ' minute' + numberEnding(minutes);
+    }
+    var seconds = temp % 60;
+    if (seconds) {
+        return seconds + ' second' + numberEnding(seconds);
+    }
+    return 'less then a second'; //'just now' //or other string you like;
+}
