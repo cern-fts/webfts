@@ -6,10 +6,6 @@ $(function(event) {
 	    pemPkey: {
 	      minlength: 1024,
 	      required: true
-	    },
-	    pemPass: {
-	      minlength: 1,	
-	      required: true,										      
 	    }
 	  },
 	  highlight: function(element) {
@@ -32,7 +28,8 @@ $( document ).ready(function() {
 $("#pinfo-form").submit(function(event){
   event.preventDefault();	
   if ($("#pinfo-form").valid()){ 
-  	doDelegate(document.getElementById('delegation_id').value, document.getElementById('pemPkey').value, document.getElementById('pemPass').value, document.getElementById('userDN').value);
+  	doDelegate(document.getElementById('delegation_id').value, document.getElementById('pemPkey').value,
+  		  	   document.getElementById('userDN').value, document.getElementById('clientCERT').value);
   }	
   return false;
 });
@@ -50,7 +47,8 @@ $('#delegationModal').modal({
 	  keyboard: false
 })
 </script>
-<h2>Transfer files</h2>
+	<h2>Transfer files</h2>
+	<span class="pull-right" id="proxyTimeSpan">Loading proxy...</span>
 	<div class="modal fade" id="delegationModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
@@ -71,20 +69,12 @@ $('#delegationModal').modal({
 							password WILL NOT BE TRANSMITTED ANYWHERE. They are only used locally
 							(within the user's browser) to generate the proxies needed to have
 							access to the FTS web services.</small>   
-					</div>
-			
+					</div>			
 					<div class="row control-group">			
 						<label class="control-label" for="privateKey">Private key</label>
 						<textarea id="pemPkey" name="pemPkey" class="field form-control" rows="5" placeholder="RSA private key"></textarea>
-					</div>
-					
-					<div class="row control-group">
-						<label class="control-label" for="privateKeyPass">Private key password</label> 
-						<input class="form-control" type="password"	name="pemPass" id="pemPass" placeholder="Password">					
-					</div>								
-					
-					<input type="hidden" id="delegation_id" value="">			
-	
+					</div>			
+					<input type="hidden" id="delegation_id" value="">				
 		      </div>
 		      <div class="modal-footer ">
 		      	<div class="controls center">
@@ -98,9 +88,12 @@ $('#delegationModal').modal({
 
 	<div id="selectedFiles" style="display: none">
 		<?php
-			foreach($_SERVER as $h=>$v)
-			if ($h == "SSL_CLIENT_S_DN")
-				echo "<input type=\"hidden\" id=\"userDN\" value=\"$v\">";
+			foreach($_SERVER as $h=>$v){
+				if ($h == "SSL_CLIENT_S_DN")
+					echo "<input type=\"hidden\" id=\"userDN\" value=\"$v\">";
+				else if ($h == "SSL_CLIENT_CERT")
+					echo "<input type=\"hidden\" id=\"clientCERT\" value=\"$v\">";				
+			}
 		?>
 		<legend>Selected files to be tranfered</legend>
 		<div class="well">
@@ -122,7 +115,13 @@ $('#delegationModal').modal({
 			</table>
 		</div>
 	</div>
-
+	<script>
+	$( "#load-left" ).click(function( event ) {
+		  event.preventDefault();
+		  getEndpointContent("?" + "surl=gsiftp://lxfsra10a01.cern.ch/dpm/");
+		  return false;
+	});
+	</script>
 	<legend>Please specify your transfer source and destination</legend>
 	<div class="row">
 		<div class="btn-group-vertical col-lg-5">
@@ -167,7 +166,6 @@ $('#delegationModal').modal({
 		  //runTransfer();
 		  return false;
 		});
-
 		</script>
 		<div class="btn-group btn-group-vertical col-md-2">
 			<button type="button" class="btn btn-primary btn-block"	name="transfer-from-left" id="transfer-from-left"> 
@@ -216,8 +214,6 @@ $('#delegationModal').modal({
 					Here should go the tree
 				</div>
 			</div>
-
-
 		</div>
 	</div>
 <!-- </form> -->
