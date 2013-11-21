@@ -80,3 +80,7 @@ function removeSelected(){
 function updateNumber(){
 	$('.filesNumber').text($('#transfersTable tr').length);
 }
+
+function showRemainingProxyTime(timeText){
+	$('#proxyTimeSpan').text("Your current proxy is still valid for " + timeText);	
+}
