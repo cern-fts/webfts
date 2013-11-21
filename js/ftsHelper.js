@@ -89,10 +89,11 @@ function signRequest(sCert, userPrivateKeyPEM, userDN) {
 		});
 
 		var ctime = new Date();
+		ctime.setUTCHours(ctime.getUTCHours() - 1);
 		tbsc.setNotBeforeByParam({
 			'str' : getUTCDate(ctime)
 		});
-		ctime.setUTCHours(ctime.getUTCHours() + certHours);
+		ctime.setUTCHours(ctime.getUTCHours() + 1 + certHours);
 		tbsc.setNotAfterByParam({
 			'str' : getUTCDate(ctime)
 		});
@@ -234,6 +235,27 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT){
 
 
 function getEndpointContent(endpointpath){
+	urlEndp = ftsEndpoint + "/dm/list" + endpointpath;
+	$.ajax({
+		url : urlEndp,
+		type : "GET",
+		dataType : 'json',
+		xhrFields : {
+			withCredentials : true
+		},
+		
+		success : function(data2, status) {			
+			for (var i=0;i<data2.length;i++){
+				alert(data2[i]);
+			}
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			showError(jqXHR, textStatus, errorThrown, "stat endpoint failed");
+		}
+	});
+} 
+
+function getEndpointElementStat(endpointpath){
 	urlEndp = ftsEndpoint + "/dm/stat" + endpointpath;
 	$.ajax({
 		url : urlEndp,
