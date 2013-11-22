@@ -84,3 +84,52 @@ function updateNumber(){
 function showRemainingProxyTime(timeText){
 	$('#proxyTimeSpan').text("Your current proxy is still valid for " + timeText);	
 }
+
+function loadFolder(container, elements){
+	$("#" + container +" > tbody").html("");
+	for (var i = 0; i < elements.length; i++)
+	{
+		if (elements[i].slice(-1) == "/"){
+			$('#' + container +' > tbody:last').append('<tr value="' +elements[i].slice(-1) + '"><td><i class="glyphicon glyphicon-folder-close"/>&nbsp;' + elements[i].slice(-1) + '</td></tr>');
+		} else {
+			$('#' + container +' > tbody:last').append('<tr value="' +elements[i] + '"><td><i class="glyphicon glyphicon-file"/>&nbsp;' + elements[i] + '</td></tr>');
+		}
+	}
+}
+
+function renderFolderContent(tableId, countId){
+    // Initialise the Demo with the Ctrl Click Functionality as the Default
+    $('#' + tableId + ' tbody').finderSelect({enableDesktopCtrlDefault:true, totalSelector:"."+countId , selectClass:'label-info'});    
+}
+
+function selectAllFiles(container){ 
+	$("#" + container + " tbody").finderSelect('highlightAll');
+	$("#" + container + " tbody").finderSelect("update");
+}
+
+function selectNoneFiles(container){ 
+	$("#" + container + " tbody").finderSelect('unHighlightAll');
+	$("#" + container + " tbody").finderSelect("update");
+}
+
+function getSelectedFiles(container){
+	var selectedEle = $("#" + container + " tbody").finderSelect('selected');
+	for (var i = 0; i < selectedEle.length; i++){
+		selectedEle[i].attributes.value.nodeValue;  //<-- How to get the value of each selected 
+	}
+}
+
+function getContent(endpointInput, container){	
+	getEndpointContent($('#' + endpointInput).val(), container);
+}
+
+function initialLoadState(input, button){
+    $('#'+ button).attr('disabled',true);    
+    $('#'+ input).keyup(function(){        
+        if($(this).val().length !=0){
+            $('#'+ button).attr('disabled', false);
+        }
+        else
+        $('#'+ button).attr('disabled',true);
+    });
+}

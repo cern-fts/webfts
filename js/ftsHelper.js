@@ -234,8 +234,8 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT){
 }
 
 
-function getEndpointContent(endpointpath){
-	urlEndp = ftsEndpoint + "/dm/list" + endpointpath;
+function getEndpointContent(endpointpath, container){
+	urlEndp = ftsEndpoint + "/dm/list?" + endpointpath;
 	$.ajax({
 		url : urlEndp,
 		type : "GET",
@@ -244,10 +244,8 @@ function getEndpointContent(endpointpath){
 			withCredentials : true
 		},
 		
-		success : function(data2, status) {			
-			for (var i=0;i<data2.length;i++){
-				alert(data2[i]);
-			}
+		success : function(data2, status) {		
+			loadFolder(container, data2);			
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			showError(jqXHR, textStatus, errorThrown, "stat endpoint failed");

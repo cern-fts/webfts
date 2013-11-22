@@ -22,6 +22,15 @@ $(function(event) {
 
 $( document ).ready(function() {	
 	getDelegationID("delegation_id");
+	try{
+		renderFolderContent("leftEndpointContent", "leftSelectedCount");
+		renderFolderContent("rightEndpointContent", "rightSelectedCount");
+	}catch (err){
+		console.log('Initializating empty files containers ('+ err +')');
+	}
+
+	initialLoadState('leftEndpoint', 'load-left');
+	initialLoadState('rightEndpoint', 'load-right');
 	console.log( "ready!" );	
 });
 
@@ -45,7 +54,12 @@ $('#delegationModal').modal({
 	  show: false,	
 	  backdrop: 'static',
 	  keyboard: false
-})
+});
+
+$("#pemPkey").change(function(){
+	//.keyup(
+	$("#pinfo-form").valid();
+});
 </script>
 	<h2>Transfer files</h2>
 	<span class="pull-right" id="proxyTimeSpan">Loading proxy...</span>
@@ -65,14 +79,13 @@ $('#delegationModal').modal({
 							pkcs12 -in yourCert.p12 -nocerts -nodes | openssl rsa </i></small>
 					</div>
 					<div class="alert alert-danger">
-						<strong>DISCLAIMER</strong>: <small>the private key and
-							password WILL NOT BE TRANSMITTED ANYWHERE. They are only used locally
+						<strong>DISCLAIMER</strong>: <small>the private key WILL NOT BE TRANSMITTED ANYWHERE. It is only used locally
 							(within the user's browser) to generate the proxies needed to have
-							access to the FTS web services.</small>   
+							access to the FTS services.</small>   
 					</div>			
 					<div class="row control-group">			
 						<label class="control-label" for="privateKey">Private key</label>
-						<textarea id="pemPkey" name="pemPkey" class="field form-control" rows="5" placeholder="RSA private key"></textarea>
+						<textarea id="pemPkey" name="pemPkey" class="field form-control" rows="5" placeholder="RSA private key" ></textarea>
 					</div>			
 					<input type="hidden" id="delegation_id" value="">				
 		      </div>
@@ -115,19 +128,12 @@ $('#delegationModal').modal({
 			</table>
 		</div>
 	</div>
-	<script>
-	$( "#load-left" ).click(function( event ) {
-		  event.preventDefault();
-		  getEndpointContent("?" + "surl=gsiftp://lxfsra10a01.cern.ch/dpm/");
-		  return false;
-	});
-	</script>
 	<legend>Please specify your transfer source and destination</legend>
 	<div class="row">
 		<div class="btn-group-vertical col-lg-5">
 			<div class="input-group">
-				<input id="rightEndpoint" type="text" placeholder="Endpoint path" class="form-control"> <span class="input-group-btn">
-					<button class="btn btn-primary" type="button" id="load-left">Load</button>
+				<input id="leftEndpoint" type="text" placeholder="Endpoint path" class="form-control" value="surl=gsiftp://lxfsra10a01.cern.ch/dpm/"> <span class="input-group-btn">
+					<button class="btn btn-primary" type="button" id="load-left" onclick="getContent('leftEndpoint', 'leftEndpointContent')">Load</button>
 				</span>
 			</div>
 
@@ -135,12 +141,12 @@ $('#delegationModal').modal({
 				<div class="panel-heading">
 					<div class="btn-toolbar">
 						<div class="btn-group ">
-							<button type="button" class="btn btn-sm">Select All</button>
-							<button type="button" class="btn btn-sm">None</button>
+							<button type="button" class="btn btn-sm" onclick="selectAllFiles('leftEndpointContent')">Select All</button>
+							<button type="button" class="btn btn-sm" onclick="selectNoneFiles('leftEndpointContent')">None</button>
 						</div>
 						<div class="btn-group">
-							<button type="button" class="btn btn-sm">
-								<i class="glyphicon glyphicon-refresh" />&nbsp;Refresh
+							<button type="button" class="btn btn-sm" onclick="getSelectedFiles('leftEndpointContent')" >
+								<i class="glyphicon glyphicon-refresh"/>&nbsp;Refresh
 							</button>
 						</div>
 						<div class="btn-group">
@@ -149,14 +155,20 @@ $('#delegationModal').modal({
 						&nbsp; <i class="glyphicon glyphicon-info-sign"/>
 					</div>
 				</div>
-				<ol class="breadcrumb">
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Library</a></li>
-						<li class="active">Data</li>
-				</ol>
 				<div class="panel-body">
-					
-					Here should go the tree
+					<table class="table table-condensed" id="leftEndpointContent">
+						<thead>
+							<tr>
+								<td>Name</td>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+					<span>
+						<span class="leftSelectedCount"> 0 </span>
+						File(s) Selected &nbsp;
+					</span>
 				</div>
 			</div>
 		</div>
@@ -169,8 +181,6 @@ $('#delegationModal').modal({
 		</script>
 		<div class="btn-group btn-group-vertical col-md-2">
 			<button type="button" class="btn btn-primary btn-block"	name="transfer-from-left" id="transfer-from-left"> 
-<!-- 			onclick="runTransfer()"> -->
-<!-- 				onclick="addTransmissionLine('transfersTable', getLeft(), getType(), getRight())"> -->
 				<i class="glyphicon glyphicon-chevron-right"></i>
 			</button>
 			<button type="button" class="btn btn-primary btn-block" name="transfer-from-right" id="transfer-from-right"> 
@@ -183,7 +193,7 @@ $('#delegationModal').modal({
 		<div class="btn-group-vertical col-lg-5">
 			<div class="input-group">
 				<input id="rightEndpoint" type="text" placeholder="Endpoint path" class="form-control"> <span class="input-group-btn">
-					<button class="btn btn-primary" type="button" id="load-right">Load</button>
+					<button class="btn btn-primary" type="button" id="load-right" onclick="getContent('rightEndpoint', 'rightEndpointContent')">Load</button>
 				</span>
 			</div>
 
@@ -191,12 +201,12 @@ $('#delegationModal').modal({
 				<div class="panel-heading">
 					<div class="btn-toolbar">
 						<div class="btn-group ">
-							<button type="button" class="btn btn-sm">Select All</button>
-							<button type="button" class="btn btn-sm">None</button>
+							<button type="button" class="btn btn-sm" onclick="selectAllFiles('rightEndpointContent')">Select All</button>
+							<button type="button" class="btn btn-sm" onclick="selectNoneFiles('rightEndpointContent')">None</button>
 						</div>
 						<div class="btn-group">
-							<button type="button" class="btn btn-sm">
-								<i class="glyphicon glyphicon-refresh" />&nbsp;Refresh
+							<button type="button" class="btn btn-sm" onclick="getSelectedFiles('rightEndpointContent')" >
+								<i class="glyphicon glyphicon-refresh"/>&nbsp;Refresh
 							</button>
 						</div>
 						<div class="btn-group">
@@ -205,13 +215,20 @@ $('#delegationModal').modal({
 						&nbsp; <i class="glyphicon glyphicon-info-sign"/>
 					</div>
 				</div>
-				<ol class="breadcrumb">
-					<li><a href="#">Home</a></li>
-					<li><a href="#">Library</a></li>
-					<li class="active">Data</li>
-				</ol>
 				<div class="panel-body">					
-					Here should go the tree
+					<table class="table table-condensed" id="rightEndpointContent">
+						<thead>
+							<tr>
+								<td>Name</td>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+					<span>
+						<span class="rightSelectedCount"> 0 </span>
+						File(s) Selected &nbsp;
+					</span>
 				</div>
 			</div>
 		</div>
