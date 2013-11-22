@@ -133,7 +133,7 @@ $("#pemPkey").change(function(){
 		<div class="btn-group-vertical col-lg-5">
 			<div class="input-group">
 				<input id="leftEndpoint" type="text" placeholder="Endpoint path" class="form-control" value="surl=gsiftp://lxfsra10a01.cern.ch/dpm/"> <span class="input-group-btn">
-					<button class="btn btn-primary" type="button" id="load-left" onclick="getContent('leftEndpoint', 'leftEndpointContent')">Load</button>
+					<button class="btn btn-primary" type="button" id="load-left" onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator')">Load</button>
 				</span>
 			</div>
 
@@ -156,19 +156,26 @@ $("#pemPkey").change(function(){
 					</div>
 				</div>
 				<div class="panel-body">
-					<table class="table table-condensed" id="leftEndpointContent">
-						<thead>
-							<tr>
-								<td>Name</td>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-					<span>
-						<span class="leftSelectedCount"> 0 </span>
-						File(s) Selected &nbsp;
-					</span>
+					<div id="left-loading-indicator" style="display:none" class="row"> 
+						<ul class="pager">
+							<li><label class="text-center"> Loading...</label>&nbsp;<img class="pagination-centered" src="img/ajax-loader.gif"/></li>
+						</ul>												
+					</div>		
+					<div id="leftEndpointContent">
+						<table class="table table-condensed" id="leftEndpointContentTable">
+							<thead>
+								<tr>
+									<td>Name</td>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+						<span>
+							<span class="leftSelectedCount"> 0 </span>
+							File(s) Selected &nbsp;
+						</span>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -193,7 +200,7 @@ $("#pemPkey").change(function(){
 		<div class="btn-group-vertical col-lg-5">
 			<div class="input-group">
 				<input id="rightEndpoint" type="text" placeholder="Endpoint path" class="form-control"> <span class="input-group-btn">
-					<button class="btn btn-primary" type="button" id="load-right" onclick="getContent('rightEndpoint', 'rightEndpointContent')">Load</button>
+					<button class="btn btn-primary" type="button" id="load-right" onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator')">Load</button>
 				</span>
 			</div>
 
@@ -215,20 +222,27 @@ $("#pemPkey").change(function(){
 						&nbsp; <i class="glyphicon glyphicon-info-sign"/>
 					</div>
 				</div>
-				<div class="panel-body">					
-					<table class="table table-condensed" id="rightEndpointContent">
-						<thead>
-							<tr>
-								<td>Name</td>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-					<span>
-						<span class="rightSelectedCount"> 0 </span>
-						File(s) Selected &nbsp;
-					</span>
+				<div class="panel-body">						
+					<div id="right-loading-indicator" style="display:none" class="row"> 
+						<ul class="pager">
+							<li><label class="text-center"> Loading...</label>&nbsp;<img class="pagination-centered" src="img/ajax-loader.gif"/></li>
+						</ul>												
+					</div>		
+					<div id="rightEndpointContent">	
+						<table class="table table-condensed" id="rightEndpointContentTable">
+							<thead>
+								<tr>
+									<td>Name</td>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+						<span>
+							<span class="rightSelectedCount"> 0 </span>
+							File(s) Selected &nbsp;
+						</span>
+					</div>
 				</div>
 			</div>
 		</div>
