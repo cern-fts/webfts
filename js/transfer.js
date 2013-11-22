@@ -85,14 +85,16 @@ function showRemainingProxyTime(timeText){
 	$('#proxyTimeSpan').text("Your current proxy is still valid for " + timeText);	
 }
 
-function loadFolder(container, elements){
-	$("#" + container +" > tbody").html("");
+function loadFolder(container, containerTable, elements, indicator){
+	$("#" + containerTable +" > tbody").html("");
+	$('#'+container).show();
+	$('#'+indicator).hide();	
 	for (var i = 0; i < elements.length; i++)
 	{
 		if (elements[i].slice(-1) == "/"){
-			$('#' + container +' > tbody:last').append('<tr value="' +elements[i].slice(-1) + '"><td><i class="glyphicon glyphicon-folder-close"/>&nbsp;' + elements[i].slice(-1) + '</td></tr>');
+			$('#' + containerTable +' > tbody:last').append('<tr value="' +elements[i].slice(-1) + '"><td><i class="glyphicon glyphicon-folder-close"/>&nbsp;' + elements[i].slice(-1) + '</td></tr>');
 		} else {
-			$('#' + container +' > tbody:last').append('<tr value="' +elements[i] + '"><td><i class="glyphicon glyphicon-file"/>&nbsp;' + elements[i] + '</td></tr>');
+			$('#' + containerTable +' > tbody:last').append('<tr value="' +elements[i] + '"><td><i class="glyphicon glyphicon-file"/>&nbsp;' + elements[i] + '</td></tr>');
 		}
 	}
 }
@@ -119,8 +121,10 @@ function getSelectedFiles(container){
 	}
 }
 
-function getContent(endpointInput, container){	
-	getEndpointContent($('#' + endpointInput).val(), container);
+function getEPContent(endpointInput, container, containerTable, indicator){	
+	$('#'+indicator).show();
+	$('#'+container).hide();
+	getEndpointContent($('#' + endpointInput).val(), container, containerTable, indicator);
 }
 
 function initialLoadState(input, button){
