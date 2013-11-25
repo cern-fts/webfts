@@ -27,10 +27,6 @@ $(function(event) {
 $( document ).ready(function() {	
 	getDelegationID("delegation_id");
 
-    //$("#leftEndpointContentTable").finderSelect({enableDesktopCtrlDefault:true, totalSelector:".leftSelectedCount" , selectClass:'label-info'});    
-    //$("#rightEndpointContentTable tbody").finderSelect({enableDesktopCtrlDefault:true, totalSelector:".rightSelectedCount" , selectClass:'label-info'});    
-    
-	
 	renderFolderContent("leftEndpointContentTable", "leftSelectedCount");
 	renderFolderContent("rightEndpointContentTable", "rightSelectedCount");
 	
@@ -103,36 +99,15 @@ $("#pemPkey").bind('input propertychange', function(){
 		</div>					   
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
-
-	<div id="selectedFiles" style="display: none">
-		<?php
-			foreach($_SERVER as $h=>$v){
-				if ($h == "SSL_CLIENT_S_DN")
-					echo "<input type=\"hidden\" id=\"userDN\" value=\"$v\">";
-				else if ($h == "SSL_CLIENT_CERT")
-					echo "<input type=\"hidden\" id=\"clientCERT\" value=\"$v\">";				
-			}
-		?>
-		<legend>Selected files to be tranfered</legend>
-		<div class="well">
-			<div class="btn-group-horizontal">
-				<div class="btn-group">
-					<button class="btn btn-primary btn-sm" type="button" id="selectAllTransfers" name="selectAllTransfers" onclick="select(true)">Select all</button>
-					<button class="btn btn-primary btn-sm" type="button" id="selectNoneTransfers" onclick="select(false)">Select none</button>
-				</div>
-				<button class="btn btn-danger btn-sm" type="button" id="removeSelectedTransfers" onclick="removeSelected()">
-					<i class="glyphicon glyphicon-trash glyphicon-white" />&nbsp;Cancel	selected
-				</button>
-				<button class="btn btn-success btn-sm" type="submit" name="submit" id="submit">
-					<i class="glyphicon glyphicon-play glyphicon-white" />&nbsp;Start transfer!
-				</button>
-				<span class="pull-right">Files to be transfered <span class="filesNumber badge">42</span></span>
-			</div>
-			<table class="table table-hover table-bordered filelist" id="transfersTable">
-				<tbody></tbody>
-			</table>
-		</div>
-	</div>
+	
+	<?php
+		foreach($_SERVER as $h=>$v){
+			if ($h == "SSL_CLIENT_S_DN")
+				echo "<input type=\"hidden\" id=\"userDN\" value=\"$v\">";
+			else if ($h == "SSL_CLIENT_CERT")
+				echo "<input type=\"hidden\" id=\"clientCERT\" value=\"$v\">";				
+		}
+	?>
 	<legend>Please specify your transfer source and destination</legend>
 	<div class="row">
 		<div class="btn-group-vertical col-lg-5">
@@ -150,7 +125,7 @@ $("#pemPkey").bind('input propertychange', function(){
 							<button type="button" class="btn btn-sm" onclick="selectNoneFiles('leftEndpointContent')">None</button>
 						</div>
 						<div class="btn-group">
-							<button type="button" class="btn btn-sm" onclick="getSelectedFiles('leftEndpointContent')" >
+							<button type="button" class="btn btn-sm" onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator')">
 								<i class="glyphicon glyphicon-refresh"/>&nbsp;Refresh
 							</button>
 						</div>
@@ -197,8 +172,6 @@ $("#pemPkey").bind('input propertychange', function(){
 				<i class="glyphicon glyphicon-chevron-right"></i>
 			</button>
 			<button type="button" class="btn btn-primary btn-block" name="transfer-from-right" id="transfer-from-right"> 
-<!-- 			onclick="runTransfer()"> -->
-<!-- 				onclick="addTransmissionLine('transfersTable', getRight(), getType(), getLeft())"> -->
 				<i class="glyphicon glyphicon-chevron-left glyphicon-white"></i>
 			</button>
 		</div>
@@ -218,7 +191,7 @@ $("#pemPkey").bind('input propertychange', function(){
 							<button type="button" class="btn btn-sm" onclick="selectNoneFiles('rightEndpointContent')">None</button>
 						</div>
 						<div class="btn-group">
-							<button type="button" class="btn btn-sm" onclick="getSelectedFiles('rightEndpointContent')" >
+							<button type="button" class="btn btn-sm" onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator')" >
 								<i class="glyphicon glyphicon-refresh"/>&nbsp;Refresh
 							</button>
 						</div>

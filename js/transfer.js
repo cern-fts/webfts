@@ -37,50 +37,6 @@ function addTransmissionLine(tableId,fromPath, type, toPath){
 	checkTableVisibility();		
 }
 
-function checkTableVisibility(){
-	 if ($('#transfersTable tr').length >0){
-		 $('#selectedFiles').show();
-	 }
-}
-
-function getLeft(){
-	//TODO: add right path
-	return '/left/path';	
-}
-
-function getRight(){
-	//TODO: add right path
-	return '/right/path';	
-}
-
-function getType(){
-	//TODO: add right type
-	var a = Math.floor((Math.random()*2));
-	if (a == 0)
-		return 'file';
-	return 'folder';
-}
-
-function select(op){
-	//op have to be true or false	
-     $('.transferCheckId').each(function () {    	 
-    	 $(this).prop('checked', op);                         
-     });
-}
-
-function removeSelected(){
-	$('.transferCheckId').each(function () {   		
-   	 if ($(this).prop('checked')){
-   		$(this).parent().parent().remove();
-   	 }                            	 
-    });
-	updateNumber();
-}
-
-function updateNumber(){
-	$('.filesNumber').text($('#transfersTable tr').length);
-}
-
 function showRemainingProxyTime(timeText){
 	$('#proxyTimeSpan').text("Your current proxy is still valid for " + timeText);	
 }
