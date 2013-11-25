@@ -56,7 +56,7 @@ $('#delegationModal').modal({
 	  keyboard: false
 });
 
-$("#pemPkey").change(function(){
+$("#pemPkey").bind('input propertychange', function(){
 	//.keyup(
 	$("#pinfo-form").valid();
 });
