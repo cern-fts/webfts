@@ -1,11 +1,15 @@
 <script>
+jQuery.validator.addMethod("checkCert", function (value, element) {
+    return value.substring(0,31)=="-----BEGIN RSA PRIVATE KEY-----";
+}, "The private key must start with -----BEGIN RSA PRIVATE KEY-----");
 $(function(event) {											
 	 $('#pinfo-form').validate(
 	  {
 	  rules: {
 	    pemPkey: {
 	      minlength: 1024,
-	      required: true
+	      required: true,
+	      checkCert: true
 	    }
 	  },
 	  highlight: function(element) {
@@ -22,13 +26,14 @@ $(function(event) {
 
 $( document ).ready(function() {	
 	getDelegationID("delegation_id");
-	try{
-		renderFolderContent("leftEndpointContent", "leftSelectedCount");
-		renderFolderContent("rightEndpointContent", "rightSelectedCount");
-	}catch (err){
-		console.log('Initializating empty files containers ('+ err +')');
-	}
 
+    //$("#leftEndpointContentTable").finderSelect({enableDesktopCtrlDefault:true, totalSelector:".leftSelectedCount" , selectClass:'label-info'});    
+    //$("#rightEndpointContentTable tbody").finderSelect({enableDesktopCtrlDefault:true, totalSelector:".rightSelectedCount" , selectClass:'label-info'});    
+    
+	
+	renderFolderContent("leftEndpointContentTable", "leftSelectedCount");
+	renderFolderContent("rightEndpointContentTable", "rightSelectedCount");
+	
 	initialLoadState('leftEndpoint', 'load-left');
 	initialLoadState('rightEndpoint', 'load-right');
 	console.log( "ready!" );	
@@ -169,6 +174,7 @@ $("#pemPkey").bind('input propertychange', function(){
 								</tr>
 							</thead>
 							<tbody>
+								<tr><td></td></tr>
 							</tbody>
 						</table>
 						<span>
@@ -236,6 +242,7 @@ $("#pemPkey").bind('input propertychange', function(){
 								</tr>
 							</thead>
 							<tbody>
+								<tr><td></td></tr>
 							</tbody>
 						</table>
 						<span>
