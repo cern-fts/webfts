@@ -101,7 +101,7 @@ function loadFolder(container, containerTable, elements, indicator){
 
 function renderFolderContent(tableId, countId){
     // Initialise the Demo with the Ctrl Click Functionality as the Default
-    $('#' + tableId + ' tbody').finderSelect({enableDesktopCtrlDefault:true, totalSelector:"."+countId , selectClass:'label-info'});    
+    $("#" + tableId + " tbody").finderSelect({enableDesktopCtrlDefault:true, totalSelector:"."+countId , selectClass:'label-info'});    
 }
 
 function selectAllFiles(container){ 
