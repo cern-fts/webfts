@@ -1,25 +1,31 @@
-function runTransfer(){	  
-      console.log("Call to FTS");
-      
-      theData = {
-    		   "files":[
-    		            {
-    		               "sources":[
-    		                  "http://lxfsra04a04.cern.ch/dpm/cern.ch//home/dteam/5281"
-    		               ],
-    		               "destinations":[
-    		                  "http://lxfsra10a01.cern.ch/dpm/cern.ch/home/dteam/andresTest"
-    		               ],
-    		            "metadata": "User defined metadata",   
-    		            "filesize": 1024,                      
-    		            "checksum": 'adler32:1234',  
-    		            }
-    		         ],
-    		         "params":{}
-    		      };      
-      runDataTransfer(theData);
+function runTransfer(container, destFolder){	  
+      var sourceList = getSelectedFiles(container);
+      if (sourceList.length > 0){
+	      theData = {
+	    		   		"files":[
+	    		            {
+	    		               "sources":[
+	    		                  sourceList
+	    		               ],
+	    		               "destinations":[
+	    		                  document.getElementById(destFolder).value
+	    		               ],
+	    		            }
+	    		         ],
+	    		         "params":{}
+	    		      };      
+	      runDataTransfer(theData);
+      }
       //ftsTransferRequest(theData, userPrivatePEM, userPEMPass, userDN);
       return false;
+}
+
+function activateTransferButton(epTable, buttonToActivate, endPoint){
+	if ((getSelectedFiles(epTable).length > 0) && ($('#' + endPoint).text().length > 0)){ 
+		$('#' + buttonToActivate).removeAttr("disabled");
+	} else {
+		$('#' + buttonToActivate).attr('disabled','disabled');
+	}
 }
 
 function addTransmissionLine(tableId,fromPath, type, toPath){		
@@ -41,10 +47,10 @@ function showRemainingProxyTime(timeText){
 	$('#proxyTimeSpan').text("Your current proxy is still valid for " + timeText);	
 }
 
-function loadFolder(container, containerTable, elements, indicator){
-	$("#" + containerTable +" > tbody").html("");
-	$('#'+container).show();
-	$('#'+indicator).hide();	
+function loadFolder(endpointpath, container, containerTable, elements, indicator, stateText){
+	$("#" + containerTable + " > tbody").html("");
+	$('#' + container).show();
+	$('#' + indicator).hide();	
 	for (var i = 0; i < elements.length; i++)
 	{
 		if (elements[i].slice(-1) == "/"){
@@ -53,11 +59,13 @@ function loadFolder(container, containerTable, elements, indicator){
 			$('#' + containerTable +' > tbody:last').append('<tr value="' +elements[i] + '"><td><i class="glyphicon glyphicon-file"/>&nbsp;' + elements[i] + '</td></tr>');
 		}
 	}
+	$("#" + stateText).text("Content of " + endpointpath.split(':')[1]);	
 }
 
 function renderFolderContent(tableId, countId){
     // Initialise the Demo with the Ctrl Click Functionality as the Default
-    $("#" + tableId + " tbody").finderSelect({enableDesktopCtrlDefault:true, totalSelector:"."+countId , selectClass:'label-info'});    
+    $("#" + tableId + " tbody").finderSelect({enableDesktopCtrlDefault:true, totalSelector:"."+countId , selectClass:'label-info'});   
+    $("#" + tableId + " > tbody").html("");
 }
 
 function selectAllFiles(container){ 
@@ -71,16 +79,22 @@ function selectNoneFiles(container){
 }
 
 function getSelectedFiles(container){
+	var selectedList = "";
 	var selectedEle = $("#" + container + " tbody").finderSelect('selected');
 	for (var i = 0; i < selectedEle.length; i++){
-		selectedEle[i].attributes.value.nodeValue;  //<-- How to get the value of each selected 
+		if (i==0){
+			selectedList = selectedEle[i].attributes.value.nodeValue;  
+		} else {
+			selectedList += ',' + selectedEle[i].attributes.value.nodeValue;
+		}
 	}
+	return selectedList;
 }
 
-function getEPContent(endpointInput, container, containerTable, indicator){	
+function getEPContent(endpointInput, container, containerTable, indicator, stateText){	
 	$('#'+indicator).show();
 	$('#'+container).hide();
-	getEndpointContent($('#' + endpointInput).val(), container, containerTable, indicator);
+	getEndpointContent($('#' + endpointInput).val(), container, containerTable, indicator, stateText);
 }
 
 function initialLoadState(input, button){

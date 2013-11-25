@@ -61,6 +61,15 @@ $('#delegationModal').modal({
 $("#pemPkey").bind('input propertychange', function(){
 	$("#pinfo-form").valid();
 });
+
+$("#leftEndpointContentTable tbody").on("click", function(e){
+	activateTransferButton('leftEndpointContentTable', 'transfer-from-left', 'right-ep-text');    
+});
+
+$("#rightEndpointContentTable tbody").on("click", function(e){
+	activateTransferButton('rightEndpointContentTable', 'transfer-from-right', 'left-ep-text');    
+});
+
 </script>
 	<h2>Transfer files</h2>
 	<span class="pull-right" id="proxyTimeSpan">Loading proxy...</span>
@@ -113,7 +122,7 @@ $("#pemPkey").bind('input propertychange', function(){
 		<div class="btn-group-vertical col-lg-5">
 			<div class="input-group">
 				<input id="leftEndpoint" type="text" placeholder="Endpoint path" class="form-control" value="surl=gsiftp://lxfsra10a01.cern.ch/dpm/"> <span class="input-group-btn">
-					<button class="btn btn-primary" type="button" id="load-left" onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator')">Load</button>
+					<button class="btn btn-primary" type="button" id="load-left" onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text')">Load</button>
 				</span>
 			</div>
 
@@ -125,7 +134,7 @@ $("#pemPkey").bind('input propertychange', function(){
 							<button type="button" class="btn btn-sm" onclick="selectNoneFiles('leftEndpointContent')">None</button>
 						</div>
 						<div class="btn-group">
-							<button type="button" class="btn btn-sm" onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator')">
+							<button type="button" class="btn btn-sm" onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text')">
 								<i class="glyphicon glyphicon-refresh"/>&nbsp;Refresh
 							</button>
 						</div>
@@ -145,7 +154,7 @@ $("#pemPkey").bind('input propertychange', function(){
 						<table class="table table-condensed" id="leftEndpointContentTable">
 							<thead>
 								<tr>
-									<td>Name</td>
+									<td>Name  <span class="label label-primary pull-right" id="left-ep-text"></span></td>
 								</tr>
 							</thead>
 							<tbody>
@@ -160,18 +169,11 @@ $("#pemPkey").bind('input propertychange', function(){
 				</div>
 			</div>
 		</div>
-		<script>
-		$( "#transfer-from-left" ).click(function( event ) {
-		  event.preventDefault();
-		  //runTransfer();
-		  return false;
-		});
-		</script>
 		<div class="btn-group btn-group-vertical col-md-2">
-			<button type="button" class="btn btn-primary btn-block"	name="transfer-from-left" id="transfer-from-left"> 
+			<button type="button" class="btn btn-primary btn-block"	name="transfer-from-left" id="transfer-from-left" onclick="runTransfer('leftEndpointContentTable', 'rightEndpoint')" disabled>			
 				<i class="glyphicon glyphicon-chevron-right"></i>
 			</button>
-			<button type="button" class="btn btn-primary btn-block" name="transfer-from-right" id="transfer-from-right"> 
+			<button type="button" class="btn btn-primary btn-block" name="transfer-from-right" id="transfer-from-right"onclick="runTransfer('rightEndpointContentTable', 'leftEndpoint')" disabled> 
 				<i class="glyphicon glyphicon-chevron-left glyphicon-white"></i>
 			</button>
 		</div>
@@ -179,7 +181,7 @@ $("#pemPkey").bind('input propertychange', function(){
 		<div class="btn-group-vertical col-lg-5">
 			<div class="input-group">
 				<input id="rightEndpoint" type="text" placeholder="Endpoint path" class="form-control"> <span class="input-group-btn">
-					<button class="btn btn-primary" type="button" id="load-right" onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator')">Load</button>
+					<button class="btn btn-primary" type="button" id="load-right" onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text')">Load</button>
 				</span>
 			</div>
 
@@ -191,12 +193,12 @@ $("#pemPkey").bind('input propertychange', function(){
 							<button type="button" class="btn btn-sm" onclick="selectNoneFiles('rightEndpointContent')">None</button>
 						</div>
 						<div class="btn-group">
-							<button type="button" class="btn btn-sm" onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator')" >
+							<button type="button" class="btn btn-sm" onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text')" >
 								<i class="glyphicon glyphicon-refresh"/>&nbsp;Refresh
 							</button>
 						</div>
 						<div class="btn-group">
-							<input type="text" class="form-control input-sm" placeholder="Filter">							
+							<input type="text" class="form-control input-sm" placeholder="Filter">														
 						</div>
 						&nbsp; <i class="glyphicon glyphicon-info-sign"/>
 					</div>
@@ -207,11 +209,11 @@ $("#pemPkey").bind('input propertychange', function(){
 							<li><label class="text-center"> Loading...</label>&nbsp;<img class="pagination-centered" src="img/ajax-loader.gif"/></li>
 						</ul>												
 					</div>		
-					<div id="rightEndpointContent">	
+					<div id="rightEndpointContent">						    
 						<table class="table table-condensed" id="rightEndpointContentTable">
 							<thead>
 								<tr>
-									<td>Name</td>
+									<td>Name <span class="label label-primary pull-right" id="right-ep-text"></span></td>
 								</tr>
 							</thead>
 							<tbody>
