@@ -56,8 +56,8 @@ $('#delegationModal').modal({
 	  keyboard: false
 });
 
+//To do the validation of the form even on paste
 $("#pemPkey").bind('input propertychange', function(){
-	//.keyup(
 	$("#pinfo-form").valid();
 });
 </script>
