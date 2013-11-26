@@ -8,7 +8,8 @@ function showError(jqXHR, textStatus, errorThrown, message) {
 	console.log("ERROR: " + JSON.stringify(jqXHR));
 	//alert("ERROR: " + JSON.stringify(jqXHR));
 	console.log(textStatus + "," + errorThrown);
-	showUserError(message);
+	if (message != null)
+		showUserError(message);
 }
 
 function getUTCDate(time) {
@@ -168,12 +169,12 @@ function checkAndTransfer(delegationID, transferData){
 		
 		success : function(data2, status) {
 			if (data2 == null){
-				jQuery('#delegationModal').modal('show');
+				showDelegateModal();
 			} else {
 				remainingTime = Date.parse(data2.termination_time) - (new Date().getTime());
 				console.log(millisecondsToStr(remainingTime));			
 				if (remainingTime < 999999) {
-					jQuery('#delegationModal').modal('show');
+					showDelegateModal();
 				} else {
 					showRemainingProxyTime(millisecondsToStr(remainingTime));
 					if (transferData != null){				
@@ -221,10 +222,12 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT){
 				},
 						
 				success : function(data4, status) {
-					jQuery('#delegationModal').modal('hide');
+					hideDelegateModal();
+					isDelegated(delegationID); //To update remaining proxy time
 				},
-				error : function(jqXHR, textStatus,	errorThrown) {
-					showError(jqXHR, textStatus, errorThrown, "Error delegating the user credentials. " + supportText);
+				error : function(jqXHR, textStatus,	errorThrown) {					
+					showError(jqXHR, textStatus, errorThrown, null);
+					showDelegateError("Error delegating the user credentials. " + supportText);
 				}
 			});
 		},

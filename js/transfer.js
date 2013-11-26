@@ -114,6 +114,24 @@ function showUserError(message){
 	$('#serverkeyAlert').show();
 }
 
+function hideDelegateError(){	
+	$('#serverDelegateAlert').hide();
+}
+
+function showDelegateError(message){
+	$('#serverDelegateErrorText').text(message);
+	$('#serverDelegateAlert').show();
+}
+
+function hideDelegateModal(){
+	$('#delegationModal').modal('hide');
+	hideDelegateError();
+}
+
+function showDelegateModal(){
+	$('#delegationModal').modal('show');
+}
+	
 function checkLength(text) {
 	var maxlength = 60;
     if(text.length > maxlength) {

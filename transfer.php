@@ -88,11 +88,14 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 						installed in your browser by using:<br /> <i>&nbsp;&nbsp;&nbsp;openssl
 							pkcs12 -in yourCert.p12 -nocerts -nodes | openssl rsa </i></small>
 					</div>
-					<div class="alert alert-danger">
+					<div class="alert alert-warning">
 						<strong>DISCLAIMER</strong>: <small>the private key WILL NOT BE TRANSMITTED ANYWHERE. It is only used locally
 							(within the user's browser) to generate the proxies needed to have
 							access to the FTS services.</small>   
 					</div>			
+					<div class="alert alert-danger" id="serverDelegateAlert" style="display:none" >
+						  <label id="delegateDelegateErrorText"></label> 
+					</div>	
 					<div class="row control-group">			
 						<label class="control-label" for="privateKey">Private key</label>
 						<textarea id="pemPkey" name="pemPkey" class="field form-control" rows="5" placeholder="RSA private key" ></textarea>
