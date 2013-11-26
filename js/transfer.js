@@ -1,4 +1,5 @@
 function runTransfer(container, destFolder){	  
+	  hideUserError();
       var sourceList = getSelectedFiles(container);
       if (sourceList.length > 0){
 	      theData = {
@@ -32,10 +33,15 @@ function showRemainingProxyTime(timeText){
 	$('#proxyTimeSpan').text("Your current proxy is still valid for " + timeText);	
 }
 
-function loadFolder(endpointpath, container, containerTable, elements, indicator, stateText){
+function clearContentTable(containerTable, container, indicator, stateText){
 	$("#" + containerTable + " > tbody").html("");
 	$('#' + container).show();
 	$('#' + indicator).hide();	
+	$("#" + stateText).text("");
+}
+
+function loadFolder(endpointpath, container, containerTable, elements, indicator, stateText){
+	clearContentTable(containerTable, container, indicator, stateText);
 	for (var i = 0; i < elements.length; i++)
 	{
 		if (elements[i].slice(-1) == "/"){
@@ -52,10 +58,10 @@ function loadFolder(endpointpath, container, containerTable, elements, indicator
 	$("#" + stateText).text(checkLength(eptext));	
 }
 
-function renderFolderContent(tableId, countId){
+function renderFolderContent(tableId, countId, container, indicator, stateText){
     // Initialise the Demo with the Ctrl Click Functionality as the Default
     $("#" + tableId + " tbody").finderSelect({enableDesktopCtrlDefault:true, totalSelector:"."+countId , selectClass:'label-info'});   
-    $("#" + tableId + " > tbody").html("");
+    clearContentTable(tableId, container, indicator, stateText);
 }
 
 function selectAllFiles(container){ 
@@ -82,6 +88,7 @@ function getSelectedFiles(container){
 }
 
 function getEPContent(endpointInput, container, containerTable, indicator, stateText){	
+	hideUserError();
 	$('#'+indicator).show();
 	$('#'+container).hide();
 	getEndpointContent($('#' + endpointInput).val(), container, containerTable, indicator, stateText);
@@ -96,6 +103,10 @@ function initialLoadState(input, button){
         else
         $('#'+ button).attr('disabled',true);
     });
+}
+
+function hideUserError(){	
+	$('#serverkeyAlert').hide();
 }
 
 function showUserError(message){

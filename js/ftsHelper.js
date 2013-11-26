@@ -1,5 +1,6 @@
 var ftsEndpoint = "https://fts3devel03.cern.ch:8446";//"https://fts3-pilot.cern.ch:8446";
 var certHours = 2; // Hours of live of the certificate
+var supportText = "Please, try again and contact support if the error continues";
 
 function showError(jqXHR, textStatus, errorThrown, message) {
 	console.log(message);
@@ -40,7 +41,7 @@ function ftsTransfer(theData) {
 			console.log("    Status: " + status);
 		},
 		error : function(xhr, textStatus, errorThrown) {
-			showError(xhr, textStatus, errorThrown, "fts(5) transfer failed");			
+			showError(xhr, textStatus, errorThrown, "Error submitting the transfer. " + supportText);			
 		}
 	});	
 	return false;
@@ -141,7 +142,7 @@ function getDelegationID(fieldName){
 			isDelegated(data1.delegation_id, null);
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			showError(jqXHR, textStatus, errorThrown, "get delegation failed");
+			showError(jqXHR, textStatus, errorThrown, "Error connecting to the server to obtain the user credentials. "+ supportText);
 		}
 	});
 }
@@ -182,7 +183,7 @@ function checkAndTransfer(delegationID, transferData){
 			}	
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			showError(jqXHR, textStatus, errorThrown, "get delegation failed");
+			showError(jqXHR, textStatus, errorThrown, "Error connecting to the server to check if there was an existing valid proxy. " + supportText);
 		}
 	});
 }
@@ -220,16 +221,15 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT){
 				},
 						
 				success : function(data4, status) {
-					//alert("Proxy certificate created sucessfully");
 					jQuery('#delegationModal').modal('hide');
 				},
 				error : function(jqXHR, textStatus,	errorThrown) {
-					showError(jqXHR, textStatus, errorThrown, "fts(4) delegation with proxy cert failed");
+					showError(jqXHR, textStatus, errorThrown, "Error delegating the user credentials. " + supportText);
 				}
 			});
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			showError(jqXHR, textStatus, errorThrown, "fts(3) delegation + id + request failed");
+			showError(jqXHR, textStatus, errorThrown, "Error connecting to the server for delegating the user credentials. " + supportText);
 		}
 	});
 }
@@ -249,7 +249,8 @@ function getEndpointContent(endpointpath, container, containerTable, indicator, 
 			loadFolder(endpointpath, container, containerTable, data2, indicator, stateText);			
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			showError(jqXHR, textStatus, errorThrown, "stat endpoint failed");
+			showError(jqXHR, textStatus, errorThrown, "Error connecting to the endpoint: it is not available or you are using a wrong protocol or address. "  + supportText);
+			clearContentTable(containerTable, container, indicator, stateText);
 		}
 	});
 } 
@@ -259,7 +260,7 @@ function getEndpointElementStat(endpointpath){
 	$.ajax({
 		url : urlEndp,
 		type : "GET",
-		dataType : 'text',
+		dataType : 'json',
 		xhrFields : {
 			withCredentials : true
 		},
@@ -268,7 +269,7 @@ function getEndpointElementStat(endpointpath){
 			alert('Done');					
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			showError(jqXHR, textStatus, errorThrown, "stat endpoint failed");
+			showError(jqXHR, textStatus, errorThrown, "Error obtaining the element details. "  + supportText);
 		}
 	});
 } 

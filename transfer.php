@@ -27,8 +27,8 @@ $(function(event) {
 $( document ).ready(function() {	
 	getDelegationID("delegation_id");
 
-	renderFolderContent("leftEndpointContentTable", "leftSelectedCount");
-	renderFolderContent("rightEndpointContentTable", "rightSelectedCount");
+	renderFolderContent("leftEndpointContentTable", "leftSelectedCount", "leftEndpointContent", "left-loading-indicator", "left-ep-text");
+	renderFolderContent("rightEndpointContentTable", "rightSelectedCount", "rightEndpointContent", "right-loading-indicator", "rifht-ep-text");
 	
 	initialLoadState('leftEndpoint', 'load-left');
 	initialLoadState('rightEndpoint', 'load-right');
