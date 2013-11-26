@@ -1,6 +1,8 @@
 function runTransfer(container, destFolder){	  
 	  hideUserError();
       var sourceList = getSelectedFiles(container);
+      //TODO: check that the destination is a FOLDER!!!!!!!!
+      var destList = getDestList(sourceList, document.getElementById(destFolder).value);
       if (sourceList.length > 0){
 	      theData = {
 	    		   		"files":[
@@ -9,7 +11,7 @@ function runTransfer(container, destFolder){
 	    		                  sourceList
 	    		               ],
 	    		               "destinations":[
-	    		                  document.getElementById(destFolder).value
+	    		                  destList	    		                  
 	    		               ],
 	    		            }
 	    		         ],
@@ -20,6 +22,14 @@ function runTransfer(container, destFolder){
       //ftsTransferRequest(theData, userPrivatePEM, userPEMPass, userDN);
       return false;
 }
+
+function getDestList(sourceList, endFolder){
+	var destArray =[];
+	$.each( sourceList, function( index, value ){
+		destArray.push(endFolder + '/' + value);
+		});
+	return destArray;
+}	
 
 function activateTransferButton(epTable, buttonToActivate, endPoint){
 	if ((getSelectedFiles(epTable).length > 0) && ($('#' + endPoint).text().length > 0)){ 
@@ -76,14 +86,10 @@ function selectNoneFiles(container){
 }
 
 function getSelectedFiles(container){
-	var selectedList = "";
+	var selectedList = [];
 	var selectedEle = $("#" + container + " tbody").finderSelect('selected');
 	for (var i = 0; i < selectedEle.length; i++){
-		if (i==0){
-			selectedList = selectedEle[i].attributes.value.nodeValue;  
-		} else {
-			selectedList += ',' + selectedEle[i].attributes.value.nodeValue;
-		}
+		selectedList.push(selectedEle[i].attributes.value.nodeValue);  		
 	}
 	return selectedList;
 }
