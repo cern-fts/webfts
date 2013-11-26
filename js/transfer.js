@@ -59,7 +59,12 @@ function loadFolder(endpointpath, container, containerTable, elements, indicator
 			$('#' + containerTable +' > tbody:last').append('<tr value="' +elements[i] + '"><td><i class="glyphicon glyphicon-file"/>&nbsp;' + elements[i] + '</td></tr>');
 		}
 	}
-	$("#" + stateText).text("Content of " + endpointpath.split(':')[1]);	
+	var ep = endpointpath.split(':');
+	var eptext = "";
+	for (var i=1; i< ep.length; i++){
+		eptext += ep[i];
+	}
+	$("#" + stateText).text("Content of " + eptext);	
 }
 
 function renderFolderContent(tableId, countId){

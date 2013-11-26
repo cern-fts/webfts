@@ -235,7 +235,7 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT){
 
 
 function getEndpointContent(endpointpath, container, containerTable, indicator, stateText){
-	urlEndp = ftsEndpoint + "/dm/list?" + endpointpath;
+	urlEndp = ftsEndpoint + "/dm/list?surl=" + endpointpath;
 	$.ajax({
 		url : urlEndp,
 		type : "GET",
