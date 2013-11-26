@@ -118,6 +118,10 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 		}
 	?>
 	<legend>Please specify your transfer source and destination</legend>
+	<div class="alert alert-danger" id="serverkeyAlert" style="display:none" >
+		<button type="button" class="close" data-dismiss="alert" onclick="$('serverkeyAlert').hide()">&times;</button>
+		<small id="serverErrorText"></small>
+	</div>
 	<div class="row">
 		<div class="btn-group-vertical col-lg-5">
 			<div class="input-group">

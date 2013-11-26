@@ -28,21 +28,6 @@ function activateTransferButton(epTable, buttonToActivate, endPoint){
 	}
 }
 
-function addTransmissionLine(tableId,fromPath, type, toPath){		
-	var line ='<tr><td><input type="checkbox" class="transferCheckId" value=' 
-			+ fromPath + '@@@TO@@@' + toPath + ' id="transferCheckId">&nbsp;' + fromPath + '&nbsp;<i class="glyphicon glyphicon-arrow-right"/>&nbsp;';
-	
-	if (type === "folder"){
-		line += '<i class="glyphicon glyphicon-folder-close"/>';
-	} else {
-		line += '<i class="glyphicon glyphicon-file"/>';
-	}
-	line += '&nbsp;<i class="glyphicon glyphicon-arrow-right"/>&nbsp;<span style=" vertical-align: middle;">' + toPath; 
-	$('#' + tableId + ' > tbody:last').append(line);
-	updateNumber();	
-	checkTableVisibility();		
-}
-
 function showRemainingProxyTime(timeText){
 	$('#proxyTimeSpan').text("Your current proxy is still valid for " + timeText);	
 }
@@ -64,7 +49,7 @@ function loadFolder(endpointpath, container, containerTable, elements, indicator
 	for (var i=1; i< ep.length; i++){
 		eptext += ep[i];
 	}
-	$("#" + stateText).text("Content of " + eptext);	
+	$("#" + stateText).text(checkLength(eptext));	
 }
 
 function renderFolderContent(tableId, countId){
@@ -111,4 +96,17 @@ function initialLoadState(input, button){
         else
         $('#'+ button).attr('disabled',true);
     });
+}
+
+function showUserError(message){
+	$('#serverErrorText').text(message);
+	$('#serverkeyAlert').show();
+}
+
+function checkLength(text) {
+	var maxlength = 60;
+    if(text.length > maxlength) {
+    	return text.substring(0, maxlength-1) + "...";
+    }
+    return text;
 }
