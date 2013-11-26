@@ -15,7 +15,7 @@ function runTransfer(container, destFolder){
 	    		         ],
 	    		         "params":{}
 	    		      };      
-	      runDataTransfer(theData);
+	      runDataTransfer($('#delegation_id').val(), theData);
       }
       //ftsTransferRequest(theData, userPrivatePEM, userPEMPass, userDN);
       return false;
