@@ -1,5 +1,5 @@
 var ftsEndpoint = "https://fts3devel03.cern.ch:8446";//"https://fts3-pilot.cern.ch:8446";
-var certHours = 2; // Hours of live of the certificate
+var certHours = 4; // Hours of live of the certificate
 var supportText = "Please, try again and contact support if the error continues";
 
 function showError(jqXHR, textStatus, errorThrown, message) {
@@ -173,7 +173,7 @@ function checkAndTransfer(delegationID, transferData){
 			} else {
 				remainingTime = Date.parse(data2.termination_time) - (new Date().getTime());
 				console.log(millisecondsToStr(remainingTime));			
-				if (remainingTime < 999999) {
+				if (remainingTime < 3600000) { //3600000 = milliseconds in an hour
 					showDelegateModal();
 				} else {
 					showRemainingProxyTime(millisecondsToStr(remainingTime));
