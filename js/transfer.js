@@ -56,6 +56,7 @@ function loadFolder(endpointpath, container, containerTable, elements, indicator
 		eptext += ep[i];
 	}
 	$("#" + stateText).text(checkLength(eptext));	
+	$("#" + containerTable + " tbody").finderSelect("update");
 }
 
 function renderFolderContent(tableId, countId, container, indicator, stateText){
@@ -139,3 +140,35 @@ function checkLength(text) {
     }
     return text;
 }
+
+function getFilteredResults(input, contentTable){
+	var filter = $('#' + input).val();
+	filterResults(filter, contentTable);
+}
+
+function filterResults(userfilter, contentTable){
+    //split the current value of searchInput
+    var data = userfilter.split(" ");
+	
+    //create a jquery object of the rows
+    var jo = $("#" + contentTable + " tbody").find("tr");
+    if (userfilter == "") {
+        jo.show();
+        return;
+    }
+    //hide all the rows
+    jo.hide();
+
+    //Recusively filter the jquery object to get results.
+    jo.filter(function (i, v) {
+    	var $t = $(this);
+        for (var d = 0; d < data.length; ++d) {
+            if ($t.is(":contains('" + data[d] + "')")) {
+                  return true;
+            }
+        }
+        return false;
+    })
+    //show the rows that match.
+    .show();
+};

@@ -146,7 +146,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 							</button>
 						</div>
 						<div class="btn-group">
-							<input type="text" class="form-control input-sm" placeholder="Filter">
+							<input type="text" class="form-control input-sm" placeholder="Filter" id="leftEpFilter" onkeyup="getFilteredResults('leftEpFilter', 'leftEndpointContentTable')">
 						</div>
 						&nbsp; <i class="glyphicon glyphicon-info-sign"/>
 					</div>
@@ -204,8 +204,8 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 								<i class="glyphicon glyphicon-refresh"/>&nbsp;Refresh
 							</button>
 						</div>
-						<div class="btn-group">
-							<input type="text" class="form-control input-sm" placeholder="Filter">														
+						<div class="btn-group">							
+							<input type="text" class="form-control input-sm" placeholder="Filter" id="rightEpFilter" onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable')">														
 						</div>
 						&nbsp; <i class="glyphicon glyphicon-info-sign"/>
 					</div>
