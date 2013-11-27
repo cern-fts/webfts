@@ -161,16 +161,17 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 						<table class="table table-condensed" id="leftEndpointContentTable">
 							<thead>
 								<tr>
-									<td>Name  <span class="label label-primary pull-right" id="left-ep-text"></span></td>
+									<td>Name</td><td>Mode</td><td>Time</td><td>Size</td>
 								</tr>
 							</thead>
 							<tbody>
-								<tr><td></td></tr>
+								<tr><td></td><td></td><td></td><td></td></tr>
 							</tbody>
 						</table>
 						<span>
 							<span class="leftSelectedCount"> 0 </span>
 							File(s) Selected &nbsp;
+							<span class="label label-primary pull-right" id="left-ep-text"></span>
 						</span>
 					</div>
 				</div>
@@ -220,11 +221,11 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 						<table class="table table-condensed" id="rightEndpointContentTable">
 							<thead>
 								<tr>
-									<td>Name <span class="label label-primary pull-right" id="right-ep-text"></span></td>
+									<td>Name</td><td>Mode</td><td>Time</td><td>Size</td>
 								</tr>
 							</thead>
 							<tbody>
-								<tr><td></td></tr>
+								<tr><td></td><td></td><td></td><td></td></tr>
 							</tbody>
 						</table>
 						<span>

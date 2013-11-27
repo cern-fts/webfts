@@ -1,3 +1,17 @@
+var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+               "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+
+var permissionNumberMeaning = {
+	    0 : '---',
+	    1 : '--x',
+	    2 : '-w-',
+	    3 : '-wx',
+	    4 : 'r--',
+	    5 : 'r-x',
+	    6 : 'rw-',
+	    7 : 'rwx'
+	};
+
 function runTransfer(container, destFolder){	  
 	  hideUserError();
       var sourceList = getSelectedFiles(container);
@@ -50,16 +64,50 @@ function clearContentTable(containerTable, container, indicator, stateText){
 	$("#" + stateText).text("");
 }
 
+function getPermissionsString(oNumber){	
+	var dirString = "";
+	var maxIt = 0;
+	if (oNumber>1000){
+		dirString ="d";
+		maxIt = 40;
+	} else {
+		dirString ="-";
+	}
+	var perString ="";
+	while (oNumber > maxIt){		
+		perString = permissionNumberMeaning[oNumber % 10] + perString; 
+		oNumber = Math.floor(oNumber / 10);	
+	}
+	return dirString + perString;
+}
+
+function pad (str, max) {
+	return str.length < max ? pad("0" + str, max) : str;
+}
+
 function loadFolder(endpointpath, container, containerTable, elements, indicator, stateText){
 	clearContentTable(containerTable, container, indicator, stateText);
-	for (var i = 0; i < elements.length; i++)
-	{
-		if (elements[i].slice(-1) == "/"){
-			$('#' + containerTable +' > tbody:last').append('<tr value="' +elements[i].slice(-1) + '"><td><i class="glyphicon glyphicon-folder-close"/>&nbsp;' + elements[i].slice(-1) + '</td></tr>');
+	$.each(elements, function(index, value){
+		var icon = "";
+		if (index.slice(-1) == "/"){
+			icon ="glyphicon glyphicon-folder-close";
 		} else {
-			$('#' + containerTable +' > tbody:last').append('<tr value="' +elements[i] + '"><td><i class="glyphicon glyphicon-file"/>&nbsp;' + elements[i] + '</td></tr>');
+			icon ="glyphicon glyphicon-file";				
 		}
-	}
+		var t_row = '<tr value="' + index + '"><td><i class="' + icon + '"/>&nbsp;' + index + '</td>';
+		$.each(value, function(e_index, e_value){
+			if (e_index == 'mode'){
+				e_value = getPermissionsString(parseInt(e_value, 10).toString(8)); //to octal 
+			} else if (e_index == 'mtime'){
+				var fdate = new Date(e_value*1000);
+				e_value = months[fdate.getUTCMonth()] + " " + pad(fdate.getUTCDate().toString(), 2) + " " + 
+						  pad(fdate.getUTCHours().toString(), 2) + ":" + pad(fdate.getUTCMinutes().toString(), 2); 
+			}
+			t_row += '<td>' + e_value + '</td>';
+		});
+		t_row += '</tr>'; 
+		$('#' + containerTable +' > tbody:last').append(t_row);
+	});
 	var ep = endpointpath.split(':');
 	var eptext = "";
 	for (var i=1; i< ep.length; i++){
