@@ -252,7 +252,7 @@ function getEndpointContent(endpointpath, container, containerTable, indicator, 
 			loadFolder(endpointpath, container, containerTable, data2, indicator, stateText);			
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			showError(jqXHR, textStatus, errorThrown, "Error connecting to the endpoint: it is not available or you are using a wrong protocol or address. "  + supportText);
+			showError(jqXHR, textStatus, errorThrown, "Error connecting to the endpoint: it is not available, the folder does not exist or it has been selected a wrong protocol or address. "  + supportText);
 			clearContentTable(containerTable, container, indicator, stateText);
 		}
 	});
