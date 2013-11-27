@@ -29,7 +29,7 @@ function ftsTransfer(theData) {
 		type : "POST",
 		data : theData,
 		contentType : "text/plain; charset=UTF-8", 
-		dataType : 'text',
+		dataType : 'json',
 		processData : false,
 		beforeSend : function(xhr) {
 			xhr.withCredentials = true;

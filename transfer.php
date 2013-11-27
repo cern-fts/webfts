@@ -128,7 +128,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 	<div class="row">
 		<div class="btn-group-vertical col-lg-5">
 			<div class="input-group">
-				<input id="leftEndpoint" type="text" placeholder="Endpoint path" class="form-control" value="gsiftp://lxfsra10a01.cern.ch/dpm/"> <span class="input-group-btn">
+				<input id="leftEndpoint" type="text" placeholder="Endpoint path" class="form-control" value="gsiftp://lxfsra10a01.cern.ch/dpm/cern.ch/home/atlas"> <span class="input-group-btn">
 					<button class="btn btn-primary" type="button" id="load-left" onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text')">Load</button>
 				</span>
 			</div>
@@ -178,17 +178,17 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 			</div>
 		</div>
 		<div class="btn-group btn-group-vertical col-md-2">
-			<button type="button" class="btn btn-primary btn-block"	name="transfer-from-left" id="transfer-from-left" onclick="runTransfer('leftEndpointContentTable', 'rightEndpoint')" disabled>			
+			<button type="button" class="btn btn-primary btn-block"	name="transfer-from-left" id="transfer-from-left" onclick="runTransfer('leftEndpointContentTable', 'leftEndpoint', 'rightEndpoint')" disabled>			
 				<i class="glyphicon glyphicon-chevron-right"></i>
 			</button>
-			<button type="button" class="btn btn-primary btn-block" name="transfer-from-right" id="transfer-from-right"onclick="runTransfer('rightEndpointContentTable', 'leftEndpoint')" disabled> 
+			<button type="button" class="btn btn-primary btn-block" name="transfer-from-right" id="transfer-from-right"onclick="runTransfer('rightEndpointContentTable', 'rightEndpoint', 'leftEndpoint')" disabled> 
 				<i class="glyphicon glyphicon-chevron-left glyphicon-white"></i>
 			</button>
 		</div>
 
 		<div class="btn-group-vertical col-lg-5">
 			<div class="input-group">
-				<input id="rightEndpoint" type="text" placeholder="Endpoint path" class="form-control" value="srm://lxfsra04a04.cern.ch:8446/srm/managerv2?SFN=/dpm/"> <span class="input-group-btn">
+				<input id="rightEndpoint" type="text" placeholder="Endpoint path" class="form-control" value="gsiftp://lxfsra10a01.cern.ch/dpm/cern.ch/home/atlas/newtest/"> <span class="input-group-btn">
 					<button class="btn btn-primary" type="button" id="load-right" onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text')">Load</button>
 				</span>
 			</div>
@@ -231,6 +231,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 						<span>
 							<span class="rightSelectedCount"> 0 </span>
 							File(s) Selected &nbsp;
+							<span class="label label-primary pull-right" id="right-ep-text"></span>
 						</span>
 					</div>
 				</div>

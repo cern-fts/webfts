@@ -12,37 +12,31 @@ var permissionNumberMeaning = {
 	    7 : 'rwx'
 	};
 
-function runTransfer(container, destFolder){	  
+function runTransfer(container, origFolder, destFolder){	  
 	  hideUserError();
-      var sourceList = getSelectedFiles(container);
+	  var selectedFiles = getSelectedFiles(container);
       //TODO: check that the destination is a FOLDER!!!!!!!!
-      var destList = getDestList(sourceList, document.getElementById(destFolder).value);
-      if (sourceList.length > 0){
-	      theData = {
-	    		   		"files":[
-	    		            {
-	    		               "sources":[
-	    		                  sourceList
-	    		               ],
-	    		               "destinations":[
-	    		                  destList	    		                  
-	    		               ],
-	    		            }
-	    		         ],
-	    		         "params":{}
-	    		      };      
+      if (selectedFiles.length > 0){
+    	  var theData = {};
+    	  theData["files"] = [];       	  
+    	  theData["files"].push({});    	  
+    	  theData["files"][0]["sources"] = [];
+   		  theData["files"][0]["sources"] = getFullPathList(selectedFiles, document.getElementById(origFolder).value);
+    	  theData["files"][0]["destinations"] = [];
+    	  theData["files"][0]["destinations"] = getFullPathList(selectedFiles, document.getElementById(destFolder).value);
+    	  theData["params"] = [];
+    	  
 	      runDataTransfer($('#delegation_id').val(), theData);
       }
-      //ftsTransferRequest(theData, userPrivatePEM, userPEMPass, userDN);
       return false;
 }
 
-function getDestList(sourceList, endFolder){
-	var destArray =[];
-	$.each( sourceList, function( index, value ){
-		destArray.push(endFolder + '/' + value);
-		});
-	return destArray;
+function getFullPathList(slist, endFolder){
+	var dList = [];
+	for (var i = 0; i < slist.length; i++){	
+		dList[i] = endFolder + '/' + slist[i];
+	}
+	return dList;
 }	
 
 function activateTransferButton(epTable, buttonToActivate, endPoint){
@@ -108,12 +102,13 @@ function loadFolder(endpointpath, container, containerTable, elements, indicator
 		t_row += '</tr>'; 
 		$('#' + containerTable +' > tbody:last').append(t_row);
 	});
-	var ep = endpointpath.split(':');
-	var eptext = "";
-	for (var i=1; i< ep.length; i++){
-		eptext += ep[i];
-	}
-	$("#" + stateText).text(checkLength(eptext));	
+//	var ep = endpointpath.split(':');
+//	var eptext = "";
+//	for (var i=1; i< ep.length; i++){
+//		eptext += ep[i];
+//	}
+//	$("#" + stateText).text(checkLength(eptext));
+	$("#" + stateText).text(checkLength(endpointpath));
 	$("#" + containerTable + " tbody").finderSelect("update");
 }
 
@@ -138,6 +133,7 @@ function getSelectedFiles(container){
 	var selectedEle = $("#" + container + " tbody").finderSelect('selected');
 	for (var i = 0; i < selectedEle.length; i++){
 		selectedList.push(selectedEle[i].attributes.value.nodeValue);  		
+		//selectedList[i] = selectedEle[i].attributes.value.nodeValue;
 	}
 	return selectedList;
 }
