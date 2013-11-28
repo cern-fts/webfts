@@ -125,6 +125,10 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 		<button type="button" class="close" data-dismiss="alert" onclick="$('serverkeyAlert').hide()">&times;</button>
 		<small id="serverErrorText"></small>
 	</div>
+	<div class="alert alert-success" id="serverkeyAlertSuccess" style="display:none" >
+		<button type="button" class="close" data-dismiss="alert" onclick="$('serverkeyAlertSuccess').hide()">&times;</button>
+		<small id="serverSuccessText"></small>
+	</div>
 	<div class="row">
 		<div class="btn-group-vertical col-lg-5">
 			<div class="input-group">
@@ -171,7 +175,8 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 						<span>
 							<span class="leftSelectedCount"> 0 </span>
 							File(s) Selected &nbsp;
-							<span class="label label-primary pull-right" id="left-ep-text"></span>
+							<input type="hidden" id="left-ep-text">
+<!-- 							<span class="label label-primary pull-right" id="left-ep-text"></span> -->
 						</span>
 					</div>
 				</div>
@@ -231,7 +236,8 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 						<span>
 							<span class="rightSelectedCount"> 0 </span>
 							File(s) Selected &nbsp;
-							<span class="label label-primary pull-right" id="right-ep-text"></span>
+							<input type="hidden" id="right-ep-text">
+<!-- 							<span class="label label-primary pull-right" id="right-ep-text"></span> -->
 						</span>
 					</div>
 				</div>

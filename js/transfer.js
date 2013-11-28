@@ -13,22 +13,22 @@ var permissionNumberMeaning = {
 	};
 
 function runTransfer(container, origFolder, destFolder){	  
-	  hideUserError();
-	  var selectedFiles = getSelectedFiles(container);
-      //TODO: check that the destination is a FOLDER!!!!!!!!
-      if (selectedFiles.length > 0){
-    	  var theData = {};
-    	  theData["files"] = [];       	  
-    	  theData["files"].push({});    	  
-    	  theData["files"][0]["sources"] = [];
-   		  theData["files"][0]["sources"] = getFullPathList(selectedFiles, document.getElementById(origFolder).value);
-    	  theData["files"][0]["destinations"] = [];
-    	  theData["files"][0]["destinations"] = getFullPathList(selectedFiles, document.getElementById(destFolder).value);
-    	  theData["params"] = [];
-    	  
-	      runDataTransfer($('#delegation_id').val(), theData);
-      }
-      return false;
+	hideUserReport();
+	var selectedFiles = getSelectedFiles(container);
+    //TODO: check that the destination is a FOLDER!!!!!!!!
+    if (selectedFiles.length > 0){
+		var theData = {};
+		theData["files"] = [];       	  
+		theData["files"].push({});    	  
+		theData["files"][0]["sources"] = [];
+		theData["files"][0]["sources"] = getFullPathList(selectedFiles, document.getElementById(origFolder).value);
+		theData["files"][0]["destinations"] = [];
+		theData["files"][0]["destinations"] = getFullPathList(selectedFiles, document.getElementById(destFolder).value);
+		theData["params"] = [];
+		  
+		runDataTransfer($('#delegation_id').val(), theData);
+    }
+    return false;
 }
 
 function getFullPathList(slist, endFolder){
@@ -139,7 +139,7 @@ function getSelectedFiles(container){
 }
 
 function getEPContent(endpointInput, container, containerTable, indicator, stateText){	
-	hideUserError();
+	hideUserReport();
 	$('#'+indicator).show();
 	$('#'+container).hide();
 	getEndpointContent($('#' + endpointInput).val(), container, containerTable, indicator, stateText);
@@ -156,8 +156,9 @@ function initialLoadState(input, button){
     });
 }
 
-function hideUserError(){	
+function hideUserReport(){	
 	$('#serverkeyAlert').hide();
+	$('#serverkeyAlertSuccess').hide();
 }
 
 function showUserError(message){
@@ -165,8 +166,9 @@ function showUserError(message){
 	$('#serverkeyAlert').show();
 }
 
-function hideDelegateError(){	
-	$('#serverDelegateAlert').hide();
+function showUserSuccess(message){
+	$('#serverSuccessText').text(message);
+	$('#serverkeyAlertSuccess').show();	
 }
 
 function showDelegateError(message){
@@ -176,7 +178,7 @@ function showDelegateError(message){
 
 function hideDelegateModal(){
 	$('#delegationModal').modal('hide');
-	hideDelegateError();
+	$('#serverDelegateAlert').hide();
 }
 
 function showDelegateModal(){

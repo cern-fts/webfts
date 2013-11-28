@@ -40,6 +40,7 @@ function ftsTransfer(theData) {
 		success : function(x, status, xhr) {
 			console.log("OK: " + JSON.stringify(x));			
 			console.log("    Status: " + status);
+			showUserSuccess("Transfer sent successfully");
 		},
 		error : function(xhr, textStatus, errorThrown) {
 			showError(xhr, textStatus, errorThrown, "Error submitting the transfer. " + supportText);			
