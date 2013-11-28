@@ -25,7 +25,7 @@ $(function(event) {
 }); 
 
 $( document ).ready(function() {	
-	getDelegationID("delegation_id");
+	getDelegationID("delegation_id", true);
 
 	renderFolderContent("leftEndpointContentTable", "leftSelectedCount", "leftEndpointContent", "left-loading-indicator", "left-ep-text");
 	renderFolderContent("rightEndpointContentTable", "rightSelectedCount", "rightEndpointContent", "right-loading-indicator", "rifht-ep-text");
@@ -192,7 +192,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 
 		<div class="btn-group-vertical col-lg-5">
 			<div class="input-group">
-				<input id="rightEndpoint" type="text" placeholder="Endpoint path" class="form-control" value="gsiftp://lxfsra10a01.cern.ch/dpm/cern.ch/home/atlas/newtest/"> <span class="input-group-btn">
+				<input id="rightEndpoint" type="text" placeholder="Endpoint path" class="form-control"> <span class="input-group-btn">
 					<button class="btn btn-primary" type="button" id="load-right" onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter')">Load</button>
 				</span>
 			</div>

@@ -1,101 +1,79 @@
-<h2>Transmissions list</h2>
-<ul class="pagination pagination pagination-sm">
-	<li class="disabled"><a href="#">&laquo;</a></li>
-	<li class="active"><a href="#">1</a></li>
-	<li><a href="#">2</a></li>
-	<li><a href="#">3</a></li>
-	<li><a href="#">4</a></li>
-	<li><a href="#">5</a></li>
-	<li><a href="#">&raquo;</a></li>
-</ul>
+<script>
+$( document ).ready(function() {	
+	getDelegationID("delegation_id", false);		
+});	
+</script>
 
-<table class="table table-bordered table-hover" id="mainResults" name="mainResults">
+<div>
+<h2>Jobs list</h2> <span class="label label-primary pull-right" id="left-ep-text">Refresh</span>
+</div>
+
+<input type="hidden" id="delegation_id" value="">		
+<!-- <ul class="pagination pagination pagination-sm"> -->
+<!-- 	<li class="disabled"><a href="#">&laquo;</a></li> -->
+<!-- 	<li class="active"><a href="#">1</a></li> -->
+<!-- 	<li><a href="#">2</a></li> -->
+<!-- 	<li><a href="#">3</a></li> -->
+<!-- 	<li><a href="#">4</a></li> -->
+<!-- 	<li><a href="#">5</a></li> -->
+<!-- 	<li><a href="#">&raquo;</a></li> -->
+<!-- </ul> -->
+
+<table class="table table-bordered table-hover" id="jobResultsTable">
 	<thead>
 		<tr>
 			<th>JOB ID</th>
 			<th>SUBMIT TIME</th>
-			<th>VO</th>
 			<th>SOURCE SE</th>
 			<th>DEST SE</th>
-			<th>DEST SPACE TOKEN</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr class="success" class="accordion-body collapse in" id="row1" name="row1">
-			<td>
-				<script>
-					$(document).ready(function() {
-						$('#mainResults #row1').click(function() {
-							if ($('#collapseme').css('display') == 'none') {
-								$('#collapseme').show();
-							} else {
-								$('#collapseme').hide();
-							}
-						});
-					});
-				</script> 6925425e-302f-11e3-9f75-02163e00a1a1</td>
-			<td>2013-10-08T17:38:50</td>
-			<td>atlas</td>
-			<td>mock://dummyhost1</td>
-			<td>mock://dummyhost2</td>
-			<td>no_spacetoken</td>
-		</tr>
-		<tr id="collapseme" class="collapse out" style="display: none;">
-			<td colspan="7">
-				<table class="table table-bordered table-hover">
-					<thead>
-						<tr>
-							<th></th>
-							<th>JOB ID</th>
-							<th>DEST SPACE TOKEN</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr class="success">
-							<td></td>
-							<td>123123123</td>
-							<td>XXXX</td>
-						</tr>
-						<tr class="success">
-							<td></td>
-							<td>1231231234123</td>
-							<td>XXXXX</td>
-						</tr>
-					</tbody>
-				</table>
-			</td>
-		</tr>
-		<tr class="success">
-			<td>6925425e-302f-11e3-9f75-02163e00a1a2</td>
-			<td>2013-10-08T17:38:50</td>
-			<td>dteam</td>
-			<td>mock://dummyhost1</td>
-			<td>mock://dummyhost2</td>
-			<td>no_spacetoken</td>
-		</tr>
-		<tr class="danger">
-			<td>6925425e-302f-11e3-9f75-02163e00a1a3</td>
-			<td>2013-10-08T17:38:50</td>
-			<td>atlas</td>
-			<td>mock://dummyhost1</td>
-			<td>mock://dummyhost2</td>
-			<td>no_spacetoken</td>
-		</tr>
-		<tr class="warning">
-			<td>6925425e-302f-11e3-9f75-02163e00a1a4</td>
-			<td>2013-10-08T17:38:50</td>
-			<td>atlas</td>
-			<td>mock://dummyhost1</td>
-			<td>mock://dummyhost2</td>
-			<td>no_spacetoken</td>
-		</tr>
-		<tr class="success">
-			<td>6925425e-302f-11e3-9f75-02163e00a1a5</td>
-			<td>2013-10-08T17:38:50</td>
-			<td>atlas</td>
-			<td>mock://dummyhost1</td>
-			<td>mock://dummyhost2</td>
-			<td>no_spacetoken</td>
-		</tr>
+<!-- 		<tr class="success" class="accordion-body collapse in" id="row1" name="row1"> -->
+<!-- 			<td> -->
+ 				<script>
+// 					$(document).ready(function() {
+// 						$('#mainResults #row1').click(function() {
+// 							if ($('#collapseme').css('display') == 'none') {
+// 								$('#collapseme').show();
+// 							} else {
+// 								$('#collapseme').hide();
+// 							}
+// 						});
+// 					});
+ 				</script>
+<!--  6925425e-302f-11e3-9f75-02163e00a1a1</td> -->
+<!-- 			<td>2013-10-08T17:38:50</td> -->
+<!-- 			<td>atlas</td> -->
+<!-- 			<td>mock://dummyhost1</td> -->
+<!-- 			<td>mock://dummyhost2</td> -->
+<!-- 			<td>no_spacetoken</td> -->
+<!-- 		</tr> -->
+<!-- 		<tr id="collapseme" class="collapse out" style="display: none;"> -->
+<!-- 			<td colspan="7"> -->
+<!-- 				<table class="table table-bordered table-hover"> -->
+<!-- 					<thead> -->
+<!-- 						<tr> -->
+<!-- 							<th></th> -->
+<!-- 							<th>JOB ID</th> -->
+<!-- 							<th>DEST SPACE TOKEN</th> -->
+<!-- 						</tr> -->
+<!-- 					</thead> -->
+<!-- 					<tbody> -->
+<!-- 						<tr class="success"> -->
+<!-- 							<td></td> -->
+<!-- 							<td>123123123</td> -->
+<!-- 							<td>XXXX</td> -->
+<!-- 						</tr> -->
+<!-- 						<tr class="success"> -->
+<!-- 							<td></td> -->
+<!-- 							<td>1231231234123</td> -->
+<!-- 							<td>XXXXX</td> -->
+<!-- 						</tr> -->
+<!-- 					</tbody> -->
+<!-- 				</table> -->
+<!-- 			</td> -->
+<!-- 		</tr> -->
+
 	</tbody>
 </table>

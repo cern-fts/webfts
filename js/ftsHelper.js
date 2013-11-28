@@ -12,6 +12,29 @@ function showError(jqXHR, textStatus, errorThrown, message) {
 		showUserError(message);
 }
 
+function getUserJobs(delegationId){
+	var urlE = ftsEndpoint + "/jobs?dlg_id=" + delegationId + "&state_in=SUBMITTED,ACTIVE,FINISHED,FAILED,CANCELED";
+	$.ajax({
+		url : urlE,
+		type : "GET",
+		dataType : 'json',
+		xhrFields : {
+			withCredentials : true
+		},
+		success : function(data1, status) {
+			loadJobTable(data1);
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			showError(jqXHR, textStatus, errorThrown, "Error retrieving user jobs. "+ supportText);
+		}
+	});
+	
+}
+
+function getJobTransmissions(jobId){
+	
+}
+
 function getUTCDate(time) {
 	return time.getUTCFullYear().toString().substring(2, 4)
 			+ ("0" + (time.getUTCMonth() + 1).toString()).slice(-2)
@@ -130,7 +153,7 @@ function signRequest(sCert, userPrivateKeyPEM, userDN) {
 	}
 }
 //Check delegation ID, save it and check if there is a valid proxy 
-function getDelegationID(fieldName){
+function getDelegationID(fieldName, delegationNeeded){
 	var urlEndp = ftsEndpoint + "/whoami";
 	$.ajax({
 		url : urlEndp,
@@ -141,7 +164,11 @@ function getDelegationID(fieldName){
 		},
 		success : function(data1, status) {
 			$('input[id='+fieldName+']').val(data1.delegation_id);	
-			isDelegated(data1.delegation_id, null);
+			if (delegationNeeded){
+				isDelegated(data1.delegation_id, null);
+			} else {
+				getUserJobs(data1.delegation_id);
+			}
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			showError(jqXHR, textStatus, errorThrown, "Error connecting to the server to obtain the user credentials. "+ supportText);

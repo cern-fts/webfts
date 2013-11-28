@@ -10,6 +10,9 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.validate.min.js"></script>
 
+<script src="js/ftsHelper.js"></script>
+<script src="js/jobs.js"></script>
+
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/bootstrap-theme.min.css" rel="stylesheet">
 <link href="css/justified-nav.css" rel="stylesheet">
