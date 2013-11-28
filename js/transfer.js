@@ -15,7 +15,6 @@ var permissionNumberMeaning = {
 function runTransfer(container, origFolder, destFolder){	  
 	hideUserReport();
 	var selectedFiles = getSelectedFiles(container);
-    //TODO: check that the destination is a FOLDER!!!!!!!!
     if (selectedFiles.length > 0){
 		var theData = {};
 		theData["files"] = [];       	  
@@ -122,7 +121,7 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 }
 
 function renderFolderContent(tableId, countId, container, indicator, stateText){
-    // Initialise the Demo with the Ctrl Click Functionality as the Default
+    // Initialise with the Ctrl Click Functionality as the Default
     $("#" + tableId + " tbody").finderSelect({enableDesktopCtrlDefault:true, totalSelector:"."+countId , selectClass:'label-info'});   
     clearContentTable(tableId, container, indicator, stateText);
 }
