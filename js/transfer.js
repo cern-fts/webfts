@@ -102,12 +102,6 @@ function loadFolder(endpointpath, container, containerTable, elements, indicator
 		t_row += '</tr>'; 
 		$('#' + containerTable +' > tbody:last').append(t_row);
 	});
-//	var ep = endpointpath.split(':');
-//	var eptext = "";
-//	for (var i=1; i< ep.length; i++){
-//		eptext += ep[i];
-//	}
-//	$("#" + stateText).text(checkLength(eptext));
 	$("#" + stateText).text(checkLength(endpointpath));
 	$("#" + containerTable + " tbody").finderSelect("update");
 }
@@ -133,7 +127,6 @@ function getSelectedFiles(container){
 	var selectedEle = $("#" + container + " tbody").finderSelect('selected');
 	for (var i = 0; i < selectedEle.length; i++){
 		selectedList.push(selectedEle[i].attributes.value.nodeValue);  		
-		//selectedList[i] = selectedEle[i].attributes.value.nodeValue;
 	}
 	return selectedList;
 }

@@ -176,7 +176,6 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 							<span class="leftSelectedCount"> 0 </span>
 							File(s) Selected &nbsp;
 							<input type="hidden" id="left-ep-text">
-<!-- 							<span class="label label-primary pull-right" id="left-ep-text"></span> -->
 						</span>
 					</div>
 				</div>
@@ -237,7 +236,6 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 							<span class="rightSelectedCount"> 0 </span>
 							File(s) Selected &nbsp;
 							<input type="hidden" id="right-ep-text">
-<!-- 							<span class="label label-primary pull-right" id="right-ep-text"></span> -->
 						</span>
 					</div>
 				</div>
