@@ -239,8 +239,8 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT){
 }
 
 
-function getEndpointContent(endpointpath, container, containerTable, indicator, stateText){
-	urlEndp = ftsEndpoint + "/dm/list?surl=" + endpointpath;
+function getEndpointContent(endpointInput, container, containerTable, indicator, stateText){	
+	urlEndp = ftsEndpoint + "/dm/list?surl=" + $('#' + endpointInput).val();
 	$.ajax({
 		url : urlEndp,
 		type : "GET",
@@ -250,30 +250,11 @@ function getEndpointContent(endpointpath, container, containerTable, indicator, 
 		},
 		
 		success : function(data2, status) {		
-			loadFolder(endpointpath, container, containerTable, data2, indicator, stateText);			
+			loadFolder(endpointInput, container, containerTable, data2, indicator, stateText);			
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			showError(jqXHR, textStatus, errorThrown, "Error connecting to the endpoint: it is not available, the folder does not exist or it has been selected a wrong protocol or address. "  + supportText);
 			clearContentTable(containerTable, container, indicator, stateText);
-		}
-	});
-} 
-
-function getEndpointElementStat(endpointpath){
-	urlEndp = ftsEndpoint + "/dm/stat" + endpointpath;
-	$.ajax({
-		url : urlEndp,
-		type : "GET",
-		dataType : 'json',
-		xhrFields : {
-			withCredentials : true
-		},
-		
-		success : function(data2, status) {
-			alert('Done');					
-		},
-		error : function(jqXHR, textStatus, errorThrown) {
-			showError(jqXHR, textStatus, errorThrown, "Error obtaining the element details. "  + supportText);
 		}
 	});
 } 

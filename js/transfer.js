@@ -79,16 +79,31 @@ function pad (str, max) {
 	return str.length < max ? pad("0" + str, max) : str;
 }
 
-function loadFolder(endpointpath, container, containerTable, elements, indicator, stateText){
+function getFolderContent(endpointInput, container, containerTable, indicator, stateText, folder){
+	if ($('#' + endpointInput).val().slice(-1) == "/"){
+		$("#" + endpointInput).val($('#' + endpointInput).val() + folder + '/');
+	} else {
+		$("#" + endpointInput).val($('#' + endpointInput).val() + '/' + folder + '/');
+	}
+	getEPContent(endpointInput, container, containerTable, indicator, stateText);	
+}
+
+function loadFolder(endpointInput, container, containerTable, elements, indicator, stateText){
 	clearContentTable(containerTable, container, indicator, stateText);
 	$.each(elements, function(index, value){
 		var icon = "";
+		var t_row = "";
 		if (index.slice(-1) == "/"){
 			icon ="glyphicon glyphicon-folder-close";
+			t_row = '<tr value="' + index + '" onclick="getFolderContent(\'' 
+					+ endpointInput + '\',\'' + container + '\',\''
+					+ containerTable + '\',\'' + indicator + '\',\'' 
+					+ stateText + '\',\'' + index.slice(0,-1) + '\')">';
 		} else {
-			icon ="glyphicon glyphicon-file";				
+			icon ="glyphicon glyphicon-file";	
+			t_row = '<tr value="' + index + '">';
 		}
-		var t_row = '<tr value="' + index + '"><td><i class="' + icon + '"/>&nbsp;' + index + '</td>';
+		t_row += '<td><i class="' + icon + '"/>&nbsp;' + index + '</td>';
 		$.each(value, function(e_index, e_value){
 			if (e_index == 'mode'){
 				e_value = getPermissionsString(parseInt(e_value, 10).toString(8)); //to octal 
@@ -102,7 +117,7 @@ function loadFolder(endpointpath, container, containerTable, elements, indicator
 		t_row += '</tr>'; 
 		$('#' + containerTable +' > tbody:last').append(t_row);
 	});
-	$("#" + stateText).text(checkLength(endpointpath));
+	$("#" + stateText).text($('#' + endpointInput).val());
 	$("#" + containerTable + " tbody").finderSelect("update");
 }
 
@@ -135,7 +150,7 @@ function getEPContent(endpointInput, container, containerTable, indicator, state
 	hideUserReport();
 	$('#'+indicator).show();
 	$('#'+container).hide();
-	getEndpointContent($('#' + endpointInput).val(), container, containerTable, indicator, stateText);
+	getEndpointContent(endpointInput, container, containerTable, indicator, stateText);
 }
 
 function initialLoadState(input, button){
@@ -176,14 +191,6 @@ function hideDelegateModal(){
 
 function showDelegateModal(){
 	$('#delegationModal').modal('show');
-}
-	
-function checkLength(text) {
-	var maxlength = 60;
-    if(text.length > maxlength) {
-    	return text.substring(0, maxlength-1) + "...";
-    }
-    return text;
 }
 
 function getFilteredResults(input, contentTable){
