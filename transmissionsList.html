@@ -19,6 +19,10 @@ $( document ).ready(function() {
 <!-- 	<li><a href="#">&raquo;</a></li> -->
 <!-- </ul> -->
 
+<div class="alert alert-danger" id="serverkeyAlert" style="display:none" >
+	<button type="button" class="close" data-dismiss="alert" onclick="$('serverkeyAlert').hide()">&times;</button>
+	<small id="serverErrorText"></small>
+</div>
 <table class="table table-bordered table-hover" id="jobResultsTable">
 	<thead>
 		<tr>
