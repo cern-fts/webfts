@@ -78,16 +78,16 @@ function pad (str, max) {
 	return str.length < max ? pad("0" + str, max) : str;
 }
 
-function getFolderContent(endpointInput, container, containerTable, indicator, stateText, folder){
+function getFolderContent(endpointInput, container, containerTable, indicator, stateText, folder, filter){
 	if ($('#' + endpointInput).val().slice(-1) == "/"){
 		$("#" + endpointInput).val($('#' + endpointInput).val() + folder + '/');
 	} else {
 		$("#" + endpointInput).val($('#' + endpointInput).val() + '/' + folder + '/');
 	}
-	getEPContent(endpointInput, container, containerTable, indicator, stateText);	
+	getEPContent(endpointInput, container, containerTable, indicator, stateText, filter);	
 }
 
-function loadFolder(endpointInput, container, containerTable, elements, indicator, stateText){
+function loadFolder(endpointInput, container, containerTable, elements, indicator, stateText, filter){
 	clearContentTable(containerTable, container, indicator, stateText);
 	$.each(elements, function(index, value){
 		var icon = "";
@@ -97,7 +97,8 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 			t_row = '<tr value="' + index + '" onclick="getFolderContent(\'' 
 					+ endpointInput + '\',\'' + container + '\',\''
 					+ containerTable + '\',\'' + indicator + '\',\'' 
-					+ stateText + '\',\'' + index.slice(0,-1) + '\')">';
+					+ stateText + '\',\'' + index.slice(0,-1) + '\',\''
+					+ filter + '\')">';
 		} else {
 			icon ="glyphicon glyphicon-file";	
 			t_row = '<tr value="' + index + '">';
@@ -145,11 +146,12 @@ function getSelectedFiles(container){
 	return selectedList;
 }
 
-function getEPContent(endpointInput, container, containerTable, indicator, stateText){	
+function getEPContent(endpointInput, container, containerTable, indicator, stateText, filter){	
 	hideUserReport();
 	$('#'+indicator).show();
 	$('#'+container).hide();
-	getEndpointContent(endpointInput, container, containerTable, indicator, stateText);
+	$('#'+filter).val('');
+	getEndpointContent(endpointInput, container, containerTable, indicator, stateText, filter);
 }
 
 function initialLoadState(input, button){

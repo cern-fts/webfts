@@ -239,7 +239,7 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT){
 }
 
 
-function getEndpointContent(endpointInput, container, containerTable, indicator, stateText){	
+function getEndpointContent(endpointInput, container, containerTable, indicator, stateText, filter){	
 	urlEndp = ftsEndpoint + "/dm/list?surl=" + $('#' + endpointInput).val();
 	$.ajax({
 		url : urlEndp,
@@ -250,7 +250,7 @@ function getEndpointContent(endpointInput, container, containerTable, indicator,
 		},
 		
 		success : function(data2, status) {		
-			loadFolder(endpointInput, container, containerTable, data2, indicator, stateText);			
+			loadFolder(endpointInput, container, containerTable, data2, indicator, stateText, filter);			
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			showError(jqXHR, textStatus, errorThrown, "Error connecting to the endpoint: it is not available, the folder does not exist or it has been selected a wrong protocol or address. "  + supportText);

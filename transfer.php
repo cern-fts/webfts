@@ -133,7 +133,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 		<div class="btn-group-vertical col-lg-5">
 			<div class="input-group">
 				<input id="leftEndpoint" type="text" placeholder="Endpoint path" class="form-control" value="gsiftp://lxfsra10a01.cern.ch/dpm/cern.ch/home/atlas"> <span class="input-group-btn">
-					<button class="btn btn-primary" type="button" id="load-left" onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text')">Load</button>
+					<button class="btn btn-primary" type="button" id="load-left" onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter')">Load</button>
 				</span>
 			</div>
 
@@ -145,7 +145,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 							<button type="button" class="btn btn-sm" onclick="selectNoneFiles('leftEndpointContent')">None</button>
 						</div>
 						<div class="btn-group">
-							<button type="button" class="btn btn-sm" onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text')">
+							<button type="button" class="btn btn-sm" onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter')">
 								<i class="glyphicon glyphicon-refresh"/>&nbsp;Refresh
 							</button>
 						</div>
@@ -193,7 +193,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 		<div class="btn-group-vertical col-lg-5">
 			<div class="input-group">
 				<input id="rightEndpoint" type="text" placeholder="Endpoint path" class="form-control" value="gsiftp://lxfsra10a01.cern.ch/dpm/cern.ch/home/atlas/newtest/"> <span class="input-group-btn">
-					<button class="btn btn-primary" type="button" id="load-right" onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text')">Load</button>
+					<button class="btn btn-primary" type="button" id="load-right" onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter')">Load</button>
 				</span>
 			</div>
 
@@ -205,7 +205,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 							<button type="button" class="btn btn-sm" onclick="selectNoneFiles('rightEndpointContent')">None</button>
 						</div>
 						<div class="btn-group">
-							<button type="button" class="btn btn-sm" onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text')" >
+							<button type="button" class="btn btn-sm" onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter')" >
 								<i class="glyphicon glyphicon-refresh"/>&nbsp;Refresh
 							</button>
 						</div>
