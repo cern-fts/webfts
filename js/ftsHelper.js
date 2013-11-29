@@ -31,6 +31,25 @@ function getUserJobs(delegationId){
 	
 }
 
+function getJobTranfers(jobId){
+	var urlE = ftsEndpoint + "/jobs/" + jobId;
+	$.ajax({
+		url : urlE,
+		type : "GET",
+		dataType : 'json',
+		xhrFields : {
+			withCredentials : true
+		},
+		success : function(data1, status) {
+			loadJobDetails(data1);
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			showError(jqXHR, textStatus, errorThrown, "Error job details. "+ supportText);
+		}
+	});
+	
+}
+
 function getJobTransmissions(jobId){
 	
 }
@@ -167,6 +186,7 @@ function getDelegationID(fieldName, delegationNeeded){
 			if (delegationNeeded){
 				isDelegated(data1.delegation_id, null);
 			} else {
+				hideUserError();
 				getUserJobs(data1.delegation_id);
 			}
 		},
