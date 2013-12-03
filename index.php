@@ -34,11 +34,9 @@
 		</div>
 
 		<div>
-			<span>webFTS: welcome!!!</span>
-	
 			<a href="#"><img src="img/banner.jpg" alt="" class="img-responsive"/> </a>
 	
-			<span><strong>webFTS</strong> FTS web interface for file transfering</span>
+			<span><strong>webFTS: </strong> FTS web interface for file transfering.</span>
 			<a href="#" class="button">More about FTS</a>
 		</div>
 
@@ -78,7 +76,7 @@
 
 		<!-- Site footer -->
 		<div class="footer">
-			<p>&copy; Company 2013</p>
+			<p>&copy; CERN 2013</p>
 		</div>
 
 	</div>
