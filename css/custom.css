@@ -1,3 +1,8 @@
 .popover-content {    
     font-size: small;
 }
+
+.transfers-table {
+    table-layout: fixed;
+    word-wrap: break-word;
+}

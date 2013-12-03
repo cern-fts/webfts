@@ -41,7 +41,7 @@ function getJobTranfers(jobId){
 			withCredentials : true
 		},
 		success : function(data1, status) {
-			loadJobDetails(data1);
+			loadTransferTable(data1, jobId);			
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			showError(jqXHR, textStatus, errorThrown, "Error job details. "+ supportText);
