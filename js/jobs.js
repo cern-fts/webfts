@@ -4,10 +4,20 @@ function loadTransferTable(transferList, jobId){
 	$("#" + jobId + "-table-details > tbody").html("");
 	$.each(transferList.files, function(index, value){
 		//Transfer row
-		var t_row = '<tr class="' + getRowColor(value.file_state) + '">' + getColumn(value.file_id) + getColumn(value.transferhost) 
-		+ getColumn(value.source_surl) + getColumn(value.dest_surl) + getColumn(value.filesize) + getColumn(value.throughput) 		
-		+ getColumn(value.start_time).replace("T", " ") + getColumn(value.finish_time).replace("T", " ") + '</tr>'  ;		
-		$("#" + jobId + "-table-details > tbody:last").append(t_row);		
+		var t_row = '<tr class="' + getRowColor(value.file_state) + '">' ;
+		var showPopover = getPopoverText(value);
+		if (showPopover == null){
+			t_row += getColumn(value.file_id);
+		} else {
+			t_row += getColumn('<a id="popover' + value.file_id  + '" href="#" class="btn" data-content="' + getPopoverText(value) + '" rel="popover" data-placement="right" data-trigger="hover" data-html="true">' + value.file_id + '</a>')
+		}
+		t_row += getColumn(value.transferhost)	+ getColumn(value.source_surl) + getColumn(value.dest_surl) + getColumn(value.filesize) 
+		+ getColumn(value.throughput) + getColumn(value.start_time).replace("T", " ") + getColumn(value.finish_time).replace("T", " ") 
+		+ '</tr>'  ;		
+		$("#" + jobId + "-table-details > tbody:last").append(t_row);
+	});
+	$.each(transferList.files, function(index, value){	
+		$('#popover' + value.file_id ).popover();	
 	});
 }
 
@@ -23,7 +33,7 @@ function loadJobTable(jobList){
 		//Transfers from job row (hidden by default)
 		t_row = '<tr class="collapse out" style="display: none;" id="' + value.job_id + '_row"><td colspan="4" >';
 		t_row += '<div id="' + value.job_id + '-loading-indicator" style="display:none" class="row"><ul class="pager"><li><label class="text-center">'
-				+ 'Loading...</label>&nbsp;<img class="pagination-centered" src="img/ajax-loader.gif"/></li></ul></div>';
+				+ 'Loading...</label>&nbsp;<img class="pagination-centered" src="img/ajax-loader.gif"/></li></ul></div>';		
 		t_row += '<table id="' + value.job_id + '-table-details" class="table table-bordered table-condensed table-hover transfers-table">';
 		t_row += '<thead><tr><th style="width: 6%;">File ID</th><th style="width: 10%;">Transfer Host</th><th style="width: 25%;">Source URL</th>';
 		t_row += '<th style="width: 25%;">Dest. URL</th><th style="width: 9%;">File Size</th>';
@@ -31,6 +41,13 @@ function loadJobTable(jobList){
 		t_row += '</td></tr>';
 		$("#jobResultsTable > tbody:last").append(t_row);
 	});
+}
+
+function getPopoverText(transfer){
+	if (transfer.reason != null){
+		return '<strong>Error reason:</strong> ' + transfer.reason; 
+	} 
+	return null;
 }
 
 function reloadJobs(){
