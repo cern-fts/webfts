@@ -60,7 +60,7 @@ function getColumn(columnName){
 }
 
 function getRowColor(job_state){
-	if (job_state=="FAILED"){
+	if (job_state=="FAILED" || job_state=="CANCELED"){
 		return "danger";		
 	} else if (job_state=="FINISHED"){
 		return "success";
