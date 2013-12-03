@@ -58,16 +58,12 @@ function clearContentTable(containerTable, container, indicator, stateText){
 }
 
 function getPermissionsString(oNumber){	
-	var dirString = "";
-	var maxIt = 0;
-	if (oNumber>1000){
-		dirString ="d";
-		maxIt = 40;
-	} else {
-		dirString ="-";
-	}
+	var dirString = "-";
+	if (oNumber<100000){
+		dirString ="d";	
+	} 
 	var perString ="";
-	while (oNumber > maxIt){		
+	for (var i=0; i<3; i++){		
 		perString = permissionNumberMeaning[oNumber % 10] + perString; 
 		oNumber = Math.floor(oNumber / 10);	
 	}
