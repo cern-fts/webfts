@@ -51,7 +51,7 @@ function activateTransferButton(epTable, buttonToActivate, endPoint){
 }
 
 function showRemainingProxyTime(timeText){
-	$('#proxyTimeSpan').text("Your current proxy is still valid for " + timeText);	
+	$('#proxyTimeSpan').text("Your current proxy is still valid for " + timeText + " ");	
 }
 
 function clearContentTable(containerTable, container, indicator, stateText){

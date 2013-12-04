@@ -7,7 +7,7 @@ $(function(event) {
 	  {
 	  rules: {
 	    pemPkey: {
-	      minlength: 1024,
+	      minlength: 256,
 	      required: true,
 	      checkCert: true
 	    }
@@ -51,11 +51,11 @@ $( "#delegateButton" ).click(function() {
 $('#popoverDelegate').popover();
 
 //To prevent the modal window to be closed by pressing ESC or clicking outside
-$('#delegationModal').modal({
-	  show: false,	
-	  backdrop: 'static',
-	  keyboard: false
-});
+// $('#delegationModal').modal({
+// 	  show: false,	
+// 	  backdrop: 'static',
+// 	  keyboard: false
+// });
 
 //To do the validation of the form even on paste
 $("#pemPkey").bind('input propertychange', function(){
@@ -72,7 +72,21 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 
 </script>
 	<h2>Transfer files</h2>
-	<span class="pull-right" id="proxyTimeSpan">Loading proxy...</span>
+<!-- 	<div class="row form-inline">		 -->
+<!-- 		<button class="btn btn-sm btn-primary pull-right" type="button" id="delegateButton" onclick="showDelegateModal()">Delegate again</button> -->
+<!-- 		&nbsp; -->
+<!-- 		<span class="pull-right" id="proxyTimeSpan">Loading proxy...</span> -->
+		<div class="btn-group pull-right">
+          <button class="btn btn-primary dropdown-toggle pull-right" type="button" data-toggle="dropdown" >
+            <span id="proxyTimeSpan">Loading proxy...  </span><span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" onclick="showDelegateModal()">Delegate again</a></li>            
+          </ul>
+        </div>
+<!-- </div> -->
+	</div>
+	<div class="row">
 	<div class="modal fade" id="delegationModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
