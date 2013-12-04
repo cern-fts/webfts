@@ -9,7 +9,7 @@ function loadTransferTable(transferList, jobId){
 		if (showPopover == null){
 			t_row += getColumn(value.file_id);
 		} else {
-			t_row += getColumn('<a id="popover' + value.file_id  + '" href="#" class="btn" data-content="' + getPopoverText(value) + '" rel="popover" data-placement="right" data-trigger="hover" data-html="true">' + value.file_id + '</a>')
+			t_row += getColumn('<a id="popover' + value.file_id  + '" href="#" class="btn" data-content="' + getPopoverText(value) + '" rel="popover" data-placement="right" data-trigger="hover" data-html="true">' + value.file_id + '</a>');
 		}
 		t_row += getColumn(value.transferhost)	+ getColumn(value.source_surl) + getColumn(value.dest_surl) + getColumn(value.filesize) 
 		+ getColumn(value.throughput) + getColumn(value.start_time).replace("T", " ") + getColumn(value.finish_time).replace("T", " ") 
@@ -44,7 +44,7 @@ function loadJobTable(jobList){
 }
 
 function getPopoverText(transfer){
-	if (transfer.reason != null){
+	if ((transfer.reason != null) && (transfer.reason != "")){
 		return '<strong>Error reason:</strong> ' + transfer.reason; 
 	} 
 	return null;
@@ -89,8 +89,3 @@ function toogleDetailRowState(rowId, jobId) {
 	}
 }	
 
-function loadJobDetails(transfers){
-	$('#' + indicator + '-loading-indicator').hide();
-	$('#' + value.job_id + '-table-details').show();
-	alert("Hola");
-}
