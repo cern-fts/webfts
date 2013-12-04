@@ -17,12 +17,15 @@ function runTransfer(container, origFolder, destFolder){
 	var selectedFiles = getSelectedFiles(container);
     if (selectedFiles.length > 0){
 		var theData = {};
-		theData["files"] = [];       	  
-		theData["files"].push({});    	  
-		theData["files"][0]["sources"] = [];
-		theData["files"][0]["sources"] = getFullPathList(selectedFiles, document.getElementById(origFolder).value);
-		theData["files"][0]["destinations"] = [];
-		theData["files"][0]["destinations"] = getFullPathList(selectedFiles, document.getElementById(destFolder).value);
+		theData["files"] = [];       	      	  
+		for (var i=0; i<selectedFiles.length; i++){
+			var files = {};
+			files["sources"] = [];
+			files["sources"] = getFullPath(selectedFiles[i], document.getElementById(origFolder).value.trim());
+			files["destinations"] = [];
+			files["destinations"] = getFullPath(selectedFiles[i], document.getElementById(destFolder).value.trim());
+			theData["files"].push(files);
+		}
 		theData["params"] = [];
 		  
 		runDataTransfer($('#delegation_id').val(), theData);
@@ -30,11 +33,12 @@ function runTransfer(container, origFolder, destFolder){
     return false;
 }
 
-function getFullPathList(slist, endFolder){
+function getFullPath(element, endFolder){
 	var dList = [];
-	for (var i = 0; i < slist.length; i++){	
-		dList[i] = endFolder + '/' + slist[i];
+	if (endFolder.slice(-1) != "/"){
+		endFolder += "/";
 	}
+	dList[0] = endFolder + element;	
 	return dList;
 }	
 
