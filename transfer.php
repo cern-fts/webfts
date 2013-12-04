@@ -72,19 +72,14 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 
 </script>
 	<h2>Transfer files</h2>
-<!-- 	<div class="row form-inline">		 -->
-<!-- 		<button class="btn btn-sm btn-primary pull-right" type="button" id="delegateButton" onclick="showDelegateModal()">Delegate again</button> -->
-<!-- 		&nbsp; -->
-<!-- 		<span class="pull-right" id="proxyTimeSpan">Loading proxy...</span> -->
-		<div class="btn-group pull-right">
+	<div class="btn-group pull-right">
           <button class="btn btn-primary dropdown-toggle pull-right" type="button" data-toggle="dropdown" >
             <span id="proxyTimeSpan">Loading proxy...  </span><span class="caret"></span>
           </button>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#" onclick="showDelegateModal()">Delegate again</a></li>            
           </ul>
-        </div>
-<!-- </div> -->
+    </div>
 	</div>
 	<div class="row">
 	<div class="modal fade" id="delegationModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -134,7 +129,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 				echo "<input type=\"hidden\" id=\"clientCERT\" value=\"$v\">";				
 		}
 	?>
-	<legend>Please specify your transfer source and destination</legend>
+	<legend><h4>Please specify your transfer source and destination <small>(Including protocol. Example: gsiftp://sra10a01.myinstitute.com/myfolder)</small></h4></legend>
 	<div class="alert alert-danger" id="serverkeyAlert" style="display:none" >
 		<button type="button" class="close" data-dismiss="alert" onclick="$('serverkeyAlert').hide()">&times;</button>
 		<small id="serverErrorText"></small>
@@ -146,7 +141,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 	<div class="row">
 		<div class="btn-group-vertical col-lg-5">
 			<div class="input-group">
-				<input id="leftEndpoint" type="text" placeholder="Endpoint path" class="form-control" value="gsiftp://lxfsra10a01.cern.ch/dpm/cern.ch/home/atlas"> <span class="input-group-btn">
+				<input id="leftEndpoint" type="text" placeholder="Endpoint path" class="form-control" value="gsiftp://lxfsra10a01.cern.ch/dpm/cern.ch/home/"> <span class="input-group-btn">
 					<button class="btn btn-primary" type="button" id="load-left" onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter')">Load</button>
 				</span>
 			</div>
