@@ -23,6 +23,7 @@ function loadTransferTable(transferList, jobId){
 
 function loadJobTable(jobList){
 	$("#jobResultsTable > tbody").html("");
+	jobList.sort(function(a,b) { return new Date(b.submit_time) - new Date(a.submit_time); } );
 	$.each(jobList, function(index, value){
 		//Job row
 		var t_row = '<tr class="' + getRowColor(value.job_state) + ' accordion-body" data-toggle="collapse" id="' + value.job_id 
