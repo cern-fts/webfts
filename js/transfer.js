@@ -225,3 +225,10 @@ function filterResults(userfilter, contentTable){
     //show the rows that match.
     .show();
 };
+
+function getInitFilter(filterField){
+    $("#" + filterField).selectpicker({
+//        style: 'btn-info',
+//        size: 4
+        });
+}

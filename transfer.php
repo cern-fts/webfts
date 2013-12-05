@@ -70,6 +70,8 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 	activateTransferButton('rightEndpointContentTable', 'transfer-from-right', 'left-ep-text');    
 });
 
+//getInitFilter('leftFilterField');
+getInitFilter('rightFilterField');
 </script>
 	<h2>Transfer files</h2>
 	<div class="btn-group pull-right">
@@ -210,41 +212,67 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 				<div class="panel-heading">
 					<div class="btn-toolbar">
 						<div class="btn-group ">
-							<button type="button" class="btn btn-sm" onclick="selectAllFiles('rightEndpointContent')">Select All</button>
-							<button type="button" class="btn btn-sm" onclick="selectNoneFiles('rightEndpointContent')">None</button>
+							<button type="button" class="btn"
+								onclick="selectAllFiles('rightEndpointContent')">Select All</button>
+							<button type="button" class="btn"
+								onclick="selectNoneFiles('rightEndpointContent')">None</button>
 						</div>
 						<div class="btn-group">
-							<button type="button" class="btn btn-sm" onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter')" >
-								<i class="glyphicon glyphicon-refresh"/>&nbsp;Refresh
+							<button type="button" class="btn"
+								onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter')">
+								<i class="glyphicon glyphicon-refresh" />&nbsp;Refresh
 							</button>
 						</div>
-						<div class="btn-group">							
-							<input type="text" class="form-control input-sm" placeholder="Filter" id="rightEpFilter" onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable')">														
+						<div class="btn-group">
+							<div class="input-group">
+								<div class="checkbox">
+									<label><input type="checkbox">Hide folders</label>
+								</div>
+							</div>
+						</div>						 
+						<div class="input-group ">							
+							<input type="text" class="form-control" placeholder="Filter" id="rightEpFilter" onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable')">
+							<div class="input-group-btn">
+								<select id="rightFilterField" class="input-group-btn" data-width="auto">
+									<option data-icon="glyphicon glyphicon-tag">Name</option>
+									<option data-icon="glyphicon glyphicon-calendar">Time</option>
+									<option data-icon="glyphicon glyphicon-resize-vertical">Size</option>
+								</select> <i class="glyphicon glyphicon-info-sign" />								
+<!--  								<label class="checkbox-inline"><input type="checkbox">Hide folders</label> -->
+							</div>
+							
 						</div>
-						&nbsp; <i class="glyphicon glyphicon-info-sign"/>
 					</div>
 				</div>
-				<div class="panel-body">						
-					<div id="right-loading-indicator" style="display:none" class="row"> 
+				<div class="panel-body">
+					<div id="right-loading-indicator" style="display: none" class="row">
 						<ul class="pager">
-							<li><label class="text-center"> Loading...</label>&nbsp;<img class="pagination-centered" src="img/ajax-loader.gif"/></li>
-						</ul>												
-					</div>		
-					<div id="rightEndpointContent">						    
-						<table class="table table-condensed" id="rightEndpointContentTable">
+							<li><label class="text-center"> Loading...</label>&nbsp;<img
+								class="pagination-centered" src="img/ajax-loader.gif" /></li>
+						</ul>
+					</div>
+					<div id="rightEndpointContent">
+						<table class="table table-condensed"
+							id="rightEndpointContentTable">
 							<thead>
 								<tr>
-									<td>Name</td><td>Mode</td><td>Time</td><td>Size</td>
+									<td>Name</td>
+									<td>Mode</td>
+									<td>Time</td>
+									<td>Size</td>
 								</tr>
 							</thead>
 							<tbody>
-								<tr><td></td><td></td><td></td><td></td></tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
 							</tbody>
 						</table>
-						<span>
-							<span class="rightSelectedCount"> 0 </span>
-							File(s) Selected &nbsp;
-							<input type="hidden" id="right-ep-text">
+						<span> <span class="rightSelectedCount"> 0 </span> File(s)
+							Selected &nbsp; <input type="hidden" id="right-ep-text">
 						</span>
 					</div>
 				</div>
