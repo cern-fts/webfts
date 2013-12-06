@@ -32,6 +32,10 @@ $( document ).ready(function() {
 	
 	initialLoadState('leftEndpoint', 'load-left');
 	initialLoadState('rightEndpoint', 'load-right');
+
+	$('#leftFilterPanel').hide();
+	$('#rightFilterPanel').hide();
+	
 	console.log( "ready!" );	
 });
 
@@ -70,8 +74,10 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 	activateTransferButton('rightEndpointContentTable', 'transfer-from-right', 'left-ep-text');    
 });
 
-//getInitFilter('leftFilterField');
-getInitFilter('rightFilterField');
+// $("#leftShowFilterButton").click(function() {
+// 	$('#leftFilterPanel').toggle();
+// });
+
 </script>
 	<h2>Transfer files</h2>
 	<div class="btn-group pull-right">
@@ -157,13 +163,47 @@ getInitFilter('rightFilterField');
 						</div>
 						<div class="btn-group">
 							<button type="button" class="btn btn-sm" onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter')">
-								<i class="glyphicon glyphicon-refresh"/>&nbsp;Refresh
+								<i class="glyphicon glyphicon-refresh" />&nbsp;Refresh
 							</button>
 						</div>
 						<div class="btn-group">
-							<input type="text" class="form-control input-sm" placeholder="Filter" id="leftEpFilter" onkeyup="getFilteredResults('leftEpFilter', 'leftEndpointContentTable')">
+							<button type="button" id="leftShowFilterButton" class="btn btn-sm" onclick="$('#leftFilterPanel').toggle();">Filter</button>							
+						</div>						
+						<div class="btn-group">
+							<div id="leftFilterPanel">
+								<div class="row formRowCustom">
+									<form class="form-inline">
+										<div class="form-group">
+											<select id="rightFilterField" class="form-control input-sm"
+												data-width="auto">
+												<option>Name</option>
+												<option>Time</option>
+												<option>Size</option>
+											</select>
+										</div>
+										<div class="form-group">
+											<input type="text" class="form-control input-sm"
+												placeholder="Filter" id="rightEpFilter"
+												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable')">
+										</div>
+										<div class="form-group">
+											<label> <input type="checkbox"> Hide folders
+											</label>
+										</div>
+									</form>
+								</div>
+								<div class="row formRowCustom">
+									<form class="form-inline">
+										<div class="form-group">
+										</div>
+										<div class="form-group">
+										</div>
+										<div class="form-group">
+										</div>
+									</form>
+								</div>
+							</div>
 						</div>
-						&nbsp; <i class="glyphicon glyphicon-info-sign"/>
 					</div>
 				</div>
 				<div class="panel-body">
@@ -212,35 +252,51 @@ getInitFilter('rightFilterField');
 				<div class="panel-heading">
 					<div class="btn-toolbar">
 						<div class="btn-group ">
-							<button type="button" class="btn"
-								onclick="selectAllFiles('rightEndpointContent')">Select All</button>
-							<button type="button" class="btn"
-								onclick="selectNoneFiles('rightEndpointContent')">None</button>
+							<button type="button" class="btn btn-sm" onclick="selectAllFiles('rightEndpointContent')">Select All</button>
+							<button type="button" class="btn btn-sm" onclick="selectNoneFiles('rightEndpointContent')">None</button>
 						</div>
 						<div class="btn-group">
-							<button type="button" class="btn"
-								onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter')">
+							<button type="button" class="btn btn-sm" onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter')">
 								<i class="glyphicon glyphicon-refresh" />&nbsp;Refresh
 							</button>
 						</div>
 						<div class="btn-group">
-							<div class="input-group">
-								<div class="checkbox">
-									<label><input type="checkbox">Hide folders</label>
+							<button type="button" id="rightShowFilterButton" class="btn btn-sm" onclick="$('#rightFilterPanel').toggle();">Filter</button>							
+						</div>						
+						<div class="btn-group">
+							<div id="rightFilterPanel">
+								<div class="row formRowCustom">
+									<form class="form-inline">
+										<div class="form-group">
+											<select id="rightFilterField" class="form-control input-sm"
+												data-width="auto">
+												<option>Name</option>
+												<option>Time</option>
+												<option>Size</option>
+											</select>
+										</div>
+										<div class="form-group">
+											<input type="text" class="form-control input-sm"
+												placeholder="Filter" id="rightEpFilter"
+												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable')">
+										</div>
+										<div class="form-group">
+											<label> <input type="checkbox"> Hide folders
+											</label>
+										</div>
+									</form>
+								</div>
+								<div class="row formRowCustom">
+									<form class="form-inline">
+										<div class="form-group">
+										</div>
+										<div class="form-group">
+										</div>
+										<div class="form-group">
+										</div>
+									</form>
 								</div>
 							</div>
-						</div>						 
-						<div class="input-group ">							
-							<input type="text" class="form-control" placeholder="Filter" id="rightEpFilter" onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable')">
-							<div class="input-group-btn">
-								<select id="rightFilterField" class="input-group-btn" data-width="auto">
-									<option data-icon="glyphicon glyphicon-tag">Name</option>
-									<option data-icon="glyphicon glyphicon-calendar">Time</option>
-									<option data-icon="glyphicon glyphicon-resize-vertical">Size</option>
-								</select> <i class="glyphicon glyphicon-info-sign" />								
-<!--  								<label class="checkbox-inline"><input type="checkbox">Hide folders</label> -->
-							</div>
-							
 						</div>
 					</div>
 				</div>

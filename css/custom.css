@@ -6,3 +6,7 @@
     table-layout: fixed;
     word-wrap: break-word;
 }
+
+.formRowCustom{
+	padding: 5px 5px 0px 10px;
+}
