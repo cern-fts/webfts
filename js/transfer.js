@@ -225,3 +225,31 @@ function filterResults(userfilter, contentTable){
     //show the rows that match.
     .show();
 };
+
+function initFilters(){
+	$('#leftFilterPanel').hide();
+	$('#rightFilterPanel').hide();
+	
+	$('#leftFilterOptionsPanel').hide();
+	$('#rightFilterOptionsPanel').hide();	
+}
+
+function setFilterShowingOptions(panel, option){	
+	$("#" + panel).children().show();
+	$("#" + option).siblings().hide();
+	$('#' + panel).show();
+}
+
+function setInitialDatepickers(){
+	$("#leftFromRangeFilterDate").datepicker();
+	$("#leftToRangeFilterDate").datepicker();
+	$("#rightFromRangeFilterDate").datepicker();
+	$("#rightToRangeFilterDate").datepicker();	
+}
+
+function setFilterPanel(panel, buttonObj){
+	buttonObj.text(function(i, text){
+        return text === "Show filters" ? "Hide filters" : "Show filters";
+	});
+	$('#' + panel).toggle();
+}

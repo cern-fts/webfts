@@ -15,10 +15,12 @@
 <link href="css/justified-nav.css" rel="stylesheet">
 <link href="css/validation.css" rel="stylesheet">
 <link href="css/custom.css" rel="stylesheet">
+<link href="css/jquery-ui.min.css" rel="stylesheet">
 
 
 <script src="js/bootstrap.min.js"></script> 
 <script src="js/jquery.finderSelect.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
 
 
 <!--[if lte IE 9]><link rel="stylesheet" href="css/style-ie9.css" /><![endif]-->

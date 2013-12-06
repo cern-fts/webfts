@@ -33,8 +33,9 @@ $( document ).ready(function() {
 	initialLoadState('leftEndpoint', 'load-left');
 	initialLoadState('rightEndpoint', 'load-right');
 
-	$('#leftFilterPanel').hide();
-	$('#rightFilterPanel').hide();
+	initFilters();	
+
+	setInitialDatepickers();
 	
 	console.log( "ready!" );	
 });
@@ -174,7 +175,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 								<div class="row formRowCustom">
 									<form class="form-inline">
 										<div class="form-group">
-											<select id="rightFilterField" class="form-control input-sm"
+											<select id="leftFilterField" class="form-control input-sm"
 												data-width="auto">
 												<option>Name</option>
 												<option>Time</option>
@@ -182,9 +183,8 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 											</select>
 										</div>
 										<div class="form-group">
-											<input type="text" class="form-control input-sm"
-												placeholder="Filter" id="rightEpFilter"
-												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable')">
+											<input type="text" class="form-control input-sm" placeholder="Filter" id="leftEpFilter"
+												onkeyup="getFilteredResults('leftEpFilter', 'leftEndpointContentTable')">
 										</div>
 										<div class="form-group">
 											<label> <input type="checkbox"> Hide folders
@@ -192,9 +192,10 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 										</div>
 									</form>
 								</div>
-								<div class="row formRowCustom">
+								<div class="row formRowCustom" id="leftFilterOptionsPanel">
 									<form class="form-inline">
 										<div class="form-group">
+											
 										</div>
 										<div class="form-group">
 										</div>
@@ -261,7 +262,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 							</button>
 						</div>
 						<div class="btn-group">
-							<button type="button" id="rightShowFilterButton" class="btn btn-sm" onclick="$('#rightFilterPanel').toggle();">Filter</button>							
+							<button type="button" id="rightShowFilterButton" class="btn btn-sm" onclick="setFilterPanel('rightFilterPanel', $(this));">Show filters</button>							
 						</div>						
 						<div class="btn-group">
 							<div id="rightFilterPanel">
@@ -269,15 +270,14 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 									<form class="form-inline">
 										<div class="form-group">
 											<select id="rightFilterField" class="form-control input-sm"
-												data-width="auto">
-												<option>Name</option>
-												<option>Time</option>
-												<option>Size</option>
+												data-width="auto" onchange="setFilterShowingOptions('rightFilterOptionsPanel', $('#rightFilterField').val());">
+												<option value="right1">Name</option>
+												<option value="right2">Date</option>
+												<option value="right3">Size</option>
 											</select>
 										</div>
 										<div class="form-group">
-											<input type="text" class="form-control input-sm"
-												placeholder="Filter" id="rightEpFilter"
+											<input type="text" class="form-control input-sm" placeholder="Filter" id="rightEpFilter"
 												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable')">
 										</div>
 										<div class="form-group">
@@ -286,13 +286,38 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 										</div>
 									</form>
 								</div>
-								<div class="row formRowCustom">
-									<form class="form-inline">
+								<div class="row formRowCustom" id="rightFilterOptionsPanel">
+									<form class="form-inline" id="right1"></form>
+									<form class="form-inline" id="right2">
 										<div class="form-group">
+											<label>Between </label>
 										</div>
 										<div class="form-group">
+											<input type="text" class="form-control input-sm" placeholder="From date" id="rightFromRangeFilterDate"
+												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable')">
 										</div>
 										<div class="form-group">
+											<label> and </label>
+										</div>
+										<div class="form-group">
+											<input type="text" class="form-control input-sm" placeholder="To date" id="rightToRangeFilterDate"
+												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable')">
+										</div>
+									</form>
+									<form class="form-inline" id="right3">
+										<div class="form-group">
+											<label>Between </label>
+										</div>
+										<div class="form-group">
+											<input type="text" class="form-control input-sm" placeholder="From bytes" id="rightFromRangeFilterSize"
+												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable')">
+										</div>
+										<div class="form-group">
+											<label> and </label>
+										</div>
+										<div class="form-group">
+											<input type="text" class="form-control input-sm" placeholder="To bytes" id="rightToRangeFilterSize"
+												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable')">
 										</div>
 									</form>
 								</div>
