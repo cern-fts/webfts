@@ -168,18 +168,18 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 							</button>
 						</div>
 						<div class="btn-group">
-							<button type="button" id="leftShowFilterButton" class="btn btn-sm" onclick="$('#leftFilterPanel').toggle();">Filter</button>							
+							<button type="button" id="leftShowFilterButton" class="btn btn-sm" onclick="setFilterPanel('leftFilterPanel', $(this));">Show filters</button>							
 						</div>						
 						<div class="btn-group">
 							<div id="leftFilterPanel">
 								<div class="row formRowCustom">
-									<form class="form-inline"  id="leftSelectingOptions">
+									<form class="form-inline" id="leftSelectingOptions">
 										<div class="form-group">
 											<select id="leftFilterField" class="form-control input-sm"
-												data-width="auto">
-												<option>Name</option>
-												<option>Time</option>
-												<option>Size</option>
+												data-width="auto" onchange="setFilterShowingOptions('leftFilterOptionsPanel', 'leftEpFilter', $('#leftFilterField').val())">
+												<option value="left1">Name</option>
+												<option value="left2">Date</option>
+												<option value="left3">Size</option>
 											</select>
 										</div>
 										<div class="form-group">
@@ -187,19 +187,44 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 												onkeyup="getFilteredResults('leftEpFilter', 'leftEndpointContentTable', 'leftFilterField')">
 										</div>
 										<div class="form-group">
-											<label> <input type="checkbox"> Hide folders
+											<label> 
+												<input type="checkbox" onclick="getFilteredResults('leftEpFilter', 'leftEndpointContentTable', 'leftFilterField')"/> Hide folders
 											</label>
 										</div>
 									</form>
 								</div>
 								<div class="row formRowCustom" id="leftFilterOptionsPanel">
-									<form class="form-inline">
+									<form class="form-inline" id="left1"></form>
+									<form class="form-inline" id="left2">
 										<div class="form-group">
-											
+											<label>Between </label>
 										</div>
 										<div class="form-group">
+											<input type="text" class="form-control input-sm" placeholder="From date" id="leftFromRangeFilterDate"
+												onkeyup="getFilteredResults(null, 'leftEndpointContentTable', 'leftFilterField')">
 										</div>
 										<div class="form-group">
+											<label> and </label>
+										</div>
+										<div class="form-group">
+											<input type="text" class="form-control input-sm" placeholder="To date" id="leftToRangeFilterDate"
+												onkeyup="getFilteredResults(null, 'leftEndpointContentTable', 'leftFilterField')">
+										</div>
+									</form>
+									<form class="form-inline" id="left3">
+										<div class="form-group">
+											<label>Between </label>
+										</div>
+										<div class="form-group">
+											<input type="text" class="form-control input-sm" placeholder="From bytes" id="leftFromRangeFilterSize"
+												onkeyup="getFilteredResults(null, 'leftEndpointContentTable', 'leftFilterField')">
+										</div>
+										<div class="form-group">
+											<label> and </label>
+										</div>
+										<div class="form-group">
+											<input type="text" class="form-control input-sm" placeholder="To bytes" id="leftToRangeFilterSize"
+												onkeyup="getFilteredResults(null, 'leftEndpointContentTable', 'leftFilterField')">
 										</div>
 									</form>
 								</div>
@@ -208,26 +233,34 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 					</div>
 				</div>
 				<div class="panel-body">
-					<div id="left-loading-indicator" style="display:none" class="row"> 
+					<div id="left-loading-indicator" style="display: none" class="row">
 						<ul class="pager">
-							<li><label class="text-center"> Loading...</label>&nbsp;<img class="pagination-centered" src="img/ajax-loader.gif"/></li>
-						</ul>												
-					</div>		
+							<li><label class="text-center"> Loading...</label>&nbsp;<img
+								class="pagination-centered" src="img/ajax-loader.gif" /></li>
+						</ul>
+					</div>
 					<div id="leftEndpointContent">
-						<table class="table table-condensed" id="leftEndpointContentTable">
+						<table class="table table-condensed"
+							id="leftEndpointContentTable">
 							<thead>
 								<tr>
-									<td>Name</td><td>Mode</td><td>Time</td><td>Size</td>
+									<td>Name</td>
+									<td>Mode</td>
+									<td>Time</td>
+									<td>Size</td>
 								</tr>
 							</thead>
 							<tbody>
-								<tr><td></td><td></td><td></td><td></td></tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
 							</tbody>
 						</table>
-						<span>
-							<span class="leftSelectedCount"> 0 </span>
-							File(s) Selected &nbsp;
-							<input type="hidden" id="left-ep-text">
+						<span> <span class="leftSelectedCount"> 0 </span> File(s)
+							Selected &nbsp; <input type="hidden" id="left-ep-text">
 						</span>
 					</div>
 				</div>
@@ -270,7 +303,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 									<form class="form-inline" id="rightSelectingOptions">
 										<div class="form-group">
 											<select id="rightFilterField" class="form-control input-sm"
-												data-width="auto" onchange="setFilterShowingOptions('rightFilterOptionsPanel', $('#rightFilterField').val());">
+												data-width="auto" onchange="setFilterShowingOptions('rightFilterOptionsPanel', 'rightEpFilter', $('#rightFilterField').val())">
 												<option value="right1">Name</option>
 												<option value="right2">Date</option>
 												<option value="right3">Size</option>
@@ -281,7 +314,8 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable', 'rightFilterField')">
 										</div>
 										<div class="form-group">
-											<label> <input type="checkbox"> Hide folders
+											<label> 
+												<input type="checkbox" onclick="getFilteredResults('rightEpFilter', 'rightEndpointContentTable', 'rightFilterField')"/> Hide folders
 											</label>
 										</div>
 									</form>
@@ -294,14 +328,14 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 										</div>
 										<div class="form-group">
 											<input type="text" class="form-control input-sm" placeholder="From date" id="rightFromRangeFilterDate"
-												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable', 'rightFilterField')">
+												onkeyup="getFilteredResults(null, 'rightEndpointContentTable', 'rightFilterField')">
 										</div>
 										<div class="form-group">
 											<label> and </label>
 										</div>
 										<div class="form-group">
 											<input type="text" class="form-control input-sm" placeholder="To date" id="rightToRangeFilterDate"
-												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable', 'rightFilterField')">
+												onkeyup="getFilteredResults(null, 'rightEndpointContentTable', 'rightFilterField')">
 										</div>
 									</form>
 									<form class="form-inline" id="right3">
@@ -310,14 +344,14 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 										</div>
 										<div class="form-group">
 											<input type="text" class="form-control input-sm" placeholder="From bytes" id="rightFromRangeFilterSize"
-												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable', 'rightFilterField')">
+												onkeyup="getFilteredResults(null, 'rightEndpointContentTable', 'rightFilterField')">
 										</div>
 										<div class="form-group">
 											<label> and </label>
 										</div>
 										<div class="form-group">
 											<input type="text" class="form-control input-sm" placeholder="To bytes" id="rightToRangeFilterSize"
-												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable', 'rightFilterField')">
+												onkeyup="getFilteredResults(null, 'rightEndpointContentTable', 'rightFilterField')">
 										</div>
 									</form>
 								</div>

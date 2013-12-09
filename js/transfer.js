@@ -195,7 +195,7 @@ function showDelegateModal(){
 }
 
 function getFilteredResults(input, contentTable, option){
-	var panelToShow = $('#rightFilterField').val();
+	var panelToShow = $('#' + option).val();
 	var filter = $('#' + input).val();
 	var inputs = $("#" + panelToShow + " :input");
 	var checkBoxParent = $('#' + option).parent().parent()[0].id;
@@ -205,21 +205,26 @@ function getFilteredResults(input, contentTable, option){
 }
 
 function filterResults(userfilter, contentTable, inputs, hideFolders, columnName){
-    //split the current value of searchInput
-    var data = userfilter.split(" ");
-	
     //create a jquery object of the rows
     var jo = $("#" + contentTable + " tbody").find("tr");
-    if (userfilter == "") {
+    if (userfilter == "" && columnName == "Name") {
         jo.hide();
     	filterFolders(jo,hideFolders);
         return;
     }
     //hide all the rows
     jo.hide();
-
-    if (columnName == "Name"){
-    	filterByName(jo, data, hideFolders);
+    
+    switch (columnName){
+	    case "Name":
+	    	filterByName(jo, userfilter.split(" "), hideFolders);
+	    	break;
+	    case "Time":
+    		filterByTime(jo, inputs, hideFolders);
+	    	break;
+	    case "Size":
+    		filterBySize(jo, inputs, hideFolders);
+	    	break;
     }
     	
 //    //Recusively filter the jquery object to get results.
@@ -235,6 +240,43 @@ function filterResults(userfilter, contentTable, inputs, hideFolders, columnName
 //    //show the rows that match.
 //    .show();
 };
+
+function filterBySize(jo, inputs, hideFolders){
+    //Recusively filter the jquery object to get results.
+    jo.filter(function (i, v) {
+    	var $t = $(this);
+    	if ($t.children()[0].textContent.indexOf('/') !== -1 && hideFolders) {
+             return false;
+        } else {
+        	if (inputs[0].value !== ""){
+        		if (parseInt(inputs[0].value.trim()) <= parseInt($t.children()[3].textContent)){
+        			if (inputs[1].value != ""){
+        				if (parseInt(inputs[1].value.trim()) >= parseInt($t.children()[3].textContent)){
+        					return true;
+    					}
+        				return false;
+        			}        			
+        			return true;
+        		}           	
+        	} else if (inputs[1].value !== ""){
+        		if (parseInt($t.children()[3].textContent) <= parseInt(inputs[1].value.trim())){        			
+        				return true;        			
+        		}           	
+        	} else {
+        		//Both empty
+        		return true;
+        	}       	        	
+        }
+        return false;
+    })	
+    //show the rows that match.
+    .show();	
+}
+
+function filterByTime(jo, inputs, hideFolders){
+	
+}
+
 function filterFolders(jo,hideFolders){
     //Recusively filter the jquery object to get results.
     jo.filter(function (i, v) {
@@ -245,7 +287,7 @@ function filterFolders(jo,hideFolders){
         }        
         return true;
     })	
-  //show the rows that match.
+    //show the rows that match.
     .show();
 }
 
@@ -265,7 +307,7 @@ function filterByName(jo, data, hideFolders){
         }
         return false;
     })	
-  //show the rows that match.
+    //show the rows that match.
     .show();
 }
 
@@ -277,10 +319,15 @@ function initFilters(){
 	$('#rightFilterOptionsPanel').hide();	
 }
 
-function setFilterShowingOptions(panel, option){	
+function setFilterShowingOptions(panel, textInput, option){	
 	$("#" + panel).children().show();
 	$("#" + option).siblings().hide();
+	if (option.indexOf('1') != -1)
+			$('#' + textInput).show();
+	else
+		$('#' + textInput).hide();
 	$('#' + panel).show();
+	
 }
 
 function setInitialDatepickers(){
