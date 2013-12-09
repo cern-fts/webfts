@@ -173,7 +173,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 						<div class="btn-group">
 							<div id="leftFilterPanel">
 								<div class="row formRowCustom">
-									<form class="form-inline">
+									<form class="form-inline"  id="leftSelectingOptions">
 										<div class="form-group">
 											<select id="leftFilterField" class="form-control input-sm"
 												data-width="auto">
@@ -184,7 +184,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 										</div>
 										<div class="form-group">
 											<input type="text" class="form-control input-sm" placeholder="Filter" id="leftEpFilter"
-												onkeyup="getFilteredResults('leftEpFilter', 'leftEndpointContentTable')">
+												onkeyup="getFilteredResults('leftEpFilter', 'leftEndpointContentTable', 'leftFilterField')">
 										</div>
 										<div class="form-group">
 											<label> <input type="checkbox"> Hide folders
@@ -267,7 +267,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 						<div class="btn-group">
 							<div id="rightFilterPanel">
 								<div class="row formRowCustom">
-									<form class="form-inline">
+									<form class="form-inline" id="rightSelectingOptions">
 										<div class="form-group">
 											<select id="rightFilterField" class="form-control input-sm"
 												data-width="auto" onchange="setFilterShowingOptions('rightFilterOptionsPanel', $('#rightFilterField').val());">
@@ -278,7 +278,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 										</div>
 										<div class="form-group">
 											<input type="text" class="form-control input-sm" placeholder="Filter" id="rightEpFilter"
-												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable')">
+												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable', 'rightFilterField')">
 										</div>
 										<div class="form-group">
 											<label> <input type="checkbox"> Hide folders
@@ -294,14 +294,14 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 										</div>
 										<div class="form-group">
 											<input type="text" class="form-control input-sm" placeholder="From date" id="rightFromRangeFilterDate"
-												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable')">
+												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable', 'rightFilterField')">
 										</div>
 										<div class="form-group">
 											<label> and </label>
 										</div>
 										<div class="form-group">
 											<input type="text" class="form-control input-sm" placeholder="To date" id="rightToRangeFilterDate"
-												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable')">
+												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable', 'rightFilterField')">
 										</div>
 									</form>
 									<form class="form-inline" id="right3">
@@ -310,14 +310,14 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 										</div>
 										<div class="form-group">
 											<input type="text" class="form-control input-sm" placeholder="From bytes" id="rightFromRangeFilterSize"
-												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable')">
+												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable', 'rightFilterField')">
 										</div>
 										<div class="form-group">
 											<label> and </label>
 										</div>
 										<div class="form-group">
 											<input type="text" class="form-control input-sm" placeholder="To bytes" id="rightToRangeFilterSize"
-												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable')">
+												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable', 'rightFilterField')">
 										</div>
 									</form>
 								</div>

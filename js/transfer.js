@@ -194,37 +194,80 @@ function showDelegateModal(){
 	$('#delegationModal').modal('show');
 }
 
-function getFilteredResults(input, contentTable){
+function getFilteredResults(input, contentTable, option){
+	var panelToShow = $('#rightFilterField').val();
 	var filter = $('#' + input).val();
-	filterResults(filter, contentTable);
+	var inputs = $("#" + panelToShow + " :input");
+	var checkBoxParent = $('#' + option).parent().parent()[0].id;
+	var hideFolders = $("#" + checkBoxParent  + " :checkbox")[0].checked;
+	var columnName = $('#' + option).find(":selected").text();
+	filterResults(filter, contentTable, inputs, hideFolders, columnName);
 }
 
-function filterResults(userfilter, contentTable){
+function filterResults(userfilter, contentTable, inputs, hideFolders, columnName){
     //split the current value of searchInput
     var data = userfilter.split(" ");
 	
     //create a jquery object of the rows
     var jo = $("#" + contentTable + " tbody").find("tr");
     if (userfilter == "") {
-        jo.show();
+        jo.hide();
+    	filterFolders(jo,hideFolders);
         return;
     }
     //hide all the rows
     jo.hide();
 
+    if (columnName == "Name"){
+    	filterByName(jo, data, hideFolders);
+    }
+    	
+//    //Recusively filter the jquery object to get results.
+//    jo.filter(function (i, v) {
+//    	var $t = $(this);
+//        for (var d = 0; d < data.length; ++d) {
+//            if ($t.is(":contains('" + data[d] + "')")) {
+//                  return true;
+//            }
+//        }
+//        return false;
+//    })
+//    //show the rows that match.
+//    .show();
+};
+function filterFolders(jo,hideFolders){
     //Recusively filter the jquery object to get results.
     jo.filter(function (i, v) {
     	var $t = $(this);
-        for (var d = 0; d < data.length; ++d) {
-            if ($t.is(":contains('" + data[d] + "')")) {
-                  return true;
-            }
+    	var $r = $t.children()[0].textContent; 
+        if ($r.indexOf('/') !== -1 && hideFolders) {
+                  return false;
+        }        
+        return true;
+    })	
+  //show the rows that match.
+    .show();
+}
+
+
+function filterByName(jo, data, hideFolders){
+    //Recusively filter the jquery object to get results.
+    jo.filter(function (i, v) {
+    	var $t = $(this);
+    	if ($t.children()[0].textContent.indexOf('/') !== -1 && hideFolders) {
+             return false;
+        } else { 
+	        for (var d = 0; d < data.length; ++d) {
+	            if ($t.children('td').eq(0).is(":contains('" + data[d] + "')")) {
+	                  return true;
+	            }
+	        }
         }
         return false;
-    })
-    //show the rows that match.
+    })	
+  //show the rows that match.
     .show();
-};
+}
 
 function initFilters(){
 	$('#leftFilterPanel').hide();
