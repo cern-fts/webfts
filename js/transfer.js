@@ -323,16 +323,38 @@ function filterByName(jo, data, hideFolders){
     	if ($t.children()[0].textContent.indexOf('/') !== -1 && hideFolders) {
              return false;
         } else { 
-	        for (var d = 0; d < data.length; ++d) {
-	            if ($t.children('td').eq(0).is(":contains('" + data[d] + "')")) {
-	                  return true;
-	            }
-	        }
+        	if (isRegEx(data.toString())){
+        		try {
+        			var fileName = $t.children()[0].textContent.toString().trim();
+        			if (fileName.indexOf('/') !== -1)
+        				fileName = fileName.substr(0, fileName.length - 1);
+        			if (fileName.match(data) != null) //regex
+        				return true;
+        		} finally {
+        			console.log("Waiting fot reh rest of the regex"); 
+        		}
+        	} else { 
+		        for (var d = 0; d < data.length; ++d) {	        	
+		            if ($t.children('td').eq(0).is(":contains('" + data[d] + "')")) {
+		                  return true;
+		            }
+		        }
+        	}
         }
         return false;
     })	
     //show the rows that match.
     .show();
+}
+
+function isRegEx(data){
+	var regChars = {'[':true, ']':true, '(':true, ')':true, '|':true, '^':true, '\\':true, '*':true, '!':true, '?':true};
+	for (var d = 0; d < data.length; ++d) {	
+		if (regChars[data[d]] != null && regChars[data[d]]){
+			return true;
+		}
+	}
+	return false;
 }
 
 function initFilters(){
