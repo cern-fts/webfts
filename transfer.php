@@ -176,7 +176,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 									<form class="form-inline" id="leftSelectingOptions">
 										<div class="form-group">
 											<select id="leftFilterField" class="form-control input-sm"
-												data-width="auto" onchange="setFilterShowingOptions('leftFilterOptionsPanel', 'leftEpFilter', $('#leftFilterField').val())">
+												data-width="auto" onchange="setFilterShowingOptions('leftFilterOptionsPanel', 'leftEpFilter', $('#leftFilterField').val(), 'leftEndpointContentTable')">
 												<option value="left1">Name</option>
 												<option value="left2">Date</option>
 												<option value="left3">Size</option>
@@ -201,14 +201,14 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 										</div>
 										<div class="form-group">
 											<input type="text" class="form-control input-sm" placeholder="From date" id="leftFromRangeFilterDate"
-												onkeyup="getFilteredResults(null, 'leftEndpointContentTable', 'leftFilterField')">
+												onchange="getFilteredResults(null, 'leftEndpointContentTable', 'leftFilterField')">
 										</div>
 										<div class="form-group">
 											<label> and </label>
 										</div>
 										<div class="form-group">
 											<input type="text" class="form-control input-sm" placeholder="To date" id="leftToRangeFilterDate"
-												onkeyup="getFilteredResults(null, 'leftEndpointContentTable', 'leftFilterField')">
+												onchange="getFilteredResults(null, 'leftEndpointContentTable', 'leftFilterField')">
 										</div>
 									</form>
 									<form class="form-inline" id="left3">
@@ -246,7 +246,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 								<tr>
 									<td>Name</td>
 									<td>Mode</td>
-									<td>Time</td>
+									<td>Date</td>
 									<td>Size</td>
 								</tr>
 							</thead>
@@ -303,7 +303,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 									<form class="form-inline" id="rightSelectingOptions">
 										<div class="form-group">
 											<select id="rightFilterField" class="form-control input-sm"
-												data-width="auto" onchange="setFilterShowingOptions('rightFilterOptionsPanel', 'rightEpFilter', $('#rightFilterField').val())">
+												data-width="auto" onchange="setFilterShowingOptions('rightFilterOptionsPanel', 'rightEpFilter', $('#rightFilterField').val(), 'rightEndpointContentTable')">
 												<option value="right1">Name</option>
 												<option value="right2">Date</option>
 												<option value="right3">Size</option>
@@ -328,14 +328,14 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 										</div>
 										<div class="form-group">
 											<input type="text" class="form-control input-sm" placeholder="From date" id="rightFromRangeFilterDate"
-												onkeyup="getFilteredResults(null, 'rightEndpointContentTable', 'rightFilterField')">
+												onchange="getFilteredResults(null, 'rightEndpointContentTable', 'rightFilterField')">
 										</div>
 										<div class="form-group">
 											<label> and </label>
 										</div>
 										<div class="form-group">
 											<input type="text" class="form-control input-sm" placeholder="To date" id="rightToRangeFilterDate"
-												onkeyup="getFilteredResults(null, 'rightEndpointContentTable', 'rightFilterField')">
+												onchange="getFilteredResults(null, 'rightEndpointContentTable', 'rightFilterField')">
 										</div>
 									</form>
 									<form class="form-inline" id="right3">
@@ -373,7 +373,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 								<tr>
 									<td>Name</td>
 									<td>Mode</td>
-									<td>Time</td>
+									<td>Date</td>
 									<td>Size</td>
 								</tr>
 							</thead>

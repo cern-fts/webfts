@@ -109,8 +109,8 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 				e_value = getPermissionsString(parseInt(e_value, 10).toString(8)); //to octal 
 			} else if (e_index == 'mtime'){
 				var fdate = new Date(e_value*1000);
-				e_value = months[fdate.getUTCMonth()] + " " + pad(fdate.getUTCDate().toString(), 2) + " " + 
-						  pad(fdate.getUTCHours().toString(), 2) + ":" + pad(fdate.getUTCMinutes().toString(), 2); 
+				e_value = fdate.getFullYear() + " " + months[fdate.getUTCMonth()] + " " + pad(fdate.getUTCDate().toString(), 2) 
+						+ " " + pad(fdate.getUTCHours().toString(), 2) + ":" + pad(fdate.getUTCMinutes().toString(), 2); 
 			}
 			t_row += '<td>' + e_value + '</td>';
 		});
@@ -154,14 +154,23 @@ function getEPContent(endpointInput, container, containerTable, indicator, state
 	getEndpointContent(endpointInput, container, containerTable, indicator, stateText, filter);
 }
 
+function setButtonState(input, button){
+	if(input.val().length !=0)
+        $('#'+ button).attr('disabled', false);        
+    else
+    	$('#'+ button).attr('disabled',true);
+}
+
 function initialLoadState(input, button){
     $('#'+ button).attr('disabled',true);    
+    $('#'+ input).click(function(){        
+    	setButtonState($(this), button);
+    });
     $('#'+ input).keyup(function(){        
-        if($(this).val().length !=0){
-            $('#'+ button).attr('disabled', false);
-        }
-        else
-        $('#'+ button).attr('disabled',true);
+    	setButtonState($(this), button);
+    });
+    $('#'+ input).on('paste', function(){        
+    	setButtonState($(this), button);
     });
 }
 
@@ -219,26 +228,13 @@ function filterResults(userfilter, contentTable, inputs, hideFolders, columnName
 	    case "Name":
 	    	filterByName(jo, userfilter.split(" "), hideFolders);
 	    	break;
-	    case "Time":
+	    case "Date":
     		filterByTime(jo, inputs, hideFolders);
 	    	break;
 	    case "Size":
     		filterBySize(jo, inputs, hideFolders);
 	    	break;
     }
-    	
-//    //Recusively filter the jquery object to get results.
-//    jo.filter(function (i, v) {
-//    	var $t = $(this);
-//        for (var d = 0; d < data.length; ++d) {
-//            if ($t.is(":contains('" + data[d] + "')")) {
-//                  return true;
-//            }
-//        }
-//        return false;
-//    })
-//    //show the rows that match.
-//    .show();
 };
 
 function filterBySize(jo, inputs, hideFolders){
@@ -274,7 +270,35 @@ function filterBySize(jo, inputs, hideFolders){
 }
 
 function filterByTime(jo, inputs, hideFolders){
-	
+    //Recusively filter the jquery object to get results.
+    jo.filter(function (i, v) {
+    	var $t = $(this);
+    	if ($t.children()[0].textContent.indexOf('/') !== -1 && hideFolders) {
+             return false;
+        } else {
+        	if (inputs[0].value !== ""){
+        		if (Date.parse(inputs[0].value.trim()) <= Date.parse($t.children()[2].textContent)){
+        			if (inputs[1].value != ""){
+        				if (Date.parse(inputs[1].value.trim()) >= Date.parse($t.children()[2].textContent)){
+        					return true;
+    					}
+        				return false;
+        			}        			
+        			return true;
+        		}           	
+        	} else if (inputs[1].value !== ""){
+        		if (Date.parse($t.children()[2].textContent) <= Date.parse(inputs[1].value.trim())){        			
+        				return true;        			
+        		}           	
+        	} else {
+        		//Both empty
+        		return true;
+        	}       	        	
+        }
+        return false;
+    })	
+    //show the rows that match.
+    .show();
 }
 
 function filterFolders(jo,hideFolders){
@@ -319,15 +343,19 @@ function initFilters(){
 	$('#rightFilterOptionsPanel').hide();	
 }
 
-function setFilterShowingOptions(panel, textInput, option){	
+function setFilterShowingOptions(panel, textInput, option, contentTable){	
 	$("#" + panel).children().show();
 	$("#" + option).siblings().hide();
 	if (option.indexOf('1') != -1)
 			$('#' + textInput).show();
-	else
+	else 
 		$('#' + textInput).hide();
-	$('#' + panel).show();
+	$('#' + textInput).val("");
+	$('#' + panel + " :input").val("");
+	$('#' + panel).show();	
 	
+	var jo = $("#" + contentTable + " tbody").find("tr");
+    jo.show();	
 }
 
 function setInitialDatepickers(){
