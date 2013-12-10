@@ -184,7 +184,8 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 										</div>
 										<div class="form-group">
 											<input type="text" class="form-control input-sm" placeholder="Filter" id="leftEpFilter"
-												onkeyup="getFilteredResults('leftEpFilter', 'leftEndpointContentTable', 'leftFilterField')">
+												onkeyup="getFilteredResults('leftEpFilter', 'leftEndpointContentTable', 'leftFilterField')"
+												 data-toggle="tooltip" title="Accepted format for regular expressions: http://www.w3schools.com/jsref/jsref_obj_regexp.asp">												
 										</div>
 										<div class="form-group">
 											<label> 
@@ -311,7 +312,8 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 										</div>
 										<div class="form-group">
 											<input type="text" class="form-control input-sm" placeholder="Filter" id="rightEpFilter"
-												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable', 'rightFilterField')">
+												onkeyup="getFilteredResults('rightEpFilter', 'rightEndpointContentTable', 'rightFilterField')"
+												data-toggle="tooltip" title="Accepted format for regular expressions: http://www.w3schools.com/jsref/jsref_obj_regexp.asp">												
 										</div>
 										<div class="form-group">
 											<label> 
