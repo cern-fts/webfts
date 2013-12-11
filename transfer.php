@@ -87,8 +87,9 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
             <span id="proxyTimeSpan">Loading proxy...  </span><span class="caret"></span>
           </button>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#" onclick="showDelegateModal()">Delegate again</a></li>            
-            <li><a href="#" onclick="removeExistingDelegation()">Remove existing delegation</a></li>
+          	<li role="presentation" class="dropdown-header">Proxy actions</li>
+            <li id="delegate_again_link"><a href="#" onclick="showDelegateModal()">Delegate again</a></li>            
+            <li id="delegate_remove_link"><a href="#" onclick="removeExistingDelegation()">Remove existing delegation</a></li>
           </ul>
     </div>
 	</div>

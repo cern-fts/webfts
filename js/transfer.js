@@ -12,6 +12,9 @@ var permissionNumberMeaning = {
 	    7 : 'rwx'
 	};
 
+var NO_DELEGATION_DETECTED = "No delegation detected";
+var EXISTING_PROXY_DETECTED = "Your current proxy is still valid for ";
+
 function runTransfer(container, origFolder, destFolder){	  
 	hideUserReport();
 	var selectedFiles = getSelectedFiles(container);
@@ -51,9 +54,28 @@ function activateTransferButton(epTable, buttonToActivate, endPoint){
 }
 
 function showRemainingProxyTime(timeText){
-	$('#proxyTimeSpan').text("Your current proxy is still valid for " + timeText + " ");	
+	$('#proxyTimeSpan').text(EXISTING_PROXY_DETECTED + timeText + " ");	
+	updateProxyButtons('proxyTimeSpan');
 }
 
+function showNoProxyMessages(){
+	$('#proxyTimeSpan').text(NO_DELEGATION_DETECTED);
+	updateProxyButtons('proxyTimeSpan');
+}
+
+function updateProxyButtons(button){
+	if ($("#" + button).text() == NO_DELEGATION_DETECTED){
+		$("#delegate_again_link").removeClass("disabled");
+		$("#delegate_remove_link").addClass("disabled");
+	} else if ($("#" + button).text().match(EXISTING_PROXY_DETECTED)){
+		$("#delegate_again_link").addClass("disabled");
+		$("#delegate_remove_link").removeClass("disabled");
+	} else {
+		$("#delegate_again_link").removeClass("disabled");
+		$("#delegate_remove_link").removeClass("disabled");
+	}
+}
+		 
 function clearContentTable(containerTable, container, indicator, stateText){
 	$("#" + containerTable + " > tbody").html("");
 	$('#' + container).show();

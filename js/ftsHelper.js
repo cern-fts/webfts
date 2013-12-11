@@ -219,6 +219,7 @@ function removeDelegation(delegationID){
 		success : function(data1, status) {
 			console.log("delegation removed correctly");
 			showDelegateModal();
+			showNoProxyMessages();			
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			showError(jqXHR, textStatus, errorThrown, "Error removing the existing delegation. "+ supportText);
@@ -239,12 +240,14 @@ function checkAndTransfer(delegationID, transferData){
 		
 		success : function(data2, status) {
 			if (data2 == null){
-				showDelegateModal();
+				showNoProxyMessages();
+				showDelegateModal();				
 			} else {
 				remainingTime = Date.parse(data2.termination_time) - (new Date().getTime());
 				console.log(millisecondsToStr(remainingTime));			
 				if (remainingTime < 3600000) { //3600000 = milliseconds in an hour
-					showDelegateModal();
+					showNoProxyMessages();
+					showDelegateModal();					
 				} else {
 					showRemainingProxyTime(millisecondsToStr(remainingTime));
 					if (transferData != null){				
