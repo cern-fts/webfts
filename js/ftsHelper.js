@@ -204,6 +204,28 @@ function runDataTransfer(delegationID, transferData){
 	return checkAndTransfer(delegationID, transferData);
 }
 
+
+function removeDelegation(delegationID){
+	var urlEndp = ftsEndpoint + "/delegation/" + delegationID;
+	$.ajax({
+		url : urlEndp,
+		//type : "DELETE" <-- use directly this is not working
+		data: {"_method":"delete"},
+		dataType:'script', 
+		type : "POST",
+		xhrFields : {
+			withCredentials : true
+		},
+		success : function(data1, status) {
+			console.log("delegation removed correctly");
+			showDelegateModal();
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			showError(jqXHR, textStatus, errorThrown, "Error removing the existing delegation. "+ supportText);
+		}
+	});
+}
+
 //Check if there is a valid delegation done. Otherwise, do it 
 function checkAndTransfer(delegationID, transferData){
 	urlEndp = ftsEndpoint + "/delegation/" + delegationID;

@@ -87,6 +87,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
           </button>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#" onclick="showDelegateModal()">Delegate again</a></li>            
+            <li><a href="#" onclick="removeExistingDelegation()">Remove existing delegation</a></li>
           </ul>
     </div>
 	</div>

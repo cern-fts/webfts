@@ -393,3 +393,7 @@ function setFilterPanel(panel, buttonObj){
 	});
 	$('#' + panel).toggle();
 }
+
+function removeExistingDelegation(){
+	removeDelegation($('#delegation_id').val());
+}
