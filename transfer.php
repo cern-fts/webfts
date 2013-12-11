@@ -42,9 +42,10 @@ $( document ).ready(function() {
 
 $("#pinfo-form").submit(function(event){
   event.preventDefault();	
-  if ($("#pinfo-form").valid()){ 
-  	doDelegate(document.getElementById('delegation_id').value, document.getElementById('pemPkey').value,
-  		  	   document.getElementById('userDN').value, document.getElementById('clientCERT').value);
+  if ($("#pinfo-form").valid()){ 	
+	doDelegate($("#delegation_id").val(), $("#pemPkey").val(),
+			$("#userDN").val(), $("#clientCERT").val());
+	$("#pemPkey").val("");  
   }	
   return false;
 });
