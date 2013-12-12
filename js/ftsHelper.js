@@ -105,7 +105,7 @@ function signRequest(sCert, userPrivateKeyPEM, userDN) {
 		var asn1 = ASN11.decode(der);
 		var pos = asn1.getCSRPubKey();
 
-		console.log(sCert);
+		//console.log(sCert);
 		
 		var rsakey = new RSAKey();
 		//The replace is because other wise something like this was 
@@ -277,7 +277,7 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT){
 		success : function(data3, status) {
 			var x509Proxy = signRequest(data3, userPrivateKeyPEM, userDN); 
 			x509Proxy += "" + userCERT;
-			console.log(x509Proxy);
+			//console.log(x509Proxy);
 			urlEndp = ftsEndpoint + "/delegation/" + delegationID + '/credential';
 			// Call 4: Delegating the signed new proxy certificate
 			$.ajax({
