@@ -9,7 +9,7 @@ function loadTransferTable(transferList, jobId){
 		if (showPopover == null){
 			t_row += getColumn(value.file_id);
 		} else {
-			t_row += getColumn('<a id="popover' + value.file_id  + '" href="#" class="btn" data-content="' + getPopoverText(value) + '" rel="popover" data-placement="right" data-trigger="hover" data-html="true">' + value.file_id + '</a>');
+			t_row += getColumn('<a id="popover' + value.file_id  + '" href="#" class="btn" data-content="' + getPopoverText(value) + '" rel="popover" data-placement="right" data-trigger="hover" data-html="true">' + value.file_id + '</a>');					
 		}
 		t_row += getColumn(value.transferhost)	+ getColumn(value.source_surl) + getColumn(value.dest_surl) + getColumn(value.filesize) 
 		+ getColumn(value.throughput) + getColumn(value.start_time).replace("T", " ") + getColumn(value.finish_time).replace("T", " ") 
@@ -27,8 +27,14 @@ function loadJobTable(jobList){
 	$.each(jobList, function(index, value){
 		//Job row
 		var t_row = '<tr class="' + getRowColor(value.job_state) + ' accordion-body" data-toggle="collapse" id="' + value.job_id 
-		+ '" data-target="#' + value.job_id + '_row" onclick="toogleDetailRowState(\'' + value.job_id + '_row\', \'' + value.job_id + '\')">' + getColumn(value.job_id) + getColumn(value.submit_time) 
-		+ getColumn(value.source_se) + getColumn(value.dest_se) + '</tr>'  ;		
+		+ '" data-target="#' + value.job_id + '_row" onclick="toogleDetailRowState(\'' + value.job_id + '_row\', \'' + value.job_id + '\')">';
+		
+		//if (isErrorState(value.job_state)){
+			t_row += "<td>" + value.job_id + setResubmitButton(value.job_id) + "</td>";
+		//} else {
+		//	t_row += getColumn(value.job_id);
+		//}
+		t_row += getColumn(value.submit_time) + getColumn(value.source_se) + getColumn(value.dest_se) + '</tr>'  ;		
 		$("#jobResultsTable > tbody:last").append(t_row);
 		
 		//Transfers from job row (hidden by default)
@@ -42,6 +48,10 @@ function loadJobTable(jobList){
 		t_row += '</td></tr>';
 		$("#jobResultsTable > tbody:last").append(t_row);
 	});
+}
+
+function setResubmitButton(delegation_id){
+	return '<div class="btn-group pull-right"><button type="button" class="btn btn-xs btn-primary" onclick="resubmitJob(\'' + delegation_id  + '\')"><i class="glyphicon glyphicon-cloud-upload"/>&nbsp;Resubmit job</button></div>';
 }
 
 function getPopoverText(transfer){
@@ -58,6 +68,10 @@ function reloadJobs(){
 
 function getColumn(columnName){
 	return "<td>" + columnName + "</td>";
+}
+
+function isErrorState(job_state){
+	return job_state=="FAILED" || job_state=="CANCELED";
 }
 
 function getRowColor(job_state){
@@ -84,9 +98,31 @@ function toogleDetailRowState(rowId, jobId) {
 		$("#jobResultsTable > tbody > #" + rowId).show();
 		$('#' + jobId + '-table-details').hide();
 		$('#' + jobId + '-loading-indicator').show();		
-		getJobTranfers(jobId);
+		getJobTranfers(jobId, false);
 	} else {
 		$("#jobResultsTable > tbody > #" + rowId).hide();
 	}
 }	
 
+function resubmitJob(jobId){
+	console.log("Resubmitting " + jobId);
+	//Get transfers and submit them
+	getJobTranfers(jobId, true);	
+}
+
+function rerunTransfer(data){	  
+	var theData = {};
+	theData["files"] = [];       	      	  
+	$.each(data.files, function(index, value){
+		var files = {};
+		files["sources"] = [];
+		files["sources"] = value.source_surl;
+		files["destinations"] = [];
+		files["destinations"] = value.dest_surl;
+		theData["files"].push(files);
+	});
+	theData["params"] = [];
+	  
+	runDataTransfer($('#delegation_id').val(), theData);
+    return false;
+}

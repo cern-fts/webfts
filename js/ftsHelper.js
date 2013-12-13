@@ -31,7 +31,7 @@ function getUserJobs(delegationId){
 	
 }
 
-function getJobTranfers(jobId){
+function getJobTranfers(jobId, isResubmit){
 	var urlE = ftsEndpoint + "/jobs/" + jobId;
 	$.ajax({
 		url : urlE,
@@ -41,16 +41,16 @@ function getJobTranfers(jobId){
 			withCredentials : true
 		},
 		success : function(data1, status) {
-			loadTransferTable(data1, jobId);			
+			if (isResubmit){
+				rerunTransfer(data1);
+			} else {
+				loadTransferTable(data1, jobId);
+			}
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			showError(jqXHR, textStatus, errorThrown, "Error job details. "+ supportText);
 		}
 	});
-	
-}
-
-function getJobTransmissions(jobId){
 	
 }
 
@@ -182,6 +182,7 @@ function getDelegationID(fieldName, delegationNeeded){
 			withCredentials : true
 		},
 		success : function(data1, status) {
+			console.log("Delegation obtained");	
 			$('input[id='+fieldName+']').val(data1.delegation_id);	
 			if (delegationNeeded){
 				isDelegated(data1.delegation_id, null);

@@ -32,13 +32,13 @@ $("#pinfo-form").submit(function(event){
 		$("#pemPkey").val("");  
 	  }	
 	  return false;
-	});
+});
 
-	$( "#delegateButton" ).click(function() {
-		$( "#pinfo-form" ).submit();
-	});
-			
-	$('#popoverDelegate').popover();
+$( "#delegateButton" ).click(function() {
+	$( "#pinfo-form" ).submit();
+});
+		
+$('#popoverDelegate').popover();
 
 	//To prevent the modal window to be closed by pressing ESC or clicking outside
 	// $('#delegationModal').modal({
@@ -48,9 +48,9 @@ $("#pinfo-form").submit(function(event){
 	// });
 	
 	//To do the validation of the form even on paste
-	$("#pemPkey").bind('input propertychange', function(){
-		$("#pinfo-form").valid();
-	});	
+$("#pemPkey").bind('input propertychange', function(){
+	$("#pinfo-form").valid();
+});	
 </script>
 <div class="modal fade" id="delegationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -85,8 +85,7 @@ $("#pinfo-form").submit(function(event){
 						<label class="control-label" for="privateKey">Private key</label>
 						<textarea id="pemPkey" name="pemPkey" class="field form-control"
 							rows="5" placeholder="RSA private key"></textarea>
-					</div>
-					<input type="hidden" id="delegation_id" value="">
+					</div>					
 				</div>
 				<div class="modal-footer ">
 					<div class="controls center">

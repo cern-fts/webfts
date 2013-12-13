@@ -44,7 +44,7 @@ $(function(){
 			onclick="removeExistingDelegation()">Remove existing delegation</a></li>
 	</ul>
 </div>
-</div>
+<input type="hidden" id="delegation_id" value="">
 <div class="row">
 	<div id="modal_content"></div>
 	<?php
