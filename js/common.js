@@ -37,3 +37,7 @@ function hideDelegateModal(){
 function showDelegateModal(){
 	$('#delegationModal').modal('show');
 }
+
+function removeExistingDelegation(){
+	removeDelegation($('#delegation_id').val());
+}
