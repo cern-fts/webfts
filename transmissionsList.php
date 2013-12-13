@@ -1,7 +1,7 @@
 <script>
 $( document ).ready(function() {	
-	//getDelegationID("delegation_id", false);	
-	getDelegationID("delegation_id", true);
+	getDelegationID("delegation_id", false);	
+	//getDelegationID("delegation_id", true);
 	
 	//Reload page every 5 minutes (5 * 60 * 1000)
 	var intervalID = window.setInterval(reloadJobs, 300000);
