@@ -187,20 +187,6 @@ function showUserSuccess(message){
 	$('#serverkeyAlertSuccess').show();	
 }
 
-function showDelegateError(message){
-	$('#serverDelegateErrorText').text(message);
-	$('#serverDelegateAlert').show();
-}
-
-function hideDelegateModal(){
-	$('#delegationModal').modal('hide');
-	$('#serverDelegateAlert').hide();
-}
-
-function showDelegateModal(){
-	$('#delegationModal').modal('show');
-}
-
 function getFilteredResults(input, contentTable, option){
 	var panelToShow = $('#' + option).val();
 	var filter = $('#' + input).val();

@@ -17,7 +17,6 @@
 <link href="css/custom.css" rel="stylesheet">
 <link href="css/jquery-ui.min.css" rel="stylesheet">
 
-
 <script src="js/bootstrap.min.js"></script> 
 <script src="js/jquery.finderSelect.min.js"></script>
 <script src="js/jquery-ui.min.js"></script>

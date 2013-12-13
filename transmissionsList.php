@@ -1,6 +1,8 @@
 <script>
 $( document ).ready(function() {	
-	getDelegationID("delegation_id", false);	
+	//getDelegationID("delegation_id", false);	
+	getDelegationID("delegation_id", true);
+	
 	//Reload page every 5 minutes (5 * 60 * 1000)
 	var intervalID = window.setInterval(reloadJobs, 300000);
 });	
@@ -27,6 +29,14 @@ $(function(){
 <legend>
 	<h4>Click in a job to show its transfers <small>(and reasons in case of errors)</small></h4>
 </legend>
+	<?php
+	foreach($_SERVER as $h=>$v){
+			if ($h == "SSL_CLIENT_S_DN")
+				echo "<input type=\"hidden\" id=\"userDN\" value=\"$v\">";
+			else if ($h == "SSL_CLIENT_CERT")
+				echo "<input type=\"hidden\" id=\"clientCERT\" value=\"$v\">";
+		}
+		?>
 
 <input type="hidden" id="delegation_id" value="">		
 <!-- <ul class="pagination pagination pagination-sm"> -->
