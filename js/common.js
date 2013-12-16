@@ -41,3 +41,13 @@ function showDelegateModal(){
 function removeExistingDelegation(){
 	removeDelegation($('#delegation_id').val());
 }
+
+function showUserError(message){
+	$('#serverErrorText').text(message);
+	$('#serverkeyAlert').show();
+}
+
+function showUserSuccess(message){
+	$('#serverSuccessText').text(message);
+	$('#serverkeyAlertSuccess').show();	
+}

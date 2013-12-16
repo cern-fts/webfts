@@ -53,6 +53,10 @@ $(function(){
 	<button type="button" class="close" data-dismiss="alert" onclick="$('#serverkeyAlert').hide()">&times;</button>
 	<small id="serverErrorText"></small>
 </div>
+<div class="alert alert-success" id="serverkeyAlertSuccess"	style="display: none">
+	<button type="button" class="close" data-dismiss="alert" onclick="$('serverkeyAlertSuccess').hide()">&times;</button>
+	<small id="serverSuccessText"></small>
+</div>
 <table class="table table-bordered table-condensed table-hover" id="jobResultsTable">
 <!-- <table class="table table-condensed" id="jobResultsTable" style="border-collapse:collapse;"> -->
 	<thead>

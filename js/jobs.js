@@ -29,11 +29,11 @@ function loadJobTable(jobList){
 		var t_row = '<tr class="' + getRowColor(value.job_state) + ' accordion-body" data-toggle="collapse" id="' + value.job_id 
 		+ '" data-target="#' + value.job_id + '_row" onclick="toogleDetailRowState(\'' + value.job_id + '_row\', \'' + value.job_id + '\')">';
 		
-		//if (isErrorState(value.job_state)){
+//		if (isErrorState(value.job_state)){
 			t_row += "<td>" + value.job_id + setResubmitButton(value.job_id) + "</td>";
-		//} else {
-		//	t_row += getColumn(value.job_id);
-		//}
+//		} else {
+//			t_row += getColumn(value.job_id);
+//		}
 		t_row += getColumn(value.submit_time) + getColumn(value.source_se) + getColumn(value.dest_se) + '</tr>'  ;		
 		$("#jobResultsTable > tbody:last").append(t_row);
 		
@@ -113,16 +113,21 @@ function resubmitJob(jobId){
 function rerunTransfer(data){	  
 	var theData = {};
 	theData["files"] = [];       	      	  
-	$.each(data.files, function(index, value){
+	for (var i=0; i<data.files.length; i++){
 		var files = {};
 		files["sources"] = [];
-		files["sources"] = value.source_surl;
+		var dLists = [];
+		dLists[0] = data.files[i].source_surl.trim();
+		files["sources"] = dLists;
 		files["destinations"] = [];
-		files["destinations"] = value.dest_surl;
-		theData["files"].push(files);
-	});
+		var dListd = [];
+		dListd[0] = data.files[i].dest_surl.trim();
+		files["destinations"] = dListd;
+		theData["files"].push(files);		
+	}
 	theData["params"] = [];
 	  
 	runDataTransfer($('#delegation_id').val(), theData);
     return false;
 }
+

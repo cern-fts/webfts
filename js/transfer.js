@@ -177,16 +177,6 @@ function hideUserReport(){
 	$('#serverkeyAlertSuccess').hide();
 }
 
-function showUserError(message){
-	$('#serverErrorText').text(message);
-	$('#serverkeyAlert').show();
-}
-
-function showUserSuccess(message){
-	$('#serverSuccessText').text(message);
-	$('#serverkeyAlertSuccess').show();	
-}
-
 function getFilteredResults(input, contentTable, option){
 	var panelToShow = $('#' + option).val();
 	var filter = $('#' + input).val();
@@ -298,7 +288,6 @@ function filterFolders(jo,hideFolders){
     //show the rows that match.
     .show();
 }
-
 
 function filterByName(jo, data, hideFolders){
     //Recusively filter the jquery object to get results.

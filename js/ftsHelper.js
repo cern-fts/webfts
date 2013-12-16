@@ -183,13 +183,12 @@ function getDelegationID(fieldName, delegationNeeded){
 		},
 		success : function(data1, status) {
 			console.log("Delegation obtained");	
-			$('input[id='+fieldName+']').val(data1.delegation_id);	
-			if (delegationNeeded){
-				isDelegated(data1.delegation_id, null);
-			} else {
+			$('input[id='+fieldName+']').val(data1.delegation_id);			
+			if (!delegationNeeded){				
 				hideUserError();
-				getUserJobs(data1.delegation_id);
+				getUserJobs(data1.delegation_id);				
 			}
+			isDelegated(data1.delegation_id, null);
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			showError(jqXHR, textStatus, errorThrown, "Error connecting to the server to obtain the user credentials. "+ supportText);
