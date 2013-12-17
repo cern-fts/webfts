@@ -26,6 +26,7 @@ $(function(){
 			onclick="removeExistingDelegation()">Remove existing delegation</a></li>
 	</ul>
 </div>
+<div class="row">
 <legend>
 	<h4>Click in a job to show its transfers <small>(and reasons in case of errors)</small></h4>
 </legend>
@@ -76,3 +77,4 @@ $(function(){
 	<tbody>
 	</tbody>
 </table>
+</div>
