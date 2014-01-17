@@ -89,19 +89,17 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 	clearContentTable(containerTable, container, indicator, stateText);
 	$.each(elements, function(index, value){
 		var icon = "";
-		var t_row = "";
+		var t_row = [];
+
 		if (index.slice(-1) == "/"){
 			icon ="glyphicon glyphicon-folder-close";
-			t_row = '<tr value="' + index + '" onclick="getFolderContent(\'' 
-					+ endpointInput + '\',\'' + container + '\',\''
-					+ containerTable + '\',\'' + indicator + '\',\'' 
-					+ stateText + '\',\'' + index.slice(0,-1) + '\',\''
-					+ filter + '\')">';
+			t_row.push("<tr value='" + index.slice(0,-1).trim() + "' onclick=\"getFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + index.slice(0,-1).trim() + "','" + filter + "')\">");
+			t_row.push('<td><i class="' + icon + '"/>&nbsp;' + index.slice(0,-1).trim() + '</td>');
 		} else {
 			icon ="glyphicon glyphicon-file";	
-			t_row = '<tr value="' + index + '">';
-		}
-		t_row += '<td><i class="' + icon + '"/>&nbsp;' + index + '</td>';
+			t_row.push('<tr value="' + index + '">');
+			t_row.push('<td><i class="' + icon + '"/>&nbsp;' + index + '</td>');
+		}		
 		$.each(value, function(e_index, e_value){
 			if (e_index == 'mode'){
 				e_value = getPermissionsString(parseInt(e_value, 10).toString(8)); //to octal 
@@ -110,10 +108,10 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 				e_value = fdate.getFullYear() + " " + months[fdate.getUTCMonth()] + " " + pad(fdate.getUTCDate().toString(), 2) 
 						+ " " + pad(fdate.getUTCHours().toString(), 2) + ":" + pad(fdate.getUTCMinutes().toString(), 2); 
 			}
-			t_row += '<td>' + e_value + '</td>';
+			t_row.push('<td>' + e_value + '</td>');
 		});
-		t_row += '</tr>'; 
-		$('#' + containerTable +' > tbody:last').append(t_row);
+		t_row.push('</tr>'); 
+		$('#' + containerTable +' > tbody:last').append(t_row.join(""));
 	});
 	$("#" + stateText).text($('#' + endpointInput).val());
 	$("#" + containerTable + " tbody").finderSelect("update");
