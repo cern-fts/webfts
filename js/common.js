@@ -24,12 +24,14 @@ function updateProxyButtons(button){
 	}
 }
 
-function showDelegateError(message){	    
+function showDelegateError(message){
+	$('#delegating-indicator').hide();
 	$('#delegateDelegateErrorText').text(message);
 	$('#serverDelegateAlert').show();
 }
 
 function hideDelegateModal(){
+	$('#delegating-indicator').hide();
 	$('#delegationModal').modal('hide');
 	$('#serverDelegateAlert').hide();
 }

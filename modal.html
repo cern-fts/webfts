@@ -26,9 +26,10 @@ $(function(event) {
 
 $("#pinfo-form").submit(function(event){
 	  event.preventDefault();	
-	  if ($("#pinfo-form").valid()){ 	
+	  if ($("#pinfo-form").valid()){
+		$("#delegating-indicator").show(); 	
 		doDelegate($("#delegation_id").val(), $("#pemPkey").val(),
-				$("#userDN").val(), $("#clientCERT").val(), $("#userVO").val());
+				$("#userDN").val(), $("#clientCERT").val(), $("#userVO").val());		
 		$("#pemPkey").val("");
 		$("#userVO").val("");    
 	  }	
@@ -90,12 +91,17 @@ $("#pemPkey").bind('input propertychange', function(){
 					<div class="row control-group">
 						<label class="control-label" for="privateKey">Virtual Organization</label><small> (VO only if VOMS credentials are required to access the endpoint)</small>
 						<input type="text" class="form-control" id="userVO">
-					</div>							
+					</div>
 				</div>
 				<div class="modal-footer ">
 					<div class="controls center">
 						<button type="button" class="btn btn-primary"
 							name="delegateButton" id="delegateButton">Delegate</button>
+						<div id="delegating-indicator" style="display: none">
+							<ul class="pager">
+								<li><label class="text-center"> Delegating credentials...</label>&nbsp;<img class="pagination-centered" src="img/ajax-loader.gif" /></li>
+							</ul>
+						</div>	
 					</div>
 				</div>
 			</form>
