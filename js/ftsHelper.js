@@ -1,6 +1,6 @@
 var ftsEndpoint = "https://fts3-devel.cern.ch:8446";//"https://fts3-pilot.cern.ch:8446";
 var certHours = 4; // Hours of live of the certificate
-var supportText = "Please, try again and contact support if the error continues";
+var supportText = "Please, try again and contact support if the error persists";
 
 function showError(jqXHR, textStatus, errorThrown, message) {
 	console.log(message);
@@ -191,7 +191,7 @@ function getDelegationID(fieldName, delegationNeeded){
 			isDelegated(data1.delegation_id, null);
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			showError(jqXHR, textStatus, errorThrown, "Error connecting to the server to obtain the user credentials. "+ supportText);
+			showError(jqXHR, textStatus, errorThrown, "Error connecting to the FTS server to obtain the user credentials. "+ supportText);
 		}
 	});
 }
@@ -229,7 +229,7 @@ function removeDelegation(delegationID){
 
 //Check if there is a valid delegation done. Otherwise, do it 
 function checkAndTransfer(delegationID, transferData){
-	urlEndp = ftsEndpoint + "/delegation/" + delegationID;
+	var urlEndp = ftsEndpoint + "/delegation/" + delegationID;
 	$.ajax({
 		url : urlEndp,
 		type : "GET",
@@ -263,9 +263,8 @@ function checkAndTransfer(delegationID, transferData){
 }
 
 //Do delegation of credentials
-//function doDelegate(delegationID, userPrivateKeyPEM, userPassword, userDN, certChain0, certChain1){
-function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT){
-	urlEndp = ftsEndpoint + "/delegation/" + delegationID + "/request";
+function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
+	var urlEndp = ftsEndpoint + "/delegation/" + delegationID + "/request";
 	// Call 3: Asking for a new proxy certificate is needed
 	$.ajax({
 		url : urlEndp,
@@ -295,12 +294,17 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT){
 				},
 						
 				success : function(data4, status) {
-					hideDelegateModal();
-					isDelegated(delegationID); //To update remaining proxy time
+					if (user_vo == null || user_vo == ""){
+						hideDelegateModal();
+						isDelegated(delegationID); //To update remaining proxy time
+					} else {	
+						getVOMSCredentials(delegationID, user_vo);
+					}	
 				},
-				error : function(jqXHR, textStatus,	errorThrown) {					
-					showError(jqXHR, textStatus, errorThrown, null);
-					showDelegateError("Error delegating the user credentials. " + supportText);
+				error : function(jqXHR, textStatus,	errorThrown) {		
+					var derror = "Error delegating the user credentials. " + supportText;
+					showError(jqXHR, textStatus, errorThrown, derror);
+					showDelegateError(derror);
 				}
 			});
 		},
@@ -310,6 +314,35 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT){
 	});
 }
 
+function getVOMSCredentials(delegationID, user_vo){
+	var urlEndp = ftsEndpoint + "/delegation/" + delegationID + "/voms";
+	var uvo = '["' + user_vo + '"]';
+	
+	$.ajax({
+		url : urlEndp,									
+		type : "POST",
+		contentType : "text/plain; charset=UTF-8", 
+		dataType : 'text',
+		data: uvo,
+		processData : false,
+		beforeSend : function(xhr) {
+			xhr.withCredentials = true;
+		},
+		xhrFields : {
+			withCredentials : true
+		},
+				
+		success : function(data4, status) {
+			hideDelegateModal();
+			isDelegated(delegationID); //To update remaining proxy time
+		},
+		error : function(jqXHR, textStatus,	errorThrown) {	
+			var verror = "Error obtaining VOMS credentials. " + supportText;
+			showError(jqXHR, textStatus, errorThrown, verror);
+			showDelegateError(verror);
+		}
+	});
+}
 
 function getEndpointContent(endpointInput, container, containerTable, indicator, stateText, filter){	
 	urlEndp = ftsEndpoint + "/dm/list?surl=" + $('#' + endpointInput).val();
@@ -365,3 +398,4 @@ function millisecondsToStr (milliseconds) {
     }
     return 'less then a second'; //'just now' //or other string you like;
 }
+
