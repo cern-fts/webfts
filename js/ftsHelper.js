@@ -183,12 +183,12 @@ function getDelegationID(fieldName, delegationNeeded){
 		},
 		success : function(data1, status) {
 			console.log("Delegation obtained");	
-			$('input[id='+fieldName+']').val(data1.delegation_id);			
+			$('input[id='+fieldName+']').val(data1.delegation_id);
 			if (!delegationNeeded){				
 				hideUserError();
-				getUserJobs(data1.delegation_id);				
+				getUserJobs(data1.delegation_id);
 			}
-			isDelegated(data1.delegation_id, null);
+			isDelegated(data1.delegation_id, delegationNeeded);
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			showError(jqXHR, textStatus, errorThrown, "Error connecting to the FTS server to obtain the user credentials. "+ supportText);
@@ -196,12 +196,12 @@ function getDelegationID(fieldName, delegationNeeded){
 	});
 }
 
-function isDelegated(delegationID){
-	return checkAndTransfer(delegationID, null);
+function isDelegated(delegationID, showModal){
+	return checkAndTransfer(delegationID, null, showModal);
 }
 
 function runDataTransfer(delegationID, transferData){
-	return checkAndTransfer(delegationID, transferData);
+	return checkAndTransfer(delegationID, transferData, true);
 }
 
 
@@ -228,7 +228,7 @@ function removeDelegation(delegationID){
 }
 
 //Check if there is a valid delegation done. Otherwise, do it 
-function checkAndTransfer(delegationID, transferData){
+function checkAndTransfer(delegationID, transferData, showModal){
 	var urlEndp = ftsEndpoint + "/delegation/" + delegationID;
 	$.ajax({
 		url : urlEndp,
@@ -241,13 +241,17 @@ function checkAndTransfer(delegationID, transferData){
 		success : function(data2, status) {
 			if (data2 == null){
 				showNoProxyMessages();
-				showDelegateModal();				
+				if (showModal){
+					showDelegateModal();
+				}	
 			} else {
 				remainingTime = Date.parse(data2.termination_time) - (new Date().getTime());
 				console.log(millisecondsToStr(remainingTime));			
 				if (remainingTime < 3600000) { //3600000 = milliseconds in an hour
 					showNoProxyMessages();
-					showDelegateModal();					
+					if (showModal){
+						showDelegateModal();
+					}
 				} else {
 					showRemainingProxyTime(millisecondsToStr(remainingTime));
 					if (transferData != null){				
@@ -296,7 +300,7 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 				success : function(data4, status) {
 					if (user_vo == null || user_vo == ""){
 						hideDelegateModal();
-						isDelegated(delegationID); //To update remaining proxy time
+						isDelegated(delegationID, true); //To update remaining proxy time
 					} else {	
 						getVOMSCredentials(delegationID, user_vo);
 					}	
@@ -334,7 +338,7 @@ function getVOMSCredentials(delegationID, user_vo){
 				
 		success : function(data4, status) {
 			hideDelegateModal();
-			isDelegated(delegationID); //To update remaining proxy time
+			isDelegated(delegationID, true); //To update remaining proxy time
 		},
 		error : function(jqXHR, textStatus,	errorThrown) {	
 			var verror = "Error obtaining VOMS credentials. " + supportText;
