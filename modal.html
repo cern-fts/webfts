@@ -42,12 +42,12 @@ $( "#delegateButton" ).click(function() {
 		
 $('#popoverDelegate').popover();
 
-	//To prevent the modal window to be closed by pressing ESC or clicking outside
-	// $('#delegationModal').modal({
-//	 	  show: false,	
-//	 	  backdrop: 'static',
-//	 	  keyboard: false
-	// });
+//To prevent the modal window to be closed by pressing ESC or clicking outside
+$('#delegationModal').modal({
+ 	  show: false,	
+ 	  backdrop: 'static',
+ 	  keyboard: false
+ });
 	
 	//To do the validation of the form even on paste
 $("#pemPkey").bind('input propertychange', function(){
@@ -97,6 +97,8 @@ $("#pemPkey").bind('input propertychange', function(){
 					<div class="controls center">
 						<button type="button" class="btn btn-primary"
 							name="delegateButton" id="delegateButton">Delegate</button>
+						<button type="button" class="btn btn-primary"
+							name="delegateButton" id="closeDelegateButton" onclick="hideDelegateModal()">Close</button>	
 						<div id="delegating-indicator" style="display: none">
 							<ul class="pager">
 								<li><label class="text-center"> Delegating credentials...</label>&nbsp;<img class="pagination-centered" src="img/ajax-loader.gif" /></li>
