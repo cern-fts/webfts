@@ -8,6 +8,9 @@ function showError(jqXHR, textStatus, errorThrown, message) {
 	console.log("ERROR: " + JSON.stringify(jqXHR));
 	//alert("ERROR: " + JSON.stringify(jqXHR));
 	console.log(textStatus + "," + errorThrown);
+	if (jqXHR.status > 0)
+		message += ". Reason: " + jqXHR.status + ": " + jqXHR.responseText;
+		
 	if (message != null)
 		showUserError(message);
 }
