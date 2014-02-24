@@ -11,6 +11,14 @@ $( document ).ready(function() {
 	initFilters();	
 
 	setInitialDatepickers();
+
+	var urlParams = getQueryParams(document.location.search);
+	if (urlParams.length > 0){
+		if (urlParams["service"] == "dropbox"){
+			get
+		}
+	}
+	
 	console.log( "ready!" );	
 });
 
@@ -75,7 +83,19 @@ $(function(){
 	</div>
 	<div class="row">
 		<div class="btn-group-vertical col-lg-5">
-			<div class="input-group">
+			
+<!-- 				<div class="btn-toolbar"> -->
+<!-- 					<div class="btn-group "> -->
+<!-- 							<button class="btn btn-primary" type="button" id="openDropbox" onclick="getDropboxAuthAndContent()">Dropbox</button>  -->
+<!-- 						<select class="form-control"> --> 
+<!-- 							<option value="grid">Grid Storage</option> -->
+<!-- 							<option value="dropbox">Dropbox</option> -->
+<!-- 							<option value="owncloud">OwnCloud</option> --> 
+<!-- 						</select> -->
+<!-- 					</div> -->
+<!-- 				</div>		 -->
+				
+			<div class="input-group">	
 				<input id="leftEndpoint" type="text" placeholder="Endpoint path"
 					class="form-control"
 					value="gsiftp://lxfsra10a01.cern.ch/dpm/cern.ch/home/"> <span
@@ -190,7 +210,7 @@ $(function(){
 									<td>Name</td>
 									<td>Mode</td>
 									<td>Date</td>
-									<td>Size</td>
+									<td>Size</t`d>
 								</tr>
 							</thead>
 							<tbody>

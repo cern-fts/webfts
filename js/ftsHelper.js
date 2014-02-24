@@ -208,7 +208,7 @@ function runDataTransfer(delegationID, transferData){
 }
 
 
-function removeDelegation(delegationID){
+function removeDelegation(delegationID, showRemoveDelegationMessage){
 	var urlEndp = ftsEndpoint + "/delegation/" + delegationID;
 	$.ajax({
 		url : urlEndp,
@@ -220,7 +220,8 @@ function removeDelegation(delegationID){
 			withCredentials : true
 		},
 		success : function(data1, status) {
-			console.log("delegation removed correctly");
+			if (showRemoveDelegationMessage)
+				console.log("delegation removed correctly");
 			showDelegateModal();
 			showNoProxyMessages();			
 		},
@@ -343,7 +344,8 @@ function getVOMSCredentials(delegationID, user_vo){
 			hideDelegateModal();
 			isDelegated(delegationID, true); //To update remaining proxy time
 		},
-		error : function(jqXHR, textStatus,	errorThrown) {	
+		error : function(jqXHR, textStatus,	errorThrown) {
+			removeDelegation(delegationID, false);
 			var verror = "Error obtaining VOMS credentials. " + supportText;
 			showError(jqXHR, textStatus, errorThrown, verror);
 			showDelegateError(verror);
