@@ -41,7 +41,7 @@ function showDelegateModal(){
 }
 
 function removeExistingDelegation(){
-	removeDelegation($('#delegation_id').val());
+	removeDelegation($('#delegation_id').val(), true);
 }
 
 function showUserError(message){
