@@ -82,7 +82,7 @@ $(function(){
 		<small id="serverSuccessText"></small>
 	</div>
 	<div class="row">
-		<div class="btn-group-vertical col-lg-5">
+		<div class="btn-group-vertical col-xs-5 col-lg-5 col-md-5">
 			
 <!-- 				<div class="btn-toolbar"> -->
 <!-- 					<div class="btn-group "> -->
@@ -229,7 +229,7 @@ $(function(){
 				</div>
 			</div>
 		</div>
-		<div class="btn-group btn-group-vertical col-md-2">
+		<div class="btn-group btn-group-vertical col-xs-2 col-lg-2 col-md-2">
 			<button type="button" class="btn btn-primary btn-block"
 				name="transfer-from-left" id="transfer-from-left"
 				onclick="runTransfer('leftEndpointContentTable', 'leftEndpoint', 'rightEndpoint')"
@@ -244,7 +244,7 @@ $(function(){
 			</button>
 		</div>
 
-		<div class="btn-group-vertical col-lg-5">
+		<div class="btn-group-vertical col-xs-5 col-lg-5 col-md-5">
 			<div class="input-group">
 				<input id="rightEndpoint" type="text" placeholder="Endpoint path"
 					class="form-control"> <span class="input-group-btn">
