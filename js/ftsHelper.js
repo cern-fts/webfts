@@ -12,7 +12,8 @@ function showError(jqXHR, textStatus, errorThrown, message) {
 		message += ". Reason: " + jqXHR.status + ": " + jqXHR.responseText;
 		
 	if (message != null)
-		showUserError(message);
+		showUserError(message);	
+	return message;
 }
 
 function getUserJobs(delegationId){
@@ -311,8 +312,8 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 				},
 				error : function(jqXHR, textStatus,	errorThrown) {		
 					var derror = "Error delegating the user credentials. " + supportText;
-					showError(jqXHR, textStatus, errorThrown, derror);
-					showDelegateError(derror);
+					var emessage = showError(jqXHR, textStatus, errorThrown, derror);
+					showDelegateError(emessage);
 				}
 			});
 		},
@@ -347,8 +348,8 @@ function getVOMSCredentials(delegationID, user_vo){
 		error : function(jqXHR, textStatus,	errorThrown) {
 			removeDelegation(delegationID, false);
 			var verror = "Error obtaining VOMS credentials. " + supportText;
-			showError(jqXHR, textStatus, errorThrown, verror);
-			showDelegateError(verror);
+			var emessage = showError(jqXHR, textStatus, errorThrown, verror);
+			showDelegateError(emessage);
 		}
 	});
 }
