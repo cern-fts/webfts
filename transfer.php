@@ -161,7 +161,7 @@ $(function(){
 											<label>Between </label>
 										</div>
 										<div class="form-group">
-											<input type="text" class="form-control input-sm"
+											<input type="text" class="form-control input-sm-a"
 												placeholder="From date" id="leftFromRangeFilterDate"
 												onchange="getFilteredResults(null, 'leftEndpointContentTable', 'leftFilterField')">
 										</div>
@@ -169,7 +169,7 @@ $(function(){
 											<label> and </label>
 										</div>
 										<div class="form-group">
-											<input type="text" class="form-control input-sm"
+											<input type="text" class="form-control input-sm-a"
 												placeholder="To date" id="leftToRangeFilterDate"
 												onchange="getFilteredResults(null, 'leftEndpointContentTable', 'leftFilterField')">
 										</div>
@@ -179,7 +179,7 @@ $(function(){
 											<label>Between </label>
 										</div>
 										<div class="form-group">
-											<input type="text" class="form-control input-sm"
+											<input type="text" class="form-control input-sm-a"
 												placeholder="From bytes" id="leftFromRangeFilterSize"
 												onkeyup="getFilteredResults(null, 'leftEndpointContentTable', 'leftFilterField')">
 										</div>
@@ -187,9 +187,12 @@ $(function(){
 											<label> and </label>
 										</div>
 										<div class="form-group">
-											<input type="text" class="form-control input-sm"
-												placeholder="To bytes" id="leftToRangeFilterSize"
+											<input type="text" class="form-control input-sm-a"
+												placeholder="To bytes" id="leftToRangeFilterSize"												
 												onkeyup="getFilteredResults(null, 'leftEndpointContentTable', 'leftFilterField')">
+										</div>
+										<div class="form-group">
+											<label> bytes </label>
 										</div>
 									</form>
 								</div>
@@ -309,7 +312,7 @@ $(function(){
 											<label>Between </label>
 										</div>
 										<div class="form-group">
-											<input type="text" class="form-control input-sm"
+											<input type="text" class="form-control input-sm-a"
 												placeholder="From date" id="rightFromRangeFilterDate"
 												onchange="getFilteredResults(null, 'rightEndpointContentTable', 'rightFilterField')">
 										</div>
@@ -317,7 +320,7 @@ $(function(){
 											<label> and </label>
 										</div>
 										<div class="form-group">
-											<input type="text" class="form-control input-sm"
+											<input type="text" class="form-control input-sm-a"
 												placeholder="To date" id="rightToRangeFilterDate"
 												onchange="getFilteredResults(null, 'rightEndpointContentTable', 'rightFilterField')">
 										</div>
@@ -327,7 +330,7 @@ $(function(){
 											<label>Between </label>
 										</div>
 										<div class="form-group">
-											<input type="text" class="form-control input-sm"
+											<input type="text" class="form-control input-sm-a"
 												placeholder="From bytes" id="rightFromRangeFilterSize"
 												onkeyup="getFilteredResults(null, 'rightEndpointContentTable', 'rightFilterField')">
 										</div>
@@ -335,9 +338,12 @@ $(function(){
 											<label> and </label>
 										</div>
 										<div class="form-group">
-											<input type="text" class="form-control input-sm"
+											<input type="text" class="form-control input-sm-a"
 												placeholder="To bytes" id="rightToRangeFilterSize"
 												onkeyup="getFilteredResults(null, 'rightEndpointContentTable', 'rightFilterField')">
+										</div>
+										<div class="form-group">
+											<label> bytes </label>
 										</div>
 									</form>
 								</div>

@@ -10,3 +10,12 @@
 .formRowCustom{
 	padding: 5px 5px 0px 10px;
 }
+
+.input-sm-a {
+  height: 30px;
+  width: 100px;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}

@@ -76,7 +76,7 @@ function pad (str, max) {
 	return str.length < max ? pad("0" + str, max) : str;
 }
 
-function getFolderContent(endpointInput, container, containerTable, indicator, stateText, folder, filter){
+function getNextFolderContent(endpointInput, container, containerTable, indicator, stateText, folder, filter){
 	if ($('#' + endpointInput).val().slice(-1) == "/"){
 		$("#" + endpointInput).val($('#' + endpointInput).val() + folder + '/');
 	} else {
@@ -85,15 +85,40 @@ function getFolderContent(endpointInput, container, containerTable, indicator, s
 	getEPContent(endpointInput, container, containerTable, indicator, stateText, filter);	
 }
 
+function getPreviousFolderContent(endpointInput, container, containerTable, indicator, stateText, filter){
+	$("#" + endpointInput).val(getPreviousUrl($('#' + endpointInput).val()));
+	getEPContent(endpointInput, container, containerTable, indicator, stateText, filter);	
+}
+
+function getPreviousUrl(endpointUrl){
+	var foldersStartIndex = endpointUrl.indexOf("://");
+	if (foldersStartIndex == -1)
+		return null;
+	if (endpointUrl.slice(-1) == "/")
+		endpointUrl = endpointUrl.substring(0, endpointUrl.length-1);
+
+	var ipath = endpointUrl.substring(endpointUrl.indexOf("://")+3, endpointUrl.length);
+	var t = ipath.split("/");	
+	if (t.length > 1)
+		return newUrl = endpointUrl.substring(0, endpointUrl.indexOf("://")+3) + "" + ipath.substring(0, ipath.lastIndexOf("/"));
+	return null;	
+}
+
 function loadFolder(endpointInput, container, containerTable, elements, indicator, stateText, filter){
-	clearContentTable(containerTable, container, indicator, stateText);
+	clearContentTable(containerTable, container, indicator, stateText);	
+	var up = getInitialRowContent(endpointInput, container, containerTable, indicator, stateText, filter);
+	if (up != null){
+		var back_row = [];
+		back_row.push(up);
+		$('#' + containerTable +' > tbody:last').append(back_row.join(""));
+	}	
 	$.each(elements, function(index, value){
 		var icon = "";
 		var t_row = [];
 
 		if (index.slice(-1) == "/"){
 			icon ="glyphicon glyphicon-folder-close";
-			t_row.push("<tr value='" + index.slice(0,-1).trim() + "' onclick=\"getFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + index.slice(0,-1).trim() + "','" + filter + "')\">");
+			t_row.push("<tr value='" + index.slice(0,-1).trim() + "' onclick=\"getNextFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + index.slice(0,-1).trim() + "','" + filter + "')\">");
 			t_row.push('<td><i class="' + icon + '"/>&nbsp;' + index.slice(0,-1).trim() + '</td>');
 		} else {
 			icon ="glyphicon glyphicon-file";	
@@ -102,19 +127,29 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 		}		
 		$.each(value, function(e_index, e_value){
 			if (e_index == 'mode'){
-				e_value = getPermissionsString(parseInt(e_value, 10).toString(8)); //to octal 
+				t_row.push('<td>' + getPermissionsString(parseInt(e_value, 10).toString(8)) + '</td>'); //to octal
 			} else if (e_index == 'mtime'){
 				var fdate = new Date(e_value*1000);
-				e_value = fdate.getFullYear() + " " + months[fdate.getUTCMonth()] + " " + pad(fdate.getUTCDate().toString(), 2) 
-						+ " " + pad(fdate.getUTCHours().toString(), 2) + ":" + pad(fdate.getUTCMinutes().toString(), 2); 
-			}
-			t_row.push('<td>' + e_value + '</td>');
+				e_value = getFileDate(fdate);				
+				t_row.push('<td>' + e_value + '</td>');
+			} else if (e_index == 'size'){				
+				t_row.push('<td id=' + e_value + '>' + getReadableFileSizeString(e_value) + '</td>');
+			}			
 		});
 		t_row.push('</tr>'); 
 		$('#' + containerTable +' > tbody:last').append(t_row.join(""));
 	});
 	$("#" + stateText).text($('#' + endpointInput).val());
 	$("#" + containerTable + " tbody").finderSelect("update");
+}
+
+function getInitialRowContent(endpointInput, container, containerTable, indicator, stateText, filter){
+	if (getPreviousUrl($('#' + endpointInput).val()) != null){
+		return "<tr value='previous' onclick=\"getPreviousFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + filter + "')\">" + 
+			   "<td><i class='glyphicon glyphicon-circle-arrow-up'/>&nbsp;..</td><td></td><td></td><td></td></tr>";
+	} else {
+		return null;
+	}
 }
 
 function renderFolderContent(tableId, countId, container, indicator, stateText){
@@ -217,9 +252,9 @@ function filterBySize(jo, inputs, hideFolders){
              return false;
         } else {
         	if (inputs[0].value !== ""){
-        		if (parseInt(inputs[0].value.trim()) <= parseInt($t.children()[3].textContent)){
+        		if (parseInt(inputs[0].value.trim()) <= parseInt($t.children()[3].id)){
         			if (inputs[1].value != ""){
-        				if (parseInt(inputs[1].value.trim()) >= parseInt($t.children()[3].textContent)){
+        				if (parseInt(inputs[1].value.trim()) >= parseInt($t.children()[3].id)){
         					return true;
     					}
         				return false;
@@ -227,7 +262,7 @@ function filterBySize(jo, inputs, hideFolders){
         			return true;
         		}           	
         	} else if (inputs[1].value !== ""){
-        		if (parseInt($t.children()[3].textContent) <= parseInt(inputs[1].value.trim())){        			
+        		if (parseInt($t.children()[3].id) <= parseInt(inputs[1].value.trim())){        			
         				return true;        			
         		}           	
         	} else {
@@ -363,4 +398,37 @@ function setFilterPanel(panel, buttonObj){
         return text === "Show filters" ? "Hide filters" : "Show filters";
 	});
 	$('#' + panel).toggle();
+}
+
+function getReadableFileSizeString(fileSizeInBytes) {
+
+	if (fileSizeInBytes < 1024)
+		return fileSizeInBytes + ' B';
+	
+    var i = -1;
+    var byteUnits = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
+    do {
+        fileSizeInBytes = fileSizeInBytes / 1024;
+        i++;
+    } while (fileSizeInBytes > 1024);
+
+    return Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
+};
+
+function getFileDate(fdate){
+	//day month hour if it is within the last year
+	//day month year if older than one year
+	
+	var currentDate = new Date();
+	var diff = currentDate - fdate;
+	var days = Math.round(diff/(1000*60*60*24));
+	
+	if (days >= 365){
+		return pad(fdate.getUTCDate().toString(), 2) + " " +months[fdate.getUTCMonth()] + " "
+		       + fdate.getFullYear().toString().substr(2,2);
+		
+	} else {
+		return pad(fdate.getUTCDate().toString(), 2) + " " +months[fdate.getUTCMonth()] + " " 
+			   + pad(fdate.getUTCHours().toString(), 2) + ":" + pad(fdate.getUTCMinutes().toString(), 2);
+	}	
 }
