@@ -1,4 +1,5 @@
-var ftsEndpoint = "https://fts3-devel.cern.ch:8446";//"https://fts3-pilot.cern.ch:8446";
+//var ftsEndpoint = "https://fts3-devel.cern.ch:8446";//"https://fts3-pilot.cern.ch:8446";
+var ftsEndpoint = "https://fts3devel01.cern.ch:8446";
 var certHours = 4; // Hours of live of the certificate
 var supportText = "Please, try again and contact support if the error persists";
 
@@ -175,6 +176,8 @@ function signRequest(sCert, userPrivateKeyPEM, userDN) {
 		console.log("ERROR signing the CSR response: " + e);
 	}
 }
+
+
 //Check delegation ID, save it and check if there is a valid proxy 
 function getDelegationID(fieldName, delegationNeeded){
 	var urlEndp = ftsEndpoint + "/whoami";
@@ -200,9 +203,11 @@ function getDelegationID(fieldName, delegationNeeded){
 	});
 }
 
+
 function isDelegated(delegationID, showModal){
 	return checkAndTransfer(delegationID, null, showModal);
 }
+
 
 function runDataTransfer(delegationID, transferData){
 	return checkAndTransfer(delegationID, transferData, true);
@@ -355,7 +360,7 @@ function getVOMSCredentials(delegationID, user_vo){
 }
 
 function getEndpointContent(endpointInput, container, containerTable, indicator, stateText, filter){	
-	urlEndp = ftsEndpoint + "/dm/list?surl=" + $('#' + endpointInput).val();
+	urlEndp = ftsEndpoint + "/dm/list?surl=" + ($('#' + endpointInput).val()).trim();
 	$.ajax({
 		url : urlEndp,
 		type : "GET",
