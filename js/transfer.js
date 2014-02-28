@@ -119,11 +119,11 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 		if (index.slice(-1) == "/"){
 			icon ="glyphicon glyphicon-folder-close";
 			t_row.push("<tr value='" + index.slice(0,-1).trim() + "' onclick=\"getNextFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + index.slice(0,-1).trim() + "','" + filter + "')\">");
-			t_row.push('<td><i class="' + icon + '"/>&nbsp;' + index.slice(0,-1).trim() + '</td>');
+			t_row.push('<td title="' + index + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(index.slice(0,-1).trim()) + '</td>');
 		} else {
 			icon ="glyphicon glyphicon-file";	
 			t_row.push('<tr value="' + index + '">');
-			t_row.push('<td><i class="' + icon + '"/>&nbsp;' + index + '</td>');
+			t_row.push('<td title="' + index + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(index) + '</td>');
 		}		
 		$.each(value, function(e_index, e_value){
 			if (e_index == 'mode'){
@@ -431,4 +431,11 @@ function getFileDate(fdate){
 		return pad(fdate.getUTCDate().toString(), 2) + " " +months[fdate.getUTCMonth()] + " " 
 			   + pad(fdate.getUTCHours().toString(), 2) + ":" + pad(fdate.getUTCMinutes().toString(), 2);
 	}	
+}
+
+function getPrintableFileName(fileName){
+	if (fileName.length > 25){
+		return fileName.substring(0, 25)+"...";
+	}
+	return fileName;
 }
