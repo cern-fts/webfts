@@ -1,6 +1,6 @@
 //var ftsEndpoint = "https://fts3-devel.cern.ch:8446";//"https://fts3-pilot.cern.ch:8446";
 var ftsEndpoint = "https://fts3devel01.cern.ch:8446";
-var certHours = 4; // Hours of live of the certificate
+var certHours = 12; // Hours of live of the certificate
 var supportText = "Please, try again and contact support if the error persists";
 
 function showError(jqXHR, textStatus, errorThrown, message) {
@@ -255,8 +255,24 @@ function checkAndTransfer(delegationID, transferData, showModal){
 					showDelegateModal();
 				}	
 			} else {
-				remainingTime = Date.parse(data2.termination_time) - (new Date().getTime());
-				console.log(millisecondsToStr(remainingTime));			
+				var noOffset = function(s) {
+					  var day= s.slice(0,-5).split(/\D/).map(function(itm){
+					    return parseInt(itm, 10) || 0;
+					  });
+					  day[1]-= 1;
+					  day= new Date(Date.UTC.apply(Date, day));  
+					  var offsetString = s.slice(-5)
+					  var offset = parseInt(offsetString,10)/100;
+					  if (offsetString.slice(0,1)=="+") offset*=-1;
+					  day.setHours(day.getHours()+offset);
+					  return day.getTime();
+					};
+					
+				// The termination time is calculated using noOffset to avoid a problem in Firefox 
+				// in operations with dates.
+				// More info:
+				//	http://stackoverflow.com/questions/5802461/javascript-which-browsers-support-parsing-of-iso-8601-date-string-with-date-par
+				remainingTime = noOffset(data2.termination_time) - (new Date().getTime());	
 				if (remainingTime < 3600000) { //3600000 = milliseconds in an hour
 					showNoProxyMessages();
 					if (showModal){
