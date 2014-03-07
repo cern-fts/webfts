@@ -43,33 +43,24 @@
 		<!-- Example row of columns -->
 		<div class="row">
 			<div class="col-lg-4">
-				<h2>Heading</h2>
-				<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-					tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-					fermentum massa justo sit amet risus. Etiam porta sem malesuada
-					magna mollis euismod. Donec sed odio dui.</p>
+				<h2>Information</h2>
+				<p>More information about WebFTS can be found in the official page.</p>
 				<p>
-					<a class="btn btn-primary" href="#">View details &raquo;</a>
+					<a class="btn btn-primary" href="https://webfts.web.cern.ch/content/user-guide">View details &raquo;</a>
 				</p>
 			</div>
 			<div class="col-lg-4">
-				<h2>Heading</h2>
-				<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-					tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-					fermentum massa justo sit amet risus. Etiam porta sem malesuada
-					magna mollis euismod. Donec sed odio dui.</p>
+				<h2>EUDAT</h2>
+				<p>This product has been developed as part of the European project EUDAT.</p>
 				<p>
-					<a class="btn btn-primary" href="#">View details &raquo;</a>
+					<a class="btn btn-primary" href="http://www.eudat.eu/">View details &raquo;</a>
 				</p>
 			</div>
 			<div class="col-lg-4">
-				<h2>Heading</h2>
-				<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in,
-					egestas eget quam. Vestibulum id ligula porta felis euismod semper.
-					Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum
-					nibh, ut fermentum massa.</p>
+				<h2>CERN</h2>
+				<p>This product has been developed at CERN.</p>
 				<p>
-					<a class="btn btn-primary" href="#">View details &raquo;</a>
+					<a class="btn btn-primary" href="http://www.cern.ch/">View details &raquo;</a>
 				</p>
 			</div>
 		</div>
