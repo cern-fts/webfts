@@ -64,7 +64,8 @@ function getUTCDate(time) {
 			+ ("0" + (time.getUTCMonth() + 1).toString()).slice(-2)
 			+ ("0" + time.getUTCDate().toString()).slice(-2)
 			+ ("0" + time.getUTCHours().toString()).slice(-2)
-			+ ("0" + time.getUTCSeconds().toString()).slice(-2) + "Z";
+			+ ("0" + time.getUTCMinutes().toString()).slice(-2)
+			+ "Z";
 }
 
 // Call to make the transfer between two endpoints
