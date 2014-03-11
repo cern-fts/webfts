@@ -136,7 +136,12 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 				e_value = getFileDate(fdate);				
 				t_row.push('<td>' + e_value + '</td>');
 			} else if (e_index == 'size'){				
-				t_row.push('<td id=' + e_value + '>' + getReadableFileSizeString(e_value) + '</td>');
+				if (t_row[1].indexOf("folder") != -1){
+					//The number of a folder means the number of elements. Not need to be converted
+					t_row.push('<td id=' + e_value + '> - </td>');
+				} else {
+					t_row.push('<td id=' + e_value + '>' + getReadableFileSizeString(e_value) + '</td>');
+				}	
 			}			
 		});
 		t_row.push('</tr>'); 
@@ -405,6 +410,9 @@ function setFilterPanel(panel, buttonObj){
 
 function getReadableFileSizeString(fileSizeInBytes) {
 
+	if (fileSizeInBytes == 0)
+		return fileSizeInBytes;
+	
 	if (fileSizeInBytes < 1024)
 		return fileSizeInBytes + ' B';
 	
