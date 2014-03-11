@@ -1,6 +1,8 @@
 var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
+var endpointsListURL = "https://fts3devel03.cern.ch:8446/bdii_cache.xml";
+
 var permissionNumberMeaning = {
 	    0 : '---',
 	    1 : '--x',
@@ -439,4 +441,46 @@ function getPrintableFileName(fileName){
 		return fileName.substring(0, 25)+"...";
 	}
 	return fileName;
+}
+ 
+function loadEndpointsList(){
+	$.ajax({
+		url : endpointsListURL,
+		type : "GET",
+		dataType : 'xml',
+		xhrFields : {
+			withCredentials : true
+		},
+		
+		success : function(xml) {
+			if (xml != null){
+				var availableURLs = [];
+				$(xml).find("entry").each(function()
+						  {
+							endpoint = $(this).find("endpoint").text();
+							if ($(this).find("type").text() == "SRM"){
+								if (endpoint.substring(0,5) == "httpg")
+									availableURLs.push("srm" + endpoint.substring(5, endpoint.length));
+							} else {
+								availableURLs.push(endpoint);
+							}
+						    $("#output").append($(this).attr("author") + "<br />");
+						  });
+				$( "#leftEndpoint" ).autocomplete({
+					source: availableURLs,
+					minLength: 2
+				});
+				$( "#rightEndpoint" ).autocomplete({
+					source: availableURLs,
+					minLength: 2
+				});
+			}
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			console.log("File with the endpoints list not avaialble or not accesible");
+			console.log(jqXHR);
+			console.log("ERROR: " + JSON.stringify(jqXHR));
+			console.log(textStatus + "," + errorThrown);
+		}
+	});
 }

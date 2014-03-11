@@ -18,6 +18,8 @@ $( document ).ready(function() {
 			get
 		}
 	}
+
+	loadEndpointsList()
 	
 	console.log( "ready!" );	
 });
