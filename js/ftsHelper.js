@@ -37,7 +37,7 @@ function getUserJobs(delegationId){
 }
 
 function getJobTranfers(jobId, isResubmit){
-	var urlE = ftsEndpoint + "/jobs/" + jobId;
+	var urlE = ftsEndpoint + "/jobs/" + jobId + "/files";
 	$.ajax({
 		url : urlE,
 		type : "GET",

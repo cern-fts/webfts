@@ -2,7 +2,7 @@ function loadTransferTable(transferList, jobId){
 	$('#' + jobId + '-loading-indicator').hide();
 	$('#' + jobId + '-table-details').show();
 	$("#" + jobId + "-table-details > tbody").html("");
-	$.each(transferList.files, function(index, value){
+	$.each(transferList, function(index, value){
 		//Transfer row
 		var t_row = '<tr class="' + getRowColor(value.file_state) + '">' ;
 		var showPopover = getPopoverText(value);
@@ -16,7 +16,7 @@ function loadTransferTable(transferList, jobId){
 		+ '</tr>'  ;		
 		$("#" + jobId + "-table-details > tbody:last").append(t_row);
 	});
-	$.each(transferList.files, function(index, value){	
+	$.each(transferList, function(index, value){	
 		$('#popover' + value.file_id ).popover();	
 	});
 }
@@ -113,15 +113,15 @@ function resubmitJob(jobId){
 function rerunTransfer(data){	  
 	var theData = {};
 	theData["files"] = [];       	      	  
-	for (var i=0; i<data.files.length; i++){
+	for (var i=0; i<data.length; i++){
 		var files = {};
 		files["sources"] = [];
 		var dLists = [];
-		dLists[0] = data.files[i].source_surl.trim();
+		dLists[0] = data[i].source_surl.trim();
 		files["sources"] = dLists;
 		files["destinations"] = [];
 		var dListd = [];
-		dListd[0] = data.files[i].dest_surl.trim();
+		dListd[0] = data[i].dest_surl.trim();
 		files["destinations"] = dListd;
 		theData["files"].push(files);		
 	}
