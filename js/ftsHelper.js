@@ -149,7 +149,11 @@ function signRequest(sCert, userPrivateKeyPEM, userDN) {
 		tbsc.setNotAfterByParam({
 			'str' : getUTCDate(ctime)
 		});
-
+		
+		tbsc.appendExtension(new KJUR.asn1.x509.BasicConstraints({'cA': false, 'critical': true}));
+		// 101 to set 'Digital Signature, Key Encipherment'. 0 means disabled 'Non Repudiation'
+		tbsc.appendExtension(new KJUR.asn1.x509.KeyUsage({'bin':'101', 'critical':true}));
+		
 		// Sign and get PEM certificate with CA private key
 		var userPrivateKey = new RSAKey();
 
