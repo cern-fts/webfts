@@ -71,7 +71,7 @@
 			echo "<span class=\"pull-right\">You are authenticated as <strong>$v</strong></span>";
 		?>
 		<div class="masthead">
-			<h3 class="text-muted">webFTS</h3>
+			<h3 class="text-muted">webFTS (Beta version)</h3>
 			<ul class="nav nav-justified">
 				<li><a href="index.php">Home</a></li>
 				<li><a href="transmissions.php">My jobs</a></li>
