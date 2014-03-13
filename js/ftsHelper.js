@@ -59,6 +59,26 @@ function getJobTranfers(jobId, isResubmit){
 	
 }
 
+function removeTransfer(jobID){
+	var urlEndp = ftsEndpoint + "/jobs/" + jobID;
+	$.ajax({
+		url : urlEndp,
+		//type : "DELETE" <-- use directly this is not working
+		data: {"_method":"delete"},
+		dataType:'script', 
+		type : "POST",
+		xhrFields : {
+			withCredentials : true
+		},
+		success : function(data1, status) {						
+			showUserSuccess("Transfer removed successfully");	
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			showError(jqXHR, textStatus, errorThrown, "Error removing the transfer. "+ supportText);
+		}
+	});
+}
+
 function getUTCDate(time) {
 	return time.getUTCFullYear().toString().substring(2, 4)
 			+ ("0" + (time.getUTCMonth() + 1).toString()).slice(-2)

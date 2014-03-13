@@ -29,11 +29,7 @@ function loadJobTable(jobList){
 		var t_row = '<tr class="' + getRowColor(value.job_state) + ' accordion-body" data-toggle="collapse" id="' + value.job_id 
 		+ '" data-target="#' + value.job_id + '_row" onclick="toogleDetailRowState(\'' + value.job_id + '_row\', \'' + value.job_id + '\')">';
 		
-//		if (isErrorState(value.job_state)){
-			t_row += "<td>" + value.job_id + setResubmitButton(value.job_id) + "</td>";
-//		} else {
-//			t_row += getColumn(value.job_id);
-//		}
+		t_row += "<td>" + value.job_id + setResubmitButton(value.job_id, isFinalState(value.job_state)) + "</td>";
 		t_row += getColumn(value.submit_time) + getColumn(value.source_se) + getColumn(value.dest_se) + '</tr>'  ;		
 		$("#jobResultsTable > tbody:last").append(t_row);
 		
@@ -50,8 +46,13 @@ function loadJobTable(jobList){
 	});
 }
 
-function setResubmitButton(delegation_id){
-	return '<div class="btn-group pull-right"><button type="button" class="btn btn-xs btn-primary" onclick="resubmitJob(\'' + delegation_id  + '\')"><i class="glyphicon glyphicon-cloud-upload"/>&nbsp;Resubmit job</button></div>';
+function setResubmitButton(delegation_id, is_final_State){
+	var row = '<div class="btn-group pull-right">';
+	if (!is_final_State){
+		row += '<button type="button" class="btn btn-xs btn-primary" onclick="removeTransfer(\'' + delegation_id  + '\')"><i class="glyphicon glyphicon-remove"/>&nbsp;Cancel</button>&nbsp;';
+	}
+	row += '<button type="button" class="btn btn-xs btn-primary" onclick="resubmitJob(\'' + delegation_id  + '\')"><i class="glyphicon glyphicon-cloud-upload"/>&nbsp;Resubmit job</button></div>';
+	return row;
 }
 
 function getPopoverText(transfer){
@@ -72,6 +73,10 @@ function getColumn(columnName){
 
 function isErrorState(job_state){
 	return job_state=="FAILED" || job_state=="CANCELED";
+}
+
+function isFinalState(job_state){
+	return isErrorState(job_state) || job_state=="FINISHED";
 }
 
 function getRowColor(job_state){
