@@ -19,6 +19,7 @@ function showError(jqXHR, textStatus, errorThrown, message) {
 
 function getUserJobs(delegationId){
 	var urlE = ftsEndpoint + "/jobs?dlg_id=" + delegationId + "&state_in=SUBMITTED,ACTIVE,FINISHED,FAILED,CANCELED";
+	$.support.cors = true;
 	$.ajax({
 		url : urlE,
 		type : "GET",
@@ -38,6 +39,7 @@ function getUserJobs(delegationId){
 
 function getJobTranfers(jobId, isResubmit){
 	var urlE = ftsEndpoint + "/jobs/" + jobId + "/files";
+	$.support.cors = true;
 	$.ajax({
 		url : urlE,
 		type : "GET",
@@ -61,6 +63,7 @@ function getJobTranfers(jobId, isResubmit){
 
 function removeTransfer(jobID){
 	var urlEndp = ftsEndpoint + "/jobs/" + jobID;
+	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
 		//type : "DELETE" <-- use directly this is not working
@@ -92,6 +95,7 @@ function getUTCDate(time) {
 function ftsTransfer(theData) {
 	var urlE = ftsEndpoint + "/jobs";
 	theData = JSON.stringify(theData);
+	$.support.cors = true;
 	outPut = $.ajax({
 		url : urlE,
 		type : "POST",
@@ -206,6 +210,7 @@ function signRequest(sCert, userPrivateKeyPEM, userDN) {
 //Check delegation ID, save it and check if there is a valid proxy 
 function getDelegationID(fieldName, delegationNeeded){
 	var urlEndp = ftsEndpoint + "/whoami";
+	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
 		type : "GET",
@@ -241,6 +246,7 @@ function runDataTransfer(delegationID, transferData){
 
 function removeDelegation(delegationID, showRemoveDelegationMessage){
 	var urlEndp = ftsEndpoint + "/delegation/" + delegationID;
+	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
 		//type : "DELETE" <-- use directly this is not working
@@ -265,6 +271,7 @@ function removeDelegation(delegationID, showRemoveDelegationMessage){
 //Check if there is a valid delegation done. Otherwise, do it 
 function checkAndTransfer(delegationID, transferData, showModal){
 	var urlEndp = ftsEndpoint + "/delegation/" + delegationID;
+	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
 		type : "GET",
@@ -320,6 +327,7 @@ function checkAndTransfer(delegationID, transferData, showModal){
 //Do delegation of credentials
 function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 	var urlEndp = ftsEndpoint + "/delegation/" + delegationID + "/request";
+	$.support.cors = true;
 	// Call 3: Asking for a new proxy certificate is needed
 	$.ajax({
 		url : urlEndp,
@@ -371,6 +379,7 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 
 function getVOMSCredentials(delegationID, user_vo){
 	var urlEndp = ftsEndpoint + "/delegation/" + delegationID + "/voms";
+	$.support.cors = true;
 	var uvo = '["' + user_vo + '"]';
 	
 	$.ajax({
@@ -402,6 +411,7 @@ function getVOMSCredentials(delegationID, user_vo){
 
 function getEndpointContent(endpointInput, container, containerTable, indicator, stateText, filter){	
 	urlEndp = ftsEndpoint + "/dm/list?surl=" + ($('#' + endpointInput).val()).trim();
+	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
 		type : "GET",
