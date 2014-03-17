@@ -256,7 +256,7 @@ function filterBySize(jo, inputs, hideFolders){
     //Recusively filter the jquery object to get results.
     jo.filter(function (i, v) {
     	var $t = $(this);
-    	if ($t.children()[0].textContent.indexOf('/') !== -1 && hideFolders) {
+    	if ($t.children()[0].title.indexOf('/') !== -1 && hideFolders) {
              return false;
         } else {
         	if (inputs[0].value !== ""){
@@ -288,7 +288,7 @@ function filterByTime(jo, inputs, hideFolders){
     //Recusively filter the jquery object to get results.
     jo.filter(function (i, v) {
     	var $t = $(this);
-    	if ($t.children()[0].textContent.indexOf('/') !== -1 && hideFolders) {
+    	if ($t.children()[0].title.indexOf('/') !== -1 && hideFolders) {
              return false;
         } else {
         	if (inputs[0].value !== ""){
@@ -334,7 +334,7 @@ function filterByName(jo, data, hideFolders){
     //Recusively filter the jquery object to get results.
     jo.filter(function (i, v) {
     	var $t = $(this);
-    	if ($t.children()[0].textContent.indexOf('/') !== -1 && hideFolders) {
+    	if ($t.children()[0].title.indexOf('/') !== -1 && hideFolders) {
              return false;
         } else { 
         	if (isRegEx(data.toString())){
