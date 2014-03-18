@@ -1,5 +1,4 @@
-//var ftsEndpoint = "https://fts3-devel.cern.ch:8446";//"https://fts3-pilot.cern.ch:8446";
-var ftsEndpoint = "https://fts3devel01.cern.ch:8446";
+var ftsEndpoint = "https://fts3-devel-oracle.cern.ch:8446";
 var certHours = 12; // Hours of live of the certificate
 var supportText = "Please, try again and contact support if the error persists";
 
