@@ -228,7 +228,7 @@ function getDelegationID(fieldName, delegationNeeded){
 			isDelegated(data1.delegation_id, delegationNeeded);
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			showError(jqXHR, textStatus, errorThrown, "Error connecting to the FTS server to obtain the user credentials. "+ supportText);
+			showError(jqXHR, textStatus, errorThrown, "Error connecting to the FTS server to obtain the user credentials. Check if you have installed a valid copy of the CERN ROOT CA certificate."+ supportText);
 		}
 	});
 }
