@@ -1,0 +1,30 @@
+<script type='text/javascript'>
+jQuery(document).ready(function(){	
+	$('input:radio[name="transferType"]').change(function(){
+		hideAllSubmitOptions();
+		$('#' + $(this).val()).show();
+	});
+});
+
+function hideAllSubmitOptions() {
+	$('input:radio[name="transferType"]').each(function(){
+		$('#' + $(this).val()).hide();
+    });
+}
+</script>
+
+<div class="row">
+	<div class="btn-group btn-group-vertical col-xs-3 col-lg-3 col-md-3">	
+		Select transfer type: 
+	</div>
+	<div class="btn-group btn-group-vertical col-xs-3 col-lg-3 col-md-3">	
+		<input type="radio" id="radio-ep" name="transferType" value="ep_ep"/> Grid endpoint <i class="glyphicon glyphicon-resize-horizontal" /> Grid endpoint
+	</div>
+	<div class="btn-group btn-group-vertical col-xs-3 col-lg-3 col-md-3">	
+		<input type="radio" id="radio-url" name="transferType" value="url_ep"/> Remote URL link <i class="glyphicon glyphicon-resize-horizontal" /> Grid endpoint
+	</div>
+	<div class="btn-group btn-group-vertical col-xs-3 col-lg-3 col-md-3">	
+		<input type="radio" id="radio-cs" name="transferType" value="cs_ep"/> Cloud Storage <i class="glyphicon glyphicon-resize-horizontal" /> Grid endpoint	
+	</div>
+</div>
+<div class="row">&nbsp;</div>

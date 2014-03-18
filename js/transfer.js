@@ -35,6 +35,32 @@ function runTransfer(container, origFolder, destFolder){
     return false;
 }
 
+function runTransferFromURL(container, url, destFolder){	  
+	hideUserReport();
+
+	var theData = {};
+	theData["files"] = [];       	      	  
+
+	var files = {};
+	files["sources"] = [];
+	var sList = [];
+	sList[0] = document.getElementById(url).value.trim();
+	files["sources"] = sList;
+	files["destinations"] = [];
+	files["destinations"] = getFullPath(getFileNameFromURL(document.getElementById(url).value.trim()), document.getElementById(destFolder).value.trim());
+	theData["files"].push(files);
+
+	theData["params"] = [];
+	  
+	runDataTransfer($('#delegation_id').val(), theData);
+
+    return false;
+}
+
+function getFileNameFromURL(url){
+	return url.substr(url.lastIndexOf("/") + 1);
+}
+
 function getFullPath(element, endFolder){
 	var dList = [];
 	if (endFolder.slice(-1) != "/"){
@@ -45,14 +71,13 @@ function getFullPath(element, endFolder){
 }	
 
 function activateTransferButton(epTable, buttonToActivate, endPoint){
-	if ((getSelectedFiles(epTable).length > 0) && ($('#' + endPoint).text().length > 0)){ 
+	if (((epTable != null) && (getSelectedFiles(epTable).length > 0) && ($('#' + endPoint).text().length > 0))
+			|| ((epTable == null) && ($('#' + endPoint).text().length > 0))){ 
 		$('#' + buttonToActivate).removeAttr("disabled");
 	} else {
 		$('#' + buttonToActivate).attr('disabled','disabled');
 	}
 }
-
-
 		 
 function clearContentTable(containerTable, container, indicator, stateText){
 	$("#" + containerTable + " > tbody").html("");
@@ -256,7 +281,7 @@ function filterBySize(jo, inputs, hideFolders){
     //Recusively filter the jquery object to get results.
     jo.filter(function (i, v) {
     	var $t = $(this);
-    	if ($t.children()[0].textContent.indexOf('/') !== -1 && hideFolders) {
+    	if ($t.children()[0].title.indexOf('/') !== -1 && hideFolders) {
              return false;
         } else {
         	if (inputs[0].value !== ""){
@@ -288,7 +313,7 @@ function filterByTime(jo, inputs, hideFolders){
     //Recusively filter the jquery object to get results.
     jo.filter(function (i, v) {
     	var $t = $(this);
-    	if ($t.children()[0].textContent.indexOf('/') !== -1 && hideFolders) {
+    	if ($t.children()[0].title.indexOf('/') !== -1 && hideFolders) {
              return false;
         } else {
         	if (inputs[0].value !== ""){
@@ -334,7 +359,7 @@ function filterByName(jo, data, hideFolders){
     //Recusively filter the jquery object to get results.
     jo.filter(function (i, v) {
     	var $t = $(this);
-    	if ($t.children()[0].textContent.indexOf('/') !== -1 && hideFolders) {
+    	if ($t.children()[0].title.indexOf('/') !== -1 && hideFolders) {
              return false;
         } else { 
         	if (isRegEx(data.toString())){
@@ -371,14 +396,6 @@ function isRegEx(data){
 	return false;
 }
 
-function initFilters(){
-	$('#leftFilterPanel').hide();
-	$('#rightFilterPanel').hide();
-	
-	$('#leftFilterOptionsPanel').hide();
-	$('#rightFilterOptionsPanel').hide();	
-}
-
 function setFilterShowingOptions(panel, textInput, option, contentTable){	
 	$("#" + panel).children().show();
 	$("#" + option).siblings().hide();
@@ -392,13 +409,6 @@ function setFilterShowingOptions(panel, textInput, option, contentTable){
 	
 	var jo = $("#" + contentTable + " tbody").find("tr");
     jo.show();	
-}
-
-function setInitialDatepickers(){
-	$("#leftFromRangeFilterDate").datepicker();
-	$("#leftToRangeFilterDate").datepicker();
-	$("#rightFromRangeFilterDate").datepicker();
-	$("#rightToRangeFilterDate").datepicker();	
 }
 
 function setFilterPanel(panel, buttonObj){
@@ -451,7 +461,7 @@ function getPrintableFileName(fileName){
 	return fileName;
 }
  
-function loadEndpointsList(){
+function loadEndpointsList(boxes){
 	$.ajax({
 		url : endpointsListURL,
 		type : "GET",
@@ -474,14 +484,9 @@ function loadEndpointsList(){
 							}
 						    $("#output").append($(this).attr("author") + "<br />");
 						  });
-				$( "#leftEndpoint" ).autocomplete({
-					source: availableURLs,
-					minLength: 2
-				});
-				$( "#rightEndpoint" ).autocomplete({
-					source: availableURLs,
-					minLength: 2
-				});
+				for(var i =0; i < boxes.length; i++){
+					loadEPList(boxes[i], availableURLs);
+				}
 			}
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
@@ -490,5 +495,12 @@ function loadEndpointsList(){
 			console.log("ERROR: " + JSON.stringify(jqXHR));
 			console.log(textStatus + "," + errorThrown);
 		}
+	});
+}
+
+function loadEPList(ep, availableURLs){
+	$( "#" + ep ).autocomplete({
+		source: availableURLs,
+		minLength: 2
 	});
 }
