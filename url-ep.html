@@ -12,6 +12,12 @@ $( document ).ready(function() {
 	
 	var contentArray = ['rightURL_Endpoint'];	
 	loadEndpointsList(contentArray);	
+	
+	$('#rightURL_Endpoint').keypress(function(event){
+		if(event.keyCode == 13){
+			$('#load-URL-right').click();
+		}
+	});
 });
 </script>
 <div class="row">

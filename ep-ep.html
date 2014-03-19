@@ -18,6 +18,17 @@ $( document ).ready(function() {
 	
 	var contentArray = ['leftEndpoint', 'rightEndpoint'];	
 	loadEndpointsList(contentArray);
+	
+	$('#leftEndpoint').keypress(function(event){
+		if(event.keyCode == 13){
+			$('#load-left').click();
+		}
+	});
+	$('#rightEndpoint').keypress(function(event){
+		if(event.keyCode == 13){
+			$('#load-right').click();
+		}
+	});
 });
 
 $("#leftEndpointContentTable tbody").on("click", function(e){
@@ -46,6 +57,7 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 				class="form-control"
 				value="gsiftp://lxfsra10a01.cern.ch/dpm/cern.ch/home/"> <span
 				class="input-group-btn">
+
 				<button class="btn btn-primary" type="button" id="load-left"
 					onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter')">Load</button>
 			</span>
