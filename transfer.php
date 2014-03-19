@@ -21,6 +21,17 @@ $( document ).ready(function() {
 
 	loadEndpointsList()
 	
+	$('#leftEndpoint').keypress(function(event){
+		if(event.keyCode == 13){
+			$('#load-left').click();
+		}
+	});
+	$('#rightEndpoint').keypress(function(event){
+		if(event.keyCode == 13){
+			$('#load-right').click();
+		}
+	});
+	
 	console.log( "ready!" );	
 });
 
