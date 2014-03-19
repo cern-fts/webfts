@@ -37,7 +37,6 @@
 			<a href="#"><img src="img/banner.jpg" alt="" class="img-responsive"/> </a>
 	
 			<span><strong>webFTS: </strong> FTS web interface for file transfering.</span>
-			<a href="#" class="button">More about FTS</a>
 		</div>
 
 		<!-- Example row of columns -->
