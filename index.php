@@ -19,11 +19,14 @@
 <body>
 
 	<div class="container">
-		<?php
-			foreach($_SERVER as $h=>$v)
-			if ($h == "SSL_CLIENT_S_DN_CN_2")
-				echo "<span class=\"pull-right\">You are authenticated as <strong>$v</strong></span>";
-		?>
+		<div class="row">
+			<script> 
+				$(function(){
+				   $("#userAuth").load("userAuth.php"); 
+				});
+			</script>
+			<div id="userAuth"></div>
+		</div>
 		<div class="masthead">
 			<h3 class="text-muted">webFTS (Beta version)</h3>			
 			<ul class="nav nav-justified">
@@ -32,11 +35,18 @@
 				<li><a href="submit.php">Submit a transfer</a></li>
 			</ul>
 		</div>
-
 		<div>
-			<a href="#"><img src="img/banner.jpg" alt="" class="img-responsive"/> </a>
-	
-			<span><strong>webFTS: </strong> FTS web interface for file transfering.</span>
+			&nbsp;
+		</div>
+		<div>
+			<h2>  <span class="label label-info">Do you need to move files between Grid machines?
+			</span></h2> 
+			<h2>  <span class="label label-info"> Do you think command line interfaces are too complicated? 
+			</span></h2>
+			<h2> <span class="label label-success">Start to use <strong>webFTS</strong> today and discover how easy can be to transfer files in the Grid 
+			</span></h2>
+			<h2> <span class="label label-default">WebFTS is powered by FTS3. 
+			</span></h2>
 		</div>
 
 		<!-- Example row of columns -->
@@ -50,7 +60,7 @@
 			</div>
 			<div class="col-lg-4">
 				<h2>EUDAT</h2>
-				<p>This product has been developed as part of the European project EUDAT.</p>
+				<p>This is part of something...done by someone...somewhere...called sometimes...EUDAT.</p>
 				<p>
 					<a class="btn btn-primary" href="http://www.eudat.eu/">View details &raquo;</a>
 				</p>
