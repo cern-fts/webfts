@@ -11,33 +11,16 @@ $(function(){
 	   $("#modal_content").load("modal.html"); 
 });
 </script>
-
-<h2>Jobs list</h2>
-<div class="btn-group pull-right">
-	<button class="btn btn-primary dropdown-toggle pull-right"
-		type="button" data-toggle="dropdown">
-		<span id="proxyTimeSpan">Loading proxy... </span><span class="caret"></span>
-	</button>
-	<ul class="dropdown-menu" role="menu">
-		<li role="presentation" class="dropdown-header">Proxy actions</li>
-		<li id="delegate_again_link"><a href="#" onclick="showDelegateModal()">Delegate
-				again</a></li>
-		<li id="delegate_remove_link"><a href="#"
-			onclick="removeExistingDelegation()">Remove existing delegation</a></li>
-	</ul>
-</div>
 <div class="row">
-<legend>
-	<h4>Click in a job to show its transfers <small>(and reasons in case of errors)</small></h4>
-</legend>
-	<?php
+<div>&nbsp;</div>
+<?php
 	foreach($_SERVER as $h=>$v){
-			if ($h == "SSL_CLIENT_S_DN")
-				echo "<input type=\"hidden\" id=\"userDN\" value=\"$v\">";
-			else if ($h == "SSL_CLIENT_CERT")
-				echo "<input type=\"hidden\" id=\"clientCERT\" value=\"$v\">";
-		}
-		?>
+		if ($h == "SSL_CLIENT_S_DN")
+			echo "<input type=\"hidden\" id=\"userDN\" value=\"$v\">";
+		else if ($h == "SSL_CLIENT_CERT")
+			echo "<input type=\"hidden\" id=\"clientCERT\" value=\"$v\">";
+	}
+?>
 
 <input type="hidden" id="delegation_id" value="">		
 <!-- <ul class="pagination pagination pagination-sm"> -->

@@ -65,11 +65,20 @@
 </head>
 <body>
 	<div class="container">
-		<?php
-		foreach($_SERVER as $h=>$v)
-		if ($h == "SSL_CLIENT_S_DN_CN_2")
-			echo "<span class=\"pull-right\">You are authenticated as <strong>$v</strong></span>";
-		?>
+		<div class="row">
+			<script> 
+				$(function(){
+				   $("#userAuth").load("userAuth.php"); 
+				});
+			</script>
+			<div id="userAuth"></div>
+			<script> 
+				$(function(){
+				   $("#delegateBtn").load("delegateButton.html"); 
+				});
+			</script>
+			<div id="delegateBtn"></div>
+		</div>
 		<div class="masthead">
 			<h3 class="text-muted">webFTS (Beta version)</h3>
 			<ul class="nav nav-justified">

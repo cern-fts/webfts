@@ -51,37 +51,18 @@ $(function(){
    $("#modal_content").load("modal.html"); 
 });
 </script>
-<h2>Transfer files</h2>
-<div class="btn-group pull-right">
-	<button class="btn btn-primary dropdown-toggle pull-right"
-		type="button" data-toggle="dropdown">
-		<span id="proxyTimeSpan">Loading proxy... </span><span class="caret"></span>
-	</button>
-	<ul class="dropdown-menu" role="menu">
-		<li role="presentation" class="dropdown-header">Proxy actions</li>
-		<li id="delegate_again_link"><a href="#" onclick="showDelegateModal()">Delegate
-				again</a></li>
-		<li id="delegate_remove_link"><a href="#"
-			onclick="removeExistingDelegation()">Remove existing delegation</a></li>
-	</ul>
-</div>
 <input type="hidden" id="delegation_id" value="">
 <div class="row">
 	<div id="modal_content"></div>
+	<div>&nbsp;</div>
 	<?php
-	foreach($_SERVER as $h=>$v){
+		foreach($_SERVER as $h=>$v){
 			if ($h == "SSL_CLIENT_S_DN")
 				echo "<input type=\"hidden\" id=\"userDN\" value=\"$v\">";
 			else if ($h == "SSL_CLIENT_CERT")
 				echo "<input type=\"hidden\" id=\"clientCERT\" value=\"$v\">";
 		}
-		?>
-	<legend>
-		<h4>
-			Please specify your transfer source and destination <small>(Including
-				protocol. Example: gsiftp://sra10a01.myinstitute.com/myfolder)</small>
-		</h4>
-	</legend>
+	?>
 	<div class="alert alert-danger" id="serverkeyAlert"
 		style="display: none">
 		<button type="button" class="close" data-dismiss="alert"
@@ -96,18 +77,6 @@ $(function(){
 	</div>
 	<div class="row">
 		<div class="btn-group-vertical col-xs-5 col-lg-5 col-md-5">
-			
-<!-- 				<div class="btn-toolbar"> -->
-<!-- 					<div class="btn-group "> -->
-<!-- 							<button class="btn btn-primary" type="button" id="openDropbox" onclick="getDropboxAuthAndContent()">Dropbox</button>  -->
-<!-- 						<select class="form-control"> --> 
-<!-- 							<option value="grid">Grid Storage</option> -->
-<!-- 							<option value="dropbox">Dropbox</option> -->
-<!-- 							<option value="owncloud">OwnCloud</option> --> 
-<!-- 						</select> -->
-<!-- 					</div> -->
-<!-- 				</div>		 -->
-				
 			<div class="input-group">	
 				<input id="leftEndpoint" type="text" placeholder="Endpoint path"
 					class="form-control"
