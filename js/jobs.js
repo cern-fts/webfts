@@ -94,10 +94,6 @@ function showUserError(message){
 	$('#serverkeyAlert').show();
 }
 
-function hideUserError(){	
-	$('#serverkeyAlert').hide();
-}
-
 function toogleDetailRowState(rowId, jobId) {	
 	if ($("#jobResultsTable > tbody > #" + rowId).css('display') == 'none') {
 		$("#jobResultsTable > tbody > #" + rowId).show();

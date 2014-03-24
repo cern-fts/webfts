@@ -31,6 +31,7 @@ function showDelegateError(message){
 }
 
 function hideDelegateModal(){
+	hideUserReport();
 	$('#delegating-indicator').hide();
 	$('#delegationModal').modal('hide');
 	$('#serverDelegateAlert').hide();
@@ -52,6 +53,11 @@ function showUserError(message){
 function showUserSuccess(message){
 	$('#serverSuccessText').text(message);
 	$('#serverkeyAlertSuccess').show();	
+}
+
+function hideUserReport(){	
+	$('#serverkeyAlert').hide();
+	$('#serverkeyAlertSuccess').hide();
 }
 
 function getQueryParams(qs) {

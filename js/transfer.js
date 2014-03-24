@@ -241,11 +241,6 @@ function initialLoadState(input, button){
     });
 }
 
-function hideUserReport(){	
-	$('#serverkeyAlert').hide();
-	$('#serverkeyAlertSuccess').hide();
-}
-
 function getFilteredResults(input, contentTable, option){
 	var panelToShow = $('#' + option).val();
 	var filter = $('#' + input).val();
