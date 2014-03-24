@@ -359,7 +359,7 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 						
 				success : function(data4, status) {
 					if (user_vo == null || user_vo == ""){
-						hideDelegateModal();
+						hideUserReport();
 						isDelegated(delegationID, true); //To update remaining proxy time
 					} else {	
 						getVOMSCredentials(delegationID, user_vo);
