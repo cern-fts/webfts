@@ -221,7 +221,7 @@ function getDelegationID(fieldName, delegationNeeded){
 			console.log("Delegation obtained");	
 			$('input[id='+fieldName+']').val(data1.delegation_id);
 			if (!delegationNeeded){				
-				hideUserError();
+				hideUserReport();
 				getUserJobs(data1.delegation_id);
 			}
 			isDelegated(data1.delegation_id, delegationNeeded);
@@ -354,7 +354,7 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 						
 				success : function(data4, status) {
 					if (user_vo == null || user_vo == ""){
-						hideUserReport(); 
+						hideDelegateModal(); 
 						isDelegated(delegationID, true); //To update remaining proxy time
 					} else {	
 						getVOMSCredentials(delegationID, user_vo);
