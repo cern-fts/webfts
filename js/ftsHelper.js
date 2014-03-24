@@ -122,7 +122,6 @@ function ftsTransfer(theData) {
 	return false;
 }
 
-
 function signRequest(sCert, userPrivateKeyPEM, userDN) {	
 	var Re = new RegExp(",","g");
 	userDN = userDN.replace(Re,"/");
@@ -207,7 +206,6 @@ function signRequest(sCert, userPrivateKeyPEM, userDN) {
 	}
 }
 
-
 //Check delegation ID, save it and check if there is a valid proxy 
 function getDelegationID(fieldName, delegationNeeded){
 	var urlEndp = ftsEndpoint + "/whoami";
@@ -234,16 +232,13 @@ function getDelegationID(fieldName, delegationNeeded){
 	});
 }
 
-
 function isDelegated(delegationID, showModal){
 	return checkAndTransfer(delegationID, null, showModal);
 }
 
-
 function runDataTransfer(delegationID, transferData){
 	return checkAndTransfer(delegationID, transferData, true);
 }
-
 
 function removeDelegation(delegationID, showRemoveDelegationMessage){
 	var urlEndp = ftsEndpoint + "/delegation/" + delegationID;
@@ -359,7 +354,7 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 						
 				success : function(data4, status) {
 					if (user_vo == null || user_vo == ""){
-						hideUserReport();
+						hideUserReport(); 
 						isDelegated(delegationID, true); //To update remaining proxy time
 					} else {	
 						getVOMSCredentials(delegationID, user_vo);
