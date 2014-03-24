@@ -162,7 +162,21 @@ function getInitialRowContent(endpointInput, container, containerTable, indicato
 
 function renderFolderContent(tableId, countId, container, indicator, stateText){
     // Initialise with the Ctrl Click Functionality as the Default
-    $("#" + tableId + " tbody").finderSelect({enableDesktopCtrlDefault:true, totalSelector:"."+countId , selectClass:'label-info'});   
+    $("#" + tableId + " tbody").finderSelect({enableDesktopCtrlDefault:true, totalSelector:"."+countId , selectClass:'label-info'});
+    $("#" + tableId + " tbody").finderSelect('addHook','highlight:after', function(element, options) { 
+    	for (var i=0; i < element.length; i++){
+    		//Avoid selecting elements outside the filters
+    		if (($(element[i]).css("display") != null) && ($(element[i]).css("display") == "none")){
+    			$(element[i]).removeClass(options.selectClass);
+    			$(element[i]).addClass(options.unSelectClass);
+    		}
+    		//Do not select folders
+    		if ((element[i].firstChild.title == "") || (element[i].firstChild.title.indexOf('/') != -1 )){
+    			$(element[i]).removeClass(options.selectClass);
+    			$(element[i]).addClass(options.unSelectClass);
+    		}
+    	}
+    });
     clearContentTable(tableId, container, indicator, stateText);
 }
 
