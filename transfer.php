@@ -105,8 +105,7 @@ $(function(){
 						<div class="btn-group">
 							<button type="button" id="leftShowFilterButton"
 								class="btn btn-sm"
-								onclick="setFilterPanel('leftFilterPanel', $(this));">Show
-								filters</button>
+								onclick="setFilterPanel('leftFilterPanel', $(this));">Show filters</button>
 						</div>
 						<div class="btn-group">
 							<div id="leftFilterPanel">
@@ -256,8 +255,7 @@ $(function(){
 						<div class="btn-group">
 							<button type="button" id="rightShowFilterButton"
 								class="btn btn-sm"
-								onclick="setFilterPanel('rightFilterPanel', $(this));">Show
-								filters</button>
+								onclick="setFilterPanel('rightFilterPanel', $(this));">Show filters</button>
 						</div>
 						<div class="btn-group">
 							<div id="rightFilterPanel">
