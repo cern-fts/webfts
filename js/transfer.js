@@ -16,23 +16,39 @@ var permissionNumberMeaning = {
 
 function runTransfer(container, origFolder, destFolder){	  
 	hideUserReport();
-	var selectedFiles = getSelectedFiles(container);
-    if (selectedFiles.length > 0){
-		var theData = {};
-		theData["files"] = [];       	      	  
-		for (var i=0; i<selectedFiles.length; i++){
-			var files = {};
-			files["sources"] = [];
-			files["sources"] = getFullPath(selectedFiles[i], document.getElementById(origFolder).value.trim());
-			files["destinations"] = [];
-			files["destinations"] = getFullPath(selectedFiles[i], document.getElementById(destFolder).value.trim());
-			theData["files"].push(files);
-		}
-		theData["params"] = [];
-		  
-		runDataTransfer($('#delegation_id').val(), theData);
-    }
-    return false;
+	if (protocolValidation(origFolder, destFolder)){
+		var selectedFiles = getSelectedFiles(container);
+	    if (selectedFiles.length > 0){
+			var theData = {};
+			theData["files"] = [];       	      	  
+			for (var i=0; i<selectedFiles.length; i++){
+				var files = {};
+				files["sources"] = [];
+				files["sources"] = getFullPath(selectedFiles[i], document.getElementById(origFolder).value.trim());
+				files["destinations"] = [];
+				files["destinations"] = getFullPath(selectedFiles[i], document.getElementById(destFolder).value.trim());
+				theData["files"].push(files);
+			}
+			theData["params"] = [];
+			  
+			runDataTransfer($('#delegation_id').val(), theData);
+	    }	    
+	} else {
+		showUserError("The protocols should be the same or at least one of them has to be SRM");
+	}    
+	return false;
+}
+
+function protocolValidation(o,d){
+	var ori = document.getElementById(o).value.trim().split(':')[0];
+	var des = document.getElementById(d).value.trim().split(':')[0];
+	
+	if (ori == des)
+		return true;
+	else if (ori == "srm" || des == "srm")
+		return true;
+	else
+		return false;
 }
 
 function getFullPath(element, endFolder){
@@ -51,8 +67,6 @@ function activateTransferButton(epTable, buttonToActivate, endPoint){
 		$('#' + buttonToActivate).attr('disabled','disabled');
 	}
 }
-
-
 		 
 function clearContentTable(containerTable, container, indicator, stateText){
 	$("#" + containerTable + " > tbody").html("");
@@ -194,7 +208,7 @@ function getSelectedFiles(container){
 	var selectedList = [];
 	var selectedEle = $("#" + container + " tbody").finderSelect('selected');
 	for (var i = 0; i < selectedEle.length; i++){
-		selectedList.push(selectedEle[i].attributes.value.nodeValue);  		
+		selectedList.push(selectedEle[i].attributes.value.value);  		
 	}
 	return selectedList;
 }
