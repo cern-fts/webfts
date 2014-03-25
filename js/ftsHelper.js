@@ -11,7 +11,8 @@ function showError(jqXHR, textStatus, errorThrown, message) {
 	//alert("ERROR: " + JSON.stringify(jqXHR));
 	console.log(textStatus + "," + errorThrown);
 	if (jqXHR.status > 0)
-		message += ". Reason: " + jqXHR.status + ": " + jqXHR.responseText;
+		var resp =  jQuery.parseJSON(jqXHR.responseText);
+		message = resp.status + ". " + resp.message + ". " + message;
 		
 	if (message != null)
 		showUserError(message);	
