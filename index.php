@@ -43,34 +43,28 @@
 			</span></h2> 
 			<h2>  <span class="label label-info"> Do you think command line interfaces are too complicated? 
 			</span></h2>
-			<h2> <span class="label label-success">Start to use <strong>webFTS</strong> today and discover how easy can be to transfer files in the Grid 
-			</span></h2>
-			<h2> <span class="label label-default">WebFTS is powered by FTS3. 
-			</span></h2>
+			<h1> <span class="label label-success">Start to use <strong>webFTS</strong> today and discover how easy is to transfer files in the Grid! 
+			</span></h1>
+			<h3> <span class="label label-default pull-right">WebFTS is powered by FTS3. 
+			</span></h3>
 		</div>
 
 		<!-- Example row of columns -->
 		<div class="row">
 			<div class="col-lg-4">
 				<h2>Information</h2>
-				<p>More information about WebFTS can be found in the official page.</p>
+				<p>More information about WebFTS and the user guide can be found in the official page.</p>
 				<p>
 					<a class="btn btn-primary" href="https://webfts.web.cern.ch/content/user-guide">View details &raquo;</a>
 				</p>
 			</div>
 			<div class="col-lg-4">
-				<h2>EUDAT</h2>
-				<p>This is part of something...done by someone...somewhere...called sometimes...EUDAT.</p>
+				<h2>EUDAT</h2>				
 				<p>
 					<a class="btn btn-primary" href="http://www.eudat.eu/">View details &raquo;</a>
 				</p>
 			</div>
 			<div class="col-lg-4">
-				<h2>CERN</h2>
-				<p>This product has been developed at CERN.</p>
-				<p>
-					<a class="btn btn-primary" href="http://www.cern.ch/">View details &raquo;</a>
-				</p>
 			</div>
 		</div>
 
