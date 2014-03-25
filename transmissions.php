@@ -77,9 +77,9 @@
 		<div class="masthead">
 			<h3 class="text-muted">webFTS  (Beta version)</h3>
 			<ul class="nav nav-justified">
-				<li><a href="index.php">Home</a></li>
-				<li class="active"><a href="#">My jobs</a></li>
-				<li><a href="submit.php">Submit a transfer</a></li>
+				<li><a href="index.php"><i class="glyphicon glyphicon-home"></i>&nbsp;Home</a></li>
+				<li class="active"><a href="#"><i class="glyphicon glyphicon-tasks"></i>&nbsp;My jobs</a></li>
+				<li><a href="submit.php"><i class="glyphicon glyphicon-chevron-left"></i><i class="glyphicon glyphicon-chevron-right"></i>&nbsp;Submit a transfer</a></li>
 			</ul>
 		</div>
 
