@@ -70,6 +70,7 @@ function activateTransferButton(epTable, buttonToActivate, endPoint){
 		 
 function clearContentTable(containerTable, container, indicator, stateText){
 	$("#" + containerTable + " > tbody").html("");
+	$("#" + containerTable + " tbody").finderSelect("update");
 	$('#' + container).show();
 	$('#' + indicator).hide();	
 }
