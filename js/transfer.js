@@ -1,7 +1,7 @@
 var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
-var endpointsListURL = "https://fts3devel03.cern.ch:8446/bdii_cache.xml";
+var endpointsListURL = "https://fts3oradevel01.cern.ch:8446/bdii_cache.xml";
 
 var permissionNumberMeaning = {
 	    0 : '---',
