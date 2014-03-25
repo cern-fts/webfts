@@ -72,7 +72,6 @@ function clearContentTable(containerTable, container, indicator, stateText){
 	$("#" + containerTable + " > tbody").html("");
 	$('#' + container).show();
 	$('#' + indicator).hide();	
-	$("#" + stateText).text("");
 }
 
 function getPermissionsString(oNumber){	
@@ -93,17 +92,20 @@ function pad (str, max) {
 }
 
 function getNextFolderContent(endpointInput, container, containerTable, indicator, stateText, folder, filter){
-	var endUrl = ($('#' + endpointInput).val()).trim();
+	var endUrl = getNotNull(endpointInput, stateText);
 	if (endUrl.slice(-1) == "/"){
 		$("#" + endpointInput).val(endUrl + folder + '/');
+		$("#" + stateText).text(endUrl + folder + '/');
 	} else {
 		$("#" + endpointInput).val(endUrl + '/' + folder + '/');
+		$("#" + stateText).text(endUrl + '/' + folder + '/');
 	}
 	getEPContent(endpointInput, container, containerTable, indicator, stateText, filter);	
 }
 
 function getPreviousFolderContent(endpointInput, container, containerTable, indicator, stateText, filter){
-	$("#" + endpointInput).val(getPreviousUrl(($('#' + endpointInput).val()).trim()));
+	$("#" + endpointInput).val(getPreviousUrl(($('#' + stateText).text()).trim()));
+	$("#" + stateText).text(getPreviousUrl(($('#' + stateText).text()).trim()));
 	getEPContent(endpointInput, container, containerTable, indicator, stateText, filter);	
 }
 
@@ -161,17 +163,34 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 		t_row.push('</tr>'); 
 		$('#' + containerTable +' > tbody:last').append(t_row.join(""));
 	});
-	$("#" + stateText).text(($('#' + endpointInput).val()).trim());
+	if ($("#" + stateText).text() == ""){
+		$("#" + stateText).text(($('#' + endpointInput).val()).trim());
+	} else {
+		$('#' + endpointInput).val($("#" + stateText).text().trim());
+	}
 	$("#" + containerTable + " tbody").finderSelect("update");
 }
 
+function loadNewEndpoint(endpointInput, container, containerTable, indicator, stateText, filter){
+	$("#" + stateText).text("");
+	getEPContent(endpointInput, container, containerTable, indicator, stateText, filter);
+}
 function getInitialRowContent(endpointInput, container, containerTable, indicator, stateText, filter){
-	if (getPreviousUrl(($('#' + endpointInput).val()).trim()) != null){
-		return "<tr value='previous' onclick=\"getPreviousFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + filter + "')\">" + 
+	if ((getPreviousUrl(($('#' + stateText).text()).trim()) != null) || 
+		((($('#' + stateText).text()).trim() == "") && ($('#' + endpointInput).val() != null) && (($('#' + endpointInput).val()).trim() != "") && (getPreviousUrl(($('#' + endpointInput).val()).trim()) != null))){
+		return "<tr value='previous' onclick=\"getPreviousFolderContent('" + endpointInput + "', '" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + filter + "')\">" + 
 			   "<td><i class='glyphicon glyphicon-circle-arrow-up'/>&nbsp;..</td><td></td><td></td><td></td></tr>";
 	} else {
 		return null;
 	}
+}
+
+function getNotNull(input, current){
+	if ($('#' + current).text() == ""){
+		return ($('#' + input).val()).trim();
+	} else {
+		return ($('#' + current).text()).trim();
+	}	
 }
 
 function renderFolderContent(tableId, countId, container, indicator, stateText){

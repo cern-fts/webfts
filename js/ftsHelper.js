@@ -405,8 +405,8 @@ function getVOMSCredentials(delegationID, user_vo){
 	});
 }
 
-function getEndpointContent(endpointInput, container, containerTable, indicator, stateText, filter){	
-	urlEndp = ftsEndpoint + "/dm/list?surl=" + ($('#' + endpointInput).val()).trim();
+function getEndpointContent(endpointInput, container, containerTable, indicator, stateText, filter){
+	urlEndp = ftsEndpoint + "/dm/list?surl=" + getNotNull(endpointInput, stateText);			
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,

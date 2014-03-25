@@ -3,7 +3,7 @@ $( document ).ready(function() {
 	getDelegationID("delegation_id", true);
 
 	renderFolderContent("leftEndpointContentTable", "leftSelectedCount", "leftEndpointContent", "left-loading-indicator", "left-ep-text");
-	renderFolderContent("rightEndpointContentTable", "rightSelectedCount", "rightEndpointContent", "right-loading-indicator", "rifht-ep-text");
+	renderFolderContent("rightEndpointContentTable", "rightSelectedCount", "rightEndpointContent", "right-loading-indicator", "right-ep-text");
 	
 	initialLoadState('leftEndpoint', 'load-left');
 	initialLoadState('rightEndpoint', 'load-right');
@@ -83,7 +83,7 @@ $(function(){
 					value="gsiftp://lxfsra10a01.cern.ch/dpm/cern.ch/home/"> <span
 					class="input-group-btn">
 					<button class="btn btn-primary" type="button" id="load-left"
-						onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter')">Load</button>
+						onclick="loadNewEndpoint('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter')">Load</button>
 				</span>
 			</div>
 
@@ -233,7 +233,7 @@ $(function(){
 				<input id="rightEndpoint" type="text" placeholder="Endpoint path"
 					class="form-control"> <span class="input-group-btn">
 					<button class="btn btn-primary" type="button" id="load-right"
-						onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter')">Load</button>
+						onclick="loadNewEndpoint('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter')">Load</button>
 				</span>
 			</div>
 
