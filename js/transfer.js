@@ -488,8 +488,8 @@ function getFileDate(fdate){
 }
 
 function getPrintableFileName(fileName){
-	if (fileName.length > 25){
-		return fileName.substring(0, 25)+"...";
+	if (fileName.length > 18){
+		return fileName.substring(0, 18)+"...";
 	}
 	return fileName;
 }
