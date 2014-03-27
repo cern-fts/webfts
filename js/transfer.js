@@ -495,28 +495,22 @@ function getPrintableFileName(fileName){
 }
  
 function loadEndpointsList(){
-	$.ajax({
-		url : endpointsListURL,
-		type : "GET",
-		dataType : 'xml',
-		xhrFields : {
-			withCredentials : true
-		},
-		
-		success : function(xml) {
-			if (xml != null){
-				var availableURLs = [];
-				$(xml).find("entry").each(function()
-						  {
-							endpoint = $(this).find("endpoint").text();
-							if ($(this).find("type").text() == "SRM"){
-								if (endpoint.substring(0,5) == "httpg")
-									availableURLs.push("srm" + endpoint.substring(5, endpoint.length));
-							} else {
-								availableURLs.push(endpoint);
-							}
-						    $("#output").append($(this).attr("author") + "<br />");
-						  });
+	availableURLs = []
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", endpointsListURL, true);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;                
+                var availableURLs = allText.split('\n');
+                for (var i=0; i<availableURLs.length; i++){
+                	if (availableURLs[i].substring(0,5) == "httpg"){
+                		availableURLs[i] = "srm" + availableURLs[i].substring(5, availableURLs[i].length);
+                	}	
+                }
 				$( "#leftEndpoint" ).autocomplete({
 					source: availableURLs,
 					minLength: 2
@@ -525,13 +519,8 @@ function loadEndpointsList(){
 					source: availableURLs,
 					minLength: 2
 				});
-			}
-		},
-		error : function(jqXHR, textStatus, errorThrown) {
-			console.log("File with the endpoints list not avaialble or not accesible");
-			console.log(jqXHR);
-			console.log("ERROR: " + JSON.stringify(jqXHR));
-			console.log(textStatus + "," + errorThrown);
-		}
-	});
+            }
+        }
+    }
+    rawFile.send(null);
 }
