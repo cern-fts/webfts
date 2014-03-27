@@ -51,7 +51,7 @@
 				<h3>
 				<span class="label label-primary"><i class="glyphicon glyphicon-info-sign"></i>&nbsp;More information about WebFTS and the user guide can be found in the official page.</span>
 				
-				<a class="btn btn-sm btn-primary" href="https://webfts.web.cern.ch/content/user-guide">View details &raquo;</a>
+				<a class="btn btn-sm btn-primary" href="http://webfts.web.cern.ch/content/user-guide">View details &raquo;</a>
 				</h3>
 				<h3>
 				<span class="label label-primary"><i class="glyphicon glyphicon-wrench"></i>&nbsp;Official support: fts-support@cern.ch</span>								
