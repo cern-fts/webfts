@@ -53,7 +53,9 @@
 				
 				<a class="btn btn-sm btn-primary" href="https://webfts.web.cern.ch/content/user-guide">View details &raquo;</a>
 				</h3>
-			
+				<h3>
+				<span class="label label-primary"><i class="glyphicon glyphicon-wrench"></i>&nbsp;Official support: fts-support@cern.ch</span>								
+				</h3>
 			<div class="row">
 				<p class="pull-right">WebFTS is powered by FTS3. &copy; CERN - EUDAT, 2014</p>
 			</div>
