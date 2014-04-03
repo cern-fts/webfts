@@ -1,7 +1,9 @@
 			<div class="navbar-left">
 				<?php
-					foreach($_SERVER as $h=>$v)
-					if ($h == "SSL_CLIENT_S_DN_CN_2")
-						echo "<div><span>You are authenticated as <strong>$v</strong></span></div>";
+					if ($_SERVER['SSL_CLIENT_S_DN_CN_2']) {
+						echo "<div><span>You are authenticated as <strong>{$_SERVER['SSL_CLIENT_S_DN_CN_2']}</strong></span></div>";
+					} elseif ($_SERVER['SSL_CLIENT_S_DN_CN']) {
+						echo "<div><span>You are authenticated as <strong>{$_SERVER['SSL_CLIENT_S_DN_CN']}</strong></span></div>";
+					}
 				?>
 			</div>
