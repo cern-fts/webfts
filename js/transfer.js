@@ -30,7 +30,7 @@ function runTransfer(container, origFolder, destFolder){
 				theData["files"].push(files);
 			}
 			theData["params"] = [];
-			  
+			 
 			runDataTransfer($('#delegation_id').val(), theData);
 	    }	  
 	} else {
