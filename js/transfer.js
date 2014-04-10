@@ -596,7 +596,7 @@ function testEP(availableURLs){
 				}				
 				console.log("Total: " + (1*(ok+bad+bad403+bad404+bad419+bad500+bad503+bad400))+ ". ok: " + ok + ", bad : " + bad + ", bad400 : " + bad400 + ", bad403 : " + bad403 +", bad404 : " + bad404 +", bad419 : " + bad419 +", bad500 : " + bad500 +", bad503 : " + bad503 + ". " + (ok/(ok+bad))*100  + " success");					
 			}
-		});	
+		});
 	}
 }
 
