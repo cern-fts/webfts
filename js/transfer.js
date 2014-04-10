@@ -509,8 +509,11 @@ function loadEndpointsList(){
                 for (var i=0; i<availableURLs.length; i++){
                 	if (availableURLs[i].substring(0,5) == "httpg"){
                 		availableURLs[i] = "srm" + availableURLs[i].substring(5, availableURLs[i].length);
-                	}	
+                	} else {
+                		availableURLs[i] = availableURLs[i].replace("?SFN=","");
+                	}                	
                 }
+                availableURLs = applyTestingFilter(availableURLs);
 				$( "#leftEndpoint" ).autocomplete({
 					source: availableURLs,
 					minLength: 2
@@ -519,8 +522,97 @@ function loadEndpointsList(){
 					source: availableURLs,
 					minLength: 2
 				});
+				//testEP(availableURLs);
             }
         }
     }
     rawFile.send(null);
+}
+
+function applyTestingFilter(uArray){
+	var found_set = {};
+	var epurl = "";
+	var newArray = [];
+	for (var i=0; i<uArray.length; i++){
+		epurl = uArray[i];
+		if ((epurl == "") || (epurl.indexOf("UNDEFINED") != -1)) 
+			continue;
+		var ele = getFilter(epurl);		
+		if (found_set[ele]){
+			console.log(ele + " is already in the set");
+		} else {
+			found_set[ele] = true;
+			newArray.push(epurl);
+		}
+	}
+	console.log("The filtered array has " + newArray.length + " elements");
+	return newArray;
+}
+
+function getFilter(epurl){	
+	return getHost(epurl);
+}
+
+function testEP(availableURLs){
+	var ok = 0;
+	var bad =0;
+	var bad400 =0;
+	var bad403 =0;
+	var bad404 =0;
+	var bad419 =0;
+	var bad500 =0;
+	var bad503 =0;
+	console.log("Testing");
+	for (var i=0; i<availableURLs.length; i++){		
+		var urlEndp = "https://fts3-devel-oracle.cern.ch:8446/dm/list?surl=" + availableURLs[i];		
+		$.support.cors = true;
+		$.ajax({
+			url : urlEndp,
+			type : "GET",
+			dataType : 'json',
+			xhrFields : {
+				withCredentials : true
+			},			
+			success : function(data2, status) {	
+				ok++;
+				console.log("Total: " + (1*(ok+bad+bad403+bad404+bad419+bad500+bad503+bad400))+ ". ok: " + ok + ", bad : " + bad + ", bad400 : " + bad400 +", bad403 : " + bad403 +", bad404 : " + bad404 +", bad419 : " + bad419 +", bad500 : " + bad500 +", bad503 : " + bad503 + ". " + (ok/(ok+bad))*100  + " success");			
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				if (jqXHR.status == 403){
+					bad403++;
+				} else if (jqXHR.status == 400){
+					bad400++;	
+				} else if (jqXHR.status == 404){
+					bad404++;
+				} else if (jqXHR.status == 419){
+					bad419++;	
+				} else if (jqXHR.status == 500){
+					bad500++;
+				} else if (jqXHR.status == 503){
+					bad503++;
+				} else {
+					console.log("Other error status: " + jqXHR.status);
+					bad++;
+				}				
+				console.log("Total: " + (1*(ok+bad+bad403+bad404+bad419+bad500+bad503+bad400))+ ". ok: " + ok + ", bad : " + bad + ", bad400 : " + bad400 + ", bad403 : " + bad403 +", bad404 : " + bad404 +", bad419 : " + bad419 +", bad500 : " + bad500 +", bad503 : " + bad503 + ". " + (ok/(ok+bad))*100  + " success");					
+			}
+		});	
+	}
+}
+
+function getDomain(url){
+	 //httpg://duck-03.biocomp.unibo.it:8444/srm/manag?SFN=/dteam
+	var d = url.split(":");
+	var comp = d[1].split(".");
+	var dom = "";
+	for (var i=1; i<comp.length; i++){
+		dom = dom + "." + comp[i];
+	}
+	return dom;
+}
+
+function getHost(url){
+	 //httpg://duck-03.biocomp.unibo.it:8444/srm/manag?SFN=/dteam
+	var d = url.split(":");
+	return d[1].substring(2, d[1].length);
 }
