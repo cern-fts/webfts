@@ -32,7 +32,7 @@ function runTransfer(container, origFolder, destFolder){
 			theData["params"] = [];
 			  
 			runDataTransfer($('#delegation_id').val(), theData);
-	    }	    
+	    }	  
 	} else {
 		showUserError("The protocols should be the same or at least one of them has to be SRM");
 	}    
