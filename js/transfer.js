@@ -20,7 +20,7 @@ function runTransfer(container, origFolder, destFolder){
 		var selectedFiles = getSelectedFiles(container);
 	    if (selectedFiles.length > 0){
 			var theData = {};
-			theData["files"] = [];       	      	  
+			theData["files"] = [];       	      	
 			for (var i=0; i<selectedFiles.length; i++){
 				var files = {};
 				files["sources"] = [];
