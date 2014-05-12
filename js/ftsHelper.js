@@ -376,6 +376,14 @@ function delPKeyFromLocalStorage() {
 	}
 }
 
+function existsPKeyInLocalStorage() {
+	if (supportsHtml5Storage) {
+		return ("cryptpKey" in localStorage && "salt" in localStorage);
+	} else {
+		return false;
+	}
+}
+
 //Do delegation of credentials
 function doDelegate(delegationID, userPrivateKeyPEM, userPKeyPW, userDN, userCERT, user_vo){
 	var urlEndp = ftsEndpoint + "/delegation/" + delegationID + "/request";

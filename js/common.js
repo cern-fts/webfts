@@ -39,6 +39,15 @@ function hideDelegateModal(){
 
 function showDelegateModal(){
 	$('#delegationModal').modal('show');
+	if (!supportsHtml5Storage) {
+		$('#deleteCacheButton').hide();
+		$('#pemPkeyPW').hide();
+	} else if (!existsPKeyInLocalStorage()) {
+		$('#deleteCacheButton').prop("disabled", true);
+	} else {
+		$('#deleteCacheButton').show();
+		$('#deleteCacheButton').prop("disabled", false);
+	}
 }
 
 function removeExistingDelegation(){
