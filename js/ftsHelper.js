@@ -347,7 +347,12 @@ function getPKeyFromLocalStorage(password) {
 		if (typeof cryptpKey !== 'undefined') {
 			var passphrase = getPassphrase(password, salt);
 			var pKeyEncoded = CryptoJS.AES.decrypt(cryptpKey, passphrase.phrase);
-			var pKey = pKeyEncoded.toString(CryptoJS.enc.Utf8);
+			var pKey = "";
+			try {
+				pKey = pKeyEncoded.toString(CryptoJS.enc.Utf8);
+			} catch (e) {
+				// pass
+			}
 			return pKey;
 		}
 	}
@@ -364,24 +369,32 @@ function setPKeyToLocalStorage(password, pKey) {
 	}
 }
 
+function delPKeyFromLocalStorage() {
+	if (supportsHtml5Storage) {
+		localStorage.removeItem("cryptpKey");
+		localStorage.removeItem("salt");
+	}
+}
+
 //Do delegation of credentials
 function doDelegate(delegationID, userPrivateKeyPEM, userPKeyPW, userDN, userCERT, user_vo){
 	var urlEndp = ftsEndpoint + "/delegation/" + delegationID + "/request";
 	$.support.cors = true;
 
-	var storedpKey = getPKeyFromLocalStorage(userPKeyPW);
-	// storedpKey is "" if the password didn't match
-	if (storedpKey !== null && storedpKey !== "") {
-		userPrivateKeyPEM = storedpKey;
-		console.log('Got the saved key');
-		console.log('It is: ' + userPrivateKeyPEM);
-	} else if (storedpKey === "") {
-		console.log('Wrong password!');
-		return;
-	} else {
-		console.log('There is no saved key');
-		setPKeyToLocalStorage(userPKeyPW, userPrivateKeyPEM);
-		console.log('saved a new key');
+	if (userPKeyPW !== "") {
+		var storedpKey = getPKeyFromLocalStorage(userPKeyPW);
+		if (storedpKey === null) { // no value is stored
+			console.log('There is no saved key');
+			setPKeyToLocalStorage(userPKeyPW, userPrivateKeyPEM);
+			console.log('Saved a new key');
+		} else if (storedpKey === "") { // storedpKey is "" if the password didn't match
+			console.log('Wrong password!');
+			showDelegateError("Sorry, I could not decrypt the key with the password you gave me. :(");
+			return;
+		} else { // key seems to be OK
+			userPrivateKeyPEM = storedpKey;
+			console.log('Got the saved key');
+		}
 	}
 
 	// Call 3: Asking for a new proxy certificate is needed
