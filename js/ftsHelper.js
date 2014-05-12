@@ -321,10 +321,69 @@ function checkAndTransfer(delegationID, transferData, showModal){
 	});
 }
 
+function supportsHtml5Storage() {
+	try {
+		return 'localStorage' in window && window.localStorage !== null;
+		} catch (e) {
+			return false;
+		}
+}
+
+function getPassphrase(password, salt) {
+	var phrase = CryptoJS.PBKDF2(password, salt, { keySize: 512/32, iterations: 1000 });
+	return { "phrase": phrase.toString() };
+}
+
+function setPassphrase(password) {
+	var salt = CryptoJS.lib.WordArray.random(128/8).toString();
+	var phrase = CryptoJS.PBKDF2(password, salt, { keySize: 512/32, iterations: 1000 });
+	return { "phrase": phrase.toString(), "salt": salt.toString() };
+}
+
+function getPKeyFromLocalStorage(password) {
+	if (supportsHtml5Storage) {
+		var cryptpKey = localStorage.cryptpKey;
+		var salt = localStorage.salt;
+		if (typeof cryptpKey !== 'undefined') {
+			var passphrase = getPassphrase(password, salt);
+			var pKeyEncoded = CryptoJS.AES.decrypt(cryptpKey, passphrase.phrase);
+			var pKey = pKeyEncoded.toString(CryptoJS.enc.Utf8);
+			return pKey;
+		}
+	}
+	return null;
+}
+
+function setPKeyToLocalStorage(password, pKey) {
+	var passphrase = setPassphrase(password);
+	var cryptpKey = CryptoJS.AES.encrypt(pKey, passphrase.phrase).toString();
+	if (supportsHtml5Storage) {
+		var storedcryptpKey = localStorage.cryptpKey;
+		localStorage.cryptpKey = cryptpKey;
+		localStorage.salt = passphrase.salt;
+	}
+}
+
 //Do delegation of credentials
-function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
+function doDelegate(delegationID, userPrivateKeyPEM, userPKeyPW, userDN, userCERT, user_vo){
 	var urlEndp = ftsEndpoint + "/delegation/" + delegationID + "/request";
 	$.support.cors = true;
+
+	var storedpKey = getPKeyFromLocalStorage(userPKeyPW);
+	// storedpKey is "" if the password didn't match
+	if (storedpKey !== null && storedpKey !== "") {
+		userPrivateKeyPEM = storedpKey;
+		console.log('Got the saved key');
+		console.log('It is: ' + userPrivateKeyPEM);
+	} else if (storedpKey === "") {
+		console.log('Wrong password!');
+		return;
+	} else {
+		console.log('There is no saved key');
+		setPKeyToLocalStorage(userPKeyPW, userPrivateKeyPEM);
+		console.log('saved a new key');
+	}
+
 	// Call 3: Asking for a new proxy certificate is needed
 	$.ajax({
 		url : urlEndp,

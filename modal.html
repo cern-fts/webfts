@@ -28,7 +28,7 @@ $("#pinfo-form").submit(function(event){
 	  event.preventDefault();	
 	  if ($("#pinfo-form").valid()){
 		$("#delegating-indicator").show(); 	
-		doDelegate($("#delegation_id").val(), $("#pemPkey").val(),
+		doDelegate($("#delegation_id").val(), $("#pemPkey").val(), $("#pemPkeyPW").val(),
 				$("#userDN").val(), $("#clientCERT").val(), $("#userVO").val());		
 		$("#pemPkey").val("");
 		$("#userVO").val("");    
@@ -87,6 +87,10 @@ $("#pemPkey").bind('input propertychange', function(){
 						<label class="control-label" for="privateKey">Private Key</label>
 						<textarea id="pemPkey" name="pemPkey" class="field form-control"
 							rows="5" placeholder="RSA private key"></textarea>
+					</div>
+					<div class="row control-group">
+						<label class="control-label" for="privateKey">Private Key Password</label>
+						<input type="password" id="pemPkeyPW" class="form-control">
 					</div>
 					<div class="row control-group">
 						<label class="control-label" for="privateKey">Virtual Organization</label><small> (VO only if VOMS credentials are required to access the endpoint)</small>
