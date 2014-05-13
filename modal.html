@@ -27,12 +27,12 @@ $(function(event) {
 $("#pinfo-form").submit(function(event){
 	  event.preventDefault();	
 	  if ($("#pinfo-form").valid()){
-		$("#delegating-indicator").show(); 	
+		$("#delegating-indicator").show();
 		doDelegate($("#delegation_id").val(), $("#pemPkey").val(), $("#pemPkeyPW").val(),
-				$("#userDN").val(), $("#clientCERT").val(), $("#userVO").val());		
+				$("#userDN").val(), $("#clientCERT").val(), $("#userVO").val());
 		$("#pemPkey").val("");
 		$("#pemPkeyPW").val("");
-		$("#userVO").val("");    
+		$("#userVO").val("");
 	  }	
 	  return false;
 });
