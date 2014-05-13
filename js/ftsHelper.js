@@ -340,6 +340,64 @@ function setPassphrase(password) {
 	return { "phrase": phrase.toString(), "salt": salt.toString() };
 }
 
+function getCertFromLocalStorage(password) {
+	if (supportsHtml5Storage) {
+		var certRaw = localStorage.cert;
+
+		if (typeof certRaw !== 'undefined') {
+			var cert = jQuery.parseJSON(certRaw);
+			var salt = cert.salt;
+			var passphrase = getPassphrase(password, salt);
+			var pKeyEncoded = CryptoJS.AES.decrypt(cert.cryptPrivKey, passphrase.phrase);
+			var pKey = "";
+			try {
+				pKey = pKeyEncoded.toString(CryptoJS.enc.Utf8);
+			} catch (e) {
+				// pass
+			}
+			return {
+				"pubKey": cert.pubKey,
+				"privKey": pKey,
+				"dn": cert.dn
+			};
+		}
+	}
+	return null;
+}
+
+function setCertToLocalStorage(password, privKey, pubKey, dn) {
+	var passphrase = setPassphrase(password);
+	var cryptPrivKey = CryptoJS.AES.encrypt(privKey, passphrase.phrase).toString();
+
+	var cert = {
+		"pubKey": pubKey,
+		"cryptPrivKey": cryptPrivKey,
+		"dn": dn,
+		"salt": passphrase.salt
+	};
+
+	if (supportsHtml5Storage) {
+		localStorage.cert = JSON.stringify(cert);
+		return true;
+	}
+	return false;
+}
+
+function delCertFromLocalStorage() {
+	if (supportsHtml5Storage) {
+		localStorage.removeItem("cert");
+	}
+	return true;
+}
+
+function existsCertInLocalStorage() {
+	if (supportsHtml5Storage) {
+		return ("cert" in localStorage);
+	} else {
+		return false;
+	}
+}
+
 function getPKeyFromLocalStorage(password) {
 	if (supportsHtml5Storage) {
 		var cryptpKey = localStorage.cryptpKey;
@@ -363,7 +421,6 @@ function setPKeyToLocalStorage(password, pKey) {
 	var passphrase = setPassphrase(password);
 	var cryptpKey = CryptoJS.AES.encrypt(pKey, passphrase.phrase).toString();
 	if (supportsHtml5Storage) {
-		var storedcryptpKey = localStorage.cryptpKey;
 		localStorage.cryptpKey = cryptpKey;
 		localStorage.salt = passphrase.salt;
 	}
@@ -390,17 +447,19 @@ function doDelegate(delegationID, userPrivateKeyPEM, userPKeyPW, userDN, userCER
 	$.support.cors = true;
 
 	if (userPKeyPW !== "") {
-		var storedpKey = getPKeyFromLocalStorage(userPKeyPW);
-		if (storedpKey === null) { // no value is stored
+		var storedCert = getCertFromLocalStorage(userPKeyPW);
+		if (storedCert === null) { // no value is stored
 			console.log('There is no saved key');
-			setPKeyToLocalStorage(userPKeyPW, userPrivateKeyPEM);
+			setCertToLocalStorage(userPKeyPW, userPrivateKeyPEM, userCERT, userDN);
 			console.log('Saved a new key');
-		} else if (storedpKey === "") { // storedpKey is "" if the password didn't match
+		} else if (storedCert === "") { // storedCert is "" if we could detect a wrong decryption
 			console.log('Wrong password!');
 			showDelegateError("Sorry, I could not decrypt the key with the password you gave me. :(");
 			return;
 		} else { // key seems to be OK
-			userPrivateKeyPEM = storedpKey;
+			userPrivateKeyPEM = storedCert.privKey;
+			userCERT = storedCert.pubKey;
+			userDN = storedCert.dn;
 			console.log('Got the saved key');
 		}
 	}
