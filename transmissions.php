@@ -39,12 +39,13 @@
 <script src="js/lib/kjur-jsrsasign/ext/rsa.js"></script>
 <script src="js/lib/kjur-jsrsasign/ext/rsa2.js"></script>
 <script src="js/lib/kjur-jsrsasign/ext/base64.js"></script>
+<script src="js/lib/kjur-jsrsasign/ext/sha1.js"></script>
 <script src="js/lib/kjur-jsrsasign/asn1hex-1.1.min.js"></script>
 <script src="js/lib/kjur-jsrsasign/rsapem-1.1.min.js"></script>
-<script src="js/lib/kjur-jsrsasign/rsasign-1.2.min.js"></script>
-<script src="js/lib/kjur-jsrsasign/x509-1.1.min.js"></script>
+<script src="js/lib/kjur-jsrsasign/rsasign-1.2.js"></script>
+<script src="js/lib/kjur-jsrsasign/x509-1.1.js"></script>
 <script src="js/lib/kjur-jsrsasign/pkcs5pkey-1.0.min.js"></script>
-<script src="js/lib/kjur-jsrsasign/asn1-1.0.min.js"></script>
+<script src="js/lib/kjur-jsrsasign/asn1-1.0.js"></script>
 <script src="js/lib/kjur-jsrsasign/asn1x509-1.0.js"></script>
 <script src="js/lib/kjur-jsrsasign/crypto-1.1.min.js"></script>
 <script src="js/lib/kjur-jsrsasign/base64x-1.1.min.js"></script>
