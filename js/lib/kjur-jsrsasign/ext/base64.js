@@ -1,3 +1,5 @@
+/*! (c) Tom Wu | http://www-cs-students.stanford.edu/~tjw/jsbn/
+*/
 var b64map="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 var b64pad="=";
 
@@ -27,6 +29,7 @@ function b64tohex(s) {
   var i;
   var k = 0; // b64 state, 0-3
   var slop;
+  var v;
   for(i = 0; i < s.length; ++i) {
     if(s.charAt(i) == b64pad) break;
     v = b64map.indexOf(s.charAt(i));

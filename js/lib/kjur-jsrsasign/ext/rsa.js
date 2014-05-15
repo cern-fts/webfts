@@ -1,3 +1,5 @@
+/*! (c) Tom Wu | http://www-cs-students.stanford.edu/~tjw/jsbn/
+*/
 // Depends on jsbn.js and rng.js
 
 // Version 1.1: support utf-8 encoding in pkcs1pad2
@@ -132,6 +134,7 @@ function RSAKey() {
 
 // Set the public key fields N and e from hex strings
 function RSASetPublic(N,E) {
+  this.isPublic = true;
   if (typeof N !== "string")
   {
     this.n = N;
@@ -172,8 +175,8 @@ function RSAEncryptOAEP(text, hash) {
 
 // Return the PKCS#1 RSA encryption of "text" as a Base64-encoded string
 //function RSAEncryptB64(text) {
-//  var h = this.encrypt(text);
-//  if(h) return hex2b64(h); else return null;
+// var h = this.encrypt(text);
+// if(h) return hex2b64(h); else return null;
 //}
 
 // protected
@@ -184,3 +187,5 @@ RSAKey.prototype.setPublic = RSASetPublic;
 RSAKey.prototype.encrypt = RSAEncrypt;
 RSAKey.prototype.encryptOAEP = RSAEncryptOAEP;
 //RSAKey.prototype.encrypt_b64 = RSAEncryptB64;
+
+RSAKey.prototype.type = "RSA";

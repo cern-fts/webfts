@@ -1,3 +1,5 @@
+/*! (c) Tom Wu | http://www-cs-students.stanford.edu/~tjw/jsbn/
+*/
 // Depends on rsa.js and jsbn2.js
 
 // Version 1.1: support utf-8 decoding in pkcs1unpad2
@@ -117,6 +119,7 @@ function oaep_unpad(d, n, hash)
 
 // Set the private key fields N, e, and d from hex strings
 function RSASetPrivate(N,E,D) {
+  this.isPrivate = true;
   if (typeof N !== "string")
   {
     this.n = N;
@@ -134,7 +137,7 @@ function RSASetPrivate(N,E,D) {
 
 // Set the private key fields N, e, d and CRT params from hex strings
 function RSASetPrivateEx(N,E,D,P,Q,DP,DQ,C) {
-  //alert("RSASetPrivateEx called");
+  this.isPrivate = true;
   if (N == null) throw "RSASetPrivateEx N == null";
   if (E == null) throw "RSASetPrivateEx E == null";
   if (N.length == 0) throw "RSASetPrivateEx N.length == 0";
@@ -179,13 +182,14 @@ function RSAGenerate(B,E) {
     var phi = p1.multiply(q1);
     if(phi.gcd(ee).compareTo(BigInteger.ONE) == 0) {
       this.n = this.p.multiply(this.q);	// this.n = p * q
-      this.d = ee.modInverse(phi);	// this.d = 
+      this.d = ee.modInverse(phi);	// this.d =
       this.dmp1 = this.d.mod(p1);	// this.dmp1 = d mod (p - 1)
       this.dmq1 = this.d.mod(q1);	// this.dmq1 = d mod (q - 1)
       this.coeff = this.q.modInverse(this.p);	// this.coeff = (q ^ -1) mod p
       break;
     }
   }
+  this.isPrivate = true;
 }
 
 // Perform raw private operation on "x": return x^d (mod n)
@@ -227,8 +231,8 @@ function RSADecryptOAEP(ctext, hash) {
 // Return the PKCS#1 RSA decryption of "ctext".
 // "ctext" is a Base64-encoded string and the output is a plain string.
 //function RSAB64Decrypt(ctext) {
-//  var h = b64tohex(ctext);
-//  if(h) return this.decrypt(h); else return null;
+// var h = b64tohex(ctext);
+// if(h) return this.decrypt(h); else return null;
 //}
 
 // protected

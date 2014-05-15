@@ -1,4 +1,6 @@
-// Copyright (c) 2005-2009  Tom Wu
+/*! (c) Tom Wu | http://www-cs-students.stanford.edu/~tjw/jsbn/
+*/
+// Copyright (c) 2005-2009 Tom Wu
 // All Rights Reserved.
 // See "LICENSE" for details.
 
