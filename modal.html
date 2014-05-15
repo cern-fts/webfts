@@ -90,7 +90,17 @@ $("#pemPkey").bind('input propertychange', function(){
 					</div>
 					<div class="row control-group">
 						<label class="control-label" for="privateKey">Virtual Organization</label><small> (VO only if VOMS credentials are required to access the endpoint)</small>
-						<input type="text" class="form-control" id="userVO">
+						<select class="form-control" id="userVO" >
+                                    <option></option>
+                                    <option>atlas</option>
+                                    <option>biomed</option>
+                                    <option>cms</option>
+                                    <option>dteam</option>
+                                    <option>lhcb</option>
+                                    <option>ops</option>
+                         </select>
+                         <br>
+                         <label class="control-label" for="privateKey">Please contact the <a href="mailto:fts-support@cern.ch?subject=Support for new VO&body">support</a> if you wish more Virtual Organizations to be supported</label>				
 					</div>
 				</div>
 				<div class="modal-footer ">
