@@ -123,20 +123,28 @@ function ftsTransfer(theData) {
 	return false;
 }
 
-function signRequest(sCert, userPrivateKeyPEM, userDN) {	
+function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {	
 	var Re = new RegExp(",","g");
 	userDN = userDN.replace(Re,"/");
 	var subject = userDN + '/CN=proxy';
 	
 	var reHex = /^\s*(?:[0-9A-Fa-f][0-9A-Fa-f]\s*)+$/;
 	try {
-		var der = reHex.test(sCert) ? Hex.decode(sCert) : Base64E
+		var derServer = reHex.test(sCert) ? Hex.decode(sCert) : Base64E
 				.unarmor(sCert);
 
-		var asn1 = ASN11.decode(der);
-		var pos = asn1.getCSRPubKey();
-
+		var derUser = reHex.test(userCERT) ? Hex.decode(userCERT) : Base64E
+				.unarmor(userCERT);
+		
+		var asn1 = ASN11.decode(derServer);
+		var pos = asn1.getCSRPubKey(); 
 		//console.log(sCert);
+		
+		var ct = new X509();
+		ct.readCertPEM(userCERT);
+		var oIssuer = ct.getIssuerHex();
+		var oSerial = ct.getSerialNumberHex();
+		//console.log(oIssuer);
 		
 		var rsakey = new RSAKey();
 		//The replace is because other wise something like this was 
@@ -149,7 +157,7 @@ function signRequest(sCert, userPrivateKeyPEM, userDN) {
 
 		// Time
 		tbsc.setSerialNumberByParam({
-			'int' : (new Date()).getTime() / 1000
+			'int' : oSerial
 		});
 		tbsc.setSignatureAlgByParam({
 			'name' : 'SHA1withRSA'
@@ -178,6 +186,11 @@ function signRequest(sCert, userPrivateKeyPEM, userDN) {
 		tbsc.appendExtension(new KJUR.asn1.x509.BasicConstraints({'cA': false, 'critical': true}));
 		// 101 to set 'Digital Signature, Key Encipherment'. 0 means disabled 'Non Repudiation'
 		tbsc.appendExtension(new KJUR.asn1.x509.KeyUsage({'bin':'101', 'critical':true}));
+
+		var s = KEYUTIL.getPEM(rsakey);
+	    var sHashHex = getSubjectKeyIdentifier(derUser);
+	    var paramAKI = {'kid': {'hex': sHashHex }, 'issuer': oIssuer, 'critical': false};
+		tbsc.appendExtension(new KJUR.asn1.x509.AuthorityKeyIdentifier(paramAKI));
 		
 		// Sign and get PEM certificate with CA private key
 		var userPrivateKey = new RSAKey();
@@ -189,6 +202,7 @@ function signRequest(sCert, userPrivateKeyPEM, userDN) {
 		var cert = new KJUR.asn1.x509.Certificate({
 			'tbscertobj' : tbsc,
 			'rsaprvkey' : userPrivateKey,
+			'prvkey' : userPrivateKey,			
 			'rsaprvpas' : "empty"
 		});
 
@@ -205,6 +219,29 @@ function signRequest(sCert, userPrivateKeyPEM, userDN) {
 	} catch (e) {
 		console.log("ERROR signing the CSR response: " + e);
 	}
+}
+
+function getSubjectKeyIdentifier(der) {
+	var asn1 = ASN11.decode(der);
+	var dom = asn1.toDOM();
+	return getSKID(dom, "2.5.29.14");
+};
+
+function getSKID(dom, skid){	
+	if (dom.textContent.indexOf(skid) > -1){ 
+		var n = dom.textContent.indexOf(skid);
+		var n2 = dom.textContent.indexOf(skid, n+1);
+		//Output should be like:
+		//2.5.29.35authorityKeyIdentifierX.509 extensionOCTET STRING(1 elem)Offset: 654Length: 2+24(encapsulates)Value:(1 elem)SEQUENCE(1 elem)Offset: 656Length: 2+22(constructed)Value:(1 elem)[0](20 byte) 98CC92D04630368CB0ED980D7251A9474CAABE21
+		var ext = dom.textContent.substring(n2, n2 + 300);
+		var n3 = ext.indexOf("20 byte");
+		return ext.substring(n3 + 9, n3 + 49);		
+	}
+	if (dom.childNodes.length > 0){
+		for (var i=0; i<dom.childNodes.length; i++){				
+			getAKI(dom.childNodes[i]);
+		}	
+	} 
 }
 
 //Check delegation ID, save it and check if there is a valid proxy 
@@ -334,7 +371,7 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 		},
 		
 		success : function(data3, status) {
-			var x509Proxy = signRequest(data3, userPrivateKeyPEM, userDN); 
+			var x509Proxy = signRequest(data3, userPrivateKeyPEM, userDN, userCERT); 
 			x509Proxy += "" + userCERT;
 			//console.log(x509Proxy);
 			urlEndp = ftsEndpoint + "/delegation/" + delegationID + '/credential';
