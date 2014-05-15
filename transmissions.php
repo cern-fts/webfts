@@ -82,7 +82,6 @@
 				<li><a href="submit.php"><i class="glyphicon glyphicon-chevron-left"></i><i class="glyphicon glyphicon-chevron-right"></i>&nbsp;Submit a transfer</a></li>
 			</ul>
 		</div>
-
 		<div class="row">
 			<div id="includedTransmissionsList"></div>
 		</div>
