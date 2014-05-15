@@ -51,7 +51,6 @@
 <script src="js/lib/kjur-jsrsasign/base64x-1.1.min.js"></script>
 <script src="js/lib/kjur-jsrsasign/keyutil-1.0.min.js"></script>
 
-<script src="js/lib/js/js-rsa-pem.js"></script>
 <!--[if lte IE 9]><link rel="stylesheet" href="css/style-ie9.css" /><![endif]-->
 <!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
 <script> 
