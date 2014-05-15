@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<title>webFTS - Jobs</title>
+<title>WebFTS - Simplifying power - Jobs</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="shortcut icon" href="img/ico/favicon.png">
 <meta name="description" content="" />
@@ -75,7 +75,7 @@
 			<div id="delegateBtn"></div>
 		</div>
 		<div class="masthead">
-			<h3 class="text-muted">webFTS  (Beta version)</h3>
+			<h3 class="text-muted">WebFTS  (Beta version)  <small><em>Symplifying power</em></small></h3>
 			<ul class="nav nav-justified">
 				<li><a href="index.php"><i class="glyphicon glyphicon-home"></i>&nbsp;Home</a></li>
 				<li class="active"><a href="#"><i class="glyphicon glyphicon-tasks"></i>&nbsp;My jobs</a></li>

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<title>webFTS - Submit</title>
+<title>WebFTS - Simplifying power - Submit</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="shortcut icon" href="img/ico/favicon.png">
 <meta name="description" content="" />
@@ -45,17 +45,19 @@
 <script src="js/lib/kjur-jsrsasign/ext/rsa.js"></script>
 <script src="js/lib/kjur-jsrsasign/ext/rsa2.js"></script>
 <script src="js/lib/kjur-jsrsasign/ext/base64.js"></script>
+<script src="js/lib/kjur-jsrsasign/ext/sha1.js"></script>
 <script src="js/lib/kjur-jsrsasign/asn1hex-1.1.min.js"></script>
 <script src="js/lib/kjur-jsrsasign/rsapem-1.1.min.js"></script>
-<script src="js/lib/kjur-jsrsasign/rsasign-1.2.min.js"></script>
-<script src="js/lib/kjur-jsrsasign/x509-1.1.min.js"></script>
+<script src="js/lib/kjur-jsrsasign/rsasign-1.2.js"></script>
+<script src="js/lib/kjur-jsrsasign/x509-1.1.js"></script>
 <script src="js/lib/kjur-jsrsasign/pkcs5pkey-1.0.min.js"></script>
-<script src="js/lib/kjur-jsrsasign/asn1-1.0.min.js"></script>
+<script src="js/lib/kjur-jsrsasign/asn1-1.0.js"></script>
 <script src="js/lib/kjur-jsrsasign/asn1x509-1.0.js"></script>
 <script src="js/lib/kjur-jsrsasign/crypto-1.1.min.js"></script>
 <script src="js/lib/kjur-jsrsasign/base64x-1.1.min.js"></script>
+<script src="js/lib/kjur-jsrsasign/keyutil-1.0.min.js"></script>
 
-<script src="js/lib/js/js-rsa-pem.js"></script>
+<!-- <script src="js/lib/js/js-rsa-pem.js"></script>  -->
 
 <script> 
 	$(function(){
@@ -80,7 +82,7 @@
 			<div id="delegateBtn"></div>
 		</div>
 		<div class="masthead">
-			<h3 class="text-muted">webFTS (Beta version)</h3>
+			<h3 class="text-muted">WebFTS (Beta version)  <small><em>Symplifying power</em></small></h3>
 			<ul class="nav nav-justified">
 				<li><a href="index.php"><i class="glyphicon glyphicon-home"></i>&nbsp;Home</a></li>
 				<li><a href="transmissions.php"><i class="glyphicon glyphicon-tasks"></i>&nbsp;My jobs</a></li>

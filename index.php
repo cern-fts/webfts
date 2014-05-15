@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<title>webFTS</title>
+<title>WebFTS - Simplifying power </title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="shortcut icon" href="img/ico/favicon.png">
 <meta name="description" content="" />
@@ -28,7 +28,7 @@
 			<div id="userAuth"></div>
 		</div>
 		<div class="masthead">
-			<h3 class="text-muted">webFTS (Beta version)</h3>			
+			<h3 class="text-muted">WebFTS (Beta version)  <small><em>Symplifying power</em></small></h3>			
 			<ul class="nav nav-justified">
 				<li class="active"><a href="#"><i class="glyphicon glyphicon-home"></i>&nbsp;Home</a></li>
 				<li><a href="transmissions.php"><i class="glyphicon glyphicon-tasks"></i>&nbsp;My jobs</a></li>
@@ -43,7 +43,7 @@
 			</span></h2> 
 			<h2> <span class="label label-info"><i class="glyphicon glyphicon-arrow-right"></i>&nbsp;Looking for a graphical interface to manage your transfers? 
 			</span></h2>
-			<h1> <span class="label label-success">Start to use <strong>webFTS</strong> today and discover how easy it is to transfer files on the grid! 													
+			<h1> <span class="label label-success">Start to use <strong>WebFTS</strong> today and discover how easy it is to transfer files on the grid! 													
 			</span></h1>
 		</div>
 		<!-- Site footer -->
@@ -57,7 +57,7 @@
 				<span class="label label-primary"><i class="glyphicon glyphicon-wrench"></i>&nbsp;Official support: fts-support@cern.ch</span>								
 				</h3>
 			<div class="row">
-				<p class="pull-right">WebFTS is powered by FTS3. &copy; CERN - EUDAT, 2014</p>
+				<p class="pull-right">WebFTS is powered by FTS3. CERN - EUDAT, 2014</p>
 			</div>
 	</div>
 </body>
