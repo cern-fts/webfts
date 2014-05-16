@@ -27,11 +27,12 @@ $(function(event) {
 $("#pinfo-form").submit(function(event){
 	  event.preventDefault();	
 	  if ($("#pinfo-form").valid()){
-		$("#delegating-indicator").show(); 	
-		doDelegate($("#delegation_id").val(), $("#pemPkey").val(),
-				$("#userDN").val(), $("#clientCERT").val(), $("#userVO").val());		
+		$("#delegating-indicator").show();
+		doDelegate($("#delegation_id").val(), $("#pemPkey").val(), $("#pemPkeyPW").val(),
+				$("#userDN").val(), $("#clientCERT").val(), $("#userVO").val());
 		$("#pemPkey").val("");
-		$("#userVO").val("");    
+		$("#pemPkeyPW").val("");
+		$("#userVO").val("");
 	  }	
 	  return false;
 });
@@ -89,6 +90,10 @@ $("#pemPkey").bind('input propertychange', function(){
 							rows="5" placeholder="RSA private key"></textarea>
 					</div>
 					<div class="row control-group">
+						<label class="control-label" for="privateKey">Private Key Password</label>
+						<input type="password" id="pemPkeyPW" class="form-control" value="">
+					</div>
+					<div class="row control-group">
 						<label class="control-label" for="privateKey">Virtual Organization</label><small> (VO only if VOMS credentials are required to access the endpoint)</small>
 						<select class="form-control" id="userVO" >
                                     <option></option>
@@ -105,6 +110,8 @@ $("#pemPkey").bind('input propertychange', function(){
 				</div>
 				<div class="modal-footer ">
 					<div class="controls center">
+						<button type="button" class="btn btn-default"
+							name="deleteCacheButton" id="deleteCacheButton" onclick="delPKeyFromLocalStorage()">Delete Key</button>
 						<button type="button" class="btn btn-primary"
 							name="delegateButton" id="delegateButton">Delegate</button>
 						<button type="button" class="btn btn-primary"
