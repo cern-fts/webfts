@@ -321,14 +321,6 @@ function checkAndTransfer(delegationID, transferData, showModal){
 	});
 }
 
-function supportsHtml5Storage() {
-	try {
-		return 'localStorage' in window && window.localStorage !== null;
-		} catch (e) {
-			return false;
-		}
-}
-
 function getPassphrase(password, salt) {
 	var phrase = CryptoJS.PBKDF2(password, salt, { keySize: 512/32, iterations: 1000 });
 	return { "phrase": phrase.toString() };
