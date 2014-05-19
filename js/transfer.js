@@ -29,10 +29,9 @@ function runTransfer(container, origFolder, destFolder){
 				files["destinations"] = getFullPath(selectedFiles[i], document.getElementById(destFolder).value.trim());
 				theData["files"].push(files);
 			}
-			theData["params"] = [];
-			theData["params"].verify_checksum= true;
-			theData["params"].overwrite= true;
-			console.log(theData);
+			theData["params"] = {};
+			theData["params"].verify_checksum = $('#checksum').prop('checked');
+			theData["params"].overwrite = $('#overwrite').prop('checked');
 			runDataTransfer($('#delegation_id').val(), theData);
 	    }	  
 	} else {
