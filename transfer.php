@@ -1,3 +1,4 @@
+
 <script>
 $( document ).ready(function() {	
 	getDelegationID("delegation_id", true);
@@ -32,6 +33,14 @@ $( document ).ready(function() {
 		}
 	});
 	
+	if (supportsHtml5Storage){
+	 if (localStorage.lfcendpoint)  {
+		 $('#lfcendpoint').val(localStorage.lfcendpoint);
+	 	}else {
+			localStorage.lfcendpoint="";
+		}
+	}
+	
 	console.log( "ready!" );	
 });
 
@@ -50,6 +59,19 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 $(function(){
    $("#modal_content").load("modal.html"); 
 });
+
+
+function setLFCendpoint(){
+	if (supportsHtml5Storage) {
+	    var lfcEndpoint= $('#lfcendpoint').val;
+	    localStorage.lfcendpoint= lfcEndpoint;
+	}
+}
+
+$('#overwrite').popover();
+$('#lfcregistration').popover();
+$('#checksum').popover();
+
 </script>
 <input type="hidden" id="delegation_id" value="">
 <div class="row">
@@ -213,19 +235,64 @@ $(function(){
 				</div>
 			</div>
 		</div>
-		<div class="btn-group btn-group-vertical col-xs-2 col-lg-2 col-md-2">
+		<div class="btn-group btn-group-vertical  col-xs-2 col-lg-2 col-md-2">
 			<button type="button" class="btn btn-primary btn-block"
 				name="transfer-from-left" id="transfer-from-left"
 				onclick="runTransfer('leftEndpointContentTable', 'leftEndpoint', 'rightEndpoint')"
 				disabled>
 				<i class="glyphicon glyphicon-chevron-right"></i>
 			</button>
+			
 			<button type="button" class="btn btn-primary btn-block"
-				name="transfer-from-right" id="transfer-from-right"
-				onclick="runTransfer('rightEndpointContentTable', 'rightEndpoint', 'leftEndpoint')"
-				disabled>
-				<i class="glyphicon glyphicon-chevron-left glyphicon-white"></i>
+					name="transfer-from-right" id="transfer-from-right"
+					onclick="runTransfer('rightEndpointContentTable', 'rightEndpoint', 'leftEndpoint')"
+					disabled>
+					<i class="glyphicon glyphicon-chevron-left glyphicon-white"></i>
 			</button>
+				<br>
+			<table class="table">
+			<tr>
+				<td>
+					<div>
+					<p class="text-left">
+		      			<span>
+		      			  <input id="overwrite" type="checkbox" class="btn btn-primary" data-content="If activated tells the system to overwite the file(s) at destination if present"
+							rel="popover" data-placement="center" data-trigger="hover" data-toggle="button"><b> Overwrite Files</b></input>
+		      			</span>	
+					</p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<div >
+					<p class="text-left">
+	      			<span>
+	      			  <input id="checksum" type="checkbox"  class="btn btn-primary" data-content="If activated tells the system to compare the file checksums after the transfer"
+							rel="popover" data-placement="center" data-trigger="hover" data-toggle="button"><b>Compare Checksums</b></input>
+	      			</span>	
+	      			</p>
+				</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<div >	 
+					<p class="text-left">
+			      	<span >
+			        <input id="lfcregistration" type="checkbox"  class="btn btn-primary" data-toggle="collapse" data-target="#lfcendpoint" data-content="If activated perform the registration on the specified LFC at the end of the transfer"
+							rel="popover" data-placement="center" data-trigger="hover"><b> LFC Registration </b></input>
+			      	</span>
+					</p>
+			     </div>
+			      <div id="lfcendpointshow"  class="collapse in" >
+			     	<span>
+			      		<input id="lfcendpoint" type="text" class="form-control" onchange="setLFCendpoint()">
+			       	</span>
+			    </div>
+			    </td>
+		    </tr>
+		    </table>
 		</div>
 
 		<div class="btn-group-vertical col-xs-5 col-lg-5 col-md-5">
