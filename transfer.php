@@ -253,10 +253,10 @@ $('#checksum').popover();
 			<table class="table">
 			<tr>
 				<td>
-					<div>
+				   <div>
 					<p class="text-left">
 		      			<span>
-		      			  <input id="overwrite" type="checkbox" class="btn btn-primary" data-content="If activated tells the system to overwite the file(s) at destination if present"
+		      			  <input id="overwrite" type="checkbox" data-content="If activated tells the system to overwite the file(s) at destination if present"
 							rel="popover" data-placement="center" data-trigger="hover" data-toggle="button"><b> Overwrite Files</b></input>
 		      			</span>	
 					</p>
@@ -268,7 +268,7 @@ $('#checksum').popover();
 				<div >
 					<p class="text-left">
 	      			<span>
-	      			  <input id="checksum" type="checkbox"  class="btn btn-primary" data-content="If activated tells the system to compare the file checksums after the transfer"
+	      			  <input id="checksum" type="checkbox"  data-content="If activated tells the system to compare the file checksums after the transfer"
 							rel="popover" data-placement="center" data-trigger="hover" data-toggle="button"><b>Compare Checksums</b></input>
 	      			</span>	
 	      			</p>
@@ -280,7 +280,7 @@ $('#checksum').popover();
 				<div >	 
 					<p class="text-left">
 			      	<span >
-			        <input id="lfcregistration" type="checkbox"  class="btn btn-primary" data-toggle="collapse" data-target="#lfcendpoint" data-content="If activated perform the registration on the specified LFC at the end of the transfer"
+			        <input id="lfcregistration" type="checkbox" data-toggle="collapse" data-target="#lfcendpoint" data-content="If activated perform the registration on the specified LFC at the end of the transfer"
 							rel="popover" data-placement="center" data-trigger="hover"><b> LFC Registration </b></input>
 			      	</span>
 					</p>

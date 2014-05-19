@@ -30,6 +30,33 @@ function runTransfer(container, origFolder, destFolder){
 				theData["files"].push(files);
 			}
 			theData["params"] = [];
+			theData["params"].verify_checksum= true;
+			theData["params"].overwrite= true;
+			console.log(theData);
+			runDataTransfer($('#delegation_id').val(), theData);
+	    }	  
+	} else {
+		showUserError("The protocols should be the same or at least one of them has to be SRM");
+	}    
+	return false;
+}
+
+function runMultiHopTransfer(container, origFolder, destFolder,lfcendpoint){	  
+	hideUserReport();
+	if (protocolValidation(origFolder, destFolder)){
+		var selectedFiles = getSelectedFiles(container);
+	    if (selectedFiles.length > 0){
+			var theData = {};
+			theData["files"] = [];       	      	
+			for (var i=0; i<selectedFiles.length; i++){
+				var files = {};
+				files["sources"] = [];
+				files["sources"] = getFullPath(selectedFiles[i], document.getElementById(origFolder).value.trim());
+				files["destinations"] = [];
+				files["destinations"] = getFullPath(selectedFiles[i], document.getElementById(destFolder).value.trim());
+				theData["files"].push(files);
+			}
+			theData["params"] = [];
 			 
 			runDataTransfer($('#delegation_id').val(), theData);
 	    }	  
