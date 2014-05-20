@@ -34,6 +34,14 @@ $( document ).ready(function() {
 	});
 	
 	if(typeof(Storage)!=="undefined"){
+	 if (sessionStorage.checksum) {
+		(sessionStorage.checksum === "true")? $('#checksum')[0].checked= true : $('#checksum')[0].checked= false;
+		(sessionStorage.overwrite === "true")? $('#overwrite')[0].checked= true : $('#overwrite')[0].checked= false;
+		(sessionStorage.lfcregistration === "true")? $('#lfcregistration')[0].checked= true : $('#lfcregistration')[0].checked= false;
+		if (sessionStorage.lfcregistration === "true"){
+			$('#lfcendpointshow')[0].collapse = false;
+		}
+	 }
 	 if (sessionStorage.lfcendpoint) {
 		 $('#lfcendpoint').val(sessionStorage.lfcendpoint);
 	 }else {
@@ -64,9 +72,16 @@ $(function(){
 
 function setLFCendpoint(){
 	if (typeof(Storage)!=="undefined") {
-	    var lfcEndpoint= $('#lfcendpoint').val();
-	    sessionStorage.lfcendpoint=lfcEndpoint;
+	    sessionStorage.lfcendpoint= $('#lfcendpoint').val();
 	}
+}
+
+function saveCheckboxState() {
+	if (typeof(Storage)!=="undefined") {
+		sessionStorage.checksum = Boolean($('#checksum').prop('checked'));
+	        sessionStorage.overwrite = Boolean($('#overwrite').prop('checked'));			
+		sessionStorage.lfcregistration = Boolean($('#lfcregistration').prop('checked'));
+	}	
 }
 
 $('#overwrite').popover();
@@ -257,7 +272,7 @@ $('#checksum').popover();
 				   <div>
 					<p class="text-left">
 		      			<span>
-		      			  <input id="overwrite" type="checkbox" data-content="If activated tells the system to overwite the file(s) at destination if present"
+		      			  <input id="overwrite" type="checkbox" onclick="saveCheckboxState()" data-content="If activated tells the system to overwite the file(s) at destination if present"
 							rel="popover" data-placement="center" data-trigger="hover" ><b> Overwrite Files</b></input>
 		      			</span>	
 					</p>
@@ -269,7 +284,7 @@ $('#checksum').popover();
 				   <div >
 					<p class="text-left">
 	      				<span>
-	      			  	<input id="checksum" type="checkbox"  data-content="If activated tells the system to compare the file checksums after the transfer"
+	      			  	<input id="checksum" type="checkbox" onclick="saveCheckboxState()"  data-content="If activated tells the system to compare the file checksums after the transfer"
 							rel="popover" data-placement="center" data-trigger="hover" ><b>Compare Checksums</b></input>
 	      				</span>	
 	      				</p>
@@ -281,11 +296,11 @@ $('#checksum').popover();
 				<div >	 
 					<p class="text-left">
 			      		<span >
-			        	<input id="lfcregistration" type="checkbox" data-toggle="collapse" data-target="#lfcendpoint" data-content="If activated perform the registration on the specified LFC at the end of the transfer" rel="popover" data-placement="center" data-trigger="hover"><b> LFC Registration </b></input>
+			        	<input id="lfcregistration" type="checkbox" onclick="saveCheckboxState()" data-toggle="collapse" data-target="#lfcendpointshow" data-content="If activated perform the registration on the specified LFC at the end of the transfer" rel="popover" data-placement="center" data-trigger="hover"><b> LFC Registration </b></input>
 			      		</span>
 					</p>
 			     </div>
-			      <div id="lfcendpointshow"  class="collapse in" >
+			      <div id="lfcendpointshow" class="collapse">
 			     	<span>
 			      		<input id="lfcendpoint" type="text" class="form-control" onchange="setLFCendpoint()">
 			       	</span>
