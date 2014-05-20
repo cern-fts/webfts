@@ -33,12 +33,13 @@ $( document ).ready(function() {
 		}
 	});
 	
-	if (supportsHtml5Storage){
-	 if (localStorage.lfcendpoint)  {
-		 $('#lfcendpoint').val(localStorage.lfcendpoint);
-	 	}else {
-			localStorage.lfcendpoint="";
-		}
+	if(typeof(Storage)!=="undefined"){
+	 if (sessionStorage.lfcendpoint) {
+		 $('#lfcendpoint').val(sessionStorage.lfcendpoint);
+	 }else {
+		sessionStorage.lfcendpoint="";
+		$('#lfcendpoint').val("");
+	   }
 	}
 	
 	console.log( "ready!" );	
@@ -62,9 +63,9 @@ $(function(){
 
 
 function setLFCendpoint(){
-	if (supportsHtml5Storage) {
-	    var lfcEndpoint= $('#lfcendpoint').val;
-	    localStorage.lfcendpoint= lfcEndpoint;
+	if (typeof(Storage)!=="undefined") {
+	    var lfcEndpoint= $('#lfcendpoint').val();
+	    sessionStorage.lfcendpoint=lfcEndpoint;
 	}
 }
 
