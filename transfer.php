@@ -48,6 +48,15 @@ $( document ).ready(function() {
 		sessionStorage.lfcendpoint="";
 		$('#lfcendpoint').val("");
 	   }
+	
+        if (sessionStorage.seEndpointLeft) {
+		 $('#leftEndpoint').val(sessionStorage.seEndpointLeft);
+	}
+
+	if (sessionStorage.seEndpointRight) {
+		 $('#rightEndpoint').val(sessionStorage.seEndpointRight);
+	}
+
 	}
 	
 	console.log( "ready!" );	
@@ -74,6 +83,14 @@ function setLFCendpoint(){
 	if (typeof(Storage)!=="undefined") {
 	    sessionStorage.lfcendpoint= $('#lfcendpoint').val();
 	}
+}
+
+function setSEpath() {
+	 if (typeof(Storage)!=="undefined") {
+	    sessionStorage.seEndpointLeft = $('#leftEndpoint').val();
+	    sessionStorage.seEndpointRight = $('#rightEndpoint').val();
+	}
+
 }
 
 function saveCheckboxState() {
@@ -118,7 +135,7 @@ $('#checksum').popover();
 			<div class="input-group">	
 				<input id="leftEndpoint" type="text" placeholder="Endpoint path"
 					class="form-control"
-					value="gsiftp://lxfsra10a01.cern.ch/dpm/cern.ch/home/"> <span
+					value="gsiftp://lxfsra10a01.cern.ch/dpm/cern.ch/home/" onchange="setSEpath()"> <span
 					class="input-group-btn">
 					<button class="btn btn-primary" type="button" id="load-left"
 						onclick="loadNewEndpoint('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter')">Load</button>
@@ -312,8 +329,8 @@ $('#checksum').popover();
 
 		<div class="btn-group-vertical col-xs-5 col-lg-5 col-md-5">
 			<div class="input-group">
-				<input id="rightEndpoint" type="text" placeholder="Endpoint path"
-					class="form-control"> <span class="input-group-btn">
+				<input id="rightEndpoint" type="text" placeholder="Endpoint path" onchange="setSEpath()"
+					class="form-control"> <span class="input-group-btn" ">
 					<button class="btn btn-primary" type="button" id="load-right"
 						onclick="loadNewEndpoint('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter')">Load</button>
 				</span>
