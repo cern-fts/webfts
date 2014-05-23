@@ -38,9 +38,8 @@ $( document ).ready(function() {
 		(sessionStorage.checksum === "true")? $('#checksum')[0].checked= true : $('#checksum')[0].checked= false;
 		(sessionStorage.overwrite === "true")? $('#overwrite')[0].checked= true : $('#overwrite')[0].checked= false;
 		(sessionStorage.lfcregistration === "true")? $('#lfcregistration')[0].checked= true : $('#lfcregistration')[0].checked= false;
-		if (sessionStorage.lfcregistration === "true"){
-			$('#lfcendpointshow')[0].collapse = false;
-		}
+		//($('#lfcregistration')[0].checked= true? $('#lfcendpointshow').collapse('show') : $('#lfcendpointshow').collapse('hide');
+		
 	 }
 	 if (sessionStorage.lfcendpoint) {
 		 $('#lfcendpoint').val(sessionStorage.lfcendpoint);
