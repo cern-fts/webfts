@@ -57,7 +57,14 @@ $( document ).ready(function() {
 	}
 
 	}
-	
+
+	 $('#lfcendpoint').popover({
+            content: $('#lfcendpoint').val(),
+            placement: 'auto',
+            html: true,
+            trigger : 'hover'
+        });
+
 	console.log( "ready!" );	
 });
 
