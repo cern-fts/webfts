@@ -30,7 +30,17 @@ function loadJobTable(jobList){
 		+ '" data-target="#' + value.job_id + '_row" onclick="toogleDetailRowState(\'' + value.job_id + '_row\', \'' + value.job_id + '\')">';
 		
 		t_row += "<td>" + value.job_id + setResubmitButton(value.job_id, isFinalState(value.job_state)) + "</td>";
-		t_row += getColumn(value.submit_time) + getColumn(value.source_se) + getColumn(value.dest_se) + '</tr>'  ;		
+		//check if multihop
+		if (value.source_se === "null" || value.dest_se === null) {	
+			source_se = getColumn("Multiple Sources");
+			dest_se= getColumn("Multiple Destinations");
+		}
+		else {
+			source_se = getColumn(value.source_se);
+			dest_se = getColumn(value.dest_se);
+		} 
+		t_row += getColumn(value.submit_time) + source_se + dest_se + '</tr>'  ;
+		
 		$("#jobResultsTable > tbody:last").append(t_row);
 		
 		//Transfers from job row (hidden by default)
