@@ -68,7 +68,6 @@ function runMultiHopTransfer(container, origFolder, destFolder){
                         theData["params"].verify_checksum = $('#checksum').prop('checked');
                         theData["params"].overwrite = $('#overwrite').prop('checked');
 			theData["params"].multihop = true;
-			console.log(theData);
 			runDataTransfer($('#delegation_id').val(), theData);
 	    }	  
 	} else {
