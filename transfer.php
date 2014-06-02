@@ -1,4 +1,3 @@
-
 <script>
 $( document ).ready(function() {	
 	getDelegationID("delegation_id", true);
@@ -38,14 +37,13 @@ $( document ).ready(function() {
 		(sessionStorage.checksum === "true")? $('#checksum')[0].checked= true : $('#checksum')[0].checked= false;
 		(sessionStorage.overwrite === "true")? $('#overwrite')[0].checked= true : $('#overwrite')[0].checked= false;
 		(sessionStorage.lfcregistration === "true")? $('#lfcregistration')[0].checked= true : $('#lfcregistration')[0].checked= false;
-		(sessionStorage.lfcregistration === "true")? $('#lfcendpointshow').collapse('show') : $('#lfcendpointshow').collapse('hide');
 		
 	  }
 	 if (sessionStorage.lfcendpoint) {
 		 $('#lfcendpoint').val(sessionStorage.lfcendpoint);
 	 }else {
 		sessionStorage.lfcendpoint="";
-		$('#lfcendpoint').val("");
+		$('#lfcendpoint').val("lfc://");
 	   }
 	
         if (sessionStorage.seEndpointLeft) {
@@ -83,14 +81,6 @@ $("#lfcregistration").on("click", function(e){
 });
 
 $("#lfcendpoint").on("change", function(e){
-        var lfcSuffix = "lfc://";
-
-        if (($('#lfcendpoint').val().length >0) &&  ($('#lfcendpoint').val().slice(0, lfcSuffix.length) == lfcSuffix)) {
- 		$('#lfcendpointshow').closest('form-control').addClass('has-error');
-        } else {
-		$('#lfcendpointshow').closest('form-control').removeClass('has-error');
-	}        
-
 	activateTransferButton('leftEndpointContentTable', 'transfer-from-left', 'right-ep-text');
         activateTransferButton('rightEndpointContentTable', 'transfer-from-right', 'left-ep-text');
 	setLFCendpoint();
@@ -336,18 +326,19 @@ $('#checksum').popover();
 			</tr>
 			<tr>
 				<td>
-				<div >	 
+				  <div> 
 					<p class="text-left">
 			      		<span >
-			        	<input id="lfcregistration" type="checkbox" onclick="saveCheckboxState()" data-toggle="collapse" data-target="#lfcendpointshow" data-content="If activated perform the registration on the specified LFC at the end of the transfer" rel="popover" data-placement="center" data-trigger="hover"><b> LFC Registration </b></input>
+			        		<input id="lfcregistration" type="checkbox" onclick="saveCheckboxState()" data-content="If activated tells the system to perform the registration on the specified LFC at the end of the transfer" rel="popover" data-placement="center" data-trigger="hover"><b> LFC Registration </b></input>
 			      		</span>
 					</p>
-			     </div>
-			      <div id="lfcendpointshow" class="collapse">
-			     	<span>
-			      		<input id="lfcendpoint" type="text" class="form-control">
-			       	</span>
-			    </div>
+					
+			      		<div id="lfcendpointshow">
+			     		<span>
+			      			<input id="lfcendpoint" type="text" class="form-control">
+			       		</span>
+			      		</div>
+				 <div>	
 			    </td>
 		    </tr>
 		    </table>
