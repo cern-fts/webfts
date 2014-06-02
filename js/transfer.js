@@ -98,11 +98,21 @@ function getFullPath(element, endFolder){
 }	
 
 function activateTransferButton(epTable, buttonToActivate, endPoint){
-	if ((getSelectedFiles(epTable).length > 0) && ($('#' + endPoint).text().length > 0)){ 
+	//check if the checkbox for lfc registration is on and the text is correct
+	var lfcSuffix = "lfc://";
+	var lfcRegistrationActivate = true;
+
+	if ($('#lfcregistration')[0].checked === true) {
+		if (($('#lfcendpoint').val().length >0) &&  ($('#lfcendpoint').val().slice(0, lfcSuffix.length) == lfcSuffix)) {}
+		else {	lfcRegistrationActivate = false; }
+	}
+			
+	if ((getSelectedFiles(epTable).length > 0) && ($('#' + endPoint).text().length > 0) && lfcRegistrationActivate){ 
 		$('#' + buttonToActivate).removeAttr("disabled");
 	} else {
 		$('#' + buttonToActivate).attr('disabled','disabled');
 	}
+	
 }
 
 function clearContentTable(containerTable, container, indicator, stateText){

@@ -49,8 +49,8 @@ function loadJobTable(jobList){
 				+ 'Loading...</label>&nbsp;<img class="pagination-centered" src="img/ajax-loader.gif"/></li></ul></div>';		
 		t_row += '<table id="' + value.job_id + '-table-details" class="table table-bordered table-condensed table-hover transfers-table">';
 		t_row += '<thead><tr><th style="width: 6%;">File ID</th><th style="width: 10%;">Transfer Host</th><th style="width: 25%;">Source URL</th>';
-		t_row += '<th style="width: 25%;">Dest. URL</th><th style="width: 9%;">File Size</th>';
-		t_row += '<th style="width: 9%;">Throughput</th><th style="width: 8%;">Start Time</th><th style="width: 8%;">End Time</th></tr></thead><tbody></tbody></table>'; 
+		t_row += '<th style="width: 25%;">Dest. URL</th><th style="width: 9%;">File Size (Bytes)</th>';
+		t_row += '<th style="width: 9%;">Throughput (MB/s)</th><th style="width: 8%;">Start Time</th><th style="width: 8%;">End Time</th></tr></thead><tbody></tbody></table>'; 
 		t_row += '</td></tr>';
 		$("#jobResultsTable > tbody:last").append(t_row);
 	});

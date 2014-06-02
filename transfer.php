@@ -34,13 +34,13 @@ $( document ).ready(function() {
 	});
 	
 	if(typeof(Storage)!=="undefined"){
-	 if (sessionStorage.checksum) {
+	 if (sessionStorage.checksum || sessionStorage.overwrite || sessionStorage.lfcregistration) {
 		(sessionStorage.checksum === "true")? $('#checksum')[0].checked= true : $('#checksum')[0].checked= false;
 		(sessionStorage.overwrite === "true")? $('#overwrite')[0].checked= true : $('#overwrite')[0].checked= false;
 		(sessionStorage.lfcregistration === "true")? $('#lfcregistration')[0].checked= true : $('#lfcregistration')[0].checked= false;
-		//($('#lfcregistration')[0].checked= true? $('#lfcendpointshow').collapse('show') : $('#lfcendpointshow').collapse('hide');
+		(sessionStorage.lfcregistration === "true")? $('#lfcendpointshow').collapse('show') : $('#lfcendpointshow').collapse('hide');
 		
-	 }
+	  }
 	 if (sessionStorage.lfcendpoint) {
 		 $('#lfcendpoint').val(sessionStorage.lfcendpoint);
 	 }else {
@@ -50,22 +50,23 @@ $( document ).ready(function() {
 	
         if (sessionStorage.seEndpointLeft) {
 		 $('#leftEndpoint').val(sessionStorage.seEndpointLeft);
-	}
+	  }
 
 	if (sessionStorage.seEndpointRight) {
 		 $('#rightEndpoint').val(sessionStorage.seEndpointRight);
-	}
+	  }
 
 	}
-
-	 $('#lfcendpoint').popover({
-            content: $('#lfcendpoint').val(),
-            placement: 'auto',
-            html: true,
-            trigger : 'hover'
-        });
 
 	console.log( "ready!" );	
+});
+
+
+$('#lfcendpoint').popover({
+    content: $('#lfcendpoint').val(),
+    placement: 'auto',
+    html: true,
+    trigger : 'hover'
 });
 
 $("#leftEndpointContentTable tbody").on("click", function(e){
@@ -74,6 +75,25 @@ $("#leftEndpointContentTable tbody").on("click", function(e){
 
 $("#rightEndpointContentTable tbody").on("click", function(e){
 	activateTransferButton('rightEndpointContentTable', 'transfer-from-right', 'left-ep-text');    
+});
+
+$("#lfcregistration").on("click", function(e){
+	activateTransferButton('leftEndpointContentTable', 'transfer-from-left', 'right-ep-text');
+        activateTransferButton('rightEndpointContentTable', 'transfer-from-right', 'left-ep-text');
+});
+
+$("#lfcendpoint").on("change", function(e){
+        var lfcSuffix = "lfc://";
+
+        if (($('#lfcendpoint').val().length >0) &&  ($('#lfcendpoint').val().slice(0, lfcSuffix.length) == lfcSuffix)) {
+ 		$('#lfcendpointshow').closest('form-control').addClass('has-error');
+        } else {
+		$('#lfcendpointshow').closest('form-control').removeClass('has-error');
+	}        
+
+	activateTransferButton('leftEndpointContentTable', 'transfer-from-left', 'right-ep-text');
+        activateTransferButton('rightEndpointContentTable', 'transfer-from-right', 'left-ep-text');
+	setLFCendpoint();
 });
 
 // $("#leftShowFilterButton").click(function() {
@@ -325,7 +345,7 @@ $('#checksum').popover();
 			     </div>
 			      <div id="lfcendpointshow" class="collapse">
 			     	<span>
-			      		<input id="lfcendpoint" type="text" class="form-control" onchange="setLFCendpoint()">
+			      		<input id="lfcendpoint" type="text" class="form-control">
 			       	</span>
 			    </div>
 			    </td>
