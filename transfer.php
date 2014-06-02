@@ -75,6 +75,23 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 	activateTransferButton('rightEndpointContentTable', 'transfer-from-right', 'left-ep-text');    
 });
 
+$("#selectAllLeft").on("click", function(e) {
+	activateTransferButton('leftEndpointContentTable', 'transfer-from-left', 'right-ep-text');
+});
+
+$("#selectNoneLeft").on("click", function(e) {
+        activateTransferButton('leftEndpointContentTable', 'transfer-from-left', 'right-ep-text');
+});
+
+$("#selectAllRight").on("click", function(e) {
+	activateTransferButton('rightEndpointContentTable', 'transfer-from-right', 'left-ep-text');
+});
+
+$("#selectNoneRight").on("click", function(e) {
+	activateTransferButton('rightEndpointContentTable', 'transfer-from-right', 'left-ep-text');
+});
+
+
 $("#lfcregistration").on("click", function(e){
 	activateTransferButton('leftEndpointContentTable', 'transfer-from-left', 'right-ep-text');
         activateTransferButton('rightEndpointContentTable', 'transfer-from-right', 'left-ep-text');
@@ -162,9 +179,9 @@ $('#checksum').popover();
 				<div class="panel-heading">
 					<div class="btn-toolbar">
 						<div class="btn-group ">
-							<button type="button" class="btn btn-sm"
+							<button id="selectAllLeft" type="button" class="btn btn-sm"
 								onclick="selectAllFiles('leftEndpointContent')">Select All</button>
-							<button type="button" class="btn btn-sm"
+							<button id="selectNoneLeft" type="button" class="btn btn-sm"
 								onclick="selectNoneFiles('leftEndpointContent')">None</button>
 						</div>
 						<div class="btn-group">
@@ -357,9 +374,9 @@ $('#checksum').popover();
 				<div class="panel-heading">
 					<div class="btn-toolbar">
 						<div class="btn-group ">
-							<button type="button" class="btn btn-sm"
+							<button id="selectAllRight" type="button" class="btn btn-sm"
 								onclick="selectAllFiles('rightEndpointContent')">Select All</button>
-							<button type="button" class="btn btn-sm"
+							<button id="selectNoneRight" type="button" class="btn btn-sm"
 								onclick="selectNoneFiles('rightEndpointContent')">None</button>
 						</div>
 						<div class="btn-group">
