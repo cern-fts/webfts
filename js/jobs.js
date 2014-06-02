@@ -29,7 +29,7 @@ function loadJobTable(jobList){
 		var t_row = '<tr class="' + getRowColor(value.job_state) + ' accordion-body" data-toggle="collapse" id="' + value.job_id 
 		+ '" data-target="#' + value.job_id + '_row" onclick="toogleDetailRowState(\'' + value.job_id + '_row\', \'' + value.job_id + '\')">';
 		
-		t_row += "<td>" + value.job_id + setResubmitButton(value.job_id, isFinalState(value.job_state), value.overwrite_flag, value.verify_checksum) + "</td>";
+		t_row += "<td>" + value.job_id + setResubmitButton(value.job_id, isFinalState(value.job_state), value.overwrite_flag, value.verify_checksum, isErrorState(value.job_state)) + "</td>";
 		//check if multihop
 		if (value.source_se === "null" || value.dest_se === null) {	
 			source_se = getColumn("Multiple Sources");
@@ -56,12 +56,21 @@ function loadJobTable(jobList){
 	});
 }
 
-function setResubmitButton(delegation_id, is_final_State, overwrite, verify_checksum){
-	var row = '<div class="btn-group pull-right">';
+function setResubmitButton(delegation_id, is_final_State, overwrite, verify_checksum,failed){
+	var row = '<div class="btn-group pull-right">'
+	var resubmitAll = true;
 	if (!is_final_State){
 		row += '<button type="button" class="btn btn-xs btn-primary" onclick="removeTransfer(\'' + delegation_id  + '\')"><i class="glyphicon glyphicon-remove"/>&nbsp;Cancel</button>&nbsp;';
 	}
-	row += '<button type="button" class="btn btn-xs btn-primary" onclick="resubmitJob(\'' + delegation_id  + '\',\'' + overwrite + '\', \''+ verify_checksum + '\')"><i class="glyphicon glyphicon-cloud-upload"/>&nbsp;Resubmit job</button></div>';
+	row += '<button type="button" class="btn btn-xs btn-primary" onclick="resubmitJob(\'' + delegation_id  + '\',\'' + overwrite + '\', \''+ verify_checksum + '\', \''+ resubmitAll + '\')"><i class="glyphicon glyphicon-cloud-upload"/>&nbsp;Resubmit Job</button>'
+
+	if(failed) {
+		resubmitAll = false;
+		row +=' <button type="button" class="btn btn-xs btn-primary" onclick="resubmitJob(\'' + delegation_id  + '\',\'' + overwrite + '\', \''+ verify_checksum + '\', \''+ resubmitAll + '\')"><i class="glyphicon glyphicon-exclamation-sign"/>&nbsp;Resubmit Failed</button>'; 
+	}
+	
+	row+='</div>';
+
 	return row;
 }
 
@@ -109,28 +118,31 @@ function toogleDetailRowState(rowId, jobId) {
 		$("#jobResultsTable > tbody > #" + rowId).show();
 		$('#' + jobId + '-table-details').hide();
 		$('#' + jobId + '-loading-indicator').show();		
-		getJobTranfers(jobId, false, false, false);
+		getJobTranfers(jobId, false, false, false, false);
 	} else {
 		$("#jobResultsTable > tbody > #" + rowId).hide();
 	}
 }	
 
-function resubmitJob(jobId, overwrite, checksum){
+function resubmitJob(jobId, overwrite, checksum, resubmitAll){
 	console.log("Resubmitting " + jobId);
 	//Get transfers and submit them
-	getJobTranfers(jobId, true, overwrite, checksum);	
+	getJobTranfers(jobId, true, overwrite, checksum, resubmitAll);	
 }
 
-function rerunTransfer(data, overwrite, checksum){	 
+function rerunTransfer(data, overwrite, checksum, resubmitAll){	 
 	var lfcregistration = false;
 	var lfcSuffix = "lfc://";
 	var theData = {};
+	var resubmitAll= (resubmitAll ==='true');
 	theData["files"] = [];       	      	  
 	for (var i=0; i<data.length; i++){
 		var files = {};
 		files["sources"] = [];
 		var dLists = [];
 		dLists[0] = data[i].source_surl.trim();
+		if (!resubmitAll && (data[i].file_state.trim() === "FINISHED")) 
+			continue;	
 		files["sources"] = dLists;
 		files["destinations"] = [];
 		var dListd = [];

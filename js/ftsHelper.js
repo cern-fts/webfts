@@ -41,7 +41,7 @@ function getUserJobs(delegationId){
 	
 }
 
-function getJobTranfers(jobId, isResubmit, overwrite, compare_checksum){
+function getJobTranfers(jobId, isResubmit, overwrite, compare_checksum,resubmitAll){
 	var urlE = ftsEndpoint + "/jobs/" + jobId + "/files";
 	$.support.cors = true;
 	$.ajax({
@@ -53,7 +53,7 @@ function getJobTranfers(jobId, isResubmit, overwrite, compare_checksum){
 		},
 		success : function(data1, status) {
 			if (isResubmit){
-				rerunTransfer(data1, overwrite,compare_checksum);
+				rerunTransfer(data1, overwrite,compare_checksum,resubmitAll);
 			} else {
 				loadTransferTable(data1, jobId);
 			}
