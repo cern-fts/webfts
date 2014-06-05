@@ -329,32 +329,13 @@ function supportsHtml5Storage() {
 		}
 }
 
-function getPassphrase(password, salt) {
-	var phrase = CryptoJS.PBKDF2(password, salt, { keySize: 512/32, iterations: 1000 });
-	return { "phrase": phrase.toString() };
-}
-
-function setPassphrase(password) {
-	var salt = CryptoJS.lib.WordArray.random(128/8).toString();
-	var phrase = CryptoJS.PBKDF2(password, salt, { keySize: 512/32, iterations: 1000 });
-	return { "phrase": phrase.toString(), "salt": salt.toString() };
-}
-
 function getCertFromLocalStorage(password) {
 	if (supportsHtml5Storage) {
 		var certRaw = localStorage.cert;
 
 		if (typeof certRaw !== 'undefined') {
 			var cert = jQuery.parseJSON(certRaw);
-			var salt = cert.salt;
-			var passphrase = getPassphrase(password, salt);
-			var pKeyEncoded = CryptoJS.AES.decrypt(cert.cryptPrivKey, passphrase.phrase);
-			var pKey = "";
-			try {
-				pKey = pKeyEncoded.toString(CryptoJS.enc.Utf8);
-			} catch (e) {
-				// pass
-			}
+			var pKey = sjcl.decrypt(password, cert.cryptPrivKey);
 			return {
 				"pubKey": cert.pubKey,
 				"privKey": pKey,
@@ -366,14 +347,12 @@ function getCertFromLocalStorage(password) {
 }
 
 function setCertToLocalStorage(password, privKey, pubKey, dn) {
-	var passphrase = setPassphrase(password);
-	var cryptPrivKey = CryptoJS.AES.encrypt(privKey, passphrase.phrase).toString();
+	var cryptPrivKey = sjcl.encrypt(password, privKey);
 
 	var cert = {
 		"pubKey": pubKey,
 		"cryptPrivKey": cryptPrivKey,
-		"dn": dn,
-		"salt": passphrase.salt
+		"dn": dn
 	};
 
 	if (supportsHtml5Storage) {
@@ -393,49 +372,6 @@ function delCertFromLocalStorage() {
 function existsCertInLocalStorage() {
 	if (supportsHtml5Storage) {
 		return ("cert" in localStorage);
-	} else {
-		return false;
-	}
-}
-
-function getPKeyFromLocalStorage(password) {
-	if (supportsHtml5Storage) {
-		var cryptpKey = localStorage.cryptpKey;
-		var salt = localStorage.salt;
-		if (typeof cryptpKey !== 'undefined') {
-			var passphrase = getPassphrase(password, salt);
-			var pKeyEncoded = CryptoJS.AES.decrypt(cryptpKey, passphrase.phrase);
-			var pKey = "";
-			try {
-				pKey = pKeyEncoded.toString(CryptoJS.enc.Utf8);
-			} catch (e) {
-				// pass
-			}
-			return pKey;
-		}
-	}
-	return null;
-}
-
-function setPKeyToLocalStorage(password, pKey) {
-	var passphrase = setPassphrase(password);
-	var cryptpKey = CryptoJS.AES.encrypt(pKey, passphrase.phrase).toString();
-	if (supportsHtml5Storage) {
-		localStorage.cryptpKey = cryptpKey;
-		localStorage.salt = passphrase.salt;
-	}
-}
-
-function delPKeyFromLocalStorage() {
-	if (supportsHtml5Storage) {
-		localStorage.removeItem("cryptpKey");
-		localStorage.removeItem("salt");
-	}
-}
-
-function existsPKeyInLocalStorage() {
-	if (supportsHtml5Storage) {
-		return ("cryptpKey" in localStorage && "salt" in localStorage);
 	} else {
 		return false;
 	}

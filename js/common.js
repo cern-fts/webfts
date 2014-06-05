@@ -50,7 +50,7 @@ function showDelegateModal(){
 	if (!supportsHtml5Storage) {
 		$('#deleteCacheButton').hide();
 		$('#pemPkeyPW').hide();
-	} else if (!existsPKeyInLocalStorage()) {
+	} else if (!existsCertInLocalStorage()) {
 		$('#deleteCacheButton').prop("disabled", true);
 	} else {
 		$('#deleteCacheButton').show();

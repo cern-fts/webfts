@@ -5,12 +5,16 @@ jQuery.validator.addMethod("checkCert", function (value, element) {
 $(function(event) {											
 	 $('#pinfo-form').validate(
 	  {
-	  rules: {
-	    pemPkey: {
-	      minlength: 256,
-	      required: true,
-	      checkCert: true
-	    }
+		 rules: {
+			 pemPkey: {
+				 minlength: 256,
+				 required: function(element) {
+					 return $("#pemPkeyPW").val().length == 0;
+				 },
+				 checkCert: function(element) {
+					 return $("#pemPkeyPW").val().length == 0;
+				 }
+			 }
 	  },
 	  highlight: function(element) {
 	    $(element).closest('.control-group').addClass('has-error');
@@ -101,7 +105,7 @@ $("#pemPkey").bind('input propertychange', function(){
 				<div class="modal-footer ">
 					<div class="controls center">
 						<button type="button" class="btn btn-default"
-							name="deleteCacheButton" id="deleteCacheButton" onclick="delPKeyFromLocalStorage()">Delete Key</button>
+							name="deleteCacheButton" id="deleteCacheButton" onclick="delCertFromLocalStorage()">Delete Key</button>
 						<button type="button" class="btn btn-primary"
 							name="delegateButton" id="delegateButton">Delegate</button>
 						<button type="button" class="btn btn-primary"

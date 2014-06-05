@@ -29,12 +29,10 @@
 <script src="js/RSAGenerator.js"></script>
 <script src="js/transfer.js"></script>
 
+<script src="js/sjcl.js"></script>
 <script src="js/lib/yahoo/yahoo-min.js"></script>
 <script src="js/lib/glibs/core-min.js"></script>
 <script src="js/lib/glibs/enc-base64-min.js"></script>
-<script src="js/lib/glibs/sha1.js"></script>
-<script src="js/lib/glibs/aes.js"></script>
-<script src="js/lib/glibs/pbkdf2.js"></script>
 <script src="js/lib/kjur-jsrsasign/ext/jsbn.js"></script>
 
 <script src="js/lib/js/hex.js"></script>
