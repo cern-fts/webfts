@@ -142,10 +142,10 @@ function pad (str, max) {
 function getNextFolderContent(endpointInput, container, containerTable, indicator, stateText, folder, filter){
 	var endUrl = getNotNull(endpointInput, stateText);
 	if (endUrl.slice(-1) == "/"){
-		$("#" + endpointInput).val(endUrl + folder + '/');
+		$("#" + endpointInput).val(endUrl + folder + '/').change();
 		$("#" + stateText).text(endUrl + folder + '/');
 	} else {
-		$("#" + endpointInput).val(endUrl + '/' + folder + '/');
+		$("#" + endpointInput).val(endUrl + '/' + folder + '/').change();
 		$("#" + stateText).text(endUrl + '/' + folder + '/');
 	}
 	getEPContent(endpointInput, container, containerTable, indicator, stateText, filter);	

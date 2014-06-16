@@ -46,13 +46,20 @@ $( document ).ready(function() {
 		$('#lfcendpoint').val("lfc://");
 	   }
 	
-        if (sessionStorage.seEndpointLeft) {
+         if (sessionStorage.seEndpointLeft) {
 		 $('#leftEndpoint').val(sessionStorage.seEndpointLeft);
+		 if (sessionStorage.seEndpointLeft !== "") {
+			$('#load-left').trigger("click");	
+		 }
 	  }
 
-	if (sessionStorage.seEndpointRight) {
+	 if (sessionStorage.seEndpointRight) {
 		 $('#rightEndpoint').val(sessionStorage.seEndpointRight);
+		 if (sessionStorage.seEndpointRight !== "") {
+                        $('#load-right').trigger("click");
+                 }  
 	  }
+
 
 	}
 
