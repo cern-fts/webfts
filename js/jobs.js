@@ -53,6 +53,10 @@ function loadJobTable(jobList){
 		t_row += '<th style="width: 9%;">Throughput (MB/s)</th><th style="width: 8%;">Start Time</th><th style="width: 8%;">End Time</th></tr></thead><tbody></tbody></table>'; 
 		t_row += '</td></tr>';
 		$("#jobResultsTable > tbody:last").append(t_row);
+		//check if it's already expanded
+		if (getRowExpanded(value.job_id + '_row') === "true") {
+			toogleDetailRowState( value.job_id + '_row', value.job_id);
+		}
 	});
 }
 
@@ -113,16 +117,43 @@ function showUserError(message){
 	$('#serverkeyAlert').show();
 }
 
+function getJobDetail(rowId, jobId) {
+        if ($("#jobResultsTable > tbody > #" + rowId).css('display') == 'none') {
+                $("#jobResultsTable > tbody > #" + rowId).show();
+                $('#' + jobId + '-table-details').hide();
+                $('#' + jobId + '-loading-indicator').show();
+                getJobTranfers(jobId, false, false, false, false);
+        } else {
+                $("#jobResultsTable > tbody > #" + rowId).hide();
+        }
+}
+
 function toogleDetailRowState(rowId, jobId) {	
 	if ($("#jobResultsTable > tbody > #" + rowId).css('display') == 'none') {
 		$("#jobResultsTable > tbody > #" + rowId).show();
 		$('#' + jobId + '-table-details').hide();
 		$('#' + jobId + '-loading-indicator').show();		
 		getJobTranfers(jobId, false, false, false, false);
+		setRowExpanded(rowId, true);
 	} else {
 		$("#jobResultsTable > tbody > #" + rowId).hide();
+		setRowExpanded(rowId, false);
 	}
 }	
+
+function setRowExpanded(rowId, expanded) {
+	 if(typeof(Storage)!=="undefined"){
+		var name= rowId+'_expanded';
+		sessionStorage.setItem(name,expanded);
+	 }
+}
+
+function getRowExpanded(rowId) {
+         if(typeof(Storage)!=="undefined"){
+                var name= rowId+'_expanded';
+                return sessionStorage.getItem(name);
+         }
+}
 
 function resubmitJob(jobId, overwrite, checksum, resubmitAll){
 	console.log("Resubmitting " + jobId);
