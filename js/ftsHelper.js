@@ -6,6 +6,8 @@ var ftsEndpoint = "https://webfts.cern.ch:8446";
 var certHours = 12; // Hours of live of the certificate
 var supportText = "Please, try again and contact support if the error persists";
 
+var jobsToRetrieve = 100;
+
 function showError(jqXHR, textStatus, errorThrown, message) {
 	console.log(message);
 	console.log(jqXHR);
@@ -22,7 +24,7 @@ function showError(jqXHR, textStatus, errorThrown, message) {
 }
 
 function getUserJobs(delegationId){
-	var urlE = ftsEndpoint + "/jobs?dlg_id=" + delegationId + "&state_in=SUBMITTED,ACTIVE,FINISHED,FAILED,CANCELED";
+	var urlE = ftsEndpoint + "/jobs?dlg_id=" + delegationId + "&state_in=SUBMITTED,ACTIVE,FINISHED,FAILED,CANCELED&limit="+ jobsToRetrieve;
 	$.support.cors = true;
 	$.ajax({
 		url : urlE,
