@@ -1,7 +1,13 @@
-var ftsEndpoint = "https://fts3-devel.cern.ch:8446";
+//var ftsEndpoint = "https://fts3-devel.cern.ch:8446";
 //var ftsEndpoint = "https://fts3-devel-oracle.cern.ch:8446";
+var ftsEndpoint = "https://fts3cloudy01.cern.ch:8446";
 var certHours = 12; // Hours of live of the certificate
 var supportText = "Please, try again and contact support if the error persists";
+function getFTSEndpoint(){
+	$.get("../config.xml", function(data){
+	    return $(data).find('basic').attr('fts_address');
+	});
+}
 
 function showError(jqXHR, textStatus, errorThrown, message) {
 	console.log(message);
@@ -209,6 +215,7 @@ function signRequest(sCert, userPrivateKeyPEM, userDN) {
 
 //Check delegation ID, save it and check if there is a valid proxy 
 function getDelegationID(fieldName, delegationNeeded){
+	var d = getFTSEndpoint();
 	var urlEndp = ftsEndpoint + "/whoami";
 	$.support.cors = true;
 	$.ajax({
@@ -293,7 +300,7 @@ function checkAndTransfer(delegationID, transferData, showModal){
 					  });
 					  day[1]-= 1;
 					  day= new Date(Date.UTC.apply(Date, day));  
-					  var offsetString = s.slice(-5)
+					  var offsetString = s.slice(-5);
 					  var offset = parseInt(offsetString,10)/100;
 					  if (offsetString.slice(0,1)=="+") offset*=-1;
 					  day.setHours(day.getHours()+offset);

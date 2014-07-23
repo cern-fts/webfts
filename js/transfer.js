@@ -14,25 +14,61 @@ var permissionNumberMeaning = {
 	    7 : 'rwx'
 	};
 
-function runTransfer(container, origFolder, destFolder){	  
+function runTransfer(container, origFolder, destFolder, CSLeftSelect){
+	if (false){ //#TODO: remove "true" and do a check of the expiration time
+		$("#warningTransferButton").click({c: container, o: origFolder, d: destFolder, s:CSLeftSelect}, function(e) {
+			executeTransfer(e.data.c, e.data.o, e.data.d, e.data.s);
+		});			
+		$("#expirationModal").show();
+	} else {
+		executeTransfer(container, origFolder, destFolder, CSLeftSelect);
+	}	
+}
+
+
+function executeTransfer(container, origFolder, destFolder, CSLeftSelect){		
 	hideUserReport();
+	
 	var selectedFiles = getSelectedFiles(container);
     if (selectedFiles.length > 0){
-		var theData = {};
-		theData["files"] = [];       	      	  
-		for (var i=0; i<selectedFiles.length; i++){
-			var files = {};
-			files["sources"] = [];
-			files["sources"] = getFullPath(selectedFiles[i], document.getElementById(origFolder).value.trim());
-			files["destinations"] = [];
-			files["destinations"] = getFullPath(selectedFiles[i], document.getElementById(destFolder).value.trim());
-			theData["files"].push(files);
-		}
-		theData["params"] = [];
-		  
-		runDataTransfer($('#delegation_id').val(), theData);
+    	
+    	//Check if there are url parameters
+    	//if (getUrlVars()["service"] != null){
+    		//CS -SE transfer
+//    		var factory = new CSFactory();
+//    		var cs = factory.createCS(getUrlVars()["service"]);
+//    		var urlList = [];
+//    		cs.getShareLinkAndSubmit(getUrlVars()["oauth_token"], getUrlVars()["oauth_token_secret"], selectedFiles, urlList, destFolder);
+    	//} else {
+    		//Grid SE -SE transfer
+    	//	runDataTransfer($('#delegation_id').val(), getDataTransfer(origFolder, destFolder, selectedFiles));
+    	//}	
+    	var optionSelected = $('#' + CSLeftSelect).data('ddslick'); 
+    	if (optionSelected.selectedIndex > 0){
+    		//var factory = new CSFactory(optionSelected.selectedData.text);
+			//var cs = factory.createCS();	
+    		runDataTransfer($('#delegation_id').val(), getCSDataTransfer(origFolder, destFolder, selectedFiles, optionSelected.selectedData.text.toLowerCase()));
+    	} else {
+    		runDataTransfer($('#delegation_id').val(), getDataTransfer(origFolder, destFolder, selectedFiles));
+    	}	
     }
     return false;
+}
+
+function getDataTransfer(origFolder, destFolder, selectedFiles) {
+	var theData = {};
+	theData["files"] = [];       	      	  
+	for (var i=0; i<selectedFiles.length; i++){
+		var files = {};
+		files["sources"] = [];
+		files["sources"] = getFullPath(selectedFiles[i], document.getElementById(origFolder).value.trim());
+		files["destinations"] = [];
+		files["destinations"] = getFullPath(selectedFiles[i], document.getElementById(destFolder).value.trim());
+		theData["files"].push(files);
+	}
+	theData["params"] = [];
+	  
+	return theData;	
 }
 
 function runTransferFromURL(container, url, destFolder){	  
@@ -104,13 +140,17 @@ function pad (str, max) {
 }
 
 function getNextFolderContent(endpointInput, container, containerTable, indicator, stateText, folder, filter){
+	setInputPath(endpointInput, folder);
+	getEPContent(endpointInput, container, containerTable, indicator, stateText, filter);	
+}
+
+function setInputPath(endpointInput, folder) {
 	var endUrl = ($('#' + endpointInput).val()).trim();
 	if (endUrl.slice(-1) == "/"){
 		$("#" + endpointInput).val(endUrl + folder + '/');
 	} else {
 		$("#" + endpointInput).val(endUrl + '/' + folder + '/');
 	}
-	getEPContent(endpointInput, container, containerTable, indicator, stateText, filter);	
 }
 
 function getPreviousFolderContent(endpointInput, container, containerTable, indicator, stateText, filter){
@@ -122,8 +162,8 @@ function getPreviousUrl(endpointUrl){
 	var foldersStartIndex = endpointUrl.indexOf("://");
 	if (foldersStartIndex == -1)
 		return null;
-	if (endpointUrl.slice(-1) == "/")
-		endpointUrl = endpointUrl.substring(0, endpointUrl.length-1);
+	else if (endpointUrl.slice(-1) == "/")
+			endpointUrl = endpointUrl.substring(0, endpointUrl.length-1);
 
 	var ipath = endpointUrl.substring(endpointUrl.indexOf("://")+3, endpointUrl.length);
 	var t = ipath.split("/");	
@@ -504,3 +544,197 @@ function loadEPList(ep, availableURLs){
 		minLength: 2
 	});
 }
+
+function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginIndicator, CSName, inputTextbox, loadButton, container, containerTable, indicator, stateText, filter){
+	$('#' + loginDiv).hide();
+	$('#' + contentDiv).show();
+	
+	if (currentSelect.selectedIndex > 0){ 
+		// Cloud storage, not Grid SE
+		//currentSelect.selectedData.text;
+		
+		$('#' + inputTextbox).prop('readonly', true);
+		$('#' + loadButton).prop("disabled",true);
+		
+		if ((getUrlVars()["service"] != currentSelect.selectedData.text.toLowerCase()) &&
+				($('#' + CSName).val().toLowerCase() != currentSelect.selectedData.text.toLowerCase())){
+			//clearContentTable(containerTable, container, indicator, stateText);
+			$('#' + loginDiv).show();
+			$('#' + contentDiv).hide();
+			$('#' + loginIndicator).hide();
+			$('#' + loginForm).show();
+		} else{
+			if (getUrlVars().length > 1){
+				var factory = new CSFactory();
+				var cs = factory.createCS(getUrlVars()["service"]);		
+				cs.getCSAccess(loginDiv, contentDiv, "/", container, containerTable, indicator, stateText, filter, inputTextbox, CSName);
+			} else {
+				getCSFolderContent(loginDiv, contentDiv, currentSelect.selectedData.text.toLowerCase(), inputTextbox, container, containerTable, indicator, stateText, "/", filter, CSName);
+			}	
+		}		
+	} else {		
+		if ((getUrlVars()["service"] != null) || ($('#' + CSName).val() != "Grid SE")){
+			clearContentTable(containerTable, container, indicator, stateText);				
+			$('#' + inputTextbox).val('');
+			$('#' + inputTextbox).attr("placeholder", "Endpoint path");
+		}		
+		$('#' + inputTextbox).prop('readonly', false);
+		$('#' + loadButton).prop("disabled",false);
+	}
+	$('#' + CSName).val(currentSelect.selectedData.text.toLowerCase());
+}
+
+function getLoginCS(CSName, loginDiv, contentDiv, loginForm, loadingPanel, path, container, containerTable, indicator, stateText, filter, endpointInput){
+	var factory = new CSFactory();
+
+	var cs = factory.createCS(CSName);
+	showRemoteLoader(loginForm, loadingPanel);		
+	//cs.getAuthRequest();			
+	cs.getCSAccess(loginDiv, contentDiv, "/", container, containerTable, indicator, stateText, filter, endpointInput, CSName);
+}
+
+function showRemoteLoader(loginForm, loadingPanel){
+	$('#' + loginForm).hide();
+	$('#' + loadingPanel).show();
+} 
+
+function hideRemoteLoader(loginForm, loadingPanel){
+	$('#' + loginForm).hide();
+	$('#' + loadingPanel).hide();
+} 
+
+//=====================================================================
+// Methods for Cloud storages
+//=====================================================================
+function checkCSState(combo, storageDiv, loginForm, loadingLoginPanel, loginPanel,  container, containerTable, indicator, stateText, filter, endpointInput, CSName){
+	var factory = new CSFactory();
+	//Check if there are url parameters
+	if (getUrlVars()["service"] != null){
+		var cs = factory.createCS(getUrlVars()["service"]);
+		if (getUrlVars()["service"] == "dropbox"){			
+			//TODO: request-token-secret, called rst, should not be here. Should be kept secretly. Only for testing
+			//if (getUrlVars()["rst"] != null){				
+			//	showRemoteLoader(loginForm, loadingLoginPanel);
+			//	cs.getAccessRequest(getUrlVars()["oauth_token"], getUrlVars()["rst"]);
+			//} else {
+				$('#' + combo).ddslick('select', {index: 1 });				
+				$('#' + loginPanel).hide();
+				$('#' + storageDiv).show();
+				$('#' + indicator).show();
+				$('#' + container).hide();
+				$('#' + filter).val('');
+				cs.getCSAccess(loginPanel, storageDiv, "/", container, containerTable, indicator, stateText, filter, endpointInput, CSName);							
+			//}	
+		}
+	}
+}
+
+function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName){
+//function loadFolder(endpointInput, container, containerTable, elements, indicator, stateText, filter){
+	$('#' + endpointInput).val(data.path); 
+
+	clearContentTable(containerTable, container, indicator, stateText);	
+	if (data.path != "/"){
+		var previousUrl = getCSPreviousPath(data.path);		
+		var row = [];
+		row.push("<tr value='previous' onclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + previousUrl + "','" + filter + "','" + CSName +"')\">" + 
+		   "<td><i class='glyphicon glyphicon-circle-arrow-up'/>&nbsp;..</td><td></td><td></td><td></td></tr>");
+		$('#' + containerTable +' > tbody:last').append(row.join(""));
+	}	
+	for (var i=0; i<data.contents.length; i++){
+		var icon = "";
+		var t_row = [];
+		var cur = data.contents[i]; 
+		if (cur.path == "/.directory")
+			continue;
+		var filePath = cur.path.substring(cur.path.lastIndexOf("/")+1, cur.path.lenght); 
+		if (cur.is_dir == true){
+			icon ="glyphicon glyphicon-folder-close";
+			t_row.push("<tr value='" + cur.path  + "' onclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + cur.path.trim() + "','" + filter + "','" + CSName + "')\">");
+			t_row.push('<td title="' + filePath + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
+		} else {
+			icon ="glyphicon glyphicon-file";	
+			t_row.push('<tr value="' + cur.path + '">');
+			t_row.push('<td title="' + filePath + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
+		}
+		t_row.push('<td>&nbsp;-&nbsp;</td>');
+		t_row.push('<td>' + getDropboxDate(cur.modified) + '</td>');
+		t_row.push('<td id=' + cur.bytes + '>' + getReadableFileSizeString(cur.bytes) + '</td>');
+		
+		t_row.push('</tr>'); 
+		$('#' + containerTable +' > tbody:last').append(t_row.join(""));
+	}
+	$("#" + stateText).text(($('#' + endpointInput).val()).trim());
+	$("#" + containerTable + " tbody").finderSelect("update");
+	$('#' + loginDiv).hide();
+	$('#' + contentDiv).show();	
+}
+
+function getCSPreviousPath(path) {
+	if (path.slice(-1) != "/")
+		path = path + "/";
+	var dataPa = path.split("/");
+	var np = "";
+	for (var i=1; i<dataPa.length-2; i++ ){
+		np = np + "/" + dataPa[i];
+	}
+	if (np == "")
+		return "/";
+	return np;
+}
+
+function getDropboxDate(ddate){
+	return ddate.substring(5,11) + " " + ddate.substring(17,22); 
+}
+
+function getCSFolderContent(loginDiv, contentDiv, service, endpointInput, container, containerTable, indicator, stateText, folder, filter, CSName){
+	//setInputPath(endpointInput, folder);
+	$('#' + indicator).show();
+	$('#' + container).hide();
+	$("#" + endpointInput).val(folder);
+	var factory = new CSFactory();
+	var cs = factory.createCS(service);
+	cs.getContent(loginDiv, contentDiv, folder, container, containerTable, indicator, stateText, filter, endpointInput, CSName);		
+}
+
+function getCSDataTransfer(origFolder, destFolder, selectedFiles, CSName) {
+	var theData = {};
+	theData["files"] = [];       	      	  
+	for (var i=0; i<selectedFiles.length; i++){
+		var files = {};
+		files["sources"] = [];
+		if (document.getElementById(origFolder).value.trim().lastIndexOf("/", 0) === 0){
+			//Cloud storage
+			var dList = [];
+			dList[0] = CSName + "://www.dropbox.com" + selectedFiles[i]; //getFullPath(selectedFiles[i], document.getElementById(origFolder).value.trim());
+			files["sources"] = dList;
+		} else {
+			//Grid SE
+			files["sources"] = getFullPath(getFileNameFromURL(selectedFiles[i]), document.getElementById(origFolder).value.trim());
+		}
+		files["destinations"] = [];
+		if (document.getElementById(destFolder).value.trim().lastIndexOf("/", 0) === 0){
+			//Cloud storage
+			var dList = [];
+			dList[0] = CSName + "://www.dropbox.com";
+			if (document.getElementById(destFolder).value.trim() == "/")
+				dList[0] += document.getElementById(destFolder).value.trim() + selectedFiles[i]; //getFullPath(selectedFiles[i], document.getElementById(destFolder).value.trim());
+			else 
+				dList[0] += document.getElementById(destFolder).value.trim() + "/" + selectedFiles[i];
+			files["destinations"] = dList;
+		} else {
+			//Grid SE
+			files["destinations"] = getFullPath(getFileNameFromURL(selectedFiles[i]), document.getElementById(destFolder).value.trim());
+		}		
+		theData["files"].push(files);
+	}
+	theData["params"] = {};
+	if ((document.getElementById(destFolder).value.trim().lastIndexOf("/", 0) === 0)
+			|| (document.getElementById(origFolder).value.trim().lastIndexOf("/", 0) === 0)){
+		//Cloud storage
+		theData["params"].credential = CSName;
+	}	
+	  
+	return theData;	
+}
+
