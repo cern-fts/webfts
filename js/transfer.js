@@ -102,7 +102,7 @@ function getFullPath(element, endFolder){
 	if (endFolder.slice(-1) != "/"){
 		endFolder += "/";
 	}
-	dList[0] = endFolder + element;	
+	dList[0] = encodeURI(endFolder + element);	
 	return dList;
 }	
 
@@ -706,7 +706,7 @@ function getCSDataTransfer(origFolder, destFolder, selectedFiles, CSName) {
 		if (document.getElementById(origFolder).value.trim().lastIndexOf("/", 0) === 0){
 			//Cloud storage
 			var dList = [];
-			dList[0] = CSName + "://www.dropbox.com" + selectedFiles[i]; //getFullPath(selectedFiles[i], document.getElementById(origFolder).value.trim());
+			dList[0] = encodeURI(CSName + "://www.dropbox.com" + selectedFiles[i]); 
 			files["sources"] = dList;
 		} else {
 			//Grid SE
@@ -718,9 +718,10 @@ function getCSDataTransfer(origFolder, destFolder, selectedFiles, CSName) {
 			var dList = [];
 			dList[0] = CSName + "://www.dropbox.com";
 			if (document.getElementById(destFolder).value.trim() == "/")
-				dList[0] += document.getElementById(destFolder).value.trim() + selectedFiles[i]; //getFullPath(selectedFiles[i], document.getElementById(destFolder).value.trim());
+				dList[0] += document.getElementById(destFolder).value.trim() + selectedFiles[i]; 
 			else 
 				dList[0] += document.getElementById(destFolder).value.trim() + "/" + selectedFiles[i];
+			dList[0] = encodeURI(dList[0]);
 			files["destinations"] = dList;
 		} else {
 			//Grid SE
