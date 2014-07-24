@@ -106,7 +106,7 @@ function ftsTransfer(theData) {
 		url : urlE,
 		type : "POST",
 		data : theData,
-		contentType : "text/plain; charset=UTF-8", 
+		contentType : "application/json", 
 		dataType : 'json',
 		processData : false,
 		beforeSend : function(xhr) {
