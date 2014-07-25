@@ -607,24 +607,15 @@ function hideRemoteLoader(loginForm, loadingPanel){
 // Methods for Cloud storages
 //=====================================================================
 function checkCSState(combo, storageDiv, loginForm, loadingLoginPanel, loginPanel,  container, containerTable, indicator, stateText, filter, endpointInput, CSName){
-	var factory = new CSFactory();
 	//Check if there are url parameters
 	if (getUrlVars()["service"] != null){
-		var cs = factory.createCS(getUrlVars()["service"]);
 		if (getUrlVars()["service"] == "dropbox"){			
-			//TODO: request-token-secret, called rst, should not be here. Should be kept secretly. Only for testing
-			//if (getUrlVars()["rst"] != null){				
-			//	showRemoteLoader(loginForm, loadingLoginPanel);
-			//	cs.getAccessRequest(getUrlVars()["oauth_token"], getUrlVars()["rst"]);
-			//} else {
-				$('#' + combo).ddslick('select', {index: 1 });				
-				$('#' + loginPanel).hide();
-				$('#' + storageDiv).show();
-				$('#' + indicator).show();
-				$('#' + container).hide();
-				$('#' + filter).val('');
-				cs.getCSAccess(loginPanel, storageDiv, "/", container, containerTable, indicator, stateText, filter, endpointInput, CSName);							
-			//}	
+			$('#' + combo).ddslick('select', {index: 1 });				
+			$('#' + loginPanel).hide();
+			$('#' + storageDiv).show();
+			$('#' + indicator).show();
+			$('#' + container).hide();
+			$('#' + filter).val('');
 		}
 	}
 }
