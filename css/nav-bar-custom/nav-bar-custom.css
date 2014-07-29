@@ -1,0 +1,115 @@
+
+/*
+* Old customised nav-bar
+*
+*/
+
+
+body {
+  padding-top: 20px;
+}
+
+.footer {
+  border-top: 1px solid #eee;
+  margin-top: 40px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  background-color: transparent;
+}
+
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px;
+}
+
+/* Customize the nav-justified links to be fill the entire space of the .navbar */
+
+.nav-justified {
+  background-color: #eee;
+  border-style: groove;
+  border-radius: 5px;
+  border: 1px solid #4f4f4f;
+}
+
+.nav-justified > li > a {
+  /*border-style: inset;*/
+  padding-top: 15px;
+  padding-bottom: 15px;
+  /*color: #777;*/
+  /*color: #0e0e0e;*/
+  color: #000;
+  text-shadow: 1px 1px #fff;
+  font-weight: bold;
+  text-align: center;
+  /*border-bottom: 1px solid #d5d5d5;*/
+  border-bottom: 1px solid #4f4f4f;
+  z-index: 250;
+  background-image: url("/css/nav-bar-custom/br1-dlight.png");
+
+  background-repeat: repeat-x; /* Repeat the gradient */
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size:  cover;
+
+}
+.nav-justified > .active > a,
+.nav-justified > .active > a:hover,
+.nav-justified > .active > a:focus {
+  /*background-color: #ddd;*/
+  /*background-image: url("/css/nav-bar-custom/br1-light.png");*/
+  background-color: rgba(255,255,255,0.5);
+/*  background-image: none;
+*/
+  box-shadow: inset 0 3px 7px rgba(0,0,0,.15);
+}
+.nav-justified > li:first-child > a {
+  border-radius: 5px 5px 0 0;
+}
+.nav-justified > li:last-child > a {
+  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+
+@media (min-width: 768px) {
+  .nav-justified {
+    max-height: 52px;
+  }
+  .nav-justified > li > a {
+    border-right: 1px solid #4f4f4f;
+  /*  border-left: 1px solid #4f4f4f;
+   */
+    /*border-right: 1px solid #d5d5d5;
+      border-left: 1px solid #fff;
+    */
+    
+  }
+  .nav-justified > li:first-child > a {
+    border-left: 0;
+    border-radius: 5px 0 0 5px;
+  }
+  .nav-justified > li:last-child > a {
+    border-radius: 0 5px 5px 0;
+    border-right: 0;
+  }
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .masthead,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+
+
+

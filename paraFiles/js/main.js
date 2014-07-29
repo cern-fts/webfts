@@ -53,3 +53,40 @@
         });
     });
 
+/*
+    (function(){
+    // Create a new tour
+    var tour = new Tour();
+     
+    // Add your steps
+    tour.addSteps([
+      {
+        element: ".tour-step.tour-step-one", // element selector to show the popover next to;
+        placement: "bottom",
+        title: "Welcome to the WebFTS tour!",
+        content: "We're going to make this quick and useful."
+      },
+      {
+        element: ".tour-step.tour-step-two",
+        placement: "bottom",
+        title: "Main navigation",
+        content: "Boom, bang, bam!"
+      },
+      {
+            element: ".tour-step.tour-step-three",
+            placement: "top",
+            backdrop: true,
+            title: "Main section",
+            content: "This is a section that you can read. It has valuable information."
+      }
+    ]);
+     
+    // Initialize method on the Tour class. Get's everything loaded up and ready to go.
+    tour.init();
+     
+    // This starts the tour itself
+    tour.start();
+
+}());
+
+*/

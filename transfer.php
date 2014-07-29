@@ -1,3 +1,10 @@
+
+    <!-- Add IntroJs styles -->
+    <link href="../../introjs.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/site-tour-styles/custom-site-tour.css">
+
+    <link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+
 <script>
 $( document ).ready(function() {	
 	getDelegationID("delegation_id", true);
@@ -47,10 +54,14 @@ $("#rightEndpointContentTable tbody").on("click", function(e){
 // 	$('#leftFilterPanel').toggle();
 // });
 
+
+
+
 $(function(){
    $("#modal_content").load("modal.html"); 
 });
 </script>
+
 <input type="hidden" id="delegation_id" value="">
 <div class="row">
 	<div id="modal_content"></div>
@@ -76,7 +87,10 @@ $(function(){
 		<small id="serverSuccessText"></small>
 	</div>
 	<div class="row">
-		<div class="btn-group-vertical col-xs-5 col-lg-5 col-md-5">
+		<div class="btn-group-vertical col-xs-5 col-lg-5 col-md-5" id="sourceEndpoint"  
+					data-step="2" 
+					data-intro="<h3><strong>Step 2:</strong></h3><h4>And actually that's it! You can start submitting your jobs from here.<br/>Here you can place your source endpoint! By clicking the &quot;load&quot; button, all the contents inside your folder will be displayed!</h4>"
+					data-position="bottom">
 			<div class="input-group">	
 				<input id="leftEndpoint" type="text" placeholder="Endpoint path"
 					class="form-control"
@@ -90,19 +104,33 @@ $(function(){
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<div class="btn-toolbar">
-						<div class="btn-group ">
+
+						<div class="btn-group " 
+								data-step="5" 
+								data-intro="<h3><strong>Selection buttons:</strong></h3>
+								<h4>By clicking one, you can select/unselect all your files.</h4>"
+								data-position="bottom">
 							<button type="button" class="btn btn-sm"
 								onclick="selectAllFiles('leftEndpointContent')">Select All</button>
 							<button type="button" class="btn btn-sm"
 								onclick="selectNoneFiles('leftEndpointContent')">None</button>
 						</div>
-						<div class="btn-group">
+						<div class="btn-group" 
+								data-step="6" 
+								data-intro="<h3><strong>Refresh button:</strong></h3>
+								<h4>Once you place a new endpoint you can see all the contents of the path by clicking on this.</h4>"
+								data-position="bottom">
 							<button type="button" class="btn btn-sm"
 								onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter')">
 								<i class="glyphicon glyphicon-refresh" />&nbsp;Refresh
 							</button>
 						</div>
-						<div class="btn-group">
+						<div class="btn-group" 
+								data-step="7" 
+								data-intro="<h3><strong>Filter button:</strong></h3>
+								<h4>Specify your file(s) search!<br/>Multiple options: <br/>name,<br/>date,<br/>size of file(s)<br/> or search for simple files by avoiding display the containing folders!</br><strong>Do you want to see live all your submited jobs? Click on the button below!</strong></h4>"
+								data-position="bottom">
+								<a href='javascript:void(0);'></a>
 							<button type="button" id="leftShowFilterButton"
 								class="btn btn-sm"
 								onclick="setFilterPanel('leftFilterPanel', $(this));">Show filters</button>
@@ -213,7 +241,10 @@ $(function(){
 				</div>
 			</div>
 		</div>
-		<div class="btn-group btn-group-vertical col-xs-2 col-lg-2 col-md-2">
+		<div class="btn-group btn-group-vertical col-xs-2 col-lg-2 col-md-2"
+					data-step="4" 
+					data-intro="<h3><strong>Step 4:</strong></h3><h4>These are the main buttons for the transfer! Choose your files and then click on one of these buttons accordingly your desires!</h4>"
+					data-position="bottom">
 			<button type="button" class="btn btn-primary btn-block"
 				name="transfer-from-left" id="transfer-from-left"
 				onclick="runTransfer('leftEndpointContentTable', 'leftEndpoint', 'rightEndpoint')"
@@ -228,7 +259,10 @@ $(function(){
 			</button>
 		</div>
 
-		<div class="btn-group-vertical col-xs-5 col-lg-5 col-md-5">
+		<div class="btn-group-vertical col-xs-5 col-lg-5 col-md-5" id="destEndpoint" 
+					data-step="3" 
+					data-intro="<h3><strong>Step 3:</strong></h3><h4>In this area you place your the destination endpoint!</h4>"
+					data-position="bottom">
 			<div class="input-group">
 				<input id="rightEndpoint" type="text" placeholder="Endpoint path"
 					class="form-control"> <span class="input-group-btn">
@@ -239,7 +273,7 @@ $(function(){
 
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<div class="btn-toolbar">
+					<div class="btn-toolbar" >
 						<div class="btn-group ">
 							<button type="button" class="btn btn-sm"
 								onclick="selectAllFiles('rightEndpointContent')">Select All</button>
@@ -365,4 +399,7 @@ $(function(){
 			</div>
 		</div>
 	</div>
+
+
+
 </div>	
