@@ -11,6 +11,11 @@ html, body {
 }
 
 
+.padding-class-2{
+	margin-bottom: -12.5%; 
+}
+
+
 .panel{
 	background-color: #E0F0FF;
 }
@@ -85,7 +90,7 @@ small{
   padding: 1% 5% 0%;
   margin-right: auto;
   margin-left: auto;
-  height: 160px;
+  height: 180px;
   width: 100%;
   display: table;
   z-index: 200;
