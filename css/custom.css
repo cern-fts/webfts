@@ -19,3 +19,8 @@
   line-height: 1.5;
   border-radius: 3px;
 }
+
+.button-image {
+	height: 26;
+	width: 26;
+}

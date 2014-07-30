@@ -36,9 +36,6 @@
 			</ul>
 		</div>
 		<div>
-			&nbsp;
-		</div>
-		<div>
 			<h2> <span class="label label-info"><i class="glyphicon glyphicon-arrow-right"></i>&nbsp;Do you need to move files between grid machines?
 			</span></h2> 
 			<h2> <span class="label label-info"><i class="glyphicon glyphicon-arrow-right"></i>&nbsp;Looking for a graphical interface to manage your transfers? 

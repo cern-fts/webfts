@@ -28,6 +28,8 @@
 <script src="js/ftsHelper.js"></script>
 <script src="js/RSAGenerator.js"></script>
 <script src="js/transfer.js"></script>
+<script src="js/CSFactory.js"></script>
+<script src="js/dropboxHelper.js"></script>
 
 <script src="js/lib/yahoo/yahoo-min.js"></script>
 <script src="js/lib/glibs/core-min.js"></script>
@@ -58,6 +60,9 @@
 <script src="js/lib/kjur-jsrsasign/keyutil-1.0.min.js"></script>
 
 <!-- <script src="js/lib/js/js-rsa-pem.js"></script>  -->
+
+<script src="js/jquery.ddslick.min.js"></script>
+
 
 <script> 
 	$(function(){

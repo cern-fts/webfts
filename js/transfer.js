@@ -14,30 +14,50 @@ var permissionNumberMeaning = {
 	    7 : 'rwx'
 	};
 
-function runTransfer(container, origFolder, destFolder){	  
-	hideUserReport();
-	if ($('#lfcregistration').prop('checked')) {
-		runMultiHopTransfer(container, origFolder, destFolder);
-	} else if (protocolValidation(origFolder, destFolder)){
-		var selectedFiles = getSelectedFiles(container);
-	    if (selectedFiles.length > 0){
-			var theData = {};
-			theData["files"] = [];       	      	
-			for (var i=0; i<selectedFiles.length; i++){
-				var files = {};
-				files["sources"] = [];
-				files["sources"] = getFullPath(selectedFiles[i], document.getElementById(origFolder).value.trim());
-				files["destinations"] = [];
-				files["destinations"] = getFullPath(selectedFiles[i], document.getElementById(destFolder).value.trim());
-				theData["files"].push(files);
-			}
-			theData["params"] = {};
-			theData["params"].verify_checksum = $('#checksum').prop('checked');
-			theData["params"].overwrite = $('#overwrite').prop('checked');
-			runDataTransfer($('#delegation_id').val(), theData);
-	    }	  
+function runTransfer(container, origFolder, destFolder, CSLeftSelect){
+	if (false){ //#TODO: remove "true" and do a check of the expiration time
+		$("#warningTransferButton").click({c: container, o: origFolder, d: destFolder, s:CSLeftSelect}, function(e) {
+			executeTransfer(e.data.c, e.data.o, e.data.d, e.data.s);
+		});			
+		$("#expirationModal").show();
 	} else {
-		showUserError("The protocols should be the same or at least one of them has to be SRM");
+		executeTransfer(container, origFolder, destFolder, CSLeftSelect);
+	}	
+}
+
+
+function executeTransfer(container, origFolder, destFolder, CSLeftSelect){		
+	hideUserReport();
+	//if ($('#lfcregistration').prop('checked')) {
+	//	runMultiHopTransfer(container, origFolder, destFolder);
+	// else if (protocolValidation(origFolder, destFolder)){
+	//	var selectedFiles = getSelectedFiles(container);
+	//    if (selectedFiles.length > 0){
+	//		var theData = {};
+	//		theData["files"] = [];       	      	
+	//		for (var i=0; i<selectedFiles.length; i++){
+	//			var files = {};
+	//			files["sources"] = [];
+	//			files["sources"] = getFullPath(selectedFiles[i], document.getElementById(origFolder).value.trim());
+	//			files["destinations"] = [];
+	//			files["destinations"] = getFullPath(selectedFiles[i], document.getElementById(destFolder).value.trim());
+	//			theData["files"].push(files);
+	//		}
+	//		theData["params"] = {};
+	//		theData["params"].verify_checksum = $('#checksum').prop('checked');
+	//		theData["params"].overwrite = $('#overwrite').prop('checked');
+	//		runDataTransfer($('#delegation_id').val(), theData);
+	//    }	  
+	//} else {
+	//	showUserError("The protocols should be the same or at least one of them has to be SRM");
+	//}
+	var selectedFiles = getSelectedFiles(container);
+        if (selectedFiles.length > 0){
+    		var optionSelected = $('#' + CSLeftSelect).data('ddslick'); 
+	    	if (optionSelected.selectedIndex > 0){
+  	    		runDataTransfer($('#delegation_id').val(), getCSDataTransfer(origFolder, destFolder, selectedFiles, optionSelected.selectedData.text.toLowerCase()));  	    		    	    		    	    	    	    	    					          } else {	    	    		    	    	    	    	    					    		    	    		runDataTransfer($('#delegation_id').val(), getDataTransfer(origFolder, destFolder, selectedFiles));
+		}
+	
 	}    
 	return false;
 }
@@ -86,6 +106,73 @@ function protocolValidation(o,d){
 		return true;
 	else
 		return false;
+	
+	var selectedFiles = getSelectedFiles(container);
+    	if (selectedFiles.length > 0){
+    	
+    	//Check if there are url parameters
+    	//if (getUrlVars()["service"] != null){
+    		//CS -SE transfer
+//    		var factory = new CSFactory();
+//    		var cs = factory.createCS(getUrlVars()["service"]);
+//    		var urlList = [];
+//    		cs.getShareLinkAndSubmit(getUrlVars()["oauth_token"], getUrlVars()["oauth_token_secret"], selectedFiles, urlList, destFolder);
+    	//} else {
+    		//Grid SE -SE transfer
+    	//	runDataTransfer($('#delegation_id').val(), getDataTransfer(origFolder, destFolder, selectedFiles));
+    	//}	
+    	var optionSelected = $('#' + CSLeftSelect).data('ddslick'); 
+    	if (optionSelected.selectedIndex > 0){
+    		//var factory = new CSFactory(optionSelected.selectedData.text);
+			//var cs = factory.createCS();	
+    		runDataTransfer($('#delegation_id').val(), getCSDataTransfer(origFolder, destFolder, selectedFiles, optionSelected.selectedData.text.toLowerCase()));
+    	} else {
+    		runDataTransfer($('#delegation_id').val(), getDataTransfer(origFolder, destFolder, selectedFiles));
+    	}	
+    }
+    return false;
+}
+
+function getDataTransfer(origFolder, destFolder, selectedFiles) {
+	var theData = {};
+	theData["files"] = [];       	      	  
+	for (var i=0; i<selectedFiles.length; i++){
+		var files = {};
+		files["sources"] = [];
+		files["sources"] = getFullPath(selectedFiles[i], document.getElementById(origFolder).value.trim());
+		files["destinations"] = [];
+		files["destinations"] = getFullPath(selectedFiles[i], document.getElementById(destFolder).value.trim());
+		theData["files"].push(files);
+	}
+	theData["params"] = [];
+	  
+	return theData;	
+}
+
+function runTransferFromURL(container, url, destFolder){	  
+	hideUserReport();
+
+	var theData = {};
+	theData["files"] = [];       	      	  
+
+	var files = {};
+	files["sources"] = [];
+	var sList = [];
+	sList[0] = document.getElementById(url).value.trim();
+	files["sources"] = sList;
+	files["destinations"] = [];
+	files["destinations"] = getFullPath(getFileNameFromURL(document.getElementById(url).value.trim()), document.getElementById(destFolder).value.trim());
+	theData["files"].push(files);
+
+	theData["params"] = [];
+	  
+	runDataTransfer($('#delegation_id').val(), theData);
+
+    return false;
+}
+
+function getFileNameFromURL(url){
+	return url.substr(url.lastIndexOf("/") + 1);
 }
 
 function getFullPath(element, endFolder){
@@ -93,7 +180,7 @@ function getFullPath(element, endFolder){
 	if (endFolder.slice(-1) != "/"){
 		endFolder += "/";
 	}
-	dList[0] = endFolder + element;	
+	dList[0] = encodeURI(endFolder + element);	
 	return dList;
 }	
 
@@ -107,7 +194,7 @@ function activateTransferButton(epTable, buttonToActivate, endPoint){
 		else {	lfcRegistrationActivate = false; }
 	}
 			
-	if ((getSelectedFiles(epTable).length > 0) && ($('#' + endPoint).text().length > 0) && lfcRegistrationActivate){ 
+	if (((epTable != null) && (getSelectedFiles(epTable).length > 0) &&  lfcRegistrationActivate && ($('#' + endPoint).text().length > 0 )) || ((epTable == null) && ($('#' + endPoint).text().length > 0))){ 
 		$('#' + buttonToActivate).removeAttr("disabled");
 	} else {
 		$('#' + buttonToActivate).attr('disabled','disabled');
@@ -140,20 +227,21 @@ function pad (str, max) {
 }
 
 function getNextFolderContent(endpointInput, container, containerTable, indicator, stateText, folder, filter){
-	var endUrl = getNotNull(endpointInput, stateText);
+	setInputPath(endpointInput, folder);
+	getEPContent(endpointInput, container, containerTable, indicator, stateText, filter);	
+}
+
+function setInputPath(endpointInput, folder) {
+	var endUrl = ($('#' + endpointInput).val()).trim();
 	if (endUrl.slice(-1) == "/"){
 		$("#" + endpointInput).val(endUrl + folder + '/').change();
-		$("#" + stateText).text(endUrl + folder + '/');
 	} else {
 		$("#" + endpointInput).val(endUrl + '/' + folder + '/').change();
-		$("#" + stateText).text(endUrl + '/' + folder + '/');
 	}
-	getEPContent(endpointInput, container, containerTable, indicator, stateText, filter);	
 }
 
 function getPreviousFolderContent(endpointInput, container, containerTable, indicator, stateText, filter){
 	$("#" + endpointInput).val(getPreviousUrl(($('#' + stateText).text()).trim()));
-	$("#" + stateText).text(getPreviousUrl(($('#' + stateText).text()).trim()));
 	getEPContent(endpointInput, container, containerTable, indicator, stateText, filter);	
 }
 
@@ -161,8 +249,8 @@ function getPreviousUrl(endpointUrl){
 	var foldersStartIndex = endpointUrl.indexOf("://");
 	if (foldersStartIndex == -1)
 		return null;
-	if (endpointUrl.slice(-1) == "/")
-		endpointUrl = endpointUrl.substring(0, endpointUrl.length-1);
+	else if (endpointUrl.slice(-1) == "/")
+			endpointUrl = endpointUrl.substring(0, endpointUrl.length-1);
 
 	var ipath = endpointUrl.substring(endpointUrl.indexOf("://")+3, endpointUrl.length);
 	var t = ipath.split("/");	
@@ -203,62 +291,32 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 				if (t_row[1].indexOf("folder") != -1){
 					//The number of a folder means the number of elements. Not need to be converted
 					t_row.push('<td id=' + e_value + '> - </td>');
-				} else {
-					t_row.push('<td id=' + e_value + '>' + getReadableFileSizeString(e_value) + '</td>');
-				}	
-			}			
-		});
-		t_row.push('</tr>'); 
-		$('#' + containerTable +' > tbody:last').append(t_row.join(""));
-	});
-	if ($("#" + stateText).text() == ""){
-		$("#" + stateText).text(($('#' + endpointInput).val()).trim());
-	} else {
-		$('#' + endpointInput).val($("#" + stateText).text().trim());
-	}
-	$("#" + containerTable + " tbody").finderSelect("update");
-}
+				} 
+				else 
+				{
+					t_row.push('<td id=' + e_value + '>' + getReadableFileSizeString(e_value) + '</td>');							}	
+			}																});
+		t_row.push('</tr>');
+	        $('#' + containerTable +' > tbody:last').append(t_row.join(""));									});
+ 	$("#" + stateText).text(($('#' + endpointInput).val()).trim());
+        $("#" + containerTable + " tbody").finderSelect("update");
+      
+   }
 
-function loadNewEndpoint(endpointInput, container, containerTable, indicator, stateText, filter){
-	$("#" + stateText).text("");
-	getEPContent(endpointInput, container, containerTable, indicator, stateText, filter);
-}
+
 function getInitialRowContent(endpointInput, container, containerTable, indicator, stateText, filter){
-	if ((getPreviousUrl(($('#' + stateText).text()).trim()) != null) || 
-		((($('#' + stateText).text()).trim() == "") && ($('#' + endpointInput).val() != null) && (($('#' + endpointInput).val()).trim() != "") && (getPreviousUrl(($('#' + endpointInput).val()).trim()) != null))){
-		return "<tr value='previous' onclick=\"getPreviousFolderContent('" + endpointInput + "', '" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + filter + "')\">" + 
+	if (getPreviousUrl(($('#' + endpointInput).val()).trim()) != null){
+		return "<tr value='previous' onclick=\"getPreviousFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + filter + "')\">" + 
 			   "<td><i class='glyphicon glyphicon-circle-arrow-up'/>&nbsp;..</td><td></td><td></td><td></td></tr>";
 	} else {
 		return null;
 	}
 }
 
-function getNotNull(input, current){
-	if ($('#' + current).text() == ""){
-		return ($('#' + input).val()).trim();
-	} else {
-		return ($('#' + current).text()).trim();
-	}	
-}
-
 function renderFolderContent(tableId, countId, container, indicator, stateText){
-    // Initialise with the Ctrl Click Functionality as the Default
-    $("#" + tableId + " tbody").finderSelect({enableDesktopCtrlDefault:true, totalSelector:"."+countId , selectClass:'label-info'});
-    $("#" + tableId + " tbody").finderSelect('addHook','highlight:after', function(element, options) { 
-    	for (var i=0; i < element.length; i++){
-    		//Avoid selecting elements outside the filters
-    		if (($(element[i]).css("display") != null) && ($(element[i]).css("display") == "none")){
-    			$(element[i]).removeClass(options.selectClass);
-    			$(element[i]).addClass(options.unSelectClass);
-    		}
-    		//Do not select folders
-    		if ((element[i].firstChild.title == "") || (element[i].firstChild.title.indexOf('/') != -1 )){
-    			$(element[i]).removeClass(options.selectClass);
-    			$(element[i]).addClass(options.unSelectClass);
-    		}
-    	}
-    });
-    clearContentTable(tableId, container, indicator, stateText);
+        // Initialise with the Ctrl Click Functionality as the Default
+        $("#" + tableId + " tbody").finderSelect({enableDesktopCtrlDefault:true, totalSelector:"."+countId , selectClass:'label-info'});
+        clearContentTable(tableId, container, indicator, stateText);
 }
 
 function selectAllFiles(container){ 
@@ -461,14 +519,6 @@ function isRegEx(data){
 	return false;
 }
 
-function initFilters(){
-	$('#leftFilterPanel').hide();
-	$('#rightFilterPanel').hide();
-	
-	$('#leftFilterOptionsPanel').hide();
-	$('#rightFilterOptionsPanel').hide();	
-}
-
 function setFilterShowingOptions(panel, textInput, option, contentTable){	
 	$("#" + panel).children().show();
 	$("#" + option).siblings().hide();
@@ -482,13 +532,6 @@ function setFilterShowingOptions(panel, textInput, option, contentTable){
 	
 	var jo = $("#" + contentTable + " tbody").find("tr");
     jo.show();	
-}
-
-function setInitialDatepickers(){
-	$("#leftFromRangeFilterDate").datepicker();
-	$("#leftToRangeFilterDate").datepicker();
-	$("#rightFromRangeFilterDate").datepicker();
-	$("#rightToRangeFilterDate").datepicker();	
 }
 
 function setFilterPanel(panel, buttonObj){
@@ -541,59 +584,44 @@ function getPrintableFileName(fileName){
 	return fileName;
 }
  
-function loadEndpointsList(){
-	availableURLs = []
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", endpointsListURL, true);
-    rawFile.onreadystatechange = function ()
-    {
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                var allText = rawFile.responseText;                
-                var availableURLs = allText.split('\n');
-                for (var i=0; i<availableURLs.length; i++){
-                	if (availableURLs[i].substring(0,5) == "httpg"){
-                		availableURLs[i] = "srm" + availableURLs[i].substring(5, availableURLs[i].length);
-                	} else {
-                		availableURLs[i] = availableURLs[i].replace("?SFN=","");
-                	}                	
-                }
-                availableURLs = applyTestingFilter(availableURLs);
-				$( "#leftEndpoint" ).autocomplete({
-					source: availableURLs,
-					minLength: 2
-				});
-				$( "#rightEndpoint" ).autocomplete({
-					source: availableURLs,
-					minLength: 2
-				});
-				//testEP(availableURLs);
-            }
-        }
-    }
-    rawFile.send(null);
-}
 
-function applyTestingFilter(uArray){
-	var found_set = {};
-	var epurl = "";
-	var newArray = [];
-	for (var i=0; i<uArray.length; i++){
-		epurl = uArray[i];
-		if ((epurl == "") || (epurl.indexOf("UNDEFINED") != -1)) 
-			continue;
-		var ele = getFilter(epurl);		
-		if (found_set[ele]){
-			console.log(ele + " is already in the set");
-		} else {
-			found_set[ele] = true;
-			newArray.push(epurl);
+function loadEndpointsList(boxes){
+	$.ajax({
+		url : endpointsListURL,
+		type : "GET",
+		dataType : 'xml',
+		xhrFields : {
+			withCredentials : true
+		},
+		
+		success : function(xml) {
+			if (xml != null){
+				var availableURLs = [];
+				$(xml).find("entry").each(function()
+						  {
+							endpoint = $(this).find("endpoint").text();
+							if ($(this).find("type").text() == "SRM"){
+								if (endpoint.substring(0,5) == "httpg")
+									availableURLs.push("srm" + endpoint.substring(5, endpoint.length));
+							} else {
+								availableURLs.push(endpoint);
+							}
+						    $("#output").append($(this).attr("author") + "<br />");
+						  });
+				for(var i =0; i < boxes.length; i++){
+					loadEPList(boxes[i], availableURLs);
+				}
+			}
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			console.log("File with the endpoints list not avaialble or not accesible");
+			console.log(jqXHR);
+			console.log("ERROR: " + JSON.stringify(jqXHR));
+			console.log(textStatus + "," + errorThrown);
 		}
-	}
-	console.log("The filtered array has " + newArray.length + " elements");
-	return newArray;
+	});
+	//console.log("The filtered array has " + newArray.length + " elements");
+	//return newArray;
 }
 
 function getFilter(epurl){	
@@ -663,3 +691,196 @@ function getHost(url){
 	var d = url.split(":");
 	return d[1].substring(2, d[1].length);
 }
+
+function loadEPList(ep, availableURLs){
+	$( "#" + ep ).autocomplete({
+		source: availableURLs,
+		minLength: 2
+	});
+}
+
+function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginIndicator, CSName, inputTextbox, loadButton, container, containerTable, indicator, stateText, filter){
+	$('#' + loginDiv).hide();
+	$('#' + contentDiv).show();
+	
+	if (currentSelect.selectedIndex > 0){ 
+		// Cloud storage, not Grid SE
+		//currentSelect.selectedData.text;
+		
+		$('#' + inputTextbox).prop('readonly', true);
+		$('#' + loadButton).prop("disabled",true);
+		
+		if ((getUrlVars()["service"] != currentSelect.selectedData.text.toLowerCase()) &&
+				($('#' + CSName).val().toLowerCase() != currentSelect.selectedData.text.toLowerCase())){
+			//clearContentTable(containerTable, container, indicator, stateText);
+			$('#' + loginDiv).show();
+			$('#' + contentDiv).hide();
+			$('#' + loginIndicator).hide();
+			$('#' + loginForm).show();
+		} else{
+			if (getUrlVars().length > 1){
+				var factory = new CSFactory();
+				var cs = factory.createCS(getUrlVars()["service"]);		
+				cs.getCSAccess(loginDiv, contentDiv, "/", container, containerTable, indicator, stateText, filter, inputTextbox, CSName);
+			} else {
+				getCSFolderContent(loginDiv, contentDiv, currentSelect.selectedData.text.toLowerCase(), inputTextbox, container, containerTable, indicator, stateText, "/", filter, CSName);
+			}	
+		}		
+	} else {		
+		if ((getUrlVars()["service"] != null) || ($('#' + CSName).val() != "Grid SE")){
+			clearContentTable(containerTable, container, indicator, stateText);				
+			$('#' + inputTextbox).val('');
+			$('#' + inputTextbox).attr("placeholder", "Endpoint path");
+		}		
+		$('#' + inputTextbox).prop('readonly', false);
+		$('#' + loadButton).prop("disabled",false);
+	}
+	$('#' + CSName).val(currentSelect.selectedData.text.toLowerCase());
+}
+
+function getLoginCS(CSName, loginDiv, contentDiv, loginForm, loadingPanel, path, container, containerTable, indicator, stateText, filter, endpointInput){
+	var factory = new CSFactory();
+
+	var cs = factory.createCS(CSName);
+	showRemoteLoader(loginForm, loadingPanel);		
+	//cs.getAuthRequest();			
+	cs.getCSAccess(loginDiv, contentDiv, "/", container, containerTable, indicator, stateText, filter, endpointInput, CSName);
+}
+
+function showRemoteLoader(loginForm, loadingPanel){
+	$('#' + loginForm).hide();
+	$('#' + loadingPanel).show();
+} 
+
+function hideRemoteLoader(loginForm, loadingPanel){
+	$('#' + loginForm).hide();
+	$('#' + loadingPanel).hide();
+} 
+
+//=====================================================================
+// Methods for Cloud storages
+//=====================================================================
+function checkCSState(combo, storageDiv, loginForm, loadingLoginPanel, loginPanel,  container, containerTable, indicator, stateText, filter, endpointInput, CSName){
+	//Check if there are url parameters
+	if (getUrlVars()["service"] != null){
+		if (getUrlVars()["service"] == "dropbox"){			
+			$('#' + combo).ddslick('select', {index: 1 });				
+			$('#' + loginPanel).hide();
+			$('#' + storageDiv).show();
+			$('#' + indicator).show();
+			$('#' + container).hide();
+			$('#' + filter).val('');
+		}
+	}
+}
+
+function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName){
+//function loadFolder(endpointInput, container, containerTable, elements, indicator, stateText, filter){
+	$('#' + endpointInput).val(data.path); 
+
+	clearContentTable(containerTable, container, indicator, stateText);	
+	if (data.path != "/"){
+		var previousUrl = getCSPreviousPath(data.path);		
+		var row = [];
+		row.push("<tr value='previous' onclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + previousUrl + "','" + filter + "','" + CSName +"')\">" + 
+		   "<td><i class='glyphicon glyphicon-circle-arrow-up'/>&nbsp;..</td><td></td><td></td><td></td></tr>");
+		$('#' + containerTable +' > tbody:last').append(row.join(""));
+	}	
+	for (var i=0; i<data.contents.length; i++){
+		var icon = "";
+		var t_row = [];
+		var cur = data.contents[i]; 
+		if (cur.path == "/.directory")
+			continue;
+		var filePath = cur.path.substring(cur.path.lastIndexOf("/")+1, cur.path.lenght); 
+		if (cur.is_dir == true){
+			icon ="glyphicon glyphicon-folder-close";
+			t_row.push("<tr value='" + cur.path  + "' onclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + cur.path.trim() + "','" + filter + "','" + CSName + "')\">");
+			t_row.push('<td title="' + filePath + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
+		} else {
+			icon ="glyphicon glyphicon-file";	
+			t_row.push('<tr value="' + cur.path + '">');
+			t_row.push('<td title="' + filePath + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
+		}
+		t_row.push('<td>&nbsp;-&nbsp;</td>');
+		t_row.push('<td>' + getDropboxDate(cur.modified) + '</td>');
+		t_row.push('<td id=' + cur.bytes + '>' + getReadableFileSizeString(cur.bytes) + '</td>');
+		
+		t_row.push('</tr>'); 
+		$('#' + containerTable +' > tbody:last').append(t_row.join(""));
+	}
+	$("#" + stateText).text(($('#' + endpointInput).val()).trim());
+	$("#" + containerTable + " tbody").finderSelect("update");
+	$('#' + loginDiv).hide();
+	$('#' + contentDiv).show();	
+}
+
+function getCSPreviousPath(path) {
+	if (path.slice(-1) != "/")
+		path = path + "/";
+	var dataPa = path.split("/");
+	var np = "";
+	for (var i=1; i<dataPa.length-2; i++ ){
+		np = np + "/" + dataPa[i];
+	}
+	if (np == "")
+		return "/";
+	return np;
+}
+
+function getDropboxDate(ddate){
+	return ddate.substring(5,11) + " " + ddate.substring(17,22); 
+}
+
+function getCSFolderContent(loginDiv, contentDiv, service, endpointInput, container, containerTable, indicator, stateText, folder, filter, CSName){
+	//setInputPath(endpointInput, folder);
+	$('#' + indicator).show();
+	$('#' + container).hide();
+	$("#" + endpointInput).val(folder);
+	var factory = new CSFactory();
+	var cs = factory.createCS(service);
+	cs.getContent(loginDiv, contentDiv, folder, container, containerTable, indicator, stateText, filter, endpointInput, CSName);		
+}
+
+function getCSDataTransfer(origFolder, destFolder, selectedFiles, CSName) {
+	var theData = {};
+	theData["files"] = [];       	      	  
+	for (var i=0; i<selectedFiles.length; i++){
+		var files = {};
+		files["sources"] = [];
+		if (document.getElementById(origFolder).value.trim().lastIndexOf("/", 0) === 0){
+			//Cloud storage
+			var dList = [];
+			dList[0] = encodeURI(CSName + "://www.dropbox.com" + selectedFiles[i]); 
+			files["sources"] = dList;
+		} else {
+			//Grid SE
+			files["sources"] = getFullPath(getFileNameFromURL(selectedFiles[i]), document.getElementById(origFolder).value.trim());
+		}
+		files["destinations"] = [];
+		if (document.getElementById(destFolder).value.trim().lastIndexOf("/", 0) === 0){
+			//Cloud storage
+			var dList = [];
+			dList[0] = CSName + "://www.dropbox.com";
+			if (document.getElementById(destFolder).value.trim() == "/")
+				dList[0] += document.getElementById(destFolder).value.trim() + selectedFiles[i]; 
+			else 
+				dList[0] += document.getElementById(destFolder).value.trim() + "/" + selectedFiles[i];
+			dList[0] = encodeURI(dList[0]);
+			files["destinations"] = dList;
+		} else {
+			//Grid SE
+			files["destinations"] = getFullPath(getFileNameFromURL(selectedFiles[i]), document.getElementById(destFolder).value.trim());
+		}		
+		theData["files"].push(files);
+	}
+	theData["params"] = {};
+	if ((document.getElementById(destFolder).value.trim().lastIndexOf("/", 0) === 0)
+			|| (document.getElementById(origFolder).value.trim().lastIndexOf("/", 0) === 0)){
+		//Cloud storage
+		theData["params"].credential = CSName;
+	}	
+	  
+	return theData;	
+}
+
