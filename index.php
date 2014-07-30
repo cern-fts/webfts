@@ -10,7 +10,7 @@
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/bootstrap-theme.min.css" rel="stylesheet">
-<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+<!-- <link href="assets/css/bootstrap-responsive.css" rel="stylesheet"> -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- <link href="css/justified-nav.css" rel="stylesheet"> -->
 <link href="css/validation.css" rel="stylesheet" >
@@ -48,9 +48,7 @@
 <script src="js/jquery.validate.min.js"></script>
 
 <!-- Browser Compatibility styles -->
-<link rel="stylesheet" href="/paraFiles/css/diffBrsStyles/base.css"/>
-<link rel="stylesheet" href="/css/Hover-master/css/hover-min.css"/>
-
+<link rel="stylesheet" href="/paraFiles/css/base.css"/>
 
 <!-- Browser Compatibility starts to apply different stylesheets-->
 <script type="text/javascript">
@@ -95,33 +93,26 @@ else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) <
 	// document.write(browserName);
 
  if (browserName == 'Firefox') {
- 	// document.write("<link rel='stylesheet' href='paraFiles/css/diffBrsStyles/Firefox.css' type='text/css'>");
  	document.write("<link rel='stylesheet' href='paraFiles/css/diffBrsStyles/FirefoxDiff.css' type='text/css'>");
  }
  else if (browserName == 'Chrome'){
- 	// document.write("<link rel='stylesheet' href='paraFiles/css/diffBrsStyles/Chrome.css' type='text/css'>");
  	document.write("<link rel='stylesheet' href='paraFiles/css/diffBrsStyles/ChromeDiff.css' type='text/css'>");
  }
  else if (browserName == 'Safari'){
- 	// document.write("<link rel='stylesheet' href='paraFiles/css/diffBrsStyles/Safari.css' type='text/css'>");
  	document.write("<link rel='stylesheet' href='paraFiles/css/diffBrsStyles/SafariDiff.css' type='text/css'>");
 
  }
  else if (browserName == 'Microsoft Internet Explorer') {
- 	// document.write("<link rel='stylesheet' href='paraFiles/css/diffBrsStyles/IE.css' type='text/css'>");
  	document.write("<link rel='stylesheet' href='paraFiles/css/diffBrsStyles/IEDiff.css' type='text/css'>");
- 	// document.write("<script type='text/javascript' src='https://getfirebug.com/firebug-lite-debug.js'>");
  } 
  else{
- 	// document.write("<link rel='stylesheet' href='paraFiles/css/style.css' type='text/css'>");
- 	document.write("<link rel='stylesheet' href='paraFiles/css/diffBrsStyles/tryFire.css' type='text/css'>");
+ 	document.write("<link rel='stylesheet' href='paraFiles/css/styles.css' type='text/css'>");
  }
 
 </script>
 <!-- Browser Compatibility ends-->
 
 </head>
-
 
 
 <body>
@@ -168,7 +159,6 @@ else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) <
 
 					<div class='container-fluid border-element'>
 						<div class='row-fluid border-element' id='main-area-slide1'>
-									<!--  -->
 							<div class='col-md-4 col-md-offset-1 col-sm-4 col-sm-offset-1 col-sm-4 col-sm-offset-1' id='front-left-block'>
 									<div class="news-title">
 										<span class='glyphicon glyphicon-ok-sign'></span> Release 3.2.22:<br/>
@@ -179,9 +169,7 @@ else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) <
 				    				</div>	
 				    				<div class='jumbotron-fluid' id='readMore'>
 										<a class="btn btn-info btn-sm"  onclick="window.open(this.href,'_blank');return false;" href="http://fts3-service.web.cern.ch/documentation/releases"><strong>Read more...</strong></a>
-									</div>
-									
-    								
+									</div>			
 							</div>
 							<div class='col-md-6 col-sm-6 center-left-block col-md-offset-1 col-sm-offset-1 text-center' id='front-right-block'>
 								<div class="carousel-cust-container border-element">

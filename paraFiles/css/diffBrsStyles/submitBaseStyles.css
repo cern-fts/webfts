@@ -27,18 +27,61 @@
 }
 
 
-.nav-justified{
+
+/* Customize the nav-justified links to be fill the entire space of the .navbar */
+.nav > li > a:hover,
+.nav > li > a:focus {
+  color: #04070C;
+  font-weight: bold;
+  font-size: 14px;
+  background-color: #959ba5;
+  text-shadow: none;
+}
+
+
+.nav-justified > .active > a,
+.nav-justified > .active > a:hover,
+.nav-justified > .active > a:focus {
+  color: #04070C;
+  text-shadow: none;
+  background-color: #959ba5 !important;
+  box-shadow: inset 0 3px 7px rgba(0,0,0,.15);
+}
+
+
+.nav-justified > li:first-child > a
+.nav-justified > li:last-child > a,
+.nav-justified > li:first-child > a:hover,
+.nav-justified > li:last-child > a:hover,
+.nav-justified > li:first-child > a:focus,
+.nav-justified > li:last-child > a:focus   {
+  color: #04070C;
+  text-shadow: none;
+  background-color: #959ba5 !important;
+  box-shadow: inset 0 3px 7px rgba(0,0,0,.15);
+  border-radius: 5px 5px 0 0;
+}
+
+
+
+
+
+
+
+
+
+/*.nav-justified{
 	border-radius: 1.5px solid #CCCCCC;
 	margin-right: 25px;
 	text-align: center;
-}
+}*/
 
-.text-muted{
+/*.text-muted{
 
   color: #D6D6D6;
   text-shadow: 2px 2px #000;
   z-index: 280;
-}
+}*/
 
 small{
   color: #ccc;
@@ -48,27 +91,24 @@ small{
 	top: 0px;
 	position: fixed;
 	z-index: 300;
+	height: 170px;
 	width: 100%;
-	height: 108px;
-	/*z-index: 10;*/
 	z-index: 200;
 }
 
 
-.nav-justified > .active > a, .nav-justified > .active > a:hover, .nav-justified > .active > a:focus {
+/*.nav-justified > .active > a, .nav-justified > .active > a:hover, .nav-justified > .active > a:focus {
 	background-image: url("/css/nav-bar-custom/br1-mlight.png");
 }
-	
+	*/
 .container-top-inner {
-  background-image: url("/css/nav-bar-custom/br1.png");
+  /*background-image: url("/css/nav-bar-custom/br1.png");*/
   padding: 1% 5% 0%;
-  /*padding-right: 15px;
-  padding-left: 15px;*/
   margin-right: auto;
   margin-left: auto;
   width: 100%;
   display: table;
-  background-color: #FFFFFF;
+  /*background-color: #FFFFFF;*/
   z-index: 250;
 }
 
@@ -115,6 +155,7 @@ small{
 .divider{
 	height: 40px;
 	text-align: center;
-	width: auto;
+	/*width: auto;*/
+	width: 100%;
 	z-index: 200;
 }

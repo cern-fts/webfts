@@ -1,9 +1,8 @@
 
-    <!-- Add IntroJs styles -->
-    <link href="../../introjs.css" rel="stylesheet">
+<!-- Add IntroJs styles -->
+<link href="../../introjs.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/site-tour-styles/custom-site-tour.css">
-
-    <link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet">
 
 <script>
 $( document ).ready(function() {	
@@ -261,7 +260,7 @@ $(function(){
 
 		<div class="btn-group-vertical col-xs-5 col-lg-5 col-md-5" id="destEndpoint" 
 					data-step="3" 
-					data-intro="<h3><strong>Step 3:</strong></h3><h4>In this area you place your the destination endpoint!</h4>"
+					data-intro="<h3><strong>Step 3:</strong></h3><h4>In this area you place the other endpoint!</h4>"
 					data-position="bottom">
 			<div class="input-group">
 				<input id="rightEndpoint" type="text" placeholder="Endpoint path"

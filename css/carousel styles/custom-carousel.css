@@ -51,7 +51,7 @@
  */
 @media (min-width: 1439px) {
   .carousel-cust-container {
-    background-image: url("/img/slideshow/mac-transp3.png");
+    background-image: url("/img/slideshow/mac-transp.png");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -79,7 +79,7 @@
 */
 @media (min-width: 1279px) and (max-width: 1367px) {
   .carousel-cust-container {
-    background-image: url("/img/slideshow/mac-transp3.png");
+    background-image: url("/img/slideshow/mac-transp.png");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -107,11 +107,10 @@
 * 10" (1024 x 600)
 * 12" (1024 x 768)
 * 
-* 
 */
 @media (min-width: 980px) and (max-width: 1025px) {
   .carousel-cust-container {
-    background-image: url("/img/slideshow/mac-transp3.png");
+    background-image: url("/img/slideshow/mac-transp.png");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -136,11 +135,9 @@
     text-align: center;
     text-shadow: 0.2em 0.3em 0.3em black !important; } }
 /* Portrait tablet to landscape and desktop */
-/*@media (min-width: 768px) and (max-width: 979px){*/
-/*@media (min-width: 600px) and (max-width: 1024px){*/
 @media only screen and (width: 768px) and (device-width: 768px) and (device-height: 1024px) and (orientation: portrait) {
   .carousel-cust-container {
-    background-image: url("/img/slideshow/mac-transp3.png");
+    background-image: url("/img/slideshow/mac-transp.png");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
