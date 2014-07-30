@@ -168,7 +168,7 @@ else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) <
 										<div class='glyphicon glyphicon-ok'>&#09 configuring FTS3 to use GridFTP/UDT instead of GridFTP/TCP</div>
 				    				</div>	
 				    				<div class='jumbotron-fluid' id='readMore'>
-										<a class="btn btn-info btn-sm"  onclick="window.open(this.href,'_blank');return false;" href="http://fts3-service.web.cern.ch/documentation/releases"><strong>Read more...</strong></a>
+										<a class="btn btn-info btn-responsive"  onclick="window.open(this.href,'_blank');return false;" href="http://fts3-service.web.cern.ch/documentation/releases"><strong>Read more...</strong></a>
 									</div>			
 							</div>
 							<div class='col-md-6 col-sm-6 center-left-block col-md-offset-1 col-sm-offset-1 text-center' id='front-right-block'>
