@@ -6,7 +6,6 @@
  */
 @media (min-width: 1920px){
 
-
   .sticky-bottom{
     left: 24%;
     margin-left: 0%;
@@ -46,7 +45,6 @@
     width: 100%;
     height:100%;
     position: relative;
-    /*padding: 30px;*/
     padding: 5%;
   }
   
@@ -58,11 +56,11 @@
     padding: 5% 1%;
   }
 
-
   #front-right-block{
     padding: 0% 10% 1% 1%;
     margin-top: -30px;
   }
+
 
 
   /*
@@ -70,7 +68,6 @@
   * Parts of Part-2
   *
   */
-
   .info-block-desc-dark {
     font-size: 25px;
     margin-top: 18%;
@@ -87,30 +84,34 @@
     padding: 0 2%;
     font-size: 18px; 
   }
+
+
+
   /*
   *
   * Parts of slide-3
   *
   */
-
   .info-block-black{
     padding: 0 2%;
     font-size: 25px; 
     margin-top: 18%;
   }
 
+
+
   /*
   *
   * Parts of slide-4
   *
   */
-
   #info-block-desc-dark-sl4{
       margin-top: 40%;
       height: 240px;
   }
 
 }
+
 
 
 /*
@@ -120,7 +121,7 @@
  *       20", 
  * to :  22" (1680 x 1050)
  */
-@media (min-width: 1440px) and (max-width: 1680px){
+@media (min-width: 1440px) and (max-width: 1919px){
 
   .sticky-bottom{
     left: 24%;
@@ -131,7 +132,6 @@
 
   .sticky-bottom-continue{
     left: 17%;
-    /*left: 25%;*/
     margin-left: -6%;
     margin-top: -6%;
     top: 85%;
@@ -162,7 +162,6 @@
     width: 100%;
     height:100%;
     position: relative;
-    /*padding: 30px;*/
     padding: 5%;
   }
   
@@ -174,11 +173,11 @@
     padding: 5% 1%;
   }
 
-
   #front-right-block{
     padding: 0% 10% 1% 1%;
     margin-top: -30px;
   }
+
 
 
   /*
@@ -186,7 +185,6 @@
   * Parts of Part-2
   *
   */
-
   .info-block-desc-dark {
     font-size: 25px;
     margin-top: 18%;
@@ -203,37 +201,275 @@
     padding: 0 2%;
     font-size: 18px; 
   }
+
+
+
   /*
   *
   * Parts of slide-3
   *
   */
-
   .info-block-black{
     padding: 0 2%;
     font-size: 25px; 
     margin-top: 18%;
   }
 
+
+
   /*
   *
   * Parts of slide-4
   *
   */
-
   #info-block-desc-dark-sl4{
-      margin-top: 40%;
-      height: 240px;
+    margin-top: 40%;
+    height: 240px;
+  }
+
+}  
+
+
+
+
+/*
+* Resolution :
+* Devices: Notebooks
+* 13" (1280 x 800)
+* 15" (1366 x 768)
+*/
+@media (min-width: 1280px) and (max-width: 1439px){
+
+  .sticky-bottom{
+    left: 17%;
+    width: 400px;
+    margin-top: -6%;
+    margin-left: 5%;
+    top: 75%;
+  }
+
+  .sticky-bottom-continue{
+    left: 17%;
+    margin-left: 5%;
+    margin-top: -6%;
+    top: 85%;
+    width: 400px;
+  }
+
+  .runew-label-1,
+  #continue-label,
+  #continue-label-earth{ 
+    font-size: 28px;
+    width: 400px;
+    left: 20%;
+  }
+
+  .button {
+    width: 400px;
+    height: 75px;
+    background-size: 50px 75px;
+    left: 63%;
+  }
+
+  .jumbotron-cust-class{
+    font-size: 20px;
+  } 
+
+  .slide{
+    top: 30px;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    width: 100%;
+    height:100%;
+    position: relative;
+    padding: 5%;
+  }
+  
+  #main-area-slide1{
+    padding: 8% 4%;
+  }
+
+  #front-left-block{
+    padding: 5% 1%;
+  }
+
+  #front-right-block{
+    padding: 0% 10% 1% 1%;
   }
 
 
 
+  /*
+  *
+  * Parts of Part-2
+  *
+  */
+  .info-block-desc-dark {
+    font-size: 25px;
+    margin-top: 18%;
+  }
+
+  .info-block-header-desc{
+    padding: 3% 2%;
+    font-size: 25px;
+    font-weight: bold;
+  }
+
+  .info-block-desc,
+  .info-block-desc-dark{
+    padding: 0 2%;
+    font-size: 18px; 
+  }
+
+
+
+  /*
+  *
+  * Parts of slide-3
+  *
+  */
+  .info-block-black{
+    padding: 0 2%;
+    font-size: 25px; 
+    margin-top: 18%;
+  }
+
+
+
+  /*
+  *
+  * Parts of slide-4
+  *
+  */
+  #info-block-desc-dark-sl4{
+    margin-top: 40%;
+  }
 
 }  
 
+
+
+/*
+* Resolution :
+* Devices: Netbooks
+* 10" (1024 x 600) CHECKED 21-7
+* 12" (1024 x 768) CHECKED 21-7
+*/
+@media (min-width: 980px) and (max-width: 1279px){
+
+  .jumbotron {
+    padding: 0.5em 0.6em;
+      h1 {
+        font-size: 18px;
+      }
+      p {
+        font-size: 12px;
+        .btn {
+          padding: 0.5em;
+        }
+      }
+  }
+
+  .sticky-bottom{
+    left: 30%;
+    margin-left: 0px;
+    margin-top: -37.5px;
+    top: 70%;
+  }
+
+  .sticky-bottom-continue{
+    left: 30%;
+    margin-left: -25px;
+    margin-top: -37.5px;
+    top: 85%;
+  }
+
+  .runew-label-1,
+  #continue-label,
+  #continue-label-earth{
+    font-size: 22px;
+    width: 200px; 
+  }
+
+  .button {
+    width: 200px;
+    height: 75px;
+    background-size: 50px 75px;
+    left: 16%;
+  }
+
+  #main-area-slide1{
+    padding: 8% 5% 0% 5%;
+  }
+
+  #front-left-block{
+    padding: 4% 0%;
+  }
+
+  #front-right-block{
+    padding: 1% 0;
+  }
+
+
+
+  /*
+  *
+  * Parts of slide-2 
+  *
+  */
+  .info-block-desc-dark {
+    font-size: 14px;
+    margin-top: 30%;
+    line-height: 1.2;
+  }
+  #info-block-desc-dark-fixed{
+    width: 600px;
+    height: auto;
+  }
+
+  .info-block-header-desc{
+    padding: 2% 1% 0% 2%;
+    font-size: 20px;
+  }
+
+  .info-block-desc{
+    padding: 1% 2%;
+    font-size: 14px;
+  }
+
+
+
+  /*
+  *
+  * Parts of Slide-3
+  *
+  */
+  .info-block-black{
+    font-size: 14px;
+    height: auto;
+    margin-top: 30%;
+    line-height: 1.2;
+  }  
+
+
+
+  /*
+  *
+  * Parts of slide-4
+  *
+  */
+  #info-block-desc-dark-sl4{
+      margin-top: 40%;
+  }
+
+}
+
+
+
 /* Rotated screen ipad  portrait */
 @media only screen and (width:768px) and (device-width:768px) and (device-height:1024px) and (orientation: portrait) {
-.sticky-bottom{
+  
+  .sticky-bottom{
     left: -16%;
     top: 70%;
     margin-left: 5%;
@@ -253,7 +489,6 @@
   #continue-label-earth{
     font-size: 28px;
     width: 400px; 
-
   }
 
   .button {
@@ -275,12 +510,10 @@
     font-size: 14px !important;
   }
 
-
   #front-left-block{
     padding: 4% 1%;
     margin-left: -1%;
   }
- 
 
   #front-right-block{
     padding: 1% 0;
@@ -288,12 +521,12 @@
   }
 
 
+
   /*
   *
   * Parts of Part-2
   *
   */
-
   .info-block-desc-dark {
     font-size: 25px;
     margin-top: 18%;
@@ -316,273 +549,31 @@
     height: auto;
     width: 550px;
   }
+
+
+
   /*
   *
   * Parts of slide-3
   *
   */
-
   .info-block-black{
     padding: 0 2%;
     font-size: 25px; 
     margin-top: 48%;
   }
 
-  /*
-  *
-  * Parts of slide-4
-  *
-  */
 
-  #info-block-desc-dark-sl4{
-      margin-top: 55%;
-      height: 250px;
-  }
-
-
-}
-
-
-
-/*
-* Resolution :
-* Devices: Notebooks
-* 13" (1280 x 800)
-* 15" (1366 x 768)
-*/
-@media (min-width: 1279px) and (max-width: 1367px){
-
-  .sticky-bottom{
-
-    left: 17%;
-    width: 400px;
-    margin-top: -6%;
-    margin-left: 5%;
-    top: 75%;
-  }
-
-  .sticky-bottom-continue{
-
-    left: 17%;
-    margin-left: 5%;
-    margin-top: -6%;
-    top: 85%;
-    width: 400px;
-
-  }
-
-
-  .runew-label-1,
-  #continue-label,
-  #continue-label-earth{ 
-    font-size: 28px;
-    width: 400px;
-    left: 20%;
-  }
-
-  .runew-label-1{
-    /*left: 20%;*/
-  }
-
-  .button {
-    width: 400px;
-    height: 75px;
-    background-size: 50px 75px;
-    left: 63%;
-
-  }
-
-  .jumbotron-cust-class{
-    font-size: 20px;
-  } 
-
-  .slide{
-    top: 30px;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    width: 100%;
-    height:100%;
-    position: relative;
-    /*padding: 30px;*/
-    padding: 5%;
-  }
-  
-  #main-area-slide1{
-    padding: 8% 4%;
-  }
-
-  #front-left-block{
-    padding: 5% 1%;
-  }
-
-
-  #front-right-block{
-    padding: 0% 10% 1% 1%;
-  }
-
-
-  /*
-  *
-  * Parts of Part-2
-  *
-  */
-
-  .info-block-desc-dark {
-    font-size: 25px;
-    margin-top: 18%;
-  }
-
-  .info-block-header-desc{
-    padding: 3% 2%;
-    font-size: 25px;
-    font-weight: bold;
-  }
-
-  .info-block-desc,
-  .info-block-desc-dark{
-    padding: 0 2%;
-    font-size: 18px; 
-  }
-  /*
-  *
-  * Parts of slide-3
-  *
-  */
-
-  .info-block-black{
-    padding: 0 2%;
-    font-size: 25px; 
-    margin-top: 18%;
-  }
 
   /*
   *
   * Parts of slide-4
   *
   */
-
   #info-block-desc-dark-sl4{
-      margin-top: 40%;
+    margin-top: 55%;
+    height: 250px;
   }
-
-}  
-
-
-
-/*
-* Resolution :
-* Devices: Netbooks
-* 10" (1024 x 600) CHECKED 21-7
-* 12" (1024 x 768) CHECKED 21-7
-*/
-
-@media (min-width: 980px) and (max-width: 1024px) and (orientation: landscape) {
-
-  .jumbotron {
-    padding: 0.5em 0.6em;
-      h1 {
-        font-size: 18px;
-      }
-      p {
-        font-size: 12px;
-        .btn {
-          padding: 0.5em;
-        }
-      }
-  }
-  .sticky-bottom{
-    left: 30%;
-    margin-left: 0px;
-    /*margin-left: -100px;*/
-    margin-top: -37.5px;
-    top: 70%;
-  }
-
-  .sticky-bottom-continue{
-    left: 30%;
-    margin-left: -25px;
-    margin-top: -37.5px;
-    top: 85%;
-  }
-
-  .runew-label-1,
-  #continue-label,
-  #continue-label-earth{
-    font-size: 22px;
-    width: 200px; 
-
-  }
-
-  .button {
-    width: 200px;
-    height: 75px;
-    background-size: 50px 75px;
-    left: 16%;
-  }
-
-  #main-area-slide1{
-    padding: 8% 5% 0% 5%;
-  }
-
-  #front-left-block{
-    padding: 4% 0%;
-  }
- 
-
-  #front-right-block{
-    padding: 1% 0;
-  }
-
-  /*
-  *
-  * Parts of slide-2 
-  *
-  */
-
-  .info-block-desc-dark {
-      font-size: 14px;
-      margin-top: 30%;
-      line-height: 1.2;
-      /*padding-bottom: 1%;*/
-  }
-  #info-block-desc-dark-fixed{
-      width: 600px;
-      height: auto;
-  }
-
-  .info-block-header-desc{
-      padding: 2% 1% 0% 2%;
-      font-size: 20px;
-  }
-
-  .info-block-desc{
-      padding: 1% 2%;
-      font-size: 14px;
-  }
-
-  /*
-  *
-  * Parts of Slide-3
-  *
-  */
-  .info-block-black{
-    font-size: 14px;
-    /*width: 600px;*/
-    height: auto;
-    margin-top: 30%;
-    line-height: 1.2;
-  }  
-
-  /*
-  *
-  * Parts of slide-4
-  *
-  */
-
-  #info-block-desc-dark-sl4{
-      margin-top: 40%;
-  }
-
 
 }  
 
@@ -591,11 +582,9 @@
 /* Portrait tablet to landscape and desktop */
 @media (min-width: 768px) and (max-width: 979px){
 
-
-
   .button {
-      right: -10%;
-      background-size: 50px 75px;
+    right: -10%;
+    background-size: 50px 75px;
 
   }
 
@@ -605,17 +594,17 @@
     font-size: 22px;
   }
 
-
-
 }
+
+
 
 @media (max-width: 767){
 
-
-
 }
+
+
+
 /* Landscape phone and down */
 @media (max-width: 480px){
-
 
 }

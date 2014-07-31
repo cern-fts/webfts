@@ -6,7 +6,6 @@
  */
 @media (min-width: 1920px){
 
-
   .sticky-bottom{
     left: 20%;
     margin-left: 5%;
@@ -58,11 +57,11 @@
     padding: 5% 1%;
   }
 
-
   #front-right-block{
     padding: 0% 10% 1% 1%;
     margin-top: -30px;
   }
+
 
 
   /*
@@ -70,7 +69,6 @@
   * Parts of Part-2
   *
   */
-
   .info-block-desc-dark {
     font-size: 25px;
     margin-top: 18%;
@@ -87,30 +85,36 @@
     padding: 0 2%;
     font-size: 18px; 
   }
+
+
+
   /*
   *
   * Parts of slide-3
   *
   */
-
   .info-block-black{
     padding: 0 2%;
     font-size: 25px; 
     margin-top: 18%;
   }
 
+
+
   /*
   *
   * Parts of slide-4
   *
   */
-
   #info-block-desc-dark-sl4{
       margin-top: 40%;
       height: 240px;
   }
 
 }
+
+
+
 /*
  * Large desktop 
  * Resolution
@@ -118,7 +122,7 @@
  *       20", 
  * to :  22" (1680 x 1050)
  */
-@media (min-width: 1440px) and (max-width: 1680px){
+@media (min-width: 1440px) and (max-width: 1919px){
 
   .sticky-bottom{
     left: 14%;
@@ -159,7 +163,6 @@
     width: 100%;
     height:100%;
     position: relative;
-    /*padding: 30px;*/
     padding: 5%;
   }
   
@@ -171,11 +174,11 @@
     padding: 5% 1%;
   }
 
-
   #front-right-block{
     padding: 0% 10% 1% 1%;
     margin-top: -30px;
   }
+
 
 
   /*
@@ -183,7 +186,6 @@
   * Parts of Part-2
   *
   */
-
   .info-block-desc-dark {
     font-size: 25px;
     margin-top: 18%;
@@ -200,33 +202,34 @@
     padding: 0 2%;
     font-size: 18px; 
   }
+
+
+
   /*
   *
   * Parts of slide-3
   *
   */
-
   .info-block-black{
     padding: 0 2%;
     font-size: 25px; 
     margin-top: 18%;
   }
 
+
+
   /*
   *
   * Parts of slide-4
   *
   */
-
   #info-block-desc-dark-sl4{
-      margin-top: 40%;
-      height: 240px;
+    margin-top: 40%;
+    height: 240px;
   }
 
-
-
-
 }  
+
 
 
 /*
@@ -235,7 +238,7 @@
 * 13" (1280 x 800)
 * 15" (1366 x 768)
 */
-@media (min-width: 1279px) and (max-width: 1367px){
+@media (min-width: 1280px) and (max-width: 1439px){
 
   .jumbotron {
     padding: 0.5em 0.6em;
@@ -249,6 +252,7 @@
         }
       }
   }
+
   .sticky-bottom{
     left: 9%;
     top: 77%;
@@ -256,11 +260,7 @@
     margin-top: -6%;
   }
 
-
-
-
   .sticky-bottom-continue{
-
     left: 9%;
     margin-left: 5%;
     margin-top: -6%;
@@ -296,30 +296,35 @@
     margin-left: 2%;
   }
 
+
+
   /*
   *
   * Parts of slide-2 
   *
   */
-
   .info-block-desc-dark {
-      font-size: 14px;
-      margin-top: 30%;
-      line-height: 1.2;
+    font-size: 14px;
+    margin-top: 30%;
+    line-height: 1.2;
   }
+
   #info-block-desc-dark-fixed{
-      width: 680px;
-      height: auto;
+    width: 680px;
+    height: auto;
   }
+
   .info-block-header-desc{
-      padding: 2% 1% 0% 2%;
-      font-size: 22px;
+    padding: 2% 1% 0% 2%;
+    font-size: 22px;
   }
 
   .info-block-desc{
-      padding: 1% 2%;
-      font-size: 16px;
+    padding: 1% 2%;
+    font-size: 16px;
   }
+
+
 
   /*
   *
@@ -333,20 +338,23 @@
     line-height: 1.2;
   }  
 
+
+
   /*
   *
   * Parts of slide-4
   *
   */
   #info-block-desc-dark-sl4{
-      margin-top: 40%;
-      height: 160px;
+    margin-top: 40%;
+    height: 160px;
   }
   #startTourButton{
-      margin-top: 10%;
+    margin-top: 10%;
   }
 
 }
+
 
 
 /*
@@ -355,9 +363,7 @@
 * 10" (1024 x 600)
 * 12" (1024 x 768)
 */
-
-@media (min-width: 980px) and (max-width: 1024px){
-
+@media (min-width: 980px) and (max-width: 1279px){
 
   .jumbotron {
     padding: 0.5em 0.6em;
@@ -371,6 +377,7 @@
         }
       }
   }
+
   .sticky-bottom{
     left: 25%;
     margin-left: 5%;
@@ -380,7 +387,6 @@
 
   .sticky-bottom-continue{
     left: 24%;
-    /*margin-left: -25px;*/
     margin-left: 5%;
     margin-top: -6%;
     top: 90%;
@@ -391,7 +397,6 @@
   #continue-label-earth{
     font-size: 22px;
     width: 200px; 
-
   }
 
   .button {
@@ -413,42 +418,43 @@
     font-size: 14px !important;
   }
 
-
   #front-left-block{
     padding: 4% 0%;
   }
- 
 
   #front-right-block{
     padding: 1% 0;
   }
+
+
 
   /*
   *
   * Parts of slide-2 
   *
   */
-
   .info-block-desc-dark {
-      font-size: 14px;
-      margin-top: 30%;
-      line-height: 1.2;
-      /*padding-bottom: 1%;*/
+    font-size: 14px;
+    margin-top: 30%;
+    line-height: 1.2;
   }
+
   #info-block-desc-dark-fixed{
-      width: 600px;
-      height: auto;
+    width: 600px;
+    height: auto;
   }
 
   .info-block-header-desc{
-      padding: 2% 1% 0% 2%;
-      font-size: 20px;
+    padding: 2% 1% 0% 2%;
+    font-size: 20px;
   }
 
   .info-block-desc{
-      padding: 1% 2%;
-      font-size: 14px;
+    padding: 1% 2%;
+    font-size: 14px;
   }
+
+
 
   /*
   *
@@ -457,20 +463,20 @@
   */
   .info-block-black{
     font-size: 14px;
-    /*width: 600px;*/
     height: auto;
     margin-top: 30%;
     line-height: 1.2;
   }  
+
+
 
   /*
   *
   * Parts of slide-4
   *
   */
-
   #info-block-desc-dark-sl4{
-      margin-top: 40%;
+    margin-top: 40%;
   }
 
 }  
@@ -480,11 +486,9 @@
 /* Portrait tablet to landscape and desktop */
 @media (min-width: 768px) and (max-width: 979px){
 
-
-
   .button {
-      right: -10%;
-      background-size: 50px 75px;
+    right: -10%;
+    background-size: 50px 75px;
 
   }
 
@@ -494,17 +498,17 @@
     font-size: 22px;
   }
 
-
-
 }
+
+
 
 @media (max-width: 767){
 
-
-
 }
+
+
+
 /* Landscape phone and down */
 @media (max-width: 480px){
-
 
 }

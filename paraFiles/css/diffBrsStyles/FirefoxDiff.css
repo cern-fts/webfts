@@ -7,15 +7,12 @@
 @media (min-width: 1920px) {
   .sticky-bottom {
     left: 17%;
-    /*    margin-left: -200px;
-        margin-top: -100px;*/
     margin-left: 0%;
     margin-top: -5%;
     top: 70%; }
 
   .sticky-bottom-continue {
     left: 17%;
-    /*left: 25%;*/
     margin-left: 0%;
     margin-top: -8%;
     top: 85%; }
@@ -99,18 +96,15 @@
  *       20", 
  * to :  22" (1680 x 1050)
  */
-@media (min-width: 1440px) and (max-width: 1680px) {
+@media (min-width: 1440px) and (max-width: 1919px) {
   .sticky-bottom {
     left: 17%;
-    /*    margin-left: -200px;
-        margin-top: -100px;*/
     margin-left: -6%;
     margin-top: -6%;
     top: 70%; }
 
   .sticky-bottom-continue {
     left: 17%;
-    /*left: 25%;*/
     margin-left: -6%;
     margin-top: -6%;
     top: 85%; }
@@ -193,7 +187,7 @@
 * 13" (1280 x 800)
 * 15" (1366 x 768)
 */
-@media (min-width: 1280px) and (max-width: 1366px) {
+@media (min-width: 1280px) and (max-width: 1439px) {
   .jumbotron {
     padding: 0.5em 0.6em; }
     .jumbotron h1 {
@@ -204,11 +198,7 @@
         padding: 0.5em; }
 
   .sticky-bottom {
-    /*    bottom: 13%;
-        left: 25%;*/
     left: 20%;
-    /*    margin-left: -200px;
-        margin-top: -37.5px;*/
     top: 74%;
     margin-left: -18%;
     margin-top: -4%; }
@@ -292,7 +282,7 @@
 * 10" (1024 x 600)
 * 12" (1024 x 768)
 */
-@media (min-width: 980px) and (max-width: 1024px) {
+@media (min-width: 980px) and (max-width: 1279px) {
   .jumbotron {
     padding: 0.5em 0.6em; }
     .jumbotron h1 {
@@ -384,15 +374,10 @@
   */
   #info-block-desc-dark-sl4 {
     margin-top: 40%; } }
-/* Rotated screen 600 x 1024 */
-/*@media (min-width: 600px) and (max-height: 1024px){*/
+/* Rotated screen ipad portrait */
 @media only screen and (width: 768px) and (device-width: 768px) and (device-height: 1024px) and (orientation: portrait) {
   .sticky-bottom {
-    /*    bottom: 13%;
-        left: 25%;*/
     left: 20%;
-    /*    margin-left: -200px;
-        margin-top: -37.5px;*/
     top: 74%;
     margin-left: -18%;
     margin-top: -4%; }
@@ -450,7 +435,6 @@
 
   .sticky-bottom-continue {
     left: 25%;
-    /*margin-left: -25px;*/
     margin-left: -50px;
     margin-top: -37.5px;
     top: 85%; }
@@ -490,8 +474,7 @@
   .info-block-desc-dark {
     font-size: 14px;
     margin-top: 30%;
-    line-height: 1.2;
-    /*padding-bottom: 1%;*/ }
+    line-height: 1.2; }
 
   #info-block-desc-dark-fixed {
     width: 600px;
@@ -512,7 +495,6 @@
   */
   .info-block-black {
     font-size: 14px;
-    /*width: 600px;*/
     height: auto;
     margin-top: 30%;
     line-height: 1.2; }
@@ -523,21 +505,5 @@
   *
   */
   #info-block-desc-dark-sl4 {
-    margin-top: 40%; }
-
-  /*
-  
-    .button {
-        right: -10%;
-        background-size: 50px 75px;
-  
-    }
-  
-    .runew-label-1,
-    #continue-label,
-    #continue-label-earth {
-      font-size: 22px;
-    }
-  
-  */ }
+    margin-top: 40%; } }
 /* Landscape phone and down */

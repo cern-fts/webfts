@@ -7,15 +7,12 @@
 @media (min-width: 1920px) {
   .sticky-bottom {
     left: 22%;
-    /*    margin-left: -200px;
-        margin-top: -100px;*/
     margin-left: 5%;
     margin-top: -5%;
     top: 70%; }
 
   .sticky-bottom-continue {
     left: 22%;
-    /*left: 25%;*/
     margin-left: 5%;
     margin-top: -8%;
     top: 85%; }
@@ -42,7 +39,6 @@
     width: 100%;
     height: 100%;
     position: relative;
-    /*padding: 30px;*/
     padding: 5%; }
 
   #main-area-slide1 {
@@ -99,10 +95,8 @@
  *       20",              CHECKED 21-7
  * to :  22" (1680 x 1050) CHECKED 21-7
  */
-@media (min-width: 1440px) and (max-width: 1680px) {
+@media (min-width: 1440px) and (max-width: 1919px) {
   .sticky-bottom {
-    /*bottom: 20%;
-    left: 20%;*/
     left: 22%;
     margin-left: 5%;
     width: 400px;
@@ -110,10 +104,7 @@
     top: 70%; }
 
   .sticky-bottom-continue {
-    /*    bottom: 10%;
-        left: 20%;*/
     left: 22%;
-    /*margin-left: -200px;*/
     margin-left: 5%;
     margin-top: -6%;
     top: 85%;
@@ -127,16 +118,16 @@
     left: 20%;
     margin-top: 8%; }
 
-  .runew-label-1 {
-    /*left: 20%;*/ }
-
+  /*
+  .runew-label-1{
+    left: 20%;
+  }
+  */
   .button {
-    /*width: 90px;*/
     width: 400px;
     height: 150px;
     background-size: 90px 150px;
     margin-top: -7%;
-    /*left: 12.5%;*/
     left: 58%; }
 
   .jumbotron-cust-class {
@@ -149,7 +140,6 @@
     width: 100%;
     height: 100%;
     position: relative;
-    /*padding: 30px;*/
     padding: 5%; }
 
   #main-area-slide1 {
@@ -199,53 +189,13 @@
   #info-block-desc-dark-sl4 {
     margin-top: 40%;
     height: 240px; } }
-/* Rotated screen ipad  */
-@media only screen and (width: 768px) and (device-width: 768px) and (device-height: 1024px) and (orientation: portrait) {
-  .sticky-bottom {
-    /*    left: 20%;
-        top: 74%;
-        margin-left: -18%;
-        margin-top: -4%;*/ }
-
-  .sticky-bottom-continue {
-    left: 22%;
-    margin-left: -250px;
-    margin-top: -100px;
-    bottom: 5%; }
-
-  .runew-label-1,
-  #continue-label,
-  #continue-label-earth {
-    font-size: 28px;
-    width: 400px; }
-
-  .button {
-    width: 400px;
-    height: 75px;
-    background-size: 50px 75px;
-    left: 14%; }
-
-  #main-area-slide1 {
-    padding: 15% 5% 0% 5%; }
-
-  .news-title {
-    font-size: 20px !important; }
-
-  .news-content {
-    font-size: 14px !important; }
-
-  #front-left-block {
-    padding: 4% 0%; }
-
-  #front-right-block {
-    padding: 1% 0; } }
 /*
 * Resolution :
 * Devices: Notebooks
 * 13" (1280 x 800) CHECKED 21-7
 * 15" (1366 x 768) CHECKED 21-7
 */
-@media (min-width: 1280px) and (max-width: 1366px) {
+@media (min-width: 1280px) and (max-width: 1439px) {
   .jumbotron {
     padding: 0.5em 0.6em; }
     .jumbotron h1 {
@@ -256,20 +206,15 @@
         padding: 0.5em; }
 
   .sticky-bottom {
-    /*    bottom: 13%;
-        left: 25%;*/
     left: 18%;
     margin-left: -4%;
     margin-top: -4%;
     top: 74%; }
 
   .sticky-bottom-continue {
-    /*    bottom: 11%;
-        left: 25%; */
     left: 18%;
     margin-left: -4%;
     margin-top: -4%;
-    /*top: 85%;*/
     bottom: 5%; }
 
   .runew-label-1,
@@ -279,15 +224,12 @@
     width: 400px; }
 
   .button {
-    /*width: 50px;*/
     width: 400px;
     height: 75px;
     background-size: 50px 75px;
-    /*left: 20%;*/
     left: 21%; }
 
   #main-area-slide1 {
-    /*padding: 0% 5%;*/
     padding: 8% 5% 0% 5%; }
 
   #front-left-block {
@@ -345,8 +287,7 @@
 * 10" (1024 x 600) CHECKED 21-7
 * 12" (1024 x 768) CHECKED 21-7
 */
-@media (min-width: 980px) and (max-width: 1024px) {
-  /*.m-top-50per { margin-top: 50%; }*/
+@media (min-width: 980px) and (max-width: 1279px) {
   .jumbotron {
     padding: 0.5em 0.6em; }
     .jumbotron h1 {
@@ -357,26 +298,22 @@
         padding: 0.5em; }
 
   .sticky-bottom {
-    /*    bottom: 12%;
-        left: 28%;*/
     left: 30%;
     margin-left: -4%;
     margin-top: -3%;
     top: 70%; }
 
   .sticky-bottom-continue {
-    /*    bottom: 10%;
-        left: 20%;*/
     left: 25%;
     margin-left: -4;
     margin-top: -3%;
     top: 85%; }
 
   /*
-    .sticky-bottom-continue{
-      bottom: 11%;
-      left: 25%; 
-    }
+  .sticky-bottom-continue{
+    bottom: 11%;
+    left: 25%; 
+  }
   */
   .runew-label-1,
   #continue-label,
@@ -388,13 +325,9 @@
     width: 200px;
     height: 75px;
     background-size: 50px 75px;
-    left: 17%;
-    /*left: 20%;*/
-    /*    bottom: 0%;
-    */ }
+    left: 17%; }
 
   #main-area-slide1 {
-    /*padding: 0% 5%;*/
     padding: 8% 5% 0% 5%; }
 
   #front-left-block {
@@ -411,8 +344,7 @@
   .info-block-desc-dark {
     font-size: 14px;
     margin-top: 30%;
-    line-height: 1.2;
-    /*padding-bottom: 1%;*/ }
+    line-height: 1.2; }
 
   #info-block-desc-dark-fixed {
     width: 600px;
@@ -433,7 +365,6 @@
   */
   .info-block-black {
     font-size: 14px;
-    /*width: 600px;*/
     height: auto;
     margin-top: 30%;
     line-height: 1.2; }
@@ -445,6 +376,40 @@
   */
   #info-block-desc-dark-sl4 {
     margin-top: 40%; } }
+/* Rotated screen ipad portrait */
+@media only screen and (width: 768px) and (device-width: 768px) and (device-height: 1024px) and (orientation: portrait) {
+  .sticky-bottom-continue {
+    left: 22%;
+    margin-left: -250px;
+    margin-top: -100px;
+    bottom: 5%; }
+
+  .runew-label-1,
+  #continue-label,
+  #continue-label-earth {
+    font-size: 28px;
+    width: 400px; }
+
+  .button {
+    width: 400px;
+    height: 75px;
+    background-size: 50px 75px;
+    left: 14%; }
+
+  #main-area-slide1 {
+    padding: 15% 5% 0% 5%; }
+
+  .news-title {
+    font-size: 20px !important; }
+
+  .news-content {
+    font-size: 14px !important; }
+
+  #front-left-block {
+    padding: 4% 0%; }
+
+  #front-right-block {
+    padding: 1% 0; } }
 /* Portrait tablet to landscape and desktop */
 @media (min-width: 768px) and (max-width: 979px) {
   .button {
