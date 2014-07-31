@@ -67,6 +67,7 @@ $( document ).ready(function() {
 	   selectText: "Select storage",
 	   onSelected: function (data) {
 	       getStorageOption(data, 'leftStorageLogin', 'leftCSLoginForm', 'leftStorageContent', 'leftLoginIndicator', 'leftCSName', 'leftEndpoint', 'load-left', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter');
+	       sessionStorage.leftCSName=$('#leftCSName').val();
 	   }
 	});
 
@@ -138,6 +139,12 @@ $( document ).ready(function() {
 
 	$('#leftStorageLogin').hide();
 	$('#rightStorageLogin').hide();
+
+        //restoring the vaule of the CS Left
+
+        $('#leftCSName').val(sessionStorage.letCSName);
+        //getStorageOption(data, 'leftStorageLogin', 'leftCSLoginForm', 'leftStorageContent', 'leftLoginIndicator', 'leftCSName', 'leftEndpoint', 'load-left', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter');
+
 
 	checkCSState('leftStorageSelect', 'leftStorageContent', 'leftCSLoginForm', 'leftLoginIndicator', 'leftStorageLogin', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter', 'leftEndpoint', 'leftCSName');	
 	console.log( "ready!" );	
