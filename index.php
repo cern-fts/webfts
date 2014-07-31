@@ -41,6 +41,8 @@
 
 <!-- Scroll to top -->
 <script type="text/javascript" src='/site-tour/scroll-to-top.js'></script>
+<script type="text/javascript" src='/js/disableScalability.js'></script>
+
 
 
 <!-- JQuery -->
