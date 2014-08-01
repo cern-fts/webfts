@@ -37,6 +37,6 @@ rm -rf %{buildroot}
 service httpd restart
 
 %files
-%config /etc/httpd/conf.d/webfts.conf
+%config(noreplace) /etc/httpd/conf.d/%{name}.conf
 %defattr(-,root,root,-)
 /var/www/%{name}
