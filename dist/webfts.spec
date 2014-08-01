@@ -20,7 +20,15 @@ rm -rf %{buildroot}
 mkdir -p -m0755 %{buildroot}/var
 mkdir -p -m0755 %{buildroot}/var/www
 mkdir -p -m0755 %{buildroot}/var/www/%{name}
+
 cp -rp * %{buildroot}/var/www/%{name}
+
+
+mkdir -p -m0755 %{buildroot}/etc
+mkdir -p -m0755 %{buildroot}/etc/httpd
+mkdir -p -m0755 %{buildroot}/etc/httpd/conf.d
+
+cp -rp conf/webfts.conf %{buildroot}/etc/httpd/conf.d/
 
 %clean
 rm -rf %{buildroot}
@@ -29,5 +37,6 @@ rm -rf %{buildroot}
 service httpd restart
 
 %files
+%config /etc/httpd/conf.d/webfts.conf
 %defattr(-,root,root,-)
 /var/www/%{name}
