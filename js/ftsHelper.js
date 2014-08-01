@@ -1,10 +1,19 @@
 //var ftsEndpoint = "https://fts3-devel.cern.ch:8446";//"https://fts3-pilot.cern.ch:8446";
 //var ftsEndpoint = "https://fts3devel01.cern.ch:8446";
 //var ftsEndpoint = "https://fts3-devel-oracle.cern.ch:8446";
-var ftsEndpoint = "https://webfts.cern.ch:8446";
+//var ftsEndpoint = "https://webfts.cern.ch:8446";
 
+var ftsEndpoint = "https://fts3cloudy01.cern.ch:8446";
 var certHours = 12; // Hours of live of the certificate
+
 var supportText = "Please, try again and contact support if the error persists";
+var jobsToRetrieve = 100;
+
+function getFTSEndpoint(){
+	$.get("../config.xml", function(data){
+	    return $(data).find('basic').attr('fts_address');
+	});
+}
 
 function showError(jqXHR, textStatus, errorThrown, message) {
 	console.log(message);
@@ -13,8 +22,7 @@ function showError(jqXHR, textStatus, errorThrown, message) {
 	//alert("ERROR: " + JSON.stringify(jqXHR));
 	console.log(textStatus + "," + errorThrown);
 	if (jqXHR.status > 0)
-		var resp =  jQuery.parseJSON(jqXHR.responseText);
-		message = resp.status + ". " + resp.message + ". " + message;
+		uessage += ". Reason: " + jqXHR.status + ": " + jqXHR.responseText;
 		
 	if (message != null)
 		showUserError(message);	
@@ -22,7 +30,7 @@ function showError(jqXHR, textStatus, errorThrown, message) {
 }
 
 function getUserJobs(delegationId){
-	var urlE = ftsEndpoint + "/jobs?dlg_id=" + delegationId + "&state_in=SUBMITTED,ACTIVE,FINISHED,FAILED,CANCELED";
+	var urlE = ftsEndpoint + "/jobs?dlg_id=" + delegationId + "&state_in=SUBMITTED,ACTIVE,FINISHED,FAILED,CANCELED&limit="+ jobsToRetrieve;
 	$.support.cors = true;
 	$.ajax({
 		url : urlE,
@@ -41,7 +49,7 @@ function getUserJobs(delegationId){
 	
 }
 
-function getJobTranfers(jobId, isResubmit){
+function getJobTranfers(jobId, isResubmit, overwrite, compare_checksum,resubmitAll){
 	var urlE = ftsEndpoint + "/jobs/" + jobId + "/files";
 	$.support.cors = true;
 	$.ajax({
@@ -53,7 +61,7 @@ function getJobTranfers(jobId, isResubmit){
 		},
 		success : function(data1, status) {
 			if (isResubmit){
-				rerunTransfer(data1);
+				rerunTransfer(data1, overwrite,compare_checksum,resubmitAll);
 			} else {
 				loadTransferTable(data1, jobId);
 			}
@@ -104,7 +112,7 @@ function ftsTransfer(theData) {
 		url : urlE,
 		type : "POST",
 		data : theData,
-		contentType : "text/plain; charset=UTF-8", 
+		contentType : "application/json", 
 		dataType : 'json',
 		processData : false,
 		beforeSend : function(xhr) {
@@ -248,6 +256,7 @@ function getSKID(dom, skid){
 
 //Check delegation ID, save it and check if there is a valid proxy 
 function getDelegationID(fieldName, delegationNeeded){
+	var d = getFTSEndpoint();
 	var urlEndp = ftsEndpoint + "/whoami";
 	$.support.cors = true;
 	$.ajax({
@@ -267,7 +276,7 @@ function getDelegationID(fieldName, delegationNeeded){
 			isDelegated(data1.delegation_id, delegationNeeded);
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			showError(jqXHR, textStatus, errorThrown, "Error connecting to the FTS server to obtain the user credentials. "+ supportText);
+			showError(jqXHR, textStatus, errorThrown, "Error connecting to the FTS server to obtain the user credentials. Check if you have installed a valid copy of the CERN ROOT CA certificate."+ supportText);
 		}
 	});
 }
@@ -329,7 +338,7 @@ function checkAndTransfer(delegationID, transferData, showModal){
 					  });
 					  day[1]-= 1;
 					  day= new Date(Date.UTC.apply(Date, day));  
-					  var offsetString = s.slice(-5)
+					  var offsetString = s.slice(-5);
 					  var offset = parseInt(offsetString,10)/100;
 					  if (offsetString.slice(0,1)=="+") offset*=-1;
 					  day.setHours(day.getHours()+offset);
@@ -446,7 +455,7 @@ function getVOMSCredentials(delegationID, user_vo){
 }
 
 function getEndpointContent(endpointInput, container, containerTable, indicator, stateText, filter){
-	urlEndp = ftsEndpoint + "/dm/list?surl=" + getNotNull(endpointInput, stateText);			
+        urlEndp = ftsEndpoint + "/dm/list?surl=" + ($('#' + endpointInput).val()).trim();
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,

@@ -28,7 +28,7 @@
 <link rel="stylesheet" type="text/css" href="/css/nav-bar-custom/nav-bar-custom.css">
 
 <!-- <link rel='stylesheet' href='paraFiles/css/diffBrsStyles/tryFire_scratch.css' type='text/css'>-->
-<!-- <link href="/site-tour/intro.js/example/assets/css/bootstrap-responsive.min.css" rel="stylesheet"> -->
+<link href="/site-tour/intro.js/example/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
 
 
 <!--Parallax scripts start-->
