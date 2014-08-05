@@ -39,6 +39,7 @@
 <script src="js/RSAGenerator.js"></script>
 <script src="js/transfer.js"></script>
 <script src="js/CSFactory.js"></script>
+<script src="js/dropboxHelper.js"></script>
 
 
 <script src="js/lib/yahoo/yahoo-min.js"></script>
