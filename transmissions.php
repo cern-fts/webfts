@@ -19,7 +19,7 @@
 <link rel="stylesheet" type="text/css" href="css/site-tour-styles/custom-site-tour.css">
 <link rel="stylesheet" href="/paraFiles/css/diffBrsStyles/submitBaseStyles.css"/>
 <link rel="stylesheet" type="text/css" href="/css/nav-bar-custom/nav-bar-custom.css">
-<link rel="stylesheet" href="/paraFiles/css/base.css"/>
+<!-- <link rel="stylesheet" href="/paraFiles/css/base.css"/> -->
 
 
 <!-- General Site tour styles -->
