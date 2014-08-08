@@ -11,7 +11,7 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/bootstrap-theme.min.css" rel="stylesheet">
 <!-- <link href="assets/css/bootstrap-responsive.css" rel="stylesheet"> -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximun-scale=1, user-scalable=no">
 <!-- <link href="css/justified-nav.css" rel="stylesheet"> -->
 <link href="css/validation.css" rel="stylesheet" >
 
