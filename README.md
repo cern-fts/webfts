@@ -18,8 +18,7 @@ https://fts3-service.web.cern.ch/documentation/webfts
 
 while for the installation guide please check the FTS3 trac wiki:
 
-https://svnweb.cern.ch/trac/fts3/wiki/WEBFTS
-
+https://svnweb.cern.ch/trac/fts3/wiki/WEBFTS#HowtodeployWEBFTS
 
 
 
