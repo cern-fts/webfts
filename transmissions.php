@@ -23,8 +23,8 @@
 
 
 <!-- General Site tour styles -->
-<link href="/site-tour/intro.js/introjs.css" rel="stylesheet">
-<link href="/site-tour/intro.js/example/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="/site-tour/introJs/introjs.css" rel="stylesheet">
+<link href="/site-tour/introJs/example/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
 
 
 
@@ -110,7 +110,7 @@
 
 
 
-	<script type="text/javascript" src="/site-tour/intro.js/intro.js"></script>
+	<script type="text/javascript" src="/site-tour/introJs/intro.js"></script>
 	<script type="text/javascript">
 		//Skip the 1st step about the credentials delegation! Start from the 2nd step!
 		introJs().goToStep(2).start();

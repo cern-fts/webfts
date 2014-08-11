@@ -19,7 +19,7 @@
 <link rel="stylesheet" type="text/css" href="css/carousel styles/custom-carousel.css">
 
 <!-- General Site tour styles -->
-<link href="/site-tour/intro.js/introjs.css" rel="stylesheet">
+<link href="site-tour/introJs/introjs.css" rel="stylesheet">
 
 <!-- custom site-tour styles -->
 <link rel="stylesheet" type="text/css" href="css/site-tour-styles/custom-site-tour.css">
@@ -28,7 +28,7 @@
 <link rel="stylesheet" type="text/css" href="/css/nav-bar-custom/nav-bar-custom.css">
 
 <!-- <link rel='stylesheet' href='paraFiles/css/diffBrsStyles/tryFire_scratch.css' type='text/css'>-->
-<link href="/site-tour/intro.js/example/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<!-- <link href="/site-tour/introJs/example/assets/css/bootstrap-responsive.min.css" rel="stylesheet"> -->
 
 
 <!--Parallax scripts start-->
@@ -314,7 +314,7 @@ else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) <
 	<!--Parallax scrolling ends -->
 
 	<!-- multi - Site tour script starts -->
-	<script type="text/javascript" src="site-tour/intro.js/intro.js"></script>
+	<script type="text/javascript" src="site-tour/introJs/intro.js"></script>
     <script type="text/javascript">
       document.getElementById('startTourButton').onclick = function() {
         introJs().start();

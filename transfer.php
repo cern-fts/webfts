@@ -1,8 +1,8 @@
 <!-- Add IntroJs styles -->
-<link href="/site-tour/intro.js/introjs.css" rel="stylesheet">
+<link href="/site-tour/introJs/introjs.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/site-tour-styles/custom-site-tour.css">
 <!-- <link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet"> -->
-<link href="/site-tour/intro.js/example/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="/site-tour/introJs/example/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
 
 
 
@@ -558,7 +558,7 @@ $('#checksum').popover();
 							<div class="btn-group"
 								data-step="8" 
 								data-intro="<h3><strong>Filter button:</strong></h3>
-											<h4>Specify your file(s) search!<br/>Multiple options: <br/>name,<br/>date,<br/>size of file(s)<br/> or search for simple files by avoiding display the containing folders!</br><strong>Do you want to see live all your submited jobs? Click on the button below!</strong></h4>"
+											<h4>Specify your file(s) search!<br/>Multiple options: <br/>name,<br/>date,<br/>size of file(s)<br/> or search for simple files by avoiding display the containing folders!</br></h4>"
 								data-position="bottom">
 								<button type="button" id="rightShowFilterButton"
 									class="btn btn-sm"

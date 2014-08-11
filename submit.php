@@ -23,7 +23,7 @@
 
 <!--
 -->
-<link href="site-tour/intro.js/introjs.css" rel="stylesheet">
+<link href="site-tour/introJs/introjs.css" rel="stylesheet">
 <!--
 -->
 
@@ -120,7 +120,7 @@
 
 
 
-	<script type="text/javascript" src="/site-tour/intro.js/intro.js"></script>
+	<script type="text/javascript" src="/site-tour/introJs/intro.js"></script>
 
 <!--
 	// <script type="text/javascript">
