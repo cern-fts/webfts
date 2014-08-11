@@ -9,6 +9,10 @@ Source:         %{name}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArchitectures: noarch
 
+Requires:	httpd
+Requires:	php
+
+
 %description
 The package provides the WEB Interface for the FTS3 service
 
