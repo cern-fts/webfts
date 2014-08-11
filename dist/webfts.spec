@@ -43,3 +43,8 @@ service httpd restart
 %config(noreplace) /etc/httpd/conf.d/%{name}.conf
 %defattr(-,root,root,-)
 /var/www/%{name}
+
+%changelog
+* Tue Jul 22 2014 Andrea Manzi <amanzi@cern.ch> - 1.4.0-1
+- added support for LFC registration, overwrite and checksums
+- added resubmission of failed files only
