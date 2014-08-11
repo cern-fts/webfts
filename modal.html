@@ -91,7 +91,7 @@ $("#pemPkey").bind('input propertychange', function(){
 					<div class="row control-group">
 					   <p class="text-center"><label class="control-label" for="privateKey">Virtual Organization</label><small> (VO only if VOMS credentials are required to access the endpoint)</small></p>
                                            <p class="text-center"><small>Please contact the <a href="mailto:fts-support@cern.ch?subject=Support for new VO&body">support</a> if you wish more Virtual Organizations to be supported</small> </p>
-					</div>
+                                        </div>
 					<select class="form-control" id="userVO" >
                                     		<option></option>
                                     		<option>atlas</option>
@@ -117,4 +117,10 @@ $("#pemPkey").bind('input propertychange', function(){
 			</form>
 		</div>
 	</div>	<!-- /.modal-dialog -->
+	
 </div> <!-- /.modal -->
+<script type="text/javascript">
+	    if (RegExp('multipage', 'gi').test(window.location.search)) {
+	       introJs().start();
+	    }
+</script>

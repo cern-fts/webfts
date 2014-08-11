@@ -1,12 +1,18 @@
-			<div class="btn-group navbar-right">
-				<button class="btn btn-primary dropdown-toggle pull-right"
+			<div class="btn-group navbar-right" 			
+					data-step="1" 
+					data-intro="<h3><strong>Step 1:</strong></h3>
+					<h4>You need a valid certificate to start transfer files.</h4>"
+					data-position="bottom">
+				<button class="btn btn-primary dropdown-toggle pull-right padding-class-2"
 					type="button" data-toggle="dropdown">
 					<span id="proxyTimeSpan">Loading proxy... </span><span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu" role="menu">
 					<li role="presentation" class="dropdown-header">Proxy actions</li>
-					<li id="delegate_again_link"><a href="#" onclick="showDelegateModal()">Delegate
-							again</a></li>
+					<li id="delegate_again_link">
+						<a href="#" onclick="showDelegateModal()">Delegate again</a></li>
+						<!-- <a href="#" href="javascript:void(0)" onclick="showDelegateModal(); javascript:introJs().start() ">Delegate again</a></li>
+ 						-->
 					<li id="delegate_remove_link"><a href="#"
 						onclick="removeExistingDelegation()">Remove existing delegation</a></li>
 				</ul>

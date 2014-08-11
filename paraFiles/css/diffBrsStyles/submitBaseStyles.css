@@ -1,0 +1,161 @@
+.navigation {
+	padding: 0;
+	margin: 0;
+	background: #333;
+	position: fixed;
+	top: 0;
+	z-index: 999;
+	width: 100%;
+
+	li {
+		display: inline-block;
+		padding:  5px 10px;
+
+		 a{
+		 	color: #e1e1e1;
+		 	text-decoration: none;
+
+		 	a:hover {
+		 		color:lighten(#e1e1e1, 20%);
+		 	}	
+		 }
+	}
+
+	.active {
+		background-color:  lighten(#333, 20%);
+	}
+}
+
+
+
+/* Customize the nav-justified links to be fill the entire space of the .navbar */
+.nav > li > a:hover,
+.nav > li > a:focus {
+  color: #04070C;
+  font-weight: bold;
+  font-size: 14px;
+  background-color: #959ba5;
+  text-shadow: none;
+}
+
+
+.nav-justified > .active > a,
+.nav-justified > .active > a:hover,
+.nav-justified > .active > a:focus {
+  color: #04070C;
+  text-shadow: none;
+  background-color: #959ba5 !important;
+  box-shadow: inset 0 3px 7px rgba(0,0,0,.15);
+}
+
+
+.nav-justified > li:first-child > a
+.nav-justified > li:last-child > a,
+.nav-justified > li:first-child > a:hover,
+.nav-justified > li:last-child > a:hover,
+.nav-justified > li:first-child > a:focus,
+.nav-justified > li:last-child > a:focus   {
+  color: #04070C;
+  text-shadow: none;
+  background-color: #959ba5 !important;
+  box-shadow: inset 0 3px 7px rgba(0,0,0,.15);
+  border-radius: 5px 5px 0 0;
+}
+
+
+
+
+
+
+
+
+
+/*.nav-justified{
+	border-radius: 1.5px solid #CCCCCC;
+	margin-right: 25px;
+	text-align: center;
+}*/
+
+/*.text-muted{
+
+  color: #D6D6D6;
+  text-shadow: 2px 2px #000;
+  z-index: 280;
+}*/
+
+small{
+  color: #ccc;
+}
+
+.container-top-outer{
+	top: 0px;
+	position: fixed;
+	z-index: 300;
+	height: 170px;
+	width: 100%;
+	z-index: 200;
+}
+
+
+/*.nav-justified > .active > a, .nav-justified > .active > a:hover, .nav-justified > .active > a:focus {
+	background-image: url("/css/nav-bar-custom/br1-mlight.png");
+}
+	*/
+.container-top-inner {
+  /*background-image: url("/css/nav-bar-custom/br1.png");*/
+  padding: 1% 5% 0%;
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+  display: table;
+  /*background-color: #FFFFFF;*/
+  z-index: 250;
+}
+
+.container-top-inner:before,
+.container-top-inner:after {
+  display: table;
+  content: " ";
+}
+
+.container-top-inner:after {
+  clear: both;
+}
+
+.container-top-inner:before,
+.container-top-inner:after {
+  display: table;
+  content: " ";
+}
+
+.container-top-inner:after {
+  clear: both;
+}
+
+.container-central{
+	width: 100%;
+	height: 100%;
+}
+
+.main-back{
+	margin-top: 30px;
+	height: 100%;
+	width: 100%;
+	margin-top: 170px;
+	padding: 2% 10%;
+	position: absolute;
+	background-image: url("/paraFiles/img/slide1/metal-main-back.jpg");
+    background-repeat: no-repeat;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size:  cover;
+    z-index: -200;
+}
+.divider{
+	height: 40px;
+	text-align: center;
+	/*width: auto;*/
+	width: 100%;
+	z-index: 200;
+}
