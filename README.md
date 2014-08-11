@@ -1,4 +1,4 @@
-webfts
+WebFTS
 ======
 
 WebFTS is a web-delivered file transfer and management solution which allows users to invoke reliable, 
@@ -11,3 +11,9 @@ for checking the detailed status of the different transfers and resubmitting any
 The “transfer engine” used is FTS3, the service responsible for distributing the majority of LHC data across 
 WLCG infrastructure. This provides WebFTS with reliable, multi-protocol (gridftp, srm, http, xrootd), 
 adaptively optimised data transfers.
+
+For More details and the user guide please check the FTS3 site:
+
+https://fts3-service.web.cern.ch/documentation/webfts
+
+
