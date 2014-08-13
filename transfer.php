@@ -270,17 +270,17 @@ $('#checksum').popover();
 		<small id="serverSuccessText"></small>
 	</div>
 	<div class="row"
-			data-step="11" 
+			data-step="12" 
 			data-intro="<h3><strong>Congratulations!</strong></h3><h4>That's all! You have finished with success your file(s) submittion!<br/><strong>Let's see live all your submited jobs and their status! Click on the button below to continue!</strong></h4>"
 			data-position="bottom-middle-aligned">
 		<div class="btn-group-vertical col-xs-5 col-lg-5 col-md-5"
-			data-step="4" 
-			data-intro="<h3><strong>Step 4:</strong></h3><h4>Here is the area where is going to be displayed your folder's content.</h4>"
+			data-step="5" 
+			data-intro="<h3><strong>Step 5:</strong></h3><h4>Here is the area where is going to be displayed your folder's content.</h4>"
 			data-position="bottom">
 			
 				<div class=""
-					data-step="2" 
-					data-intro="<h3><strong>Step 2:</strong></h3><h4>And actually that's it! You can start submitting your jobs!<br/>Here you can choose the storage type of your desire*!<br/>In case you selected the <strong>Dropbox transfer</strong>, the very first step is to <strong>log-in</strong> with your account in order to use this service!<br/>On the other way, if you choose the <strong>&quot;Grid SE&quot;</strong> you have to define the endpoint for the transfer!</h4><h5>*During this tour you will not be asked to choose something.</h5>"
+					data-step="3" 
+					data-intro="<h3><strong>Step 3:</strong></h3><h4>And actually that's it! You can start submitting your jobs!<br/>Here you can choose the storage type of your desire*!<br/>In case you selected the <strong>Dropbox transfer</strong>, the very first step is to <strong>log-in</strong> with your account in order to use this service!<br/>On the other way, if you choose the <strong>&quot;Grid SE&quot;</strong> you have to define the endpoint for the transfer!</h4><h5>*During this tour you will not be asked to choose something.</h5>"
 					data-position="bottom">
 					<select id="leftStorageSelect"></select>
 				</div>
@@ -304,8 +304,8 @@ $('#checksum').popover();
 			</div>
 			<div id="leftStorageContent">			
 				<div class="input-group"
-					data-step="3" 
-					data-intro="<h3><strong>Step 3:</strong></h3><h4>This textfield is going to be enabled only for &quot;<strong>Grid SE</strong>&quot; transfers! At first you have to place here your endpoint and then to press the &quot;load&quot; button in order to load the content of your folder!</h4>"
+					data-step="4" 
+					data-intro="<h3><strong>Step 4:</strong></h3><h4>This textfield is going to be enabled only for &quot;<strong>Grid SE</strong>&quot; transfers! At first you have to place here your endpoint and then to press the &quot;load&quot; button in order to load the content of your folder!</h4>"
 					data-position="bottom">
 					<input id="leftEndpoint" type="text" placeholder="Endpoint path"
 						class="form-control"
@@ -448,8 +448,8 @@ $('#checksum').popover();
 		</div>
 		<div class="btn-group btn-group-vertical  col-xs-2 col-lg-2 col-md-2">
 			<div class="transfer-buttons"
-				data-step="10" 
-				data-intro="<h3><strong>Step 10:</strong></h3><h4>These are the main buttons for the transfer! Choose your files and then click on one of these buttons accordingly in which direction is going to be the tranfer of your desire!</h4>"
+				data-step="11" 
+				data-intro="<h3><strong>Step 11:</strong></h3><h4>These are the main buttons for the transfer! Choose your files and then click on one of these buttons accordingly in which direction is going to be the tranfer of your desire!</h4>"
 				data-position="bottom">
 				<button type="button" class="btn btn-primary btn-block"
 					name="transfer-from-left" id="transfer-from-left"
@@ -467,8 +467,8 @@ $('#checksum').popover();
 			</div>
 				<br>
 			<div class="more-center-options"
-				data-step="9" 
-				data-intro="<h3><strong>Step 9:</strong></h3><h4>In this area you have the option to enable/disable some of these additional options!</h4>"
+				data-step="10" 
+				data-intro="<h3><strong>Step 10:</strong></h3><h4>In this area you have the option to enable/disable some of these additional options!</h4>"
 				data-position="right">	
 				<table class="table">
 				<tr>
@@ -517,8 +517,8 @@ $('#checksum').popover();
 		</div>
 	
 		<div class="btn-group-vertical col-xs-5 col-lg-5 col-md-5"
-			data-step="5" 
-			data-intro="<h3><strong>Step 5:</strong></h3><h4>In this area you can either choose the type of the SE in the same way as before!</h4>"
+			data-step="6" 
+			data-intro="<h3><strong>Step 6:</strong></h3><h4>In this area you can either choose the type of the SE in the same way as before!</h4>"
 			data-position="bottom">
 			<select id="rightStorageSelect"></select>
 			<div id="rightStorageLogin"></div>
@@ -535,7 +535,7 @@ $('#checksum').popover();
 					<div class="panel-heading">
 						<div class="btn-toolbar">
 							<div class="btn-group "
-								data-step="6" 
+								data-step="7" 
 								data-intro="<h3><strong>Selection buttons:</strong></h3>
 											<h4>By clicking one, you can select/unselect all your files.</h4>"
 								data-position="bottom">
@@ -546,7 +546,7 @@ $('#checksum').popover();
 									onclick="selectNoneFiles('rightEndpointContent')">None</button>
 							</div>
 							<div class="btn-group"
-								data-step="7" 
+								data-step="8" 
 								data-intro="<h3><strong>Refresh button:</strong></h3>
 											<h4>Once you place a new endpoint you can see all the contents of the folder by clicking on this.</h4>"
 								data-position="bottom">
@@ -556,7 +556,7 @@ $('#checksum').popover();
 								</button>
 							</div>
 							<div class="btn-group"
-								data-step="8" 
+								data-step="9" 
 								data-intro="<h3><strong>Filter button:</strong></h3>
 											<h4>Specify your file(s) search!<br/>Multiple options: <br/>name,<br/>date,<br/>size of file(s)<br/> or search for simple files by avoiding display the containing folders!</br></h4>"
 								data-position="bottom">
