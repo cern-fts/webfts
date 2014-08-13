@@ -26,8 +26,6 @@
 	}
 }
 
-
-
 /* Customize the nav-justified links to be fill the entire space of the .navbar */
 .nav > li > a:hover,
 .nav > li > a:focus {
@@ -38,7 +36,6 @@
   text-shadow: none;
 }
 
-
 .nav-justified > .active > a,
 .nav-justified > .active > a:hover,
 .nav-justified > .active > a:focus {
@@ -47,7 +44,6 @@
   background-color: #959ba5 !important;
   box-shadow: inset 0 3px 7px rgba(0,0,0,.15);
 }
-
 
 .nav-justified > li:first-child > a
 .nav-justified > li:last-child > a,
@@ -61,14 +57,6 @@
   box-shadow: inset 0 3px 7px rgba(0,0,0,.15);
   border-radius: 5px 5px 0 0;
 }
-
-
-
-
-
-
-
-
 
 /*.nav-justified{
 	border-radius: 1.5px solid #CCCCCC;
@@ -96,19 +84,12 @@ small{
 	z-index: 200;
 }
 
-
-/*.nav-justified > .active > a, .nav-justified > .active > a:hover, .nav-justified > .active > a:focus {
-	background-image: url("/css/nav-bar-custom/br1-mlight.png");
-}
-	*/
 .container-top-inner {
-  /*background-image: url("/css/nav-bar-custom/br1.png");*/
   padding: 1% 5% 0%;
   margin-right: auto;
   margin-left: auto;
   width: 100%;
   display: table;
-  /*background-color: #FFFFFF;*/
   z-index: 250;
 }
 
@@ -150,12 +131,20 @@ small{
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size:  cover;
-    z-index: -200;
+    /*z-index: -200; issue with pop up modal in transfer.php*/
 }
 .divider{
 	height: 40px;
 	text-align: center;
-	/*width: auto;*/
 	width: 100%;
 	z-index: 200;
+}
+
+.modal-dialog{
+	margin-top: 205px !important;
+	z-index: 4000;
+}
+
+.modal-backdrop{
+	z-index: 1000;
 }
