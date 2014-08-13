@@ -231,7 +231,7 @@ small{
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size:  cover;
-    z-index: 100;
+    z-index: -50;
 }
 
 

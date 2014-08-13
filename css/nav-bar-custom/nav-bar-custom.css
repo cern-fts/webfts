@@ -2,6 +2,15 @@ body {
   padding-top: 20px;
 }
 
+
+.text-muted{
+
+  color: #D6D6D6;
+  text-shadow: 2px 2px #000;
+  z-index: 280;
+}
+
+
 .masthead{
   padding-top: -1%;
 }
@@ -54,6 +63,8 @@ body {
 
 
 .container-central{
+  /*margin-top: 9%;*/
+  /*height: 85%;*/
   width: 100%;
   height: 100%;
   z-index: 100;
