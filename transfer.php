@@ -44,32 +44,26 @@ $( document ).ready(function() {
 	                 description: "Dropbox",
 	                 imageSrc: "img/Dropbox-icon.png"
 	             },
-	             //{
-	             //    text: "Drive",
-	             //    value: 4,
-	             //    selected: false,
-	             //    description: "Google Drive",
-	             //    imageSrc: "img/Google-Drive-icon.png" 
-	             //},
-	             //{
-	             //    text: "OneDrive",
-	             //    value: 5,
-	             //    selected: false,
-	             //    description: "Microsoft OneDrive",
-	             //    imageSrc: "img/skydrive-icon.png"
-	             //}
 	         ];
 	         
-	$('#leftStorageSelect').ddslick({
-	   data: ddDataLeft,
-	   width: "100%",
-	   imagePosition: "left",
-	   selectText: "Select storage",
-	   onSelected: function (data) {
-	       getStorageOption(data, 'leftStorageLogin', 'leftCSLoginForm', 'leftStorageContent', 'leftLoginIndicator', 'leftCSName', 'leftEndpoint', 'load-left', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter');
-	       sessionStorage.leftCSName=$('#leftCSName').val();
-	   }
-	});
+	//workaround to make the session loading work
+        var setSession= false;
+
+        $('#leftStorageSelect').ddslick({
+           data: ddDataLeft,
+           width: "100%",
+           imagePosition: "left",
+           selectText: "Select storage",
+           onSelected: function (data) {
+               getStorageOption(data, 'leftStorageLogin', 'leftCSLoginForm', 'leftStorageContent', 'leftLoginIndicator', 'leftCSName', 'leftEndpoint', 'load-left', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter');
+               if (setSession) {
+                        sessionStorage.leftCSIndex=data.selectedIndex;
+                }
+           }
+        });
+
+        setSession= true;
+
 
 	var ddDataRight = [
 		              {
@@ -137,14 +131,8 @@ $( document ).ready(function() {
 
 	}
 
-	$('#leftStorageLogin').hide();
-	$('#rightStorageLogin').hide();
-
-        //restoring the vaule of the CS Left
-
-        $('#leftCSName').val(sessionStorage.letCSName);
-        //getStorageOption(data, 'leftStorageLogin', 'leftCSLoginForm', 'leftStorageContent', 'leftLoginIndicator', 'leftCSName', 'leftEndpoint', 'load-left', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter');
-
+	//$('#leftStorageLogin').hide();
+	//$('#rightStorageLogin').hide();
 
 	checkCSState('leftStorageSelect', 'leftStorageContent', 'leftCSLoginForm', 'leftLoginIndicator', 'leftStorageLogin', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter', 'leftEndpoint', 'leftCSName');	
 	console.log( "ready!" );	
