@@ -166,20 +166,6 @@ function rerunTransfer(data, overwrite, checksum, resubmitAll){
 	var lfcSuffix = "lfc://";
 	var theData = {};
 	var resubmitAll= (resubmitAll ==='true');
-		getJobTranfers(jobId, false);
-	} else {
-		$("#jobResultsTable > tbody > #" + rowId).hide();
-	}
-}	
-
-function resubmitJob(jobId){
-	console.log("Resubmitting " + jobId);
-	//Get transfers and submit them
-	getJobTranfers(jobId, true);	
-}
-
-function rerunTransfer(data){	  
-	var theData = {};
 	theData["files"] = [];       	      	  
 	for (var i=0; i<data.length; i++){
 		var files = {};

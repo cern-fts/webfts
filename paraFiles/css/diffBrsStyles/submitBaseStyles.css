@@ -81,22 +81,28 @@
 }
 
 .container-top-inner:before,
-.container-top-inner:after {
+.container-top-inner:after,
+.container-top-outer:before,
+.container-top-outer:after{
   display: table;
   content: " ";
 }
 
-.container-top-inner:after {
+.container-top-inner:after,
+.container-top-outer:after {
   clear: both;
 }
 
 .container-top-inner:before,
-.container-top-inner:after {
+.container-top-inner:after,
+.container-top-outer:before,
+.container-top-outer:after {
   display: table;
   content: " ";
 }
 
-.container-top-inner:after {
+.container-top-inner:after,
+.container-top-outer:after {
   clear: both;
 }
 
