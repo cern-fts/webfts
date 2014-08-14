@@ -64,6 +64,12 @@ $( document ).ready(function() {
 
         setSession= true;
 
+	//reload from session
+        if (sessionStorage.leftCSIndex) {
+                var i = parseInt(sessionStorage.leftCSIndex);
+                $('#leftStorageSelect').ddslick('select', {index: i});
+        }
+
 
 	var ddDataRight = [
 		              {
