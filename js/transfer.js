@@ -710,6 +710,10 @@ function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginI
 		$('#' + inputTextbox).prop('readonly', true);
 		$('#' + loadButton).prop("disabled",true);
 		
+		$('#lfcregistration').prop("disabled",true);
+		$('#checksum').prop("disabled",true);
+		$('#lfcendpoint').prop("disabled",true);
+		
 		if ((getUrlVars()["service"] != currentSelect.selectedData.text.toLowerCase()) &&
 				($('#' + CSName).val().toLowerCase() != currentSelect.selectedData.text.toLowerCase())){
 			//clearContentTable(containerTable, container, indicator, stateText);
@@ -734,6 +738,9 @@ function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginI
 		}		
 		$('#' + inputTextbox).prop('readonly', false);
 		$('#' + loadButton).prop("disabled",false);
+		$('#lfcregistration').prop("disabled",false);
+                $('#checksum').prop("disabled",false);
+		$('#lfcendpoint').prop("disabled",false)
 	}
 	$('#' + CSName).val(currentSelect.selectedData.text.toLowerCase());
 }
