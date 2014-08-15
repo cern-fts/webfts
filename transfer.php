@@ -251,12 +251,8 @@ $('#checksum').popover();
 				echo "<input type=\"hidden\" id=\"clientCERT\" value=\"$v\">";
 		}
 	?>
-         <legend>
-		 <h4>
-		 Please specify your transfer source and destination <small>(Including
-		 protocol. Example: gsiftp://sra10a01.myinstitute.com/myfolder)</small>
-		 </h4>
-	 </legend>
+         <legend> 
+	 	</legend>
 	<div class="alert alert-danger" id="serverkeyAlert"
 		style="display: none">
 		<button type="button" class="close" data-dismiss="alert"
