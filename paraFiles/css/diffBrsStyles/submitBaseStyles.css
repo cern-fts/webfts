@@ -65,7 +65,7 @@
 .container-top-outer{
 	top: 0px;
 	position: fixed;
-	z-index: 300;
+	/*z-index: 300;*/
 	height: 170px;
 	width: 100%;
 	z-index: 200;

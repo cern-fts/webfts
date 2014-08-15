@@ -75,7 +75,9 @@ small{
   color: #ccc;
 }
 
-
+.navbar-left {
+  color: #fff;
+}
 /*
 .container-top-outer{
 	top: 0px;
