@@ -237,6 +237,7 @@ $('#checksum').popover();
 				echo "<input type=\"hidden\" id=\"clientCERT\" value=\"$v\">";
 		}
 	?>
+	<legend></legend>
 	<div class="alert alert-danger" id="serverkeyAlert"
 		style="display: none">
 		<button type="button" class="close" data-dismiss="alert"
