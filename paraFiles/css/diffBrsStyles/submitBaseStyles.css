@@ -119,7 +119,7 @@
 	padding: 2% 10%;
 	position: absolute;
 	background-image: url("/paraFiles/img/slide1/metal-main-back.jpg");
-    background-repeat: no-repeat;
+    background-repeat: repeat;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
