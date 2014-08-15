@@ -11,6 +11,11 @@ body {
 }
 
 
+.navbar-left {
+  color: #fff;
+}
+
+
 .masthead{
   padding-top: -1%;
 }

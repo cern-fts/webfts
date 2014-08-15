@@ -75,6 +75,9 @@ small{
   color: #ccc;
 }
 
+.navbar-left {
+  color: #fff;
+}
 /*
 .container-top-outer{
 	top: 0px;
@@ -231,7 +234,7 @@ small{
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size:  cover;
-    z-index: -50;
+    z-index: 100;
 }
 
 
