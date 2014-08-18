@@ -15,11 +15,18 @@ var permissionNumberMeaning = {
 	};
 
 function runTransfer(container, origFolder, destFolder, CSLeftSelect){
-	if (false){ //#TODO: remove "true" and do a check of the expiration time
+	console.log("remaining proxy lifetime: " + sessionStorage.remainingProxyLifetime);
+	if (sessionStorage.remainingProxyLifetime && sessionStorage.remainingProxyLifetime < 3600*1000*2 ){//2 hours 
 		$("#warningTransferButton").click({c: container, o: origFolder, d: destFolder, s:CSLeftSelect}, function(e) {
 			executeTransfer(e.data.c, e.data.o, e.data.d, e.data.s);
-		});			
-		$("#expirationModal").show();
+			$("#expirationModal").modal('hide');
+		});
+		$("#doDelegateButton").click(function(e) {
+              		showDelegateModal(); 
+			$("#expirationModal").modal('hide');
+                });
+					
+		$("#expirationModal").modal('show');
 	} else {
 		executeTransfer(container, origFolder, destFolder, CSLeftSelect);
 	}	

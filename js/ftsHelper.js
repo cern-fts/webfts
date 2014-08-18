@@ -357,9 +357,10 @@ function checkAndTransfer(delegationID, transferData, showModal){
 					}
 				} else {
 					showRemainingProxyTime(millisecondsToStr(remainingTime));
+					sessionStorage.remainingProxyLifetime=remainingTime;
 					if (transferData != null){				
 						ftsTransfer(transferData);
-					}
+					} 
 				}						
 			}	
 		},
