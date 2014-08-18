@@ -541,45 +541,60 @@ function getPrintableFileName(fileName){
 	return fileName;
 }
  
-
-function loadEndpointsList(boxes){
-	$.ajax({
-		url : endpointsListURL,
-		type : "GET",
-		dataType : 'xml',
-		xhrFields : {
-			withCredentials : true
-		},
-		
-		success : function(xml) {
-			if (xml != null){
-				var availableURLs = [];
-				$(xml).find("entry").each(function()
-						  {
-							endpoint = $(this).find("endpoint").text();
-							if ($(this).find("type").text() == "SRM"){
-								if (endpoint.substring(0,5) == "httpg")
-									availableURLs.push("srm" + endpoint.substring(5, endpoint.length));
-							} else {
-								availableURLs.push(endpoint);
-							}
-						    $("#output").append($(this).attr("author") + "<br />");
-						  });
-				for(var i =0; i < boxes.length; i++){
-					loadEPList(boxes[i], availableURLs);
-				}
-			}
-		},
-		error : function(jqXHR, textStatus, errorThrown) {
-			console.log("File with the endpoints list not avaialble or not accesible");
-			console.log(jqXHR);
-			console.log("ERROR: " + JSON.stringify(jqXHR));
-			console.log(textStatus + "," + errorThrown);
-		}
-	});
-	//console.log("The filtered array has " + newArray.length + " elements");
-	//return newArray;
+function loadEndpointsList(){
+	availableURLs = []
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", endpointsListURL, true);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;                
+                var availableURLs = allText.split('\n');
+                for (var i=0; i<availableURLs.length; i++){
+                	if (availableURLs[i].substring(0,5) == "httpg"){
+                		availableURLs[i] = "srm" + availableURLs[i].substring(5, availableURLs[i].length);
+                	} else {
+                		availableURLs[i] = availableURLs[i].replace("?SFN=","");
+                	}                	
+                }
+                availableURLs = applyTestingFilter(availableURLs);
+				$( "#leftEndpoint" ).autocomplete({
+					source: availableURLs,
+					minLength: 2
+				});
+				$( "#rightEndpoint" ).autocomplete({
+					source: availableURLs,
+					minLength: 2
+				});
+	  }
+        }
+    }
+ rawFile.send(null);
 }
+
+function applyTestingFilter(uArray){
+	var found_set = {};
+	var epurl = "";
+	var newArray = [];
+	for (var i=0; i<uArray.length; i++){
+		epurl = uArray[i];
+		if ((epurl == "") || (epurl.indexOf("UNDEFINED") != -1)) 
+			continue;
+		var ele = getFilter(epurl);		
+		if (found_set[ele]){
+			console.log(ele + " is already in the set");
+		} else {
+			found_set[ele] = true;
+			newArray.push(epurl);
+		}
+	}
+	console.log("The filtered array has " + newArray.length + " elements");
+	return newArray;
+}
+
 
 function getFilter(epurl){	
 	return getHost(epurl);
@@ -661,8 +676,6 @@ function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginI
 	$('#' + contentDiv).show();
 	
 	if (currentSelect.selectedIndex > 0){ 
-		// Cloud storage, not Grid SE
-		//currentSelect.selectedData.text;
 		
 		$('#' + inputTextbox).prop('readonly', true);
 		$('#' + loadButton).prop("disabled",true);

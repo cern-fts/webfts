@@ -256,7 +256,6 @@ function getSKID(dom, skid){
 
 //Check delegation ID, save it and check if there is a valid proxy 
 function getDelegationID(fieldName, delegationNeeded){
-	var d = getFTSEndpoint();
 	var urlEndp = ftsEndpoint + "/whoami";
 	$.support.cors = true;
 	$.ajax({
