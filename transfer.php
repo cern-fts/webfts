@@ -298,10 +298,10 @@ $('#checksum').popover();
 					<div class="panel-heading">
 						<div class="btn-toolbar">
 							<div class="btn-group ">
-								<button type="button" class="btn btn-sm"
+								<button type="button" id="selectAllLeft" class="btn btn-sm"
 									onclick="selectAllFiles('leftEndpointContent')">Select
 									All</button>
-								<button type="button" class="btn btn-sm"
+								<button type="button" id="selectNoneLeft" class="btn btn-sm"
 									onclick="selectNoneFiles('leftEndpointContent')">None</button>
 							</div>
 							<div class="btn-group">
@@ -499,10 +499,10 @@ $('#checksum').popover();
 					<div class="panel-heading">
 						<div class="btn-toolbar">
 							<div class="btn-group ">
-								<button type="button" class="btn btn-sm"
+								<button type="button" id="selectAllRight" class="btn btn-sm"
 									onclick="selectAllFiles('rightEndpointContent')">Select
 									All</button>
-								<button type="button" class="btn btn-sm"
+								<button type="button" id="selectNoneRight" class="btn btn-sm"
 									onclick="selectNoneFiles('rightEndpointContent')">None</button>
 							</div>
 							<div class="btn-group">
