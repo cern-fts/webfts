@@ -304,12 +304,13 @@ else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) <
 									You need help? Take a virtual tour by clicking here!
 									<br/>
 								</p>
-								<div class='row-fluid'>
+								
+							</div>
+							<div class='row-fluid'>
 									<p class='col-md-4 col-md-offset-9 col-sm-4 col-sm-offset-9 jumbotron  border-element ' id="pointer">
 										<a class="btn btn-primary btn-lg back-to-top" href="#" href='javascript:void(0);' id="startTourButton"><strong>Take a tour!</strong></a>
 									</p>
 								</div>
-							</div>
 						</div>	
 					</div>
 					
