@@ -140,7 +140,7 @@ else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) <
 				<h3 class="text-muted">WebFTS (Beta version)  <small><em>Symplifying power</em></small></h3>			
 				<ul class="nav nav-justified" >
 					<li class="active" 
-						data-step='2' 
+						data-step="2" 
 						data-intro="<h3><strong>Home:</strong></h3><h4>Kept informed always! Learn first all the recent WebFTS news!</h4>"
 						data-position='bottom'>
 						<a href="#"><i class="glyphicon glyphicon-home"></i>&nbsp;Home</a>

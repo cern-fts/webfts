@@ -555,6 +555,10 @@ if (!window.console) console = {log: function() {}};
       //remove old classes
       var oldShowElement = document.querySelector('.introjs-showElement');
       oldShowElement.className = oldShowElement.className.replace(/introjs-[a-zA-Z]+/g, '').replace(/^\s+|\s+$/g, '');
+      
+      //added line (using jQuery...)
+      $(oldShowElement).find('td').removeClass('introjs-showElement').removeClass('introjs-relativePosition');
+
       //we should wait until the CSS3 transition is competed (it's 0.3 sec) to prevent incorrect `height` and `width` calculation
       if (self._lastShowElementTimer) {
         clearTimeout(self._lastShowElementTimer);
@@ -735,11 +739,21 @@ if (!window.console) console = {log: function() {}};
     //add target element position style
     targetElement.element.className += ' introjs-showElement';
 
+    //var currentElementPosition = _getPropValue(targetElement.element, 'position');
+    // if (currentElementPosition !== 'absolute' &&
+    //     currentElementPosition !== 'relative') {
+    //   //change to new intro item
+    //   targetElement.element.className += ' introjs-relativePosition';
+    // }
+
     var currentElementPosition = _getPropValue(targetElement.element, 'position');
     if (currentElementPosition !== 'absolute' &&
         currentElementPosition !== 'relative') {
       //change to new intro item
       targetElement.element.className += ' introjs-relativePosition';
+
+      //added line (using jQuery...)
+      $(targetElement.element).find('td').addClass(' introjs-relativePosition').addClass('introjs-showElement');
     }
 
     var parentElm = targetElement.element.parentNode;
