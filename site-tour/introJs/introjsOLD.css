@@ -19,15 +19,10 @@
           transition: all 0.3s ease-out;
 }
 
+
 .introjs-fixParent {
   z-index: auto !important;
   opacity: 1.0 !important;
-  position: absolute;
-  -webkit-transform: none !important;
-     -moz-transform: none !important;
-      -ms-transform: none !important;
-       -o-transform: none !important;
-          transform: none !important;
 }
 
 .introjs-showElement,

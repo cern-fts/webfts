@@ -140,7 +140,7 @@ else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) <
 				<h3 class="text-muted">WebFTS (Beta version)  <small><em>Symplifying power</em></small></h3>			
 				<ul class="nav nav-justified" >
 					<li class="active" 
-						data-step='2' 
+						data-step="2" 
 						data-intro="<h3><strong>Home:</strong></h3><h4>Kept informed always! Learn first all the recent WebFTS news!</h4>"
 						data-position='bottom'>
 						<a href="#"><i class="glyphicon glyphicon-home"></i>&nbsp;Home</a>
@@ -304,12 +304,13 @@ else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) <
 									You need help? Take a virtual tour by clicking here!
 									<br/>
 								</p>
-								<div class='row-fluid'>
+								
+							</div>
+							<div class='row-fluid'>
 									<p class='col-md-4 col-md-offset-9 col-sm-4 col-sm-offset-9 jumbotron  border-element ' id="pointer">
 										<a class="btn btn-primary btn-lg back-to-top" href="#" href='javascript:void(0);' id="startTourButton"><strong>Take a tour!</strong></a>
 									</p>
 								</div>
-							</div>
 						</div>	
 					</div>
 					
