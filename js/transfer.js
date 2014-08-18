@@ -701,7 +701,7 @@ function getLoginCS(CSName, loginDiv, contentDiv, loginForm, loadingPanel, path,
 	var cs = factory.createCS(CSName);
 	showRemoteLoader(loginForm, loadingPanel);		
 	//cs.getAuthRequest();			
-	cs.getCSAccess(loginDiv, contentDiv, "/", container, containerTable, indicator, stateText, filter, endpointInput, CSName);
+	cs.getCSAccess(loginDiv, contentDiv, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName);
 }
 
 function showRemoteLoader(loginForm, loadingPanel){
