@@ -134,9 +134,6 @@
 }
 
 .modal-dialog{
-	margin-top: 205px !important;
-}
-
-.modal-backdrop{
-	/*z-index: 1000;*/
+	/*margin-top: 100px !important;*/
+	position: relative;
 }
