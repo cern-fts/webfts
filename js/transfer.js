@@ -760,7 +760,7 @@ function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTabl
 		if (cur.is_dir == true){
 			icon ="glyphicon glyphicon-folder-close";
 			t_row.push("<tr value='" + cur.path  + "' onclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + cur.path.trim() + "','" + filter + "','" + CSName + "')\">");
-			t_row.push('<td title="' + filePath + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
+			t_row.push('<td title="' + filePath + '\/"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
 		} else {
 			icon ="glyphicon glyphicon-file";	
 			t_row.push('<tr value="' + cur.path + '">');
