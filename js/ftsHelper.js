@@ -22,7 +22,7 @@ function showError(jqXHR, textStatus, errorThrown, message) {
 	//alert("ERROR: " + JSON.stringify(jqXHR));
 	console.log(textStatus + "," + errorThrown);
 	if (jqXHR.status > 0)
-		uessage += ". Reason: " + jqXHR.status + ": " + jqXHR.responseText;
+		message += ". Reason: " + jqXHR.status + ": " + jqXHR.responseText;
 		
 	if (message != null)
 		showUserError(message);	
