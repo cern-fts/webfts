@@ -220,6 +220,18 @@ function saveCheckboxState() {
 	}	
 }
 
+function refreshFiles() {
+	if (sessionStorage.leftCSIndex && sessionStorage.leftCSIndex > 0 ) {
+ 		$('#left-loading-indicator').show();
+ 		$('#leftEpFilter').val('');
+		getLoginCS( $('#leftCSName').val(), 'leftStorageLogin', 'leftStorageContent', 'leftCSLoginForm', 'leftLoginIndicator', '/', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter', 'leftEndpoint');
+		 }	
+	else {
+		getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter');
+	}
+
+}
+
 $('#overwrite').popover();
 $('#lfcregistration').popover();
 $('#checksum').popover();
@@ -294,7 +306,7 @@ $('#checksum').popover();
 							</div>
 							<div class="btn-group">
 								<button type="button" class="btn btn-sm"
-									onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter')">
+									onclick="refreshFiles()">
 									<i class="glyphicon glyphicon-refresh" />&nbsp;Refresh
 								</button>
 							</div>
