@@ -2,11 +2,10 @@ function Dropbox(){
 	this.dropboxEndpoint = "https://www.dropbox.com/1";
 	/*this.dropboxApi = "https://api.dropbox.com/1";
 	this.dropboxApiContent = "https://api-content.dropbox.com/1";*/
-	//his.callbackUrl = "https://fts3devel02.cern.ch:8446/submit.php"; 
 
 	this.getCSAccess = function(loginDiv, contentDiv, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName){
 		//Step 1: check if the user has asked for access
-		var urlE = ftsEndpoint + "/cs/access_request/dropbox";
+		var urlE = sessionStorage.ftsRestEndpoint + "/cs/access_request/dropbox";
 		$.support.cors = true;
 		$.ajax({
 			url : urlE,
@@ -17,7 +16,7 @@ function Dropbox(){
 			},
 			success : function(data1, status) {				
 				//Check if user has already access
-				var urlE = ftsEndpoint + "/cs/registered/dropbox";
+				var urlE = sessionStorage.ftsRestEndpoint + "/cs/registered/dropbox";
 				$.support.cors = true;
 				$.ajax({
 					url : urlE,
@@ -50,7 +49,7 @@ function Dropbox(){
 	};
 	
 	this.getRequestTokens = function (){		
-		var urlEndp = ftsEndpoint + "/cs/access_request/dropbox/request";
+		var urlEndp = sessionStorage.ftsRestEndpoint + "/cs/access_request/dropbox/request";
 		var ep = this.dropboxEndpoint;
 		$.support.cors = true;
 		$.ajax({
@@ -72,7 +71,7 @@ function Dropbox(){
 	};
 	
 	this.getAccessTokens = function (loginDiv, contentDiv, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName){		
-		var urlEndp = ftsEndpoint + "/cs/access_grant/dropbox";
+		var urlEndp = sessionStorage.ftsRestEndpoint + "/cs/access_grant/dropbox";
 		$.support.cors = true;
 		$.ajax({
 			url : urlEndp,
@@ -93,7 +92,7 @@ function Dropbox(){
 	};
 	
 	this.getContent = function (loginDiv, contentDiv, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName){			
-		var urlEndp = ftsEndpoint + "/cs/remote_content/dropbox?surl=" + path; //+ "/metadata/dropbox" + path + "?list=true";
+		var urlEndp = sessionStorage.ftsRestEndpoint + "/cs/remote_content/dropbox?surl=" + path; //+ "/metadata/dropbox" + path + "?list=true";
 		/*if (path == "/")
 			urlEndp += "null";
 		else

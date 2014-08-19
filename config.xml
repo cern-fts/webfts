@@ -1,0 +1,14 @@
+<config>
+	<ftsAddress>https://fts3cloudy01.cern.ch:8446</ftsAddress>
+	<jobToList>100</jobToList>
+	<endpointListUrl>https://webfts.cern.ch/endpointList</endpointListUrl> 
+	<proxyCertHours>12</proxyCertHours>
+	<VOs>
+		<VO>atlas</VO>
+		<VO>biomed</VO>
+		<VO>cms</VO>
+		<VO>dteam</VO>
+		<VO>lhcb</VO>
+		<VO>ops</VO>
+	</VOs>
+</config>

@@ -53,7 +53,11 @@
 
 <!--[if lte IE 9]><link rel="stylesheet" href="css/style-ie9.css" /><![endif]-->
 <!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
-<script> 
+<script>
+	$( document ).ready(function() {
+        	if(!sessionStorage.ftsRestEndpoint)
+                	getConfig();
+	});
 	$(function(){			
 	   $("#includedTransmissionsList").load("transmissionsList.php");  
 	});

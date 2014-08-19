@@ -1,8 +1,6 @@
 var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
-var endpointsListURL = "https://webfts.cern.ch/endpointList";
-
 var permissionNumberMeaning = {
 	    0 : '---',
 	    1 : '--x',
@@ -544,7 +542,7 @@ function getPrintableFileName(fileName){
 function loadEndpointsList(){
 	availableURLs = []
     var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", endpointsListURL, true);
+    rawFile.open("GET", sessionStorage.endpointsUrl, true);
     rawFile.onreadystatechange = function ()
     {
         if(rawFile.readyState === 4)
