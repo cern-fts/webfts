@@ -1,4 +1,4 @@
-<!-- Add IntroJs styles -->
+<!--Add IntroJs styles -->
 <link href="/site-tour/introJs/introjs.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/site-tour-styles/custom-site-tour.css">
 <!-- <link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet"> -->
@@ -265,19 +265,19 @@ $('#checksum').popover();
 			onclick="$('serverkeyAlertSuccess').hide()">&times;</button>
 		<small id="serverSuccessText"></small>
 	</div>
-	<div class="row"
+	<div class="row" id="id12"><!-- 
 			data-step="12" 
 			data-intro="<h3><strong>Congratulations!</strong></h3><h4>That's all! You have finished with success your file(s) submittion!<br/><strong>Let's see live all your submited jobs and their status! Click on the button below to continue!</strong></h4>"
-			data-position="bottom-middle-aligned">
-		<div class="btn-group-vertical col-xs-5 col-lg-5 col-md-5"
+			data-position="bottom-middle-aligned"> -->
+		<div class="btn-group-vertical col-xs-5 col-lg-5 col-md-5" id="id5"><!-- 
 			data-step="5" 
 			data-intro="<h3><strong>Step 5:</strong></h3><h4>Here is the area where is going to be displayed your folder's content.</h4>"
-			data-position="bottom">
+			data-position="bottom"> -->
 			
-				<div class=""
+				<div class="" id="id3"><!-- 
 					data-step="3" 
 					data-intro="<h3><strong>Step 3:</strong></h3><h4>And actually that's it! You can start submitting your jobs!<br/>Here you can choose the storage type of your desire*!<br/>In case you selected the <strong>Dropbox transfer</strong>, the very first step is to <strong>log-in</strong> with your account in order to use this service!<br/>On the other way, if you choose the <strong>&quot;Grid SE&quot;</strong> you have to define the endpoint for the transfer!</h4><h5>*During this tour you will not be asked to choose something.</h5>"
-					data-position="bottom">
+					data-position="bottom">-->
 					<select id="leftStorageSelect"></select>
 				</div>
 			
@@ -299,10 +299,10 @@ $('#checksum').popover();
 				</div>	
 			</div>
 			<div id="leftStorageContent">			
-				<div class="input-group"
+				<div class="input-group" id="id4"><!-- 
 					data-step="4" 
 					data-intro="<h3><strong>Step 4:</strong></h3><h4>This textfield is going to be enabled only for &quot;<strong>Grid SE</strong>&quot; transfers! At first you have to place here your endpoint and then to press the &quot;load&quot; button in order to load the content of your folder!</h4>"
-					data-position="bottom">
+					data-position="bottom"> -->
 					<input id="leftEndpoint" type="text" placeholder="Endpoint path"
 						class="form-control"
 						value="gsiftp://lxfsra10a01.cern.ch/dpm/cern.ch/home/" onchange="setSEpath()" > <span
@@ -443,11 +443,11 @@ $('#checksum').popover();
 			</div>
 		</div>
 		<div class="btn-group btn-group-vertical  col-xs-2 col-lg-2 col-md-2">
-			<div class="transfer-buttons"
-				data-step="11" 
+			<div class="transfer-buttons" id="id11">
+<!-- 				data-step="11" 
 				data-intro="<h3><strong>Step 11:</strong></h3><h4>These are the main buttons for the transfer! Choose your files and then click on one of these buttons accordingly in which direction is going to be the tranfer of your desire!</h4>"
 				data-position="bottom">
-				<button type="button" class="btn btn-primary btn-block"
+ -->				<button type="button" class="btn btn-primary btn-block"
 					name="transfer-from-left" id="transfer-from-left"
 					onclick="runTransfer('leftEndpointContentTable', 'leftEndpoint', 'rightEndpoint', 'leftStorageSelect')"
 					disabled>
@@ -462,11 +462,11 @@ $('#checksum').popover();
 				</button>
 			</div>
 				<br>
-			<div class="more-center-options"
-				data-step="10" 
+			<div class="more-center-options" id="id10">
+<!-- 				data-step="10" 
 				data-intro="<h3><strong>Step 10:</strong></h3><h4>In this area you have the option to enable/disable some of these additional options!</h4>"
 				data-position="right">	
-				<table class="table">
+ -->				<table class="table">
 				<tr>
 					<td>
 					   <div>
@@ -512,10 +512,10 @@ $('#checksum').popover();
 		    </div>
 		</div>
 	
-		<div class="btn-group-vertical col-xs-5 col-lg-5 col-md-5"
-			data-step="6" 
+		<div class="btn-group-vertical col-xs-5 col-lg-5 col-md-5" id="id6">
+			<!-- data-step="6" 
 			data-intro="<h3><strong>Step 6:</strong></h3><h4>In this area you can either choose the type of the SE in the same way as before!</h4>"
-			data-position="bottom">
+			data-position="bottom"> -->
 			<select id="rightStorageSelect"></select>
 			<div id="rightStorageLogin"></div>
 			<div id="rightStorageContent">
@@ -530,33 +530,33 @@ $('#checksum').popover();
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<div class="btn-toolbar">
-							<div class="btn-group "
-								data-step="7" 
+							<div class="btn-group" id="id7">
+<!-- 								data-step="7" 
 								data-intro="<h3><strong>Selection buttons:</strong></h3>
 											<h4>By clicking one, you can select/unselect all your files.</h4>"
 								data-position="bottom">
-								<button type="button" class="btn btn-sm"
+ -->								<button type="button" class="btn btn-sm"
 									onclick="selectAllFiles('rightEndpointContent')">Select
 									All</button>
 								<button type="button" class="btn btn-sm"
 									onclick="selectNoneFiles('rightEndpointContent')">None</button>
 							</div>
-							<div class="btn-group"
-								data-step="8" 
+							<div class="btn-group" id="id8">
+<!-- 								data-step="8" 
 								data-intro="<h3><strong>Refresh button:</strong></h3>
 											<h4>Once you place a new endpoint you can see all the contents of the folder by clicking on this.</h4>"
 								data-position="bottom">
-								<button type="button" class="btn btn-sm"
+ -->								<button type="button" class="btn btn-sm"
 									onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter')">
 									<i class="glyphicon glyphicon-refresh" />&nbsp;Refresh
 								</button>
 							</div>
-							<div class="btn-group"
-								data-step="9" 
+							<div class="btn-group" id="id9">
+<!-- 								data-step="9" 
 								data-intro="<h3><strong>Filter button:</strong></h3>
 											<h4>Specify your file(s) search!<br/>Multiple options: <br/>name,<br/>date,<br/>size of file(s)<br/> or search for simple files by avoiding display the containing folders!</br></h4>"
 								data-position="bottom">
-								<button type="button" id="rightShowFilterButton"
+ -->								<button type="button" id="rightShowFilterButton"
 									class="btn btn-sm"
 									onclick="setFilterPanel('rightFilterPanel', $(this));">Show
 									filters</button>
@@ -671,3 +671,15 @@ $('#checksum').popover();
 		</div>
 	</div>		
 </div>	
+<!-- <script type="text/javascript" src="/js/site-tourModal.js"></script>-->
+
+
+
+<script type="text/javascript" src="/site-tour/introJs/intro.js"></script>
+<script type="text/javascript" src="/js/site-tourModal.js"></script>
+
+<script type="text/javascript">
+        if (RegExp('multipage', 'gi').test(window.location.search)) {
+           myIntro.start();
+        }
+</script>

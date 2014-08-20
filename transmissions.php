@@ -105,11 +105,34 @@
 			<div id="includedTransmissionsList"></div>
 		</div>
 	</div>
+
+
+
+
+
+<script type="text/javascript" src="/site-tour/introJs/intro.js"></script>
+<script type="text/javascript" src="/js/site-tourTransmissions.js"></script>
+
+<script type="text/javascript">
+        if (RegExp('multipage', 'gi').test(window.location.search)) {
+           myIntro.start();
+        }
+</script>
+
+
+
+<!--
+
+
 	<script type="text/javascript" src="/site-tour/introJs/intro.js"></script>
+	<script type="text/javascript" src="/js/site-tourTransmissions.js"></script>
+
+
 	<script type="text/javascript">
 		//Skip the 1st step about the credentials delegation! Start from the 2nd step!
-		introJs().goToStep(2).start();
+		myIntro.start();
 	</script>
+-->	
 <!--
 	<script type="text/javascript">
 		if (RegExp('multipage', 'gi').test(window.location.search)) {

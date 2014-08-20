@@ -117,8 +117,7 @@
 
 
 
-	<script type="text/javascript" src="/site-tour/introJs/intro.js"></script>
-	
+
 <!--
 	// <script type="text/javascript">
 	//     if (RegExp('multipage', 'gi').test(window.location.search)) {

@@ -41,10 +41,11 @@ $(function(){
 	<button type="button" class="close" data-dismiss="alert" onclick="$('serverkeyAlertSuccess').hide()">&times;</button>
 	<small id="serverSuccessText"></small>
 </div>
-<div 	data-step="1" 
+<div id="idjobsTable">
+<!-- 		data-step="1" 
 		data-intro="<h4>In this area are going to be displayed all your submitted jobs! Check the live status of your submittions whenever you want!</br><strong>Are you ready to start?</strong></h4>"
 		data-position="bottom-middle-aligned">
-	<table class="table table-bordered table-condensed table-hover" id="jobResultsTable">
+ -->	<table class="table table-bordered table-condensed table-hover" id="jobResultsTable">
 	<!-- <table class="table table-condensed" id="jobResultsTable" style="border-collapse:collapse;"> -->
 		<thead>
 			<tr>
@@ -64,8 +65,19 @@ $(function(){
 		</tbody>
 	</table>
 </div>
+<!-- <script type="text/javascript" src="/js/site-tourTransmissions.js"></script>
+<script type="text/javascript" src="/site-tour/intro.js/intro.js"></script>
 
-	<script type="text/javascript" src="/site-tour/intro.js/intro.js"></script>
-
-
+ -->
 </div>
+<!--
+
+<script type="text/javascript" src="/site-tour/introJs/intro.js"></script>
+<script type="text/javascript" src="/js/site-tourModal.js"></script>
+
+<script type="text/javascript">
+        if (RegExp('multipage', 'gi').test(window.location.search)) {
+           myIntro.start();
+        }
+</script>
+-->
