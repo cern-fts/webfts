@@ -13,8 +13,7 @@ var permissionNumberMeaning = {
 	};
 
 function runTransfer(container, origFolder, destFolder, CSLeftSelect){
-	console.log("remaining proxy lifetime: " + sessionStorage.remainingProxyLifetime);
-	if (sessionStorage.remainingProxyLifetime && sessionStorage.remainingProxyLifetime < 3600*1000*2 ){//2 hours 
+	if (sessionStorage.remainingProxyLifetime && parseInt(sessionStorage.remainingProxyLifetime) < 3600*1000*2 ){//2 hours 
 		$("#warningTransferButton").click({c: container, o: origFolder, d: destFolder, s:CSLeftSelect}, function(e) {
 			executeTransfer(e.data.c, e.data.o, e.data.d, e.data.s);
 			$("#expirationModal").modal('hide');

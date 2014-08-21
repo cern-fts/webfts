@@ -184,7 +184,7 @@ function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {
 		tbsc.setNotBeforeByParam({
 			'str' : getUTCDate(ctime)
 		});
-		ctime.setUTCHours(ctime.getUTCHours() + 1 + sessionStorage.proxyCertHours);
+		ctime.setUTCHours(ctime.getUTCHours() + 1 + parseInt(sessionStorage.proxyCertHours));
 		tbsc.setNotAfterByParam({
 			'str' : getUTCDate(ctime)
 		});
