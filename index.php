@@ -125,7 +125,14 @@ else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) <
 
 
 <body>
-	<div class='container-top-outer' data-step="1" data-intro="<h3><strong>Here is the main navigation bar!</strong></h3><h4><br/> You can easily submit your file jobs to different endpoints, manage your jobs and see details about them!</h4>" data-position='bottom-middle-aligned'>
+	<div class='container-top-outer' 
+		data-step="1" 
+		data-intro="<h3><strong>Here is the main navigation bar!</strong></h3><h4><br/>
+					You can easily submit your file jobs to different endpoints,
+					manage your jobs and see details about them!</h4>
+					</br>
+					For your convinience, during the tour you could either use the <strong>next/back</strong> buttons or your arrow buttons on your keyboard!"
+		data-position='bottom-middle-aligned'>
 		<div class="container-top-inner" >
 			<div class="row">
 				<script> 
