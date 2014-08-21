@@ -65,19 +65,4 @@ $(function(){
 		</tbody>
 	</table>
 </div>
-<!-- <script type="text/javascript" src="/js/site-tourTransmissions.js"></script>
-<script type="text/javascript" src="/site-tour/intro.js/intro.js"></script>
-
- -->
 </div>
-<!--
-
-<script type="text/javascript" src="/site-tour/introJs/intro.js"></script>
-<script type="text/javascript" src="/js/site-tourModal.js"></script>
-
-<script type="text/javascript">
-        if (RegExp('multipage', 'gi').test(window.location.search)) {
-           myIntro.start();
-        }
-</script>
--->
