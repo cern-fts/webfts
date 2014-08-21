@@ -127,8 +127,8 @@ $( document ).ready(function() {
 		sessionStorage.lfcendpoint="";
 		$('#lfcendpoint').val("lfc://");
 	   }
-	
-         if (sessionStorage.seEndpointLeft) {
+	 //reloading the endpoint only if SE GRid
+         if (sessionStorage.seEndpointLeft && (parseInt(sessionStorage.leftCSIndex) ==0) ) {
 		 $('#leftEndpoint').val(sessionStorage.seEndpointLeft);
 		 if (sessionStorage.seEndpointLeft !== "") {
 			$('#load-left').trigger("click");	
