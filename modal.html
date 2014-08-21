@@ -57,11 +57,7 @@ $("#pemPkey").bind('input propertychange', function(){
 <div class="modal fade" id="delegationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 	<div class="modal-dialog">
 		<div class="modal-content">
-		<!-- data-step="2" 
-							data-intro="<h3><strong>Step 1:</strong></h3>
-										<h4>The very first step in order to use WebFTS is the credentials delegation! If you have a valid certificate in your browser please follow the instrustions here, inorder to export and copy&paste your RSA key! Afterwards, please select your Virtual Organisation and click on &quot;<strong>Delegate</strong>&quot; button to start*! </h4></br><h5>Now, please press the &quot;<strong>Close</strong>&quot; to close this pop up and then press &quot;<strong>Next</strong>&quot; to continue the site tour!</h5>"
-							data-position="left"  >
-		 -->	<form action="" id="pinfo-form" name="pinfo-form"
+			<form action="" id="pinfo-form" name="pinfo-form"
 				class="form-horizontal" method="post">
 				<div class="modal-body">
 					<h4 class="modal-title" >
@@ -123,26 +119,3 @@ $("#pemPkey").bind('input propertychange', function(){
 	</div>	<!-- /.modal-dialog -->
 	
 </div> <!-- /.modal -->
-<script type="text/javascript" src="/site-tour/introJs/intro.js"></script>
-<script type="text/javascript" src="/js/site-tourModal.js"></script>
-<script type="text/javascript" src="/js/site-tourTransmissions.js"></script>
-
-
-<!--
-
-<script type="text/javascript">
-      function startIntro(){
-        var intro = introJs();
-          intro.setOptions({
-            steps: [
-              { 
-                element: document.querySelector('#step2'),
-                intro: "This is a tooltip."
-              }
-            ]
-        });
-
-          intro.start();
-      }
-</script>
--->
