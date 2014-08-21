@@ -52,32 +52,32 @@ $( document ).ready(function() {
 	                 description: "Dropbox",
 	                 imageSrc: "img/Dropbox-icon.png"
 	             },
-	             //{
-	             //    text: "Drive",
-	             //    value: 4,
-	             //    selected: false,
-	             //    description: "Google Drive",
-	             //    imageSrc: "img/Google-Drive-icon.png" 
-	             //},
-	             //{
-	             //    text: "OneDrive",
-	             //    value: 5,
-	             //    selected: false,
-	             //    description: "Microsoft OneDrive",
-	             //    imageSrc: "img/skydrive-icon.png"
-	             //}
 	         ];
 	         
-	$('#leftStorageSelect').ddslick({
-	   data: ddDataLeft,
-	   width: "100%",
-	   imagePosition: "left",
-	   selectText: "Select storage",
-	   onSelected: function (data) {
-	       getStorageOption(data, 'leftStorageLogin', 'leftCSLoginForm', 'leftStorageContent', 'leftLoginIndicator', 'leftCSName', 'leftEndpoint', 'load-left', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter');
-	       sessionStorage.leftCSName=$('#leftCSName').val();
-	   }
-	});
+	//workaround to make the session loading work
+        var setSession= false;
+
+        $('#leftStorageSelect').ddslick({
+           data: ddDataLeft,
+           width: "100%",
+           imagePosition: "left",
+           selectText: "Select storage",
+           onSelected: function (data) {
+               getStorageOption(data, 'leftStorageLogin', 'leftCSLoginForm', 'leftStorageContent', 'leftLoginIndicator', 'leftCSName', 'leftEndpoint', 'load-left', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter');
+               if (setSession) {
+                        sessionStorage.leftCSIndex=data.selectedIndex;
+                }
+           }
+        });
+
+        setSession= true;
+
+        //reload from session
+        if (sessionStorage.leftCSIndex) {
+                var i = parseInt(sessionStorage.leftCSIndex);
+                $('#leftStorageSelect').ddslick('select', {index: i});
+        }
+
 
 	var ddDataRight = [
 		              {
@@ -145,14 +145,8 @@ $( document ).ready(function() {
 
 	}
 
-	$('#leftStorageLogin').hide();
-	$('#rightStorageLogin').hide();
-
-        //restoring the vaule of the CS Left
-
-        $('#leftCSName').val(sessionStorage.letCSName);
-        //getStorageOption(data, 'leftStorageLogin', 'leftCSLoginForm', 'leftStorageContent', 'leftLoginIndicator', 'leftCSName', 'leftEndpoint', 'load-left', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter');
-
+	//$('#leftStorageLogin').hide();
+	//$('#rightStorageLogin').hide();
 
 	checkCSState('leftStorageSelect', 'leftStorageContent', 'leftCSLoginForm', 'leftLoginIndicator', 'leftStorageLogin', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter', 'leftEndpoint', 'leftCSName');	
 	console.log( "ready!" );	
@@ -233,6 +227,19 @@ function saveCheckboxState() {
 		sessionStorage.lfcregistration = Boolean($('#lfcregistration').prop('checked'));
 	}	
 }
+
+function refreshFiles() {
+        if (sessionStorage.leftCSIndex && sessionStorage.leftCSIndex > 0 ) {
+                $('#left-loading-indicator').show();
+                $('#leftEpFilter').val('');
+                getLoginCS( $('#leftCSName').val(), 'leftStorageLogin', 'leftStorageContent', 'leftCSLoginForm', 'leftLoginIndicator', $('#leftEndpoint').val(), 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter', 'leftEndpoint');
+                 }
+        else {
+                getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter');
+        }
+
+}
+
 
 $('#overwrite').popover();
 $('#lfcregistration').popover();
@@ -317,15 +324,15 @@ $('#checksum').popover();
 					<div class="panel-heading">
 						<div class="btn-toolbar">
 							<div class="btn-group ">
-								<button type="button" class="btn btn-sm"
+								<button type="button"  id="selectAllLeft" class="btn btn-sm"
 									onclick="selectAllFiles('leftEndpointContent')">Select
 									All</button>
-								<button type="button" class="btn btn-sm"
+								<button type="button"  id="selectNoneLeft" class="btn btn-sm"
 									onclick="selectNoneFiles('leftEndpointContent')">None</button>
 							</div>
 							<div class="btn-group">
 								<button type="button" class="btn btn-sm"
-									onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter')">
+									onclick="refreshFiles()">
 									<i class="glyphicon glyphicon-refresh" />&nbsp;Refresh
 								</button>
 							</div>
@@ -535,10 +542,10 @@ $('#checksum').popover();
 								data-intro="<h3><strong>Selection buttons:</strong></h3>
 											<h4>By clicking one, you can select/unselect all your files.</h4>"
 								data-position="bottom">
- -->								<button type="button" class="btn btn-sm"
+ -->								<button type="button"  id="selectAllRight" class="btn btn-sm"
 									onclick="selectAllFiles('rightEndpointContent')">Select
 									All</button>
-								<button type="button" class="btn btn-sm"
+								<button type="button"  id="selectNoneRight" class="btn btn-sm"
 									onclick="selectNoneFiles('rightEndpointContent')">None</button>
 							</div>
 							<div class="btn-group" id="id8">

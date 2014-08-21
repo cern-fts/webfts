@@ -1,8 +1,6 @@
 var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
-var endpointsListURL = "https://webfts.cern.ch/endpointList";
-
 var permissionNumberMeaning = {
 	    0 : '---',
 	    1 : '--x',
@@ -15,11 +13,18 @@ var permissionNumberMeaning = {
 	};
 
 function runTransfer(container, origFolder, destFolder, CSLeftSelect){
-	if (false){ //#TODO: remove "true" and do a check of the expiration time
+	console.log("remaining proxy lifetime: " + sessionStorage.remainingProxyLifetime);
+	if (sessionStorage.remainingProxyLifetime && sessionStorage.remainingProxyLifetime < 3600*1000*2 ){//2 hours 
 		$("#warningTransferButton").click({c: container, o: origFolder, d: destFolder, s:CSLeftSelect}, function(e) {
 			executeTransfer(e.data.c, e.data.o, e.data.d, e.data.s);
-		});			
-		$("#expirationModal").show();
+			$("#expirationModal").modal('hide');
+		});
+		$("#doDelegateButton").click(function(e) {
+              		showDelegateModal(); 
+			$("#expirationModal").modal('hide');
+                });
+					
+		$("#expirationModal").modal('show');
 	} else {
 		executeTransfer(container, origFolder, destFolder, CSLeftSelect);
 	}	
@@ -28,74 +33,20 @@ function runTransfer(container, origFolder, destFolder, CSLeftSelect){
 
 function executeTransfer(container, origFolder, destFolder, CSLeftSelect){		
 	hideUserReport();
-	//if ($('#lfcregistration').prop('checked')) {
-	//	runMultiHopTransfer(container, origFolder, destFolder);
-	// else if (protocolValidation(origFolder, destFolder)){
-	//	var selectedFiles = getSelectedFiles(container);
-	//    if (selectedFiles.length > 0){
-	//		var theData = {};
-	//		theData["files"] = [];       	      	
-	//		for (var i=0; i<selectedFiles.length; i++){
-	//			var files = {};
-	//			files["sources"] = [];
-	//			files["sources"] = getFullPath(selectedFiles[i], document.getElementById(origFolder).value.trim());
-	//			files["destinations"] = [];
-	//			files["destinations"] = getFullPath(selectedFiles[i], document.getElementById(destFolder).value.trim());
-	//			theData["files"].push(files);
-	//		}
-	//		theData["params"] = {};
-	//		theData["params"].verify_checksum = $('#checksum').prop('checked');
-	//		theData["params"].overwrite = $('#overwrite').prop('checked');
-	//		runDataTransfer($('#delegation_id').val(), theData);
-	//    }	  
-	//} else {
-	//	showUserError("The protocols should be the same or at least one of them has to be SRM");
-	//}
 	var selectedFiles = getSelectedFiles(container);
         if (selectedFiles.length > 0){
     		var optionSelected = $('#' + CSLeftSelect).data('ddslick'); 
 	    	if (optionSelected.selectedIndex > 0){
-  	    		runDataTransfer($('#delegation_id').val(), getCSDataTransfer(origFolder, destFolder, selectedFiles, optionSelected.selectedData.text.toLowerCase()));  	    		    	    		    	    	    	    	    					          } else {	    	    		    	    	    	    	    					    		    	    		runDataTransfer($('#delegation_id').val(), getDataTransfer(origFolder, destFolder, selectedFiles));
+  	    		runDataTransfer($('#delegation_id').val(), getCSDataTransfer(origFolder, destFolder, selectedFiles, optionSelected.selectedData.text.toLowerCase()));  	    		    				          } 
+							else {	    	    		    	    	    	    	    					    		    	    		runDataTransfer($('#delegation_id').val(), getDataTransfer(origFolder, destFolder, selectedFiles));
 		}
 	
 	}    
 	return false;
 }
 
-function runMultiHopTransfer(container, origFolder, destFolder){	  
-	if (protocolValidation(origFolder, destFolder)){
-		var selectedFiles = getSelectedFiles(container);
-	    if (selectedFiles.length > 0){
-			var theData = {};
-			theData["files"] = [];       	      	
-			for (var i=0; i<selectedFiles.length; i++){
-				var files = {};
-				files["sources"] = [];
-				files["sources"] = getFullPath(selectedFiles[i], document.getElementById(origFolder).value.trim());
-				files["destinations"] = [];
-				files["destinations"] = getFullPath(selectedFiles[i], document.getElementById(destFolder).value.trim());
-				theData["files"].push(files);
-			}
-                        for (var i=0; i<selectedFiles.length; i++){
-                                var files = {};
-                                files["sources"] = [];
-                                files["sources"] = getFullPath(selectedFiles[i], document.getElementById(destFolder).value.trim());
-                                files["destinations"] = [];
-                                files["destinations"] = getFullPath(selectedFiles[i], $('#lfcendpoint').val());
-                                theData["files"].push(files);
-                        }
-			theData["params"] = {};
-                        theData["params"].verify_checksum = $('#checksum').prop('checked');
-                        theData["params"].overwrite = $('#overwrite').prop('checked');
-			theData["params"].multihop = true;
-			runDataTransfer($('#delegation_id').val(), theData);
-	    }	  
-	} else {
-		showUserError("The protocols should be the same or at least one of them has to be SRM");
-	}    
-	return false;
-}
 
+//TO REMOVE CAUSE UNUSED
 function protocolValidation(o,d){
 	var ori = document.getElementById(o).value.trim().split(':')[0];
 	var des = document.getElementById(d).value.trim().split(':')[0];
@@ -110,21 +61,8 @@ function protocolValidation(o,d){
 	var selectedFiles = getSelectedFiles(container);
     	if (selectedFiles.length > 0){
     	
-    	//Check if there are url parameters
-    	//if (getUrlVars()["service"] != null){
-    		//CS -SE transfer
-//    		var factory = new CSFactory();
-//    		var cs = factory.createCS(getUrlVars()["service"]);
-//    		var urlList = [];
-//    		cs.getShareLinkAndSubmit(getUrlVars()["oauth_token"], getUrlVars()["oauth_token_secret"], selectedFiles, urlList, destFolder);
-    	//} else {
-    		//Grid SE -SE transfer
-    	//	runDataTransfer($('#delegation_id').val(), getDataTransfer(origFolder, destFolder, selectedFiles));
-    	//}	
     	var optionSelected = $('#' + CSLeftSelect).data('ddslick'); 
     	if (optionSelected.selectedIndex > 0){
-    		//var factory = new CSFactory(optionSelected.selectedData.text);
-			//var cs = factory.createCS();	
     		runDataTransfer($('#delegation_id').val(), getCSDataTransfer(origFolder, destFolder, selectedFiles, optionSelected.selectedData.text.toLowerCase()));
     	} else {
     		runDataTransfer($('#delegation_id').val(), getDataTransfer(origFolder, destFolder, selectedFiles));
@@ -134,8 +72,11 @@ function protocolValidation(o,d){
 }
 
 function getDataTransfer(origFolder, destFolder, selectedFiles) {
+	
 	var theData = {};
-	theData["files"] = [];       	      	  
+        theData["files"] = [];
+	theData["params"] = {};
+
 	for (var i=0; i<selectedFiles.length; i++){
 		var files = {};
 		files["sources"] = [];
@@ -144,8 +85,22 @@ function getDataTransfer(origFolder, destFolder, selectedFiles) {
 		files["destinations"] = getFullPath(selectedFiles[i], document.getElementById(destFolder).value.trim());
 		theData["files"].push(files);
 	}
-	theData["params"] = [];
-	  
+	
+	if ($('#lfcregistration').prop('checked')) {
+                        for (var i=0; i<selectedFiles.length; i++){
+                                var files = {};
+                                files["sources"] = [];
+                                files["sources"] = getFullPath(selectedFiles[i], document.getElementById(destFolder).value.trim());
+                                files["destinations"] = [];
+                                files["destinations"] = getFullPath(selectedFiles[i], $('#lfcendpoint').val());
+                                theData["files"].push(files);
+                        }
+			
+                        theData["params"].multihop = true;
+	}
+	theData["params"].verify_checksum = $('#checksum').prop('checked');
+        theData["params"].overwrite = $('#overwrite').prop('checked');
+	
 	return theData;	
 }
 
@@ -316,7 +271,21 @@ function getInitialRowContent(endpointInput, container, containerTable, indicato
 function renderFolderContent(tableId, countId, container, indicator, stateText){
         // Initialise with the Ctrl Click Functionality as the Default
         $("#" + tableId + " tbody").finderSelect({enableDesktopCtrlDefault:true, totalSelector:"."+countId , selectClass:'label-info'});
-        clearContentTable(tableId, container, indicator, stateText);
+        $("#" + tableId + " tbody").finderSelect('addHook','highlight:after', function(element, options) { 
+    	for (var i=0; i < element.length; i++){
+    		//Avoid selecting elements outside the filters
+    		if (($(element[i]).css("display") != null) && ($(element[i]).css("display") == "none")){
+    			$(element[i]).removeClass(options.selectClass);
+    			$(element[i]).addClass(options.unSelectClass);
+    		}
+    		//Do not select folders
+    		if ((element[i].firstChild.title == "") || (element[i].firstChild.title.indexOf('/') != -1 )){
+    			$(element[i]).removeClass(options.selectClass);
+    			$(element[i]).addClass(options.unSelectClass);
+    		}
+    	}
+    	});
+	clearContentTable(tableId, container, indicator, stateText);
 }
 
 function selectAllFiles(container){ 
@@ -584,45 +553,60 @@ function getPrintableFileName(fileName){
 	return fileName;
 }
  
-
-function loadEndpointsList(boxes){
-	$.ajax({
-		url : endpointsListURL,
-		type : "GET",
-		dataType : 'xml',
-		xhrFields : {
-			withCredentials : true
-		},
-		
-		success : function(xml) {
-			if (xml != null){
-				var availableURLs = [];
-				$(xml).find("entry").each(function()
-						  {
-							endpoint = $(this).find("endpoint").text();
-							if ($(this).find("type").text() == "SRM"){
-								if (endpoint.substring(0,5) == "httpg")
-									availableURLs.push("srm" + endpoint.substring(5, endpoint.length));
-							} else {
-								availableURLs.push(endpoint);
-							}
-						    $("#output").append($(this).attr("author") + "<br />");
-						  });
-				for(var i =0; i < boxes.length; i++){
-					loadEPList(boxes[i], availableURLs);
-				}
-			}
-		},
-		error : function(jqXHR, textStatus, errorThrown) {
-			console.log("File with the endpoints list not avaialble or not accesible");
-			console.log(jqXHR);
-			console.log("ERROR: " + JSON.stringify(jqXHR));
-			console.log(textStatus + "," + errorThrown);
-		}
-	});
-	//console.log("The filtered array has " + newArray.length + " elements");
-	//return newArray;
+function loadEndpointsList(){
+	availableURLs = []
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", sessionStorage.endpointsUrl, true);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;                
+                var availableURLs = allText.split('\n');
+                for (var i=0; i<availableURLs.length; i++){
+                	if (availableURLs[i].substring(0,5) == "httpg"){
+                		availableURLs[i] = "srm" + availableURLs[i].substring(5, availableURLs[i].length);
+                	} else {
+                		availableURLs[i] = availableURLs[i].replace("?SFN=","");
+                	}                	
+                }
+                availableURLs = applyTestingFilter(availableURLs);
+				$( "#leftEndpoint" ).autocomplete({
+					source: availableURLs,
+					minLength: 2
+				});
+				$( "#rightEndpoint" ).autocomplete({
+					source: availableURLs,
+					minLength: 2
+				});
+	  }
+        }
+    }
+ rawFile.send(null);
 }
+
+function applyTestingFilter(uArray){
+	var found_set = {};
+	var epurl = "";
+	var newArray = [];
+	for (var i=0; i<uArray.length; i++){
+		epurl = uArray[i];
+		if ((epurl == "") || (epurl.indexOf("UNDEFINED") != -1)) 
+			continue;
+		var ele = getFilter(epurl);		
+		if (found_set[ele]){
+			console.log(ele + " is already in the set");
+		} else {
+			found_set[ele] = true;
+			newArray.push(epurl);
+		}
+	}
+	console.log("The filtered array has " + newArray.length + " elements");
+	return newArray;
+}
+
 
 function getFilter(epurl){	
 	return getHost(epurl);
@@ -704,11 +688,13 @@ function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginI
 	$('#' + contentDiv).show();
 	
 	if (currentSelect.selectedIndex > 0){ 
-		// Cloud storage, not Grid SE
-		//currentSelect.selectedData.text;
 		
 		$('#' + inputTextbox).prop('readonly', true);
 		$('#' + loadButton).prop("disabled",true);
+		
+		$('#lfcregistration').prop("disabled",true);
+		$('#checksum').prop("disabled",true);
+		$('#lfcendpoint').prop("disabled",true);
 		
 		if ((getUrlVars()["service"] != currentSelect.selectedData.text.toLowerCase()) &&
 				($('#' + CSName).val().toLowerCase() != currentSelect.selectedData.text.toLowerCase())){
@@ -734,6 +720,9 @@ function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginI
 		}		
 		$('#' + inputTextbox).prop('readonly', false);
 		$('#' + loadButton).prop("disabled",false);
+		$('#lfcregistration').prop("disabled",false);
+                $('#checksum').prop("disabled",false);
+		$('#lfcendpoint').prop("disabled",false)
 	}
 	$('#' + CSName).val(currentSelect.selectedData.text.toLowerCase());
 }
@@ -744,7 +733,7 @@ function getLoginCS(CSName, loginDiv, contentDiv, loginForm, loadingPanel, path,
 	var cs = factory.createCS(CSName);
 	showRemoteLoader(loginForm, loadingPanel);		
 	//cs.getAuthRequest();			
-	cs.getCSAccess(loginDiv, contentDiv, "/", container, containerTable, indicator, stateText, filter, endpointInput, CSName);
+	cs.getCSAccess(loginDiv, contentDiv, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName);
 }
 
 function showRemoteLoader(loginForm, loadingPanel){
@@ -796,7 +785,7 @@ function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTabl
 		if (cur.is_dir == true){
 			icon ="glyphicon glyphicon-folder-close";
 			t_row.push("<tr value='" + cur.path  + "' onclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + cur.path.trim() + "','" + filter + "','" + CSName + "')\">");
-			t_row.push('<td title="' + filePath + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
+			t_row.push('<td title="' + filePath + '\/"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
 		} else {
 			icon ="glyphicon glyphicon-file";	
 			t_row.push('<tr value="' + cur.path + '">');
@@ -879,7 +868,8 @@ function getCSDataTransfer(origFolder, destFolder, selectedFiles, CSName) {
 			|| (document.getElementById(origFolder).value.trim().lastIndexOf("/", 0) === 0)){
 		//Cloud storage
 		theData["params"].credential = CSName;
-	}	
+	}
+	theData["params"].overwrite = $('#overwrite').prop('checked');	
 	  
 	return theData;	
 }

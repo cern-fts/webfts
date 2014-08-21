@@ -121,6 +121,14 @@ else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) <
 </script>
 <!-- Browser Compatibility ends-->
 
+<script src="js/ftsHelper.js"></script>
+<script>
+$( document ).ready(function() {
+        if(!sessionStorage.ftsRestEndpoint)
+                getConfig();
+});
+</script>
+
 </head>
 
 

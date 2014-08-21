@@ -1,0 +1,22 @@
+{
+  "name": "webfts",
+  "version": "2.0.0",
+  "homepage": "https://github.com/cern-it-sdc-id/webfts",
+  "authors": [
+    "amanzi <andrea.manzi@cern.ch>"
+  ],
+  "description": "The package provides the WEB Interface for the FTS3 service",
+  "main": "index.php",
+  "keywords": [
+    "file",
+    "transfer"
+  ],
+  "license": "ASL 2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

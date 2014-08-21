@@ -1,17 +1,13 @@
-//var ftsEndpoint = "https://fts3-devel.cern.ch:8446";//"https://fts3-pilot.cern.ch:8446";
-//var ftsEndpoint = "https://fts3devel01.cern.ch:8446";
-//var ftsEndpoint = "https://fts3-devel-oracle.cern.ch:8446";
-//var ftsEndpoint = "https://webfts.cern.ch:8446";
-
-var ftsEndpoint = "https://fts3cloudy01.cern.ch:8446";
-var certHours = 12; // Hours of live of the certificate
-
 var supportText = "Please, try again and contact support if the error persists";
-var jobsToRetrieve = 100;
 
-function getFTSEndpoint(){
+function getConfig(){
 	$.get("../config.xml", function(data){
-	    return $(data).find('basic').attr('fts_address');
+	    $(data).find('config').each(function() {
+		sessionStorage.ftsRestEndpoint=$(this).find('ftsAddress').text();
+		sessionStorage.jobsToList=$(this).find('jobToList').text();
+	    	sessionStorage.endpointsUrl=$(this).find('endpointListUrl').text();
+	    	sessionStorage.proxyCertHours=$(this).find('proxyCertHours').text();
+		});
 	});
 }
 
@@ -22,7 +18,7 @@ function showError(jqXHR, textStatus, errorThrown, message) {
 	//alert("ERROR: " + JSON.stringify(jqXHR));
 	console.log(textStatus + "," + errorThrown);
 	if (jqXHR.status > 0)
-		uessage += ". Reason: " + jqXHR.status + ": " + jqXHR.responseText;
+		message += ". Reason: " + jqXHR.status + ": " + jqXHR.responseText;
 		
 	if (message != null)
 		showUserError(message);	
@@ -30,7 +26,7 @@ function showError(jqXHR, textStatus, errorThrown, message) {
 }
 
 function getUserJobs(delegationId){
-	var urlE = ftsEndpoint + "/jobs?dlg_id=" + delegationId + "&state_in=SUBMITTED,ACTIVE,FINISHED,FAILED,CANCELED&limit="+ jobsToRetrieve;
+	var urlE = sessionStorage.ftsRestEndpoint + "/jobs?dlg_id=" + delegationId + "&state_in=SUBMITTED,ACTIVE,FINISHED,FAILED,CANCELED&limit="+ sessionStorage.jobsToList;
 	$.support.cors = true;
 	$.ajax({
 		url : urlE,
@@ -50,7 +46,7 @@ function getUserJobs(delegationId){
 }
 
 function getJobTranfers(jobId, isResubmit, overwrite, compare_checksum,resubmitAll){
-	var urlE = ftsEndpoint + "/jobs/" + jobId + "/files";
+	var urlE = sessionStorage.ftsRestEndpoint + "/jobs/" + jobId + "/files";
 	$.support.cors = true;
 	$.ajax({
 		url : urlE,
@@ -74,7 +70,7 @@ function getJobTranfers(jobId, isResubmit, overwrite, compare_checksum,resubmitA
 }
 
 function removeTransfer(jobID){
-	var urlEndp = ftsEndpoint + "/jobs/" + jobID;
+	var urlEndp = sessionStorage.ftsRestEndpoint + "/jobs/" + jobID;
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
@@ -105,7 +101,7 @@ function getUTCDate(time) {
 
 // Call to make the transfer between two endpoints
 function ftsTransfer(theData) {
-	var urlE = ftsEndpoint + "/jobs";
+	var urlE = sessionStorage.ftsRestEndpoint + "/jobs";
 	theData = JSON.stringify(theData);
 	$.support.cors = true;
 	outPut = $.ajax({
@@ -188,7 +184,7 @@ function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {
 		tbsc.setNotBeforeByParam({
 			'str' : getUTCDate(ctime)
 		});
-		ctime.setUTCHours(ctime.getUTCHours() + 1 + certHours);
+		ctime.setUTCHours(ctime.getUTCHours() + 1 + sessionStorage.proxyCertHours);
 		tbsc.setNotAfterByParam({
 			'str' : getUTCDate(ctime)
 		});
@@ -256,8 +252,7 @@ function getSKID(dom, skid){
 
 //Check delegation ID, save it and check if there is a valid proxy 
 function getDelegationID(fieldName, delegationNeeded){
-	var d = getFTSEndpoint();
-	var urlEndp = ftsEndpoint + "/whoami";
+	var urlEndp = sessionStorage.ftsRestEndpoint + "/whoami";
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
@@ -290,7 +285,7 @@ function runDataTransfer(delegationID, transferData){
 }
 
 function removeDelegation(delegationID, showRemoveDelegationMessage){
-	var urlEndp = ftsEndpoint + "/delegation/" + delegationID;
+	var urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID;
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
@@ -315,7 +310,7 @@ function removeDelegation(delegationID, showRemoveDelegationMessage){
 
 //Check if there is a valid delegation done. Otherwise, do it 
 function checkAndTransfer(delegationID, transferData, showModal){
-	var urlEndp = ftsEndpoint + "/delegation/" + delegationID;
+	var urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID;
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
@@ -357,9 +352,10 @@ function checkAndTransfer(delegationID, transferData, showModal){
 					}
 				} else {
 					showRemainingProxyTime(millisecondsToStr(remainingTime));
+					sessionStorage.remainingProxyLifetime=remainingTime;
 					if (transferData != null){				
 						ftsTransfer(transferData);
-					}
+					} 
 				}						
 			}	
 		},
@@ -371,7 +367,7 @@ function checkAndTransfer(delegationID, transferData, showModal){
 
 //Do delegation of credentials
 function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
-	var urlEndp = ftsEndpoint + "/delegation/" + delegationID + "/request";
+	var urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID + "/request";
 	$.support.cors = true;
 	// Call 3: Asking for a new proxy certificate is needed
 	$.ajax({
@@ -385,7 +381,7 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 			var x509Proxy = signRequest(data3, userPrivateKeyPEM, userDN, userCERT); 
 			x509Proxy += "" + userCERT;
 			//console.log(x509Proxy);
-			urlEndp = ftsEndpoint + "/delegation/" + delegationID + '/credential';
+			urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID + '/credential';
 			// Call 4: Delegating the signed new proxy certificate
 			$.ajax({
 				url : urlEndp,									
@@ -423,7 +419,7 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 }
 
 function getVOMSCredentials(delegationID, user_vo){
-	var urlEndp = ftsEndpoint + "/delegation/" + delegationID + "/voms";
+	var urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID + "/voms";
 	$.support.cors = true;
 	var uvo = '["' + user_vo + '"]';
 	
@@ -455,7 +451,7 @@ function getVOMSCredentials(delegationID, user_vo){
 }
 
 function getEndpointContent(endpointInput, container, containerTable, indicator, stateText, filter){
-        urlEndp = ftsEndpoint + "/dm/list?surl=" + ($('#' + endpointInput).val()).trim();
+        urlEndp = sessionStorage.ftsRestEndpoint + "/dm/list?surl=" + ($('#' + endpointInput).val()).trim();
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,

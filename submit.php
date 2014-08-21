@@ -72,6 +72,13 @@
 <!-- <script src="js/lib/js/js-rsa-pem.js"></script>  -->
 <script src="js/jquery.ddslick.min.js"></script>
 
+<script>
+$( document ).ready(function() {
+        if(!sessionStorage.ftsRestEndpoint)
+                getConfig();
+});
+</script>
+
 
 <script> 
 	$(function(){

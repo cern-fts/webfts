@@ -1,4 +1,13 @@
 <script>
+$(document).ready(function(){
+        $.get("config.xml", function(data){
+                $('#userVO').append("<option></option>");
+                $(data).find('VO').each(function () {
+                        $('#userVO').append($("<option></option>").text($(this).text()));
+                });
+        });
+});
+
 jQuery.validator.addMethod("checkCert", function (value, element) {
     return value.substring(0,31)=="-----BEGIN RSA PRIVATE KEY-----";
 }, "The private key must start with -----BEGIN RSA PRIVATE KEY-----");
@@ -92,15 +101,7 @@ $("#pemPkey").bind('input propertychange', function(){
 					   <p class="text-center"><label class="control-label" for="privateKey">Virtual Organization</label><small> (VO only if VOMS credentials are required to access the endpoint)</small></p>
                                            <p class="text-center"><small>Please contact the <a href="mailto:fts-support@cern.ch?subject=Support for new VO&body">support</a> if you wish more Virtual Organizations to be supported</small> </p>
                                         </div>
-					<select class="form-control" id="userVO" >
-                                    		<option></option>
-                                    		<option>atlas</option>
-                                    		<option>biomed</option>
-                                    		<option>cms</option>
-                                    		<option>dteam</option>
-                                    		<option>lhcb</option>
-                                    		<option>ops</option>
-                         		</select>
+					<select class="form-control" id="userVO" />
 				<div class="modal-footer ">
 					<div class="controls center">
 						<button type="button" class="btn btn-primary"
