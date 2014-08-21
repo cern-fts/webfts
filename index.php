@@ -239,6 +239,9 @@ else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) <
 								<p class='col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 button' data-slide='2' title=' ' style='text-align: center'></p>
 						</div>	
 					</div>
+					<div class="poweredBy-text">
+						<h5>WebFTS is powered by FTS3. CERN - EUDAT, 2014</h5>
+					</div>
 
 				</div>
 
