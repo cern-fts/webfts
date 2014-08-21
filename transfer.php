@@ -671,15 +671,12 @@ $('#checksum').popover();
 		</div>
 	</div>		
 </div>	
-<!-- <script type="text/javascript" src="/js/site-tourModal.js"></script>-->
-
-
 
 <script type="text/javascript" src="/site-tour/introJs/intro.js"></script>
-<script type="text/javascript" src="/js/site-tourModal.js"></script>
+<script type="text/javascript" src="/js/site-tourTransfer.js"></script>
 
 <script type="text/javascript">
-        if (RegExp('multipage', 'gi').test(window.location.search)) {
-           myIntro.start();
-        }
+    if (RegExp('multipage', 'gi').test(window.location.search)) {
+        myIntro.start();
+    }
 </script>
