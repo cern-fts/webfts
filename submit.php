@@ -114,31 +114,6 @@
 					<div id="includedContentTransfer"></div>
 				</div>
 			</div>
-
-
-
-	<script type="text/javascript" src="/site-tour/introJs/intro.js"></script>
-
-<!--
-	// <script type="text/javascript">
-	//     if (RegExp('multipage', 'gi').test(window.location.search)) {
-	//        introJs().start();
-	//     }
-	// </script>
--->
-	<!-- Multi - Site tour script starts -->
-<!--    // <script type="text/javascript">
-    //   window.onload = function() {
-    //     introJs().start().oncomplete(function() {
-    //       window.location.href = 'transmissions.php?multipage=true';
-    //     });
-    //   };
-    // </script>
--->	<!-- Multi - Site tour script ends -->
-
-
-
-
-
+	<script type="text/javascript" src="/js/site-tourTransmissions.js"></script>
 </body>
 </html>

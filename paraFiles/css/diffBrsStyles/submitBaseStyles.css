@@ -133,10 +133,26 @@
 	z-index: 200;
 }
 
-.modal-dialog{
-	margin-top: 205px !important;
+/*.modal-dialog{
+	margin-top: 100px !important;
+	position: relative;
+	top: 180px;
+}*/
+
+/*.modal-window{
+	margin-top: -180px !important;
+	position: relative;
+	top: 180px;
+}*/
+
+.modal-content{
+ 	/*left: 460px;*/
+    position: relative;
+/*    z-index: 1024;
+*/
+	  top: -30px;
 }
 
-.modal-backdrop{
-	/*z-index: 1000;*/
+.modal-dialog{
+	top: 200px;
 }
