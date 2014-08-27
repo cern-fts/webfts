@@ -193,11 +193,11 @@ $( document ).ready(function() {
 
 					<div class='container-fluid border-element'>
 						<div class='row-fluid border-element' id='main-area-slide1'>
-							<div class='col-md-4 col-md-offset-1 col-sm-4 col-sm-offset-1 col-sm-4 col-sm-offset-1' id='front-left-block'>
+							<div class='col-md-4 col-md-offset-1 col-sm-4 col-sm-offset-1 col-sm-4 col-sm-offset-1 ' id='front-left-block'>
 									<div class="news-title">
 										<span class='glyphicon glyphicon-ok-sign'></span> News<br/>
 									</div>
-									<div id="divRss"></div>
+									<div id="divRss" class="jumbotron-fluid" ></div>
 									
 				    				<div class='jumbotron-fluid' id='readMore'>
 										<a class="btn btn-info btn-responsive"  onclick="window.open(this.href,'_blank');return false;" href="http://fts3-service.web.cern.ch/documentation/releases"><strong>Read more...</strong></a>
