@@ -39,7 +39,6 @@
 
 
 <!--Parallax scripts start-->
-<script type="text/javascript" src='http://codeorigin.jquery.com/jquery-2.0.3.min.js'></script>
 <script type="text/javascript" src='paraFiles/js/jquery.stellar.min.js'></script>
 <script type="text/javascript" src='paraFiles/js/waypoints.js'></script>
 <script type="text/javascript" src='paraFiles/js/jquery.easing.1.3.js'></script>
@@ -121,9 +120,20 @@ else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) <
 </script>
 <!-- Browser Compatibility ends-->
 
+<!-- rss feed -->
+<script type="text/javascript" src="js/lib/FeedEk-2.0.2-patched/FeedEk.js"></script>
+
 <script src="js/ftsHelper.js"></script>
 <script>
 $( document ).ready(function() {
+	$('#divRss').FeedEk({
+    		FeedUrl : 'http://fts3-service.web.cern.ch/rss.xml',
+    		MaxCount : 3,
+    		ShowDesc : false,
+    		ShowPubDate: true,
+    		TitleLinkTarget: '_blank',
+  	});
+
         if(!sessionStorage.ftsRestEndpoint)
                 getConfig();
 });
@@ -185,12 +195,10 @@ $( document ).ready(function() {
 						<div class='row-fluid border-element' id='main-area-slide1'>
 							<div class='col-md-4 col-md-offset-1 col-sm-4 col-sm-offset-1 col-sm-4 col-sm-offset-1' id='front-left-block'>
 									<div class="news-title">
-										<span class='glyphicon glyphicon-ok-sign'></span> Release 3.2.22:<br/>
+										<span class='glyphicon glyphicon-ok-sign'></span> News<br/>
 									</div>
-									<div class="news-content">
-										<div class='glyphicon glyphicon-ok'>&#09 UDT support,</div>
-										<div class='glyphicon glyphicon-ok'>&#09 configuring FTS3 to use GridFTP/UDT instead of GridFTP/TCP</div>
-				    				</div>	
+									<div id="divRss"></div>
+									
 				    				<div class='jumbotron-fluid' id='readMore'>
 										<a class="btn btn-info btn-responsive"  onclick="window.open(this.href,'_blank');return false;" href="http://fts3-service.web.cern.ch/documentation/releases"><strong>Read more...</strong></a>
 									</div>			
