@@ -1,8 +1,11 @@
 var NO_DELEGATION_DETECTED = "No delegation detected";
-var EXISTING_PROXY_DETECTED = "Your current proxy is still valid for ";
+var EXISTING_PROXY_DETECTED = "Your current proxy is valid for ";
+var VO_DETECTED = "for the VO ";
 
-function showRemainingProxyTime(timeText){
-	$('#proxyTimeSpan').text(EXISTING_PROXY_DETECTED + timeText + " ");	
+function showRemainingProxyTime(timeText,vo){
+	$('#proxyTimeSpan').text(EXISTING_PROXY_DETECTED + timeText + " ");
+	if (vo !== "")	
+		$('#proxyTimeSpan').append(VO_DETECTED + vo + " ");	
 	updateProxyButtons('proxyTimeSpan');
 }
 

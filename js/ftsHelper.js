@@ -351,7 +351,8 @@ function checkAndTransfer(delegationID, transferData, showModal){
 						showDelegateModal();
 					}
 				} else {
-					showRemainingProxyTime(millisecondsToStr(remainingTime));
+					var vo = data2.voms_attrs[0];
+					showRemainingProxyTime(millisecondsToStr(remainingTime),vo);
 					sessionStorage.remainingProxyLifetime=remainingTime;
 					if (transferData != null){				
 						ftsTransfer(transferData);
