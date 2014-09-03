@@ -41,23 +41,28 @@ $(function(){
 	<button type="button" class="close" data-dismiss="alert" onclick="$('serverkeyAlertSuccess').hide()">&times;</button>
 	<small id="serverSuccessText"></small>
 </div>
-<table class="table table-bordered table-condensed table-hover" id="jobResultsTable">
-<!-- <table class="table table-condensed" id="jobResultsTable" style="border-collapse:collapse;"> -->
-	<thead>
-		<tr>
-			<th>Job ID
-				<div class="btn-group pull-right">
-					<button type="button" class="btn btn-xs btn-primary" onclick="getDelegationID('delegation_id', false)">
-						<i class="glyphicon glyphicon-refresh"/>&nbsp;Refresh
-					</button>					
-				</div>
-			</th>
-			<th>Submit Time</th>
-			<th>Source SE</th>
-			<th>Dest. SE</th>
-		</tr>
-	</thead>
-	<tbody>
-	</tbody>
-</table>
+<div id="idjobsTable">
+<!-- 		data-step="1" 
+		data-intro="<h4>In this area are going to be displayed all your submitted jobs! Check the live status of your submittions whenever you want!</br><strong>Are you ready to start?</strong></h4>"
+		data-position="bottom-middle-aligned">
+ -->	<table class="table table-bordered table-condensed table-hover" id="jobResultsTable">
+	<!-- <table class="table table-condensed" id="jobResultsTable" style="border-collapse:collapse;"> -->
+		<thead>
+			<tr>
+				<th>Job ID
+					<div class="btn-group pull-right">
+						<button type="button" class="btn btn-xs btn-primary" onclick="getDelegationID('delegation_id', false)">
+							<i class="glyphicon glyphicon-refresh"/>&nbsp;Refresh
+						</button>					
+					</div>
+				</th>
+				<th>Submit Time</th>
+				<th>Source SE</th>
+				<th>Dest. SE</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+</div>
 </div>

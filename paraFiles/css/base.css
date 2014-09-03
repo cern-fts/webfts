@@ -1,0 +1,289 @@
+h1,h2,h3,h4,h5{
+	font-family: 'Arial';
+}
+
+
+html, body {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	z-index: -400;
+}
+
+
+.padding-class-2{
+	margin-bottom: -12.5%; 
+}
+
+
+.panel{
+	background-color: #E0F0FF;
+}
+
+
+.tr{
+	background-color: rgba(0,0,0,0.5);
+}
+
+
+.navigation {
+	padding: 0;
+	margin: 0;
+	background: #333;
+	position: fixed;
+	top: 0;
+	z-index: 999;
+	width: 100%;
+
+	li {
+		display: inline-block;
+		padding:  5px 10px;
+
+		 a{
+		 	color: #e1e1e1;
+		 	text-decoration: none;
+
+		 	a:hover {
+		 		color:lighten(#e1e1e1, 20%);
+		 	}	
+		 }
+	}
+	.active {
+		background-color:  lighten(#333, 20%);
+	}
+}
+
+
+.nav-justified{
+
+	border-radius: 1.5px solid #CCCCCC;
+	margin-right: 25px;
+	text-align: center;
+}
+
+
+.text-muted{
+
+  color: #D6D6D6;
+  text-shadow: 2px 2px #000;
+  z-index: 280;
+}
+
+
+small{
+  color: #ccc;
+}
+
+.navbar-left {
+  color: #fff;
+}
+
+
+.main{
+	margin-top: 30px;
+	height: 100%;
+	width: 100%;
+	z-index: -400;
+	/*z-index: 100;*/
+}
+
+
+#front-left-block{
+	background-color: rgba(31, 91, 153, 0);
+	z-index: 150;
+}
+
+
+.news-title{
+	font-family: 'Arial Black';
+	font-size: 22px;
+	font-weight: bold;
+	padding-bottom: 8%;
+}
+
+
+.news-content{
+	font-family: 'Arial Black';
+	font-size: 18px;
+	line-height: 3;
+	word-wrap:break-word;
+	padding-bottom: 5%;
+}
+
+.sticky-bottom,
+.sticky-bottom-continue {
+	position: absolute;
+	display: block;
+	z-index: 150;
+}
+
+#pointer{
+	cursor: pointer;
+}
+
+
+.button {
+	bottom: 0%;
+	background-image: url('../img/arrow-down.png'); 
+	background-repeat: no-repeat;
+	opacity: 0.9;
+	z-index: 150;
+}
+
+
+.runew-label-1,
+#continue-label {   
+	font-weight: bold;
+    text-align: center;
+    z-index: 150;
+}
+
+
+.runew-label-1{
+	color: #1f2136;
+    text-shadow: 0 0.1em 0.2em white;
+}
+
+
+#continue-label{
+	color: #fff;
+    text-shadow: 0 0.1em 0.2em Black;
+}
+
+
+#readMore{
+	font-family: "Arial Black", Gadget, sans-serif;
+}
+
+
+.slide{
+	top: 30px;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	width: 100%;
+	height:100%;
+	position: relative;
+	padding: 5%;
+}
+
+
+#slide1{
+    background-image: url('../img/slide1/metal-main-back.jpg');
+    background-repeat: no-repeat;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size:  cover;
+    z-index: 100;
+}
+
+.poweredBy-text{
+    position: fixed;
+    bottom: 10px;
+    color: #132036;
+    right: 15px;
+}
+
+
+#main-area-slide1{
+	font-family: "Arial Black", Gadget, sans-serif;
+}
+
+
+#slide2{
+	background-image: url('../img/slide2/sl-storage.jpg');
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size:  cover;
+	z-index: 9;
+}
+
+
+
+/*
+*
+*	Parts of Slide-2
+*
+*/
+.info-block-header-desc{
+	font-weight: bold;
+}
+
+
+.info-block-desc,
+.info-block-desc-dark,
+#info-block-desc-dark-sl4{
+	padding: 1% 0%;
+}
+
+
+.info-block-desc-dark{
+	background-color: rgba(31,33,54,0.8);
+	box-shadow: 5px 10px 40px 10px #10101b;
+    color: #ffffff;
+    padding: 1% 5%; 
+}
+
+
+#slide3 {
+	background: url('../img/slide3/FTSearth2.png');
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size:  cover;
+	z-index: -9;
+}
+
+
+
+/*
+*
+*	Parts of slide-3
+*
+*/
+.info-block-black{
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.7);
+    box-shadow: 15px 20px 60px 20px #000000;
+    padding: 1% 2%; 
+    color: #ffffff;
+}
+
+
+#continue-label-earth{
+	font-weight: bold;
+    text-align: center;
+    z-index: 210;
+	color: #000;
+    text-shadow: 0.1em 0.1em 0.1em white;
+}
+
+
+#slide4{
+	background-image: url('../img/slide4/blue-f.png');
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size:  cover;
+	z-index: 9;
+}
+
+
+
+/*
+*
+*	Parts of slide-4
+*
+*/
+#info-block-desc-dark-sl4{
+    padding: 1% 5%; 
+}
+
+
+.startTourButton{
+	padding-top: 10%;
+	margin-top: 25%;
+}

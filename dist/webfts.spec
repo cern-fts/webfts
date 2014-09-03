@@ -1,5 +1,5 @@
 Name:           webfts
-Version:        1.4.0
+Version:        2.1.0
 Release:        1%{?dist}
 Summary:        Web Interface for FTS 
 Group:          Applications/Internet
@@ -9,8 +9,14 @@ Source:         %{name}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArchitectures: noarch
 
+<<<<<<< HEAD
 Requires:       httpd
 Requires:       php
+=======
+Requires:	httpd
+Requires:	php
+
+>>>>>>> master
 
 %description
 The package provides the WEB Interface for the FTS3 service
@@ -45,6 +51,8 @@ service httpd restart
 /var/www/%{name}
 
 %changelog
+* Tue Aug 27 2014 Andrea Manzi <amanzi@cern.ch> - 2.0.0-1
+- dropbox support
 * Tue Jul 22 2014 Andrea Manzi <amanzi@cern.ch> - 1.4.0-1
 - added support for LFC registration, overwrite and checksums
 - added resubmission of failed files only

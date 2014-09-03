@@ -1,0 +1,25 @@
+<script>
+//To prevent the modal window to be closed by pressing ESC or clicking outside
+$('#expirationModal').modal({
+ 	  show: false,	
+ 	  backdrop: 'static',
+ 	  keyboard: false
+ });
+</script>
+<div class="modal fade" id="expirationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">	
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">					
+					The existing proxy will expire soon. We suggest you to delegate again. Are you sure you still want to submit this transfer?
+					<input type="hidden" id="transferButtonTrigger" value="">										
+			</div>
+			<div class="modal-footer ">
+				<div class="controls center">
+					<button type="button" class="btn btn-primary" name="doDelegateButton" id="doDelegateButton">Delegate</button>
+					<button type="button" class="btn btn-primary" name="warningTransferButton" id="warningTransferButton">Transfer</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>								
+				</div>
+			</div>
+		</div>
+	</div>	<!-- /.modal-dialog -->
+</div> <!-- /.modal -->

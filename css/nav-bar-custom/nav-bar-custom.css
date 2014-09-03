@@ -1,0 +1,206 @@
+body {
+  padding-top: 20px;
+}
+
+.sticky {
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  top: 15px;
+}
+
+.text-muted{
+
+  color: #D6D6D6;
+  text-shadow: 2px 2px #000;
+  z-index: 280;
+}
+
+
+.navbar-left {
+  color: #fff;
+}
+
+
+.masthead{
+  padding-top: -1%;
+}
+
+
+.container-top-outer{
+  top: 0px;
+  position: absolute;
+  z-index: 300;
+  height: 170px;
+  width: 100%;
+  z-index: 200;
+}
+
+  
+.container-top-inner {
+  background-color: #132036;
+  padding: 1% 5% 0%;
+  margin-right: auto;
+  margin-left: auto;
+  height: 180px;
+  width: 100%;
+  display: table;
+  z-index: 200;
+}
+
+
+.container-top-inner:before,
+.container-top-inner:after {
+  display: table;
+  content: " ";
+}
+
+
+.container-top-inner:after {
+  clear: both;
+}
+
+
+.container-top-inner:before,
+.container-top-inner:after {
+  display: table;
+  content: " ";
+}
+
+
+.container-top-inner:after {
+  clear: both;
+}
+
+
+.container-central{
+  /*margin-top: 9%;*/
+  /*height: 85%;*/
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+
+
+.divider{
+  height: 40px;
+  text-align: center;
+  width: 100%;
+  z-index: 10;
+}
+
+
+.footer {
+  border-top: 1px solid #eee;
+  margin-top: 40px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  background-color: transparent;
+}
+
+
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px;
+}
+
+
+/* Customize the nav-justified links to be fill the entire space of the .navbar */
+
+.nav-justified {
+  border-radius: 3px;
+  border-style: groove;
+  border: 2px solid #0F1A2B !important;
+}
+
+
+.nav-justified > li > a {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  color: #fff;
+  text-shadow: 2px 2px #000;
+  background-color: #2b364a;
+  border-left: none;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 1px solid #0F1A2B;
+  z-index: 250;
+}
+
+
+.nav > li > a:hover,
+.nav > li > a:focus {
+  color: #04070C;
+  font-weight: bold;
+  font-size: 14px;
+  background-color: #535c6c;
+  text-shadow: none;
+}
+
+
+.nav-justified > .active > a{
+  color: #04070C;
+  text-shadow: none;
+  background-color: #959ba5;
+  box-shadow: inset 0 3px 7px rgba(0,0,0,.15);
+}
+
+
+.nav-justified > .active > a:hover,
+.nav-justified > .active > a:focus {
+  color: #04070C;
+  text-shadow: none;
+  box-shadow: inset 0 3px 7px rgba(0,0,0,.15);
+  background-color: #535c6c;
+}
+
+
+.nav-justified > li:first-child > a {
+  border-radius: 5px 5px 0 0;
+}
+
+
+.nav-justified > li:last-child > a {
+  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+
+
+@media (min-width: 768px) {
+  .nav-justified {
+    max-height: 52px;
+  }
+
+  .nav-justified > li > a {
+
+    border-right: 4px solid #0f1a2b; 
+  }
+
+  .nav-justified > li:first-child > a {
+    border-left: 0;
+    border-radius: 5px 0 0 5px;
+  }
+
+  .nav-justified > li:last-child > a {
+    border-radius: 0 5px 5px 0;
+    border-right: 0;
+  }
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .masthead,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

@@ -1,8 +1,11 @@
 var NO_DELEGATION_DETECTED = "No delegation detected";
-var EXISTING_PROXY_DETECTED = "Your current proxy is still valid for ";
+var EXISTING_PROXY_DETECTED = "Your current proxy is valid for ";
+var VO_DETECTED = "for the VO ";
 
-function showRemainingProxyTime(timeText){
-	$('#proxyTimeSpan').text(EXISTING_PROXY_DETECTED + timeText + " ");	
+function showRemainingProxyTime(timeText,vo){
+	$('#proxyTimeSpan').text(EXISTING_PROXY_DETECTED + timeText + " ");
+	if (vo !== "")	
+		$('#proxyTimeSpan').append(VO_DETECTED + vo + " ");	
 	updateProxyButtons('proxyTimeSpan');
 }
 
@@ -72,4 +75,16 @@ function getQueryParams(qs) {
     }
 
     return params;
+}
+
+function getUrlVars(){
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
 }

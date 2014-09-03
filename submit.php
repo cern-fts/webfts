@@ -17,6 +17,16 @@
 <link href="css/custom.css" rel="stylesheet">
 <link href="css/jquery-ui.min.css" rel="stylesheet">
 
+<link rel="stylesheet" href="/paraFiles/css/diffBrsStyles/submitBaseStyles.css"/>
+<link rel="stylesheet" type="text/css" href="/css/nav-bar-custom/nav-bar-custom.css">
+<!-- <link rel="stylesheet" href="/paraFiles/css/base.css"/> -->
+
+<!--
+-->
+<link href="site-tour/introJs/introjs.css" rel="stylesheet">
+<!--
+-->
+
 <script src="js/bootstrap.min.js"></script> 
 <script src="js/jquery.finderSelect.min.js"></script>
 <script src="js/jquery-ui.min.js"></script>
@@ -28,6 +38,8 @@
 <script src="js/ftsHelper.js"></script>
 <script src="js/RSAGenerator.js"></script>
 <script src="js/transfer.js"></script>
+<script src="js/CSFactory.js"></script>
+<script src="js/dropboxHelper.js"></script>
 
 <script src="js/lib/yahoo/yahoo-min.js"></script>
 <script src="js/lib/glibs/core-min.js"></script>
@@ -58,6 +70,15 @@
 <script src="js/lib/kjur-jsrsasign/keyutil-1.0.min.js"></script>
 
 <!-- <script src="js/lib/js/js-rsa-pem.js"></script>  -->
+<script src="js/jquery.ddslick.min.js"></script>
+
+<script>
+$( document ).ready(function() {
+        if(!sessionStorage.ftsRestEndpoint)
+                getConfig();
+});
+</script>
+
 
 <script> 
 	$(function(){
@@ -66,33 +87,40 @@
 </script>
 </head>
 <body>
-	<div class="container">
-		<div class="row">
-			<script> 
-				$(function(){
-				   $("#userAuth").load("userAuth.php"); 
-				});
-			</script>
-			<div id="userAuth"></div>
-			<script> 
-				$(function(){
-				   $("#delegateBtn").load("delegateButton.html"); 
-				});
-			</script>
-			<div id="delegateBtn"></div>
-		</div>
-		<div class="masthead">
-			<h3 class="text-muted">WebFTS (Beta version)  <small><em>Symplifying power</em></small></h3>
-			<ul class="nav nav-justified">
-				<li><a href="index.php"><i class="glyphicon glyphicon-home"></i>&nbsp;Home</a></li>
-				<li><a href="transmissions.php"><i class="glyphicon glyphicon-tasks"></i>&nbsp;My jobs</a></li>
-				<li class="active"><a href="#"><i class="glyphicon glyphicon-chevron-left"></i><i class="glyphicon glyphicon-chevron-right"></i>&nbsp;Submit a transfer</a></li>
-			</ul>
-		</div>
-
-		<div class="row">
-			<div id="includedContentTransfer"></div>
-		</div>
-	</div>
+			<div class='container-top-outer'>
+				<div class="container-top-inner" >
+					<div class="row">
+						<script> 
+							$(function(){
+							   $("#userAuth").load("userAuth.php"); 
+							});
+						</script>
+						<div id="userAuth"></div>
+						<script> 
+							$(function(){
+							   $("#delegateBtn").load("delegateButton.html"); 
+							});
+						</script>
+						<div id="delegateBtn"></div>
+					</div>
+					
+					<div class="masthead">
+						<h3 class="text-muted">WebFTS (Beta version)  <small><em>Symplifying power</em></small></h3>
+						<ul class="nav nav-justified">
+							<li><a href="index.php"><i class="glyphicon glyphicon-home"></i>&nbsp;Home</a></li>
+							<li><a href="transmissions.php"><i class="glyphicon glyphicon-tasks"></i>&nbsp;My jobs</a></li>
+							<li class="active" id="start2ndTour"><a href="#" href='javascript:void(0);'><i class="glyphicon glyphicon-chevron-left"></i><i class="glyphicon glyphicon-chevron-right"></i>&nbsp;Submit a transfer</a></li>
+						</ul>
+					</div>
+				<img src="paraFiles/img/shadow-bottom.png" alt=' ' class='divider' >
+				</div>
+				
+			</div>
+			<div class="main-back">
+				<div class="row">
+					<div id="includedContentTransfer"></div>
+				</div>
+			</div>
+	<script type="text/javascript" src="/js/site-tourTransmissions.js"></script>
 </body>
 </html>

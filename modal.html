@@ -1,4 +1,13 @@
 <script>
+$(document).ready(function(){
+        $.get("config.xml", function(data){
+                $('#userVO').append("<option></option>");
+                $(data).find('VO').each(function () {
+                        $('#userVO').append($("<option></option>").text($(this).text()));
+                });
+        });
+});
+
 jQuery.validator.addMethod("checkCert", function (value, element) {
     return value.substring(0,31)=="-----BEGIN RSA PRIVATE KEY-----";
 }, "The private key must start with -----BEGIN RSA PRIVATE KEY-----");
@@ -54,17 +63,17 @@ $("#pemPkey").bind('input propertychange', function(){
 	$("#pinfo-form").valid();
 });	
 </script>
-<div class="modal fade" id="delegationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="delegationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<form action="" id="pinfo-form" name="pinfo-form"
 				class="form-horizontal" method="post">
 				<div class="modal-body">
-					<h4 class="modal-title">
+					<h4 class="modal-title" >
 						Credentials delegation <a id="popoverDelegate" class="btn" href="#"
-							data-content="There is not an existing valid proxy. You have to delegate your credentials to create a new one."
-							rel="popover" data-placement="right" data-trigger="hover">?</a>
-					</h4>
+								data-content="There is not an existing valid proxy. You have to delegate your credentials to create a new one."
+								rel="popover" data-placement="right" data-trigger="hover">?</a>
+					</h4>		
 					<div class="alert alert-success" id="obtainkeyAlert">
 						<button type="button" class="close" data-dismiss="alert"
 							onclick="$('obtainkeyAlert').hide()">&times;</button>
@@ -91,16 +100,8 @@ $("#pemPkey").bind('input propertychange', function(){
 					<div class="row control-group">
 					   <p class="text-center"><label class="control-label" for="privateKey">Virtual Organization</label><small> (VO only if VOMS credentials are required to access the endpoint)</small></p>
                                            <p class="text-center"><small>Please contact the <a href="mailto:fts-support@cern.ch?subject=Support for new VO&body">support</a> if you wish more Virtual Organizations to be supported</small> </p>
-					</div>
-					<select class="form-control" id="userVO" >
-                                    		<option></option>
-                                    		<option>atlas</option>
-                                    		<option>biomed</option>
-                                    		<option>cms</option>
-                                    		<option>dteam</option>
-                                    		<option>lhcb</option>
-                                    		<option>ops</option>
-                         		</select>
+                                        </div>
+					<select class="form-control" id="userVO" />
 				<div class="modal-footer ">
 					<div class="controls center">
 						<button type="button" class="btn btn-primary"
@@ -117,4 +118,5 @@ $("#pemPkey").bind('input propertychange', function(){
 			</form>
 		</div>
 	</div>	<!-- /.modal-dialog -->
+	
 </div> <!-- /.modal -->
