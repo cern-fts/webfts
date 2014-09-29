@@ -7,6 +7,7 @@ function getConfig(){
 		sessionStorage.jobsToList=$(this).find('jobToList').text();
 	    	sessionStorage.endpointsUrl=$(this).find('endpointListUrl').text();
 	    	sessionStorage.proxyCertHours=$(this).find('proxyCertHours').text();
+		sessionStorage.cernboxBaseUrl=$(this).find('cernboxBaseUrl').text();
 		});
 	});
 }

@@ -70,14 +70,6 @@ $( document ).ready(function() {
            }
         });
 
-        setSession= true;
-
-        //reload from session
-        if (sessionStorage.leftCSIndex) {
-                var i = parseInt(sessionStorage.leftCSIndex);
-                $('#leftStorageSelect').ddslick('select', {index: i});
-        }
-
 
 	var ddDataRight = [
 		              {
@@ -86,7 +78,14 @@ $( document ).ready(function() {
 		                 selected: true,
 		                 description: "Grid Storage Element",
 		                 imageSrc: "img/grid_storage.png"
-		             }
+		             },
+			     {
+                         	text: "CERNBox",
+                         	value: 3,
+                         	selected: false,
+                         	description: "CERNBox Service (Beta)",
+                         	imageSrc: "img/CERNBox-icon.png"
+                     	     },
 		         ];
 		
 	$('#rightStorageSelect').ddslick({
@@ -95,11 +94,28 @@ $( document ).ready(function() {
 		   imagePosition: "left",
 		   selectText: "Select storage",
 		   onSelected: function (data) {
-			   //As for the moment we consider only one...
-			   //getStorageOption(data);
+			   getStorageOption(data, 'rightStorageLogin', 'rightCSLoginForm', 'rightStorageContent', 'rightLoginIndicator', 'rightCSName', 'rightEndpoint', 'load-right', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter');
+			   if (setSession) {
+                        	sessionStorage.rightCSIndex=data.selectedIndex;
+                	   }
 		   }
 	});  
-	$('#rightStorageSelect').prop('disabled', true);
+	//$('#rightStorageSelect').prop('disabled', true);
+
+	setSession= true;
+
+        //reload from session
+        if (sessionStorage.leftCSIndex ) {
+                var i = parseInt(sessionStorage.leftCSIndex);
+                $('#leftStorageSelect').ddslick('select', {index: i});
+                 
+        }
+        if (sessionStorage.rightCSIndex) {
+                var i = parseInt(sessionStorage.rightCSIndex);
+                $('#rightStorageSelect').ddslick('select', {index: i});
+        
+        }
+
 
 	loadEndpointsList()
 	
