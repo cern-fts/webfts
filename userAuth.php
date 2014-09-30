@@ -3,7 +3,7 @@ if ($('#sslalert').text() !== "") {
 		alert($( "#dialog" ).text());
 	}
 if ($('#auth').text() !== "") {
-		sessionStorage.clientCN = $( "#auth" ).text().substring(26);
+		sessionStorage.clientCN = $( "#auth" ).text().substring(25);
 	}
 </script>	
 		<div id="dialog" title="User Certificate Needed"  style="display: none;" >WebFTS needs a valid user certificate installed in your browser.</div>
