@@ -1,10 +1,6 @@
 <!--Add IntroJs styles -->
 <link href="/site-tour/introJs/introjs.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/site-tour-styles/custom-site-tour.css">
-<!-- <link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet"> -->
-<link href="/site-tour/introJs/example/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
-
-
 
 <script>
 $( document ).ready(function() {
@@ -101,9 +97,19 @@ $( document ).ready(function() {
                     			url: 'getcn.php',
                     			success: function(data)
                     			{
-						 if (data !="")
-						 	sessionStorage.clientCN=data.substring(3).trim();
-                    			}
+						if (data != "") {
+							sessionStorage.clientCN=data.substring(3).trim();
+						}
+						else {
+							alert("WebFTS could not retrieve your credentials to access CERNBox, are you a CERNBOX user?");
+							return;
+						}
+                    			},
+					error: function(xhr, desc, err) 
+					{ 
+                                           alert("WebFTS could not retrieve your credentials to access CERNBox, are you a CERNBOX user?");
+					   return;
+					},	
                 		});	
 			}	
 		   getStorageOption(data, 'rightStorageLogin', 'rightCSLoginForm', 'rightStorageContent', 'rightLoginIndicator', 'rightCSName', 'rightEndpoint', 'load-right', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter');

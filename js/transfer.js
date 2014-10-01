@@ -659,7 +659,6 @@ function testEP(availableURLs){
 }
 
 function getDomain(url){
-	 //httpg://duck-03.biocomp.unibo.it:8444/srm/manag?SFN=/dteam
 	var d = url.split(":");
 	var comp = d[1].split(".");
 	var dom = "";
@@ -723,8 +722,9 @@ function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginI
 			path = sessionStorage.cernboxBaseUrl+pathFirst+"/"+sessionStorage.clientCN+"/cernbox";
 			console.log(path);
 
-			$('#rightEndpoint').val(path);
-			$('#load-right').click();
+			$('#' + inputTextbox).val(path);
+			$('#' + loadButton).click();
+			$("#" + stateText).text(($('#' + inputTextbox).val()).trim());
 		}
 	}  else {		
 		if ((getUrlVars()["service"] != null) || ($('#' + CSName).val() != "Grid SE")){
@@ -782,7 +782,6 @@ function checkCSState(combo, storageDiv, loginForm, loadingLoginPanel, loginPane
 }
 
 function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName){
-//function loadFolder(endpointInput, container, containerTable, elements, indicator, stateText, filter){
 	$('#' + endpointInput).val(data.path); 
 
 	clearContentTable(containerTable, container, indicator, stateText);	
