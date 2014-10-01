@@ -717,8 +717,14 @@ function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginI
                 	$('#lfcregistration').prop("disabled",true);
                 	$('#checksum').prop("disabled",true);
                 	$('#lfcendpoint').prop("disabled",true);
+			//creating the path
+			var pathFirst= sessionStorage.clientCN.substring(0,1);
 			
-			
+			path = sessionStorage.cernboxBaseUrl+pathFirst+"/"+sessionStorage.clientCN+"/cernbox";
+			console.log(path);
+
+			$('#rightEndpoint').val(path);
+			$('#load-right').click();
 		}
 	}  else {		
 		if ((getUrlVars()["service"] != null) || ($('#' + CSName).val() != "Grid SE")){

@@ -95,15 +95,14 @@ $( document ).ready(function() {
 	   imagePosition: "left",
 	   selectText: "Select storage",
 	   onSelected: function (data) {
-		   $('#rightCSName').val(data.selectedData.text.toLowerCase());
-		   if (data.selectedData.text.toLowerCase() == "cernbox") {
-			if (!sessionStorage.clientCN)
+		$('#rightCSName').val(data.selectedData.text.toLowerCase());
+		if (!sessionStorage.clientCN) {
 				  $.ajax({
                     			url: 'getcn.php',
                     			success: function(data)
                     			{
 						 if (data !="")
-						 	sessionStorage.clientCN=data.substring(3);
+						 	sessionStorage.clientCN=data.substring(3).trim();
                     			}
                 		});	
 			}	
