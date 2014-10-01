@@ -63,6 +63,7 @@ $( document ).ready(function() {
            imagePosition: "left",
            selectText: "Select storage",
            onSelected: function (data) {
+	       $('#leftCSName').val(data.selectedData.text.toLowerCase());
                getStorageOption(data, 'leftStorageLogin', 'leftCSLoginForm', 'leftStorageContent', 'leftLoginIndicator', 'leftCSName', 'leftEndpoint', 'load-left', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter');
                if (setSession) {
                         sessionStorage.leftCSIndex=data.selectedIndex;
@@ -81,7 +82,7 @@ $( document ).ready(function() {
 		             },
 			     {
                          	text: "CERNBox",
-                         	value: 3,
+                         	value: 2,
                          	selected: false,
                          	description: "CERNBox Service (Beta)",
                          	imageSrc: "img/CERNBox-icon.png"
@@ -89,16 +90,28 @@ $( document ).ready(function() {
 		         ];
 		
 	$('#rightStorageSelect').ddslick({
-		   data: ddDataRight,
-		   width: "100%",
-		   imagePosition: "left",
-		   selectText: "Select storage",
-		   onSelected: function (data) {
-			   getStorageOption(data, 'rightStorageLogin', 'rightCSLoginForm', 'rightStorageContent', 'rightLoginIndicator', 'rightCSName', 'rightEndpoint', 'load-right', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter');
-			   if (setSession) {
-                        	sessionStorage.rightCSIndex=data.selectedIndex;
-                	   }
-		   }
+	   data: ddDataRight,
+	   width: "100%",
+	   imagePosition: "left",
+	   selectText: "Select storage",
+	   onSelected: function (data) {
+		   $('#rightCSName').val(data.selectedData.text.toLowerCase());
+		   if (data.selectedData.text.toLowerCase() == "cernbox") {
+			if (!sessionStorage.clientCN)
+				  $.ajax({
+                    			url: 'getcn.php',
+                    			success: function(data)
+                    			{
+						 if (data !="")
+						 	sessionStorage.clientCN=data.substring(3);
+                    			}
+                		});	
+			}	
+		   getStorageOption(data, 'rightStorageLogin', 'rightCSLoginForm', 'rightStorageContent', 'rightLoginIndicator', 'rightCSName', 'rightEndpoint', 'load-right', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter');
+		   if (setSession) {
+                       	sessionStorage.rightCSIndex=data.selectedIndex;
+               	   }
+	   }
 	});  
 	//$('#rightStorageSelect').prop('disabled', true);
 
@@ -275,7 +288,7 @@ $('#checksum').popover();
 		}
 	?>
          <legend> 
-	 	</legend>
+	 </legend>
 	<div class="alert alert-danger" id="serverkeyAlert"
 		style="display: none">
 		<button type="button" class="close" data-dismiss="alert"

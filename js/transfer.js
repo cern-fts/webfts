@@ -670,7 +670,6 @@ function getDomain(url){
 }
 
 function getHost(url){
-	 //httpg://duck-03.biocomp.unibo.it:8444/srm/manag?SFN=/dteam
 	var d = url.split(":");
 	return d[1].substring(2, d[1].length);
 }
@@ -686,32 +685,42 @@ function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginI
 	$('#' + loginDiv).hide();
 	$('#' + contentDiv).show();
 	
-	if (currentSelect.selectedIndex > 0){ 
+	if (currentSelect.selectedIndex > 0){
+		if ($('#' + CSName).val() == "dropbox") {
+			$('#' + inputTextbox).prop('readonly', true);
+			$('#' + loadButton).prop("disabled",true);
 		
-		$('#' + inputTextbox).prop('readonly', true);
-		$('#' + loadButton).prop("disabled",true);
+			$('#lfcregistration').prop("disabled",true);
+			$('#checksum').prop("disabled",true);
+			$('#lfcendpoint').prop("disabled",true);
 		
-		$('#lfcregistration').prop("disabled",true);
-		$('#checksum').prop("disabled",true);
-		$('#lfcendpoint').prop("disabled",true);
-		
-		if ((getUrlVars()["service"] != currentSelect.selectedData.text.toLowerCase()) &&
+			if ((getUrlVars()["service"] != currentSelect.selectedData.text.toLowerCase()) &&
 				($('#' + CSName).val().toLowerCase() != currentSelect.selectedData.text.toLowerCase())){
-			//clearContentTable(containerTable, container, indicator, stateText);
-			$('#' + loginDiv).show();
-			$('#' + contentDiv).hide();
-			$('#' + loginIndicator).hide();
-			$('#' + loginForm).show();
-		} else{
-			if (getUrlVars().length > 1){
-				var factory = new CSFactory();
-				var cs = factory.createCS(getUrlVars()["service"]);		
-				cs.getCSAccess(loginDiv, contentDiv, "/", container, containerTable, indicator, stateText, filter, inputTextbox, CSName);
-			} else {
-				getCSFolderContent(loginDiv, contentDiv, currentSelect.selectedData.text.toLowerCase(), inputTextbox, container, containerTable, indicator, stateText, "/", filter, CSName);
-			}	
-		}		
-	} else {		
+				//clearContentTable(containerTable, container, indicator, stateText);
+				$('#' + loginDiv).show();
+				$('#' + contentDiv).hide();
+				$('#' + loginIndicator).hide();
+				$('#' + loginForm).show();
+			} else{
+				if (getUrlVars().length > 1){
+					var factory = new CSFactory();
+					var cs = factory.createCS(getUrlVars()["service"]);		
+					cs.getCSAccess(loginDiv, contentDiv, "/", container, containerTable, indicator, stateText, filter, inputTextbox, CSName);
+				} else {
+					getCSFolderContent(loginDiv, contentDiv, currentSelect.selectedData.text.toLowerCase(), inputTextbox, container, containerTable, indicator, stateText, "/", filter, CSName);
+				}	
+			}
+		//CERNBOX		
+		} else	{ 
+			$('#' + inputTextbox).prop('readonly', true);
+                	$('#' + loadButton).prop("disabled",true);
+                	$('#lfcregistration').prop("disabled",true);
+                	$('#checksum').prop("disabled",true);
+                	$('#lfcendpoint').prop("disabled",true);
+			
+			
+		}
+	}  else {		
 		if ((getUrlVars()["service"] != null) || ($('#' + CSName).val() != "Grid SE")){
 			clearContentTable(containerTable, container, indicator, stateText);				
 			$('#' + inputTextbox).val('');
@@ -721,7 +730,7 @@ function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginI
 		$('#' + loadButton).prop("disabled",false);
 		$('#lfcregistration').prop("disabled",false);
                 $('#checksum').prop("disabled",false);
-		$('#lfcendpoint').prop("disabled",false)
+		$('#lfcendpoint').prop("disabled",false);
 	}
 	$('#' + CSName).val(currentSelect.selectedData.text.toLowerCase());
 }
@@ -733,6 +742,10 @@ function getLoginCS(CSName, loginDiv, contentDiv, loginForm, loadingPanel, path,
 	showRemoteLoader(loginForm, loadingPanel);		
 	//cs.getAuthRequest();			
 	cs.getCSAccess(loginDiv, contentDiv, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName);
+}
+
+function getCERNBOXURL() {
+	
 }
 
 function showRemoteLoader(loginForm, loadingPanel){
