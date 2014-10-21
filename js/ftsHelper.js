@@ -117,6 +117,7 @@ function ftsTransfer(theData) {
 		},
 		xhrFields : {
 			withCredentials : true
+
 		},
 		success : function(x, status, xhr) {
 			console.log("OK: " + JSON.stringify(x));			
@@ -129,6 +130,8 @@ function ftsTransfer(theData) {
 	});	
 	return false;
 }
+
+
 
 function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {	
 	var Re = new RegExp(",","g");
@@ -380,8 +383,27 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 		},
 		
 		success : function(data3, status) {
-			var x509Proxy = signRequest(data3, userPrivateKeyPEM, userDN, userCERT); 
-			x509Proxy += "" + userCERT;
+			var asn1 = ProxyJS.Util.pem2asn1(data3);
+			var certificate = new X509();
+    			try {
+        		   certificate.readCertPEM(userCERT);
+    			}
+    			catch (err) {
+        			throw "Invalid or malformed X509 user certificate (contact site administrator)";
+   			}
+                        var privateKey = new RSAKey();
+    			try {
+        			privateKey.readPrivateKeyFromPEMString(userPrivateKeyPEM);
+    			}
+    			catch (err) {
+        			throw "Invalid or malformed RSA private key";
+    			}
+			var x509Proxy = ProxyJS.signRequest(asn1,userDN, certificate,privateKey,parseInt(sessionStorage.proxyCertHours)); 
+			var proxyPem = x509Proxy.getPEMString().replace(/\r/g, "").replace(/^\s*$[\n\r]{1,}/gm, "\n");
+
+    			// Append certificate
+    			proxyPem += "\n" + userCERT;
+			//x509Proxy += "" + userCERT;
 			//console.log(x509Proxy);
 			urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID + '/credential';
 			// Call 4: Delegating the signed new proxy certificate
@@ -390,7 +412,8 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 				type : "POST",
 				contentType : "text/plain; charset=UTF-8", 
 				dataType : 'text',
-				data: x509Proxy,
+				//data: x509Proxy,
+				data: proxyPem,
 				processData : false,
 				beforeSend : function(xhr) {
 					xhr.withCredentials = true;
