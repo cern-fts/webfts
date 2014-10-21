@@ -173,6 +173,9 @@ function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {
 		tbsc.setIssuerByParam({
 			'str' : userDN
 		});
+		
+		tbsc.asn1Issuer.hTLV = ct.getSubjectHex();
+		
 		tbsc.setSubjectByParam({
 			'str' : subject
 		});
@@ -196,8 +199,8 @@ function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {
 		tbsc.appendExtension(new KJUR.asn1.x509.KeyUsage({'bin':'101', 'critical':true}));
 
 		var s = KEYUTIL.getPEM(rsakey);
-	    var sHashHex = getSubjectKeyIdentifier(derUser);
-	    var paramAKI = {'kid': {'hex': sHashHex }, 'issuer': oIssuer, 'critical': false};
+	    	var sHashHex = getSubjectKeyIdentifier(derUser);
+	    	var paramAKI = {'kid': {'hex': sHashHex }, 'issuer': oIssuer, 'critical': false};
 		tbsc.appendExtension(new KJUR.asn1.x509.AuthorityKeyIdentifier(paramAKI));
 		
 		// Sign and get PEM certificate with CA private key
