@@ -273,9 +273,9 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 			var proxyPem = x509Proxy.getPEMString().replace(/\r/g, "").replace(/^\s*$[\n\r]{1,}/gm, "\n");
 
     			// Append certificate
-    			proxyPem += "\n" + userCERT;
-			//x509Proxy += "" + userCERT;
-			//console.log(x509Proxy);
+    			//proxyPem += "\n" + userCERT;
+                        proxyPem +=userCERT;
+			console.log(proxyPem);
 			urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID + '/credential';
 			// Call 4: Delegating the signed new proxy certificate
 			$.ajax({
@@ -283,7 +283,6 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 				type : "POST",
 				contentType : "text/plain; charset=UTF-8", 
 				dataType : 'text',
-				//data: x509Proxy,
 				data: proxyPem,
 				processData : false,
 				beforeSend : function(xhr) {
