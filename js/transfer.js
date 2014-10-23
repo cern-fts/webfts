@@ -719,7 +719,7 @@ function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginI
 			//creating the path
 			var pathFirst= sessionStorage.clientCN.substring(0,1);
 			
-			path = sessionStorage.cernboxBaseUrl+pathFirst+"/"+sessionStorage.clientCN+"/cernbox";
+			path = sessionStorage.cernboxBaseUrl+pathFirst+"/"+sessionStorage.clientCN;
 			console.log(path);
 
 			$('#' + inputTextbox).val(path);
