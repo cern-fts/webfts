@@ -5,15 +5,20 @@ $('#dataManagement').modal({
           backdrop: 'static',
           keyboard: false
  });
+
+$( "#createFolderButton" ).click(function() {
+        createFolder($('#createFolderEndpoint#).val(), $('#createFolderPath#).val());
+});
 </script>
 <div class="modal fade" id="dataManagement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
                 <div class="modal-content" id="createFolderModal">
                         <div class="modal-body">
-					Do you want to create a folder?
-                                        <input type="hidden" id="transferButtonTrigger" value="">                                                                               
+					Please Enter the name of the folder to create at the URL
                         </div>
-                        <div class="modal-footer ">
+                        <input id="createFolderEndpoint" type="text" class="form-control"   value="" disabled=true/> 
+                        <input id="createFolderPath" type="text" class="form-control"   value=""/>
+			<div class="modal-footer ">
                                 <div class="controls center">
                                         <button type="button" class="btn btn-primary" name="createFolderButton" id="createFolderButton">Create Folder</button>
                                         <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>                                                      

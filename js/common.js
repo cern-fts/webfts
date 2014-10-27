@@ -90,11 +90,12 @@ function getUrlVars(){
 }
 
 function showDataManagementModal(type, url){
-        switch(type) {
+          switch(type) {
     		case 'create':
 			$('#renameModal').hide();
 			$('#removeModal').hide();
-			$('#createFolderModal').show();	
+			$('#createFolderModal').show();
+			$('#createFolderEndpoint').val(url);
         	break;
     		case 'remove':
 			$('#renameModal').hide();
