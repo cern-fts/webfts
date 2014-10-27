@@ -40,7 +40,7 @@
 <script src="js/transfer.js"></script>
 <script src="js/CSFactory.js"></script>
 <script src="js/dropboxHelper.js"></script>
-
+<script src="js/datamanagement.js"></script>
 <script src="js/lib/yahoo/yahoo-min.js"></script>
 <script src="js/lib/glibs/core-min.js"></script>
 <script src="js/lib/glibs/enc-base64-min.js"></script>

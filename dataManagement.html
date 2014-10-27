@@ -1,0 +1,52 @@
+<script>
+//To prevent the modal window to be closed by pressing ESC or clicking outside
+$('#dataManagement').modal({
+          show: false,
+          backdrop: 'static',
+          keyboard: false
+ });
+</script>
+<div class="modal fade" id="dataManagement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+                <div class="modal-content" id="createFolderModal">
+                        <div class="modal-body">
+					Do you want to create a folder?
+                                        <input type="hidden" id="transferButtonTrigger" value="">                                                                               
+                        </div>
+                        <div class="modal-footer ">
+                                <div class="controls center">
+                                        <button type="button" class="btn btn-primary" name="createFolderButton" id="createFolderButton">Create Folder</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>                                                      
+                                </div>
+                        </div>
+                </div>
+		 <div class="modal-content" id="removeModal">
+                        <div class="modal-body">
+                                        Do you want to remove a file/folder?
+                                        <input type="hidden" id="transferButtonTrigger" value="">                                                                               
+                        </div>
+                        <div class="modal-footer ">
+                                <div class="controls center">
+                                        <button type="button" class="btn btn-primary" name="removeButton" id="removeButton">Remove</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>                                                      
+                                </div>
+                        </div>
+                </div>
+		<div class="modal-content" id="renameModal">
+                        <div class="modal-body">
+                                        Do you want to rename a file/folder?
+                                        <input type="hidden" id="transferButtonTrigger" value="">                                                                               
+                        </div>
+                        <div class="modal-footer ">
+                                <div class="controls center">
+                                        <button type="button" class="btn btn-primary" name="renameButton" id="removeButton">Rename</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>                                                      
+                                </div>
+                        </div>
+                </div>
+
+        </div>  <!-- /.modal-dialog -->
+</div> <!-- /.modal -->
+
+
+~                           

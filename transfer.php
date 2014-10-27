@@ -1,4 +1,4 @@
-<!--Add IntroJs styles -->
+<!-A-dd IntroJs styles -->
 <link href="/site-tour/introJs/introjs.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/site-tour-styles/custom-site-tour.css">
 
@@ -230,15 +230,14 @@ $("#lfcendpoint").on("change", function(e){
 	setLFCendpoint();
 });
 
-// $("#leftShowFilterButton").click(function() {
-// 	$('#leftFilterPanel').toggle();
-// });
-
 $(function(){
 	   $("#modal_content").load("modal.html");
 	   $("#warning_modal_content").load("expirationWarningModal.html");  
 });
 
+$(function(){
+           $("#datamanagement_modal_content").load("dataManagement.html");
+});
 
 function setLFCendpoint(){
 	if (typeof(Storage)!=="undefined") {
@@ -284,6 +283,7 @@ $('#checksum').popover();
 <div class="row">
 	<div id="modal_content"></div>
 	<div id="warning_modal_content"></div>
+	<div id="datamanagement_modal_content"></div>
 	<?php
 		foreach($_SERVER as $h=>$v){
 			if ($h == "SSL_CLIENT_S_DN")
@@ -327,8 +327,6 @@ $('#checksum').popover();
 				<div class="panel-body">
 					<input type="hidden" id="leftCSName" value="">
 					<form class="form" id="leftCSLoginForm">
-<!-- 						<input type="text" name="leftCSUsername" placeholder="username"> -->
-<!-- 						<input type="password" name="leftCSPassword" placeholder="password"> -->																						
 						<button type="button" id="leftCSLoginBtn" class="btn btn-primary center-block" onclick="getLoginCS( $('#leftCSName').val(), 'leftStorageLogin', 'leftStorageContent', 'leftCSLoginForm', 'leftLoginIndicator', '/', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter', 'leftEndpoint')">Login</button> 						
 					</form>
 					<div id="leftLoginIndicator" style="display: none" class="row">
@@ -340,10 +338,7 @@ $('#checksum').popover();
 				</div>	
 			</div>
 			<div id="leftStorageContent">			
-				<div class="input-group" id="id4"><!-- 
-					data-step="4" 
-					data-intro="<h3><strong>Step 4:</strong></h3><h4>This textfield is going to be enabled only for &quot;<strong>Grid SE</strong>&quot; transfers! At first you have to place here your endpoint and then to press the &quot;load&quot; button in order to load the content of your folder!</h4>"
-					data-position="bottom"> -->
+				<div class="input-group" id="id4">
 					<input id="leftEndpoint" type="text" placeholder="Endpoint path"
 						class="form-control"
 						value="gsiftp://lxfsra10a01.cern.ch/dpm/cern.ch/home/" onchange="setSEpath()" > <span
@@ -353,7 +348,27 @@ $('#checksum').popover();
 							onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter')">Load</button>
 					</span>
 				</div>
-		
+				<div class="panel panel-primary" id="dmpanelleft">
+                                         <div class="panel-heading">
+						<div class="btn-toolbar">
+							<div class="btn-group ">
+                                                                <button type="button"  id="createFolderlLeft" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('create',$('#leftEndpoint').val())">Create 
+                                                                        Folder</button>
+                                                        </div>
+							<div class="btn-group ">
+                                                                <button type="button"  id="removelLeft" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('remove', $('#leftEndpoint').val())">Delete
+                                                                        </button>
+                                                        </div>
+							<div class="btn-group ">
+                                                                <button type="button"  id="renamelLeft" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('rename',$('#leftEndpoint').val())">Rename
+                                                                        </button>
+                                                        </div>
+                                                </div>
+					</div>
+				</div>
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<div class="btn-toolbar">

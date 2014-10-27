@@ -88,3 +88,25 @@ function getUrlVars(){
     }
     return vars;
 }
+
+function showDataManagementModal(type, url){
+        switch(type) {
+    		case 'create':
+			$('#renameModal').hide();
+			$('#removeModal').hide();
+			$('#createFolderModal').show();	
+        	break;
+    		case 'remove':
+			$('#renameModal').hide();
+			$('#createFolderModal').hide();
+			$('#removeModal').show();
+        	break;
+		case 'rename':
+			$('#createFolderModal').hide();
+			$('#removeModal').hide();
+			$('#renameModal').show();	
+    		break;
+		default:
+	}
+	$('#dataManagement').modal('show');
+}
