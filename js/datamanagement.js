@@ -1,23 +1,29 @@
-function removeDelegation(delegationID, showRemoveDelegationMessage){
-        var urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID;
+function createFolder(basePath, folder){
+        var urlEndp = sessionStorage.ftsRestEndpoint + "/dm/mkdir";
+	var newurl= basePath+folder;
+	var theData = {};
+        theData["surl"] = encodeURI(newurl); 
+	dataString= JSON.stringify(theData);
+	console.log(dataString);
         $.support.cors = true;
         $.ajax({
                 url : urlEndp,
-                //type : "DELETE" <-- use directly this is not working
-                data: {"_method":"delete"},
-                dataType:'script',
-                type : "POST",
+		type : "POST",
+		contentType : "application/json",
+                dataType : "json",
+		data: dataString,
+                processData : false,
+		beforeSend : function(xhr) {
+                        xhr.withCredentials = true;
+                },
                 xhrFields : {
                         withCredentials : true
                 },
                 success : function(data1, status) {
-                        if (showRemoveDelegationMessage)
-                                console.log("delegation removed correctly");
-                        showDelegateModal();
-                        showNoProxyMessages();
+                        console.log("folder created");
                 },
                 error : function(jqXHR, textStatus, errorThrown) {
-                        showError(jqXHR, textStatus, errorThrown, "Error removing the existing delegation. "+ supportText);
+                        showError(jqXHR, textStatus, errorThrown, "Error creating the folder: "+ newurl );
                 }
         });
 }
