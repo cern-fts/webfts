@@ -353,17 +353,17 @@ $('#checksum').popover();
 						<div class="btn-toolbar">
 							<div class="btn-group ">
                                                                 <button type="button"  id="createFolderlLeft" class="btn btn-sm"
-                                                                        onclick="showDataManagementModal('create',$('#leftEndpoint').val())">Create 
+                                                                        onclick="showDataManagementModal('create',$('#leftEndpoint').val(), 'left')">Create 
                                                                         Folder</button>
                                                         </div>
 							<div class="btn-group ">
                                                                 <button type="button"  id="removelLeft" class="btn btn-sm"
-                                                                        onclick="showDataManagementModal('remove', $('#leftEndpoint').val())">Delete
+                                                                        onclick="showDataManagementModal('remove', $('#leftEndpoint').val(),'left)">Delete
                                                                         </button>
                                                         </div>
 							<div class="btn-group ">
                                                                 <button type="button"  id="renamelLeft" class="btn btn-sm"
-                                                                        onclick="showDataManagementModal('rename',$('#leftEndpoint').val())">Rename
+                                                                        onclick="showDataManagementModal('rename',$('#leftEndpoint').val(), 'left')">Rename
                                                                         </button>
                                                         </div>
                                                 </div>

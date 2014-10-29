@@ -1,4 +1,4 @@
-function createFolder(basePath, folder){
+function createFolder(basePath, folder, side){
         var urlEndp = sessionStorage.ftsRestEndpoint + "/dm/mkdir";
 	var newurl= basePath+folder;
 	var theData = {};
@@ -22,6 +22,7 @@ function createFolder(basePath, folder){
                 success : function(data1, status) {
                         console.log("folder created");
 			hideDatamanagementModal();
+			$('#load-'+side).trigger("click");
                 },
                 error : function(jqXHR, textStatus, errorThrown) {
                         showError(jqXHR, textStatus, errorThrown, "Error creating the folder: "+ newurl );

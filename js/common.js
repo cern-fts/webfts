@@ -89,7 +89,7 @@ function getUrlVars(){
     return vars;
 }
 
-function showDataManagementModal(type, url){
+function showDataManagementModal(type, url, side){
         if (url =="") {
 		  $('#renameModal').hide();
                   $('#removeModal').hide();
@@ -97,6 +97,7 @@ function showDataManagementModal(type, url){
 	          $('#errorModal').show();
 	} else {	  
 	    $('#errorModal').hide();
+	    $('#sideModal').val(side);
 	    switch(type) {
     		case 'create':
 			$('#renameModal').hide();

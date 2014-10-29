@@ -7,10 +7,11 @@ $('#dataManagement').modal({
  });
 
 $( "#createFolderButton" ).click(function() {
-        createFolder($('#createFolderEndpoint').val(), $('#createFolderPath').val());
+        createFolder($('#createFolderEndpoint').val(), $('#createFolderPath').val(),$('#sideModal').val());
 });
 </script>
 <div class="modal fade" id="dataManagement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<input id="sideModal" type="text" class="form-control"   value="" disabled=true/>
         <div class="modal-dialog">
                 <div class="modal-content" id="createFolderModal">
                         <div class="modal-body">
