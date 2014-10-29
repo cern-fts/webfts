@@ -21,9 +21,11 @@ function createFolder(basePath, folder){
                 },
                 success : function(data1, status) {
                         console.log("folder created");
+			hideDatamanagementModal();
                 },
                 error : function(jqXHR, textStatus, errorThrown) {
                         showError(jqXHR, textStatus, errorThrown, "Error creating the folder: "+ newurl );
+			hideDatamanagementModal();
                 }
         });
 }

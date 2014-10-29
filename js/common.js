@@ -90,7 +90,14 @@ function getUrlVars(){
 }
 
 function showDataManagementModal(type, url){
-          switch(type) {
+        if (url =="") {
+		  $('#renameModal').hide();
+                  $('#removeModal').hide();
+                  $('#createFolderModal').hide();
+	          $('#errorModal').show();
+	} else {	  
+	    $('#errorModal').hide();
+	    switch(type) {
     		case 'create':
 			$('#renameModal').hide();
 			$('#removeModal').hide();
@@ -107,7 +114,11 @@ function showDataManagementModal(type, url){
 			$('#removeModal').hide();
 			$('#renameModal').show();	
     		break;
-		default:
+	  }
 	}
-	$('#dataManagement').modal('show');
+       $('#dataManagement').modal('show');
+}
+
+function hideDatamanagementModal(){
+        $('#dataManagement').modal('hide');
 }
