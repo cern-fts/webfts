@@ -9,15 +9,27 @@ $('#dataManagement').modal({
 $( "#createFolderButton" ).click(function() {
         createFolder($('#createFolderEndpoint').val(), $('#createFolderPath').val(),$('#sideModal').val());
 });
+
+$( "#removeButton" ).click(function() {
+        removeFile( $('#removeEndpoint').val(),$('#sideModal').val());
+});
+
+$( "#renameButton" ).click(function() {
+        rename( $('#basePath').val(),$('#oldname').val(),$('#newname').val(),$('#sideModal').val());
+});
+
 </script>
 <div class="modal fade" id="dataManagement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<input id="sideModal" type="text" class="form-control"   value="" disabled=true/>
+	<input id="sideModal" type="hidden" class="form-control"   value="" disabled="true" />
         <div class="modal-dialog">
                 <div class="modal-content" id="createFolderModal">
                         <div class="modal-body">
-					Please Enter the name of the folder to create at the URL
+					Do you want to create a folder at the following Endpoint?
                         </div>
-                        <input id="createFolderEndpoint" type="text" class="form-control"   value="" disabled=true/> 
+                        <input id="createFolderEndpoint" type="text" class="form-control"   value="" disabled="true"/> 
+			<div class="modal-body">
+                                        Please Enter the name of the folder to create
+                        </div>
                         <input id="createFolderPath" type="text" class="form-control"   value=""/>
 			<div class="modal-footer ">
                                 <div class="controls center">
@@ -28,9 +40,9 @@ $( "#createFolderButton" ).click(function() {
                 </div>
 		 <div class="modal-content" id="removeModal">
                         <div class="modal-body">
-                                        Do you want to remove a file/folder?
-                                        <input type="hidden" id="transferButtonTrigger" value="">                                                                               
+                                        Do you want to remove the file/folder?
                         </div>
+			<input id="removeEndpoint" type="text" class="form-control"   value="" disabled="true"/>
                         <div class="modal-footer ">
                                 <div class="controls center">
                                         <button type="button" class="btn btn-primary" name="removeButton" id="removeButton">Remove</button>
@@ -40,19 +52,24 @@ $( "#createFolderButton" ).click(function() {
                 </div>
 		<div class="modal-content" id="renameModal">
                         <div class="modal-body">
-                                        Do you want to rename a file/folder?
-                                        <input type="hidden" id="transferButtonTrigger" value="">                                                                               
+                                        Do you want to rename the following file/folder?
                         </div>
+			<input id="oldname" type="text" class="form-control"   value="" disabled="true"/>
+			<div class="modal-body">
+                                        Please Enter the new name
+                        </div>
+			<input id="basePath" type="hidden" class="form-control"   value=""/>
+			<input id="newname" type="text" class="form-control"   value=""/>
                         <div class="modal-footer ">
                                 <div class="controls center">
-                                        <button type="button" class="btn btn-primary" name="renameButton" id="removeButton">Rename</button>
+                                        <button type="button" class="btn btn-primary" name="renameButton" id="renameButton">Rename</button>
                                         <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>                                                      
                                 </div>
                         </div>
                 </div>
 		<div class="modal-content" id="errorModal">
                         <div class="modal-body">
-                        	The Endpoint is empty!
+				<input id="errorString" type="text" class="form-control"   value="" disabled=true/>
 			</div>
                         <div class="modal-footer ">
                                 <div class="controls center">
@@ -63,6 +80,3 @@ $( "#createFolderButton" ).click(function() {
 
         </div>  <!-- /.modal-dialog -->
 </div> <!-- /.modal -->
-
-
-~                           

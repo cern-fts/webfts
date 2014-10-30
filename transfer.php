@@ -352,18 +352,18 @@ $('#checksum').popover();
                                          <div class="panel-heading">
 						<div class="btn-toolbar">
 							<div class="btn-group ">
-                                                                <button type="button"  id="createFolderlLeft" class="btn btn-sm"
-                                                                        onclick="showDataManagementModal('create',$('#leftEndpoint').val(), 'left')">Create 
+                                                                <button type="button"  id="createFolderLeft" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('create',$('#leftEndpoint').val(), 'left','leftEndpointContentTable')">Create 
                                                                         Folder</button>
                                                         </div>
 							<div class="btn-group ">
-                                                                <button type="button"  id="removelLeft" class="btn btn-sm"
-                                                                        onclick="showDataManagementModal('remove', $('#leftEndpoint').val(),'left)">Delete
+                                                                <button type="button"  id="removeLeft" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('remove', $('#leftEndpoint').val(),'left','leftEndpointContentTable')">Delete
                                                                         </button>
                                                         </div>
 							<div class="btn-group ">
-                                                                <button type="button"  id="renamelLeft" class="btn btn-sm"
-                                                                        onclick="showDataManagementModal('rename',$('#leftEndpoint').val(), 'left')">Rename
+                                                                <button type="button"  id="renameLeft" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('rename',$('#leftEndpoint').val(), 'left','leftEndpointContentTable')">Rename
                                                                         </button>
                                                         </div>
                                                 </div>

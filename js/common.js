@@ -1,6 +1,9 @@
 var NO_DELEGATION_DETECTED = "No delegation detected";
 var EXISTING_PROXY_DETECTED = "Your current proxy is valid for ";
 var VO_DETECTED = "for the VO ";
+var NO_URL_DETECTED = "No Endpoint detected, please load an endpoint!";
+var NO_FILE_SELECTED = "No file/folder selected, please select one file/folder!"
+var MULTIPLE_FILE_SELECTED = "Multiple file/folder selection is not supported, please select only one file/folder";
 
 function showRemainingProxyTime(timeText,vo){
 	$('#proxyTimeSpan').text(EXISTING_PROXY_DETECTED + timeText + " ");
@@ -89,13 +92,25 @@ function getUrlVars(){
     return vars;
 }
 
-function showDataManagementModal(type, url, side){
-        if (url =="") {
+function showDataManagementModal(type, url, side, container){
+	if (url =="") {
 		  $('#renameModal').hide();
                   $('#removeModal').hide();
                   $('#createFolderModal').hide();
+		  $('#errorString').val(NO_URL_DETECTED); 
 	          $('#errorModal').show();
-	} else {	  
+	} else if (type != 'create' && getSelectedFiles(container).length != 1) {
+		if (getSelectedFiles(container).length ==0) {
+		  $('#errorString').val(NO_FILE_SELECTED);				
+		} else {
+		  $('#errorString').val(MULTIPLE_FILE_SELECTED);
+		}
+		  $('#renameModal').hide();
+                  $('#removeModal').hide();
+                  $('#createFolderModal').hide();
+		  $('#errorModal').show();
+	}
+	else  {	  
 	    $('#errorModal').hide();
 	    $('#sideModal').val(side);
 	    switch(type) {
@@ -109,11 +124,14 @@ function showDataManagementModal(type, url, side){
 			$('#renameModal').hide();
 			$('#createFolderModal').hide();
 			$('#removeModal').show();
+			$('#removeEndpoint').val(url+'/'+getSelectedFiles(container)[0]);
         	break;
 		case 'rename':
 			$('#createFolderModal').hide();
 			$('#removeModal').hide();
 			$('#renameModal').show();	
+			$('#oldname').val(getSelectedFiles(container)[0]);
+			$('#basePath').val(url);
     		break;
 	  }
 	}
