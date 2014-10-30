@@ -227,7 +227,7 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 
 		if (index.slice(-1) == "/"){
 			icon ="glyphicon glyphicon-folder-close";
-			t_row.push("<tr value='" + index.slice(0,-1).trim() + "' onclick=\"getNextFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + index.slice(0,-1).trim() + "','" + filter + "')\">");
+			t_row.push("<tr value='" + index.slice(0,-1).trim() + "' ondblclick=\"getNextFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + index.slice(0,-1).trim() + "','" + filter + "')\">");
 			t_row.push('<td title="' + index + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(index.slice(0,-1).trim()) + '</td>');
 		} else {
 			icon ="glyphicon glyphicon-file";	
@@ -260,7 +260,7 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 
 function getInitialRowContent(endpointInput, container, containerTable, indicator, stateText, filter){
 	if (getPreviousUrl(($('#' + endpointInput).val()).trim()) != null){
-		return "<tr value='previous' onclick=\"getPreviousFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + filter + "')\">" + 
+		return "<tr value='previous' ondblclick=\"getPreviousFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + filter + "')\">" + 
 			   "<td><i class='glyphicon glyphicon-circle-arrow-up'/>&nbsp;..</td><td></td><td></td><td></td></tr>";
 	} else {
 		return null;
@@ -278,10 +278,10 @@ function renderFolderContent(tableId, countId, container, indicator, stateText){
     			$(element[i]).addClass(options.unSelectClass);
     		}
     		//Do not select folders
-    		if ((element[i].firstChild.title == "") || (element[i].firstChild.title.indexOf('/') != -1 )){
-    			$(element[i]).removeClass(options.selectClass);
-    			$(element[i]).addClass(options.unSelectClass);
-    		}
+    		//if ((element[i].firstChild.title == "") || (element[i].firstChild.title.indexOf('/') != -1 )){
+    		//	$(element[i]).removeClass(options.selectClass);
+    		//	$(element[i]).addClass(options.unSelectClass);
+    		//}
     	}
     	});
 	clearContentTable(tableId, container, indicator, stateText);
@@ -750,9 +750,6 @@ function getLoginCS(CSName, loginDiv, contentDiv, loginForm, loadingPanel, path,
 	cs.getCSAccess(loginDiv, contentDiv, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName);
 }
 
-function getCERNBOXURL() {
-	
-}
 
 function showRemoteLoader(loginForm, loadingPanel){
 	$('#' + loginForm).hide();

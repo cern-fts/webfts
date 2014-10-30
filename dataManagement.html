@@ -8,15 +8,40 @@ $('#dataManagement').modal({
 
 $( "#createFolderButton" ).click(function() {
         createFolder($('#createFolderEndpoint').val(), $('#createFolderPath').val(),$('#sideModal').val());
+	$('#loading-indicator').show();
 });
 
 $( "#removeButton" ).click(function() {
         removeFile( $('#removeEndpoint').val(),$('#sideModal').val());
+	$('#loading-indicator').show();
 });
 
 $( "#renameButton" ).click(function() {
         rename( $('#basePath').val(),$('#oldname').val(),$('#newname').val(),$('#sideModal').val());
+        $('#loading-indicator').show();
 });
+
+//enable operaion via pressing enter
+
+$('#createFolderButton').keypress(function(event){
+     if(event.keyCode == 13){
+	 createFolder($('#createFolderEndpoint').val(), $('#createFolderPath').val(),$('#sideModal').val());
+     }
+});
+
+$('#removeButton').keypress(function(event){
+     if(event.keyCode == 13){
+	removeFile( $('#removeEndpoint').val(),$('#sideModal').val());
+    }
+});
+
+$('#renameButton').keypress(function(event){
+     if(event.keyCode == 13){
+	 createFolder($('#createFolderEndpoint').val(), $('#createFolderPath').val(),$('#sideModal').val());
+     }
+});
+
+
 
 </script>
 <div class="modal fade" id="dataManagement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -67,6 +92,12 @@ $( "#renameButton" ).click(function() {
                                 </div>
                         </div>
                 </div>
+		 <div id="loading-indicator" style="display: none" class="row">
+                         <ul class="pager">
+                                      <li><label class="text-center"> Loading...</label>&nbsp;<img
+                                       class="pagination-centered" src="img/ajax-loader.gif" /></li>
+                          </ul>
+                 </div>
 		<div class="modal-content" id="errorModal">
                         <div class="modal-body">
 				<input id="errorString" type="text" class="form-control"   value="" disabled=true/>

@@ -140,4 +140,5 @@ function showDataManagementModal(type, url, side, container){
 
 function hideDatamanagementModal(){
         $('#dataManagement').modal('hide');
+	$('#loading-indicator').hide();
 }
