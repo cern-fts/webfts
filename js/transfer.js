@@ -681,65 +681,36 @@ function loadEPList(ep, availableURLs){
 }
 
 function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginIndicator, CSName, inputTextbox, loadButton, container, containerTable, indicator, stateText, filter){
-	$('#' + loginDiv).hide();
-	$('#' + contentDiv).show();
-	
-	if (currentSelect.selectedIndex > 0){
-		if ($('#' + CSName).val() == "dropbox") {
-			$('#' + inputTextbox).prop('readonly', true);
-			$('#' + loadButton).prop("disabled",true);
-		
-			$('#lfcregistration').prop("disabled",true);
-			$('#checksum').prop("disabled",true);
-			$('#lfcendpoint').prop("disabled",true);
-		
-			if ((getUrlVars()["service"] != currentSelect.selectedData.text.toLowerCase()) &&
-				($('#' + CSName).val().toLowerCase() != currentSelect.selectedData.text.toLowerCase())){
-				//clearContentTable(containerTable, container, indicator, stateText);
-				$('#' + loginDiv).show();
-				$('#' + contentDiv).hide();
-				$('#' + loginIndicator).hide();
-				$('#' + loginForm).show();
-			} else{
-				if (getUrlVars().length > 1){
-					var factory = new CSFactory();
-					var cs = factory.createCS(getUrlVars()["service"]);		
-					cs.getCSAccess(loginDiv, contentDiv, "/", container, containerTable, indicator, stateText, filter, inputTextbox, CSName);
-				} else {
-					getCSFolderContent(loginDiv, contentDiv, currentSelect.selectedData.text.toLowerCase(), inputTextbox, container, containerTable, indicator, stateText, "/", filter, CSName);
-				}	
-			}
-		//CERNBOX		
-		} else	{ 
-			$('#' + inputTextbox).prop('readonly', true);
-                	$('#' + loadButton).prop("disabled",true);
-                	$('#lfcregistration').prop("disabled",true);
-                	$('#checksum').prop("disabled",true);
-                	$('#lfcendpoint').prop("disabled",true);
-			//creating the path
-			var pathFirst= sessionStorage.clientCN.substring(0,1);
-			
-			path = sessionStorage.cernboxBaseUrl+pathFirst+"/"+sessionStorage.clientCN;
-			console.log(path);
+        $('#' + loginDiv).hide();
+        $('#' + contentDiv).show();
 
-			$('#' + inputTextbox).val(path);
-			$('#' + loadButton).click();
-			$("#" + stateText).text(($('#' + inputTextbox).val()).trim());
-		}
-	}  else {		
-		if ((getUrlVars()["service"] != null) || ($('#' + CSName).val() != "Grid SE")){
-			clearContentTable(containerTable, container, indicator, stateText);				
-			$('#' + inputTextbox).val('');
-			$('#' + inputTextbox).attr("placeholder", "Endpoint path");
-		}		
-		$('#' + inputTextbox).prop('readonly', false);
-		$('#' + loadButton).prop("disabled",false);
-		$('#lfcregistration').prop("disabled",false);
-                $('#checksum').prop("disabled",false);
-		$('#lfcendpoint').prop("disabled",false);
-	}
-	$('#' + CSName).val(currentSelect.selectedData.text.toLowerCase());
+	 if ($('#' + CSName).val() == "lhcb federation") {
+                        $('#' + inputTextbox).prop('readonly', true);
+                        $('#lfcregistration').prop("disabled",true);
+                        $('#' + inputTextbox).val("http://federation.desy.de/fed/lhcb/");
+                        $('#' + loadButton).prop("disabled",false);
+                        $('#checksum').prop("disabled",true);
+                        $('#' + loadButton).click();
+                        $("#" + stateText).text(($('#' + inputTextbox).val()).trim());
+                }
+		else  {
+                        $('#' + inputTextbox).prop('readonly', true);
+                        $('#' + loadButton).prop("disabled",true);
+                        $('#lfcregistration').prop("disabled",true);
+                        $('#checksum').prop("disabled",true);
+			$('#lfcendpoint').prop("disabled",true);
+			 var pathFirst= sessionStorage.clientCN.substring(0,1);
+
+                        path = sessionStorage.cernboxBaseUrl+pathFirst+"/"+sessionStorage.clientCN;
+                        console.log(path);
+
+                        $('#' + inputTextbox).val(path);
+                        $('#' + loadButton).click();
+                        $("#" + stateText).text(($('#' + inputTextbox).val()).trim());
+                }
+        $('#' + CSName).val(currentSelect.selectedData.text.toLowerCase());
 }
+
 
 function getLoginCS(CSName, loginDiv, contentDiv, loginForm, loadingPanel, path, container, containerTable, indicator, stateText, filter, endpointInput){
 	var factory = new CSFactory();

@@ -21,6 +21,8 @@ $( document ).ready(function() {
 	$("#leftToRangeFilterDate").datepicker();
 	$("#rightFromRangeFilterDate").datepicker();
 	$("#rightToRangeFilterDate").datepicker();
+	$('#leftEndpoint').prop('readonly', true);
+        $('#rightEndpoint').prop('readonly', true);
 	
 	$('#leftEndpoint').keypress(function(event){
 		if(event.keyCode == 13){
@@ -35,18 +37,11 @@ $( document ).ready(function() {
 
 	var ddDataLeft = [
 	              {
-	                 text: "Grid SE",
+	                 text: "LHCb Federation",
 	                 value: 1,
-	                 selected: true,
-	                 description: "Grid Storage Element",
-	                 imageSrc: "img/grid_storage.png"
-	             },
-	             {
-	                 text: "Dropbox",
-	                 value: 3,
 	                 selected: false,
-	                 description: "Dropbox",
-	                 imageSrc: "img/Dropbox-icon.png"
+	                 description: "LHCb WebDav federation",
+	                 imageSrc: "img/lhcb_logo.jpg"
 	             },
 	         ];
 	         
@@ -69,13 +64,6 @@ $( document ).ready(function() {
 
 
 	var ddDataRight = [
-		              {
-		                 text: "Grid SE",
-		                 value: 1,
-		                 selected: true,
-		                 description: "Grid Storage Element",
-		                 imageSrc: "img/grid_storage.png"
-		             },
 			     {
                          	text: "CERNBox",
                          	value: 2,
@@ -179,7 +167,7 @@ $( document ).ready(function() {
 
 	}
 
-	//$('#leftStorageLogin').hide();
+	$('#leftStorageLogin').hide();
 	//$('#rightStorageLogin').hide();
 
 	checkCSState('leftStorageSelect', 'leftStorageContent', 'leftCSLoginForm', 'leftLoginIndicator', 'leftStorageLogin', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter', 'leftEndpoint', 'leftCSName');	
@@ -346,7 +334,7 @@ $('#checksum').popover();
 					data-position="bottom"> -->
 					<input id="leftEndpoint" type="text" placeholder="Endpoint path"
 						class="form-control"
-						value="gsiftp://lxfsra10a01.cern.ch/dpm/cern.ch/home/" onchange="setSEpath()" > <span
+						value="" onchange="setSEpath()" > <span
 						class="input-group-btn">
 		
 						<button class="btn btn-primary" type="button" id="load-left"
@@ -495,12 +483,6 @@ $('#checksum').popover();
 					<i class="glyphicon glyphicon-chevron-right"></i>
 				</button>
 				
-				<button type="button" class="btn btn-primary btn-block"
-					name="transfer-from-right" id="transfer-from-right"
-					onclick="runTransfer('rightEndpointContentTable', 'rightEndpoint', 'leftEndpoint', 'leftStorageSelect')"
-					disabled>
-					<i class="glyphicon glyphicon-chevron-left glyphicon-white"></i>
-				</button>
 			</div>
 				<br>
 			<div class="more-center-options" id="id10">
@@ -562,7 +544,7 @@ $('#checksum').popover();
 			<div id="rightStorageContent">
 				<div id="leftStorageContent">
 				<div class="input-group">
-					<input id="rightEndpoint" type="text" placeholder="Endpoint path" value="gsiftp://lxfsra10a01.cern.ch/dpm/cern.ch/home/"  onchange="setSEpath()"class="form-control"> <span class="input-group-btn">
+					<input id="rightEndpoint" type="text" placeholder="Endpoint path" value=""  onchange="setSEpath()"class="form-control"> <span class="input-group-btn">
 						<button class="btn btn-primary" type="button" id="load-right"
 							onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter')">Load</button>
 					</span>
