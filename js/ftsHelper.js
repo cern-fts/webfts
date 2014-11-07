@@ -106,7 +106,7 @@ function ftsTransfer(theData) {
 	var urlE = sessionStorage.ftsRestEndpoint + "/jobs";
 	theData = JSON.stringify(theData);
 	$.support.cors = true;
-	outPut = $.ajax({
+	$.ajax({
 		url : urlE,
 		type : "POST",
 		data : theData,
@@ -128,7 +128,6 @@ function ftsTransfer(theData) {
 			showError(xhr, textStatus, errorThrown, "Error submitting the transfer. " + supportText);			
 		}
 	});	
-	return false;
 }
 
 function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {	
