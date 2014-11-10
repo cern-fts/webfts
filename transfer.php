@@ -582,6 +582,28 @@ $('#checksum').popover();
 							onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter')">Load</button>
 					</span>
 				</div>
+				 <div class="panel panel-primary" id="dmpanelRight">
+                                         <div class="panel-heading">
+                                                <div class="btn-toolbar">
+                                                        <div class="btn-group ">
+                                                                <button type="button"  id="createFolderRight" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('create',$('#RightEndpoint').val(), 'right','rightEndpointContentTable')">Create
+                                                                        Folder</button>
+                                                        </div>
+                                                        <div class="btn-group ">
+                                                                <button type="button"  id="removeRight" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('remove', $('#rightEndpoint').val(),'right','rightEndpointContentTable')">Delete
+                                                                        </button>
+                                                        </div>
+                                                        <div class="btn-group ">
+                                                                <button type="button"  id="renameRight" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('rename',$('#rightEndpoint').val(), 'right','rightEndpointContentTable')">Rename
+                                                                        </button>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+
 		
 				<div class="panel panel-primary">
 					<div class="panel-heading">
