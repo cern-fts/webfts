@@ -124,7 +124,7 @@ function showDataManagementModal(type, url, side, container){
 			$('#renameModal').hide();
 			$('#createFolderModal').hide();
 			$('#removeModal').show();
-			$('#removeEndpoint').val(url+'/'+getSelectedFiles(container)[0]);
+			$('#removeEndpoint').val(url+'/'+getSelected(container)[0]);
         	break;
 		case 'rename':
 			$('#createFolderModal').hide();

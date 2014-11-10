@@ -358,7 +358,7 @@ $('#checksum').popover();
                                                         </div>
 							<div class="btn-group ">
                                                                 <button type="button"  id="removeLeft" class="btn btn-sm"
-                                                                        onclick="showDataManagementModal('remove', $('#leftEndpoint').val(),'left','leftEndpointContentTable')">Delete
+                                                                        onclick="showDataManagementModal('remove', $('#leftEndpoint').val(),'left','leftEndpointContentTable')"><i class="glyphicon glyphicon-remove" />&nbsp;Delete
                                                                         </button>
                                                         </div>
 							<div class="btn-group ">
@@ -587,12 +587,12 @@ $('#checksum').popover();
                                                 <div class="btn-toolbar">
                                                         <div class="btn-group ">
                                                                 <button type="button"  id="createFolderRight" class="btn btn-sm"
-                                                                        onclick="showDataManagementModal('create',$('#RightEndpoint').val(), 'right','rightEndpointContentTable')">Create
+                                                                        onclick="showDataManagementModal('create',$('#rightEndpoint').val(), 'right','rightEndpointContentTable')">Create
                                                                         Folder</button>
                                                         </div>
                                                         <div class="btn-group ">
                                                                 <button type="button"  id="removeRight" class="btn btn-sm"
-                                                                        onclick="showDataManagementModal('remove', $('#rightEndpoint').val(),'right','rightEndpointContentTable')">Delete
+                                                                        onclick="showDataManagementModal('remove', $('#rightEndpoint').val(),'right','rightEndpointContentTable')"><i class="glyphicon glyphicon-remove" />&nbsp;Delete
                                                                         </button>
                                                         </div>
                                                         <div class="btn-group ">

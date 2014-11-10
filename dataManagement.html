@@ -12,7 +12,10 @@ $( "#createFolderButton" ).click(function() {
 });
 
 $( "#removeButton" ).click(function() {
-        removeFile( $('#removeEndpoint').val(),$('#sideModal').val());
+	if ($('#removeEndpoint').val().slice(-1) == "/")
+        	removeFolder( $('#removeEndpoint').val(),$('#sideModal').val());
+	else    
+		removeFile( $('#removeEndpoint').val(),$('#sideModal').val());
 	$('#loading-indicator').show();
 });
 

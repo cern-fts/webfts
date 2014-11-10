@@ -306,6 +306,15 @@ function getSelectedFiles(container){
 	return selectedList;
 }
 
+function getSelected(container){
+        var selectedList = [];
+        var selectedEle = $("#" + container + " tbody").finderSelect('selected');
+        for (var i = 0; i < selectedEle.length; i++){
+                selectedList.push(selectedEle[i].attributes.value.title);
+        }
+        return selectedList;
+}
+
 function getEPContent(endpointInput, container, containerTable, indicator, stateText, filter){	
 	hideUserReport();
 	$('#'+indicator).show();
