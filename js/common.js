@@ -118,7 +118,10 @@ function showDataManagementModal(type, url, side, container){
 			$('#renameModal').hide();
 			$('#removeModal').hide();
 			$('#createFolderModal').show();
-			$('#createFolderEndpoint').val(url);
+			if (sessionStorage.leftCSIndex && sessionStorage.leftCSIndex > 0)
+				$('#createFolderEndpoint').val("dropbox://www.dropbox.com");
+			else
+				$('#createFolderEndpoint').val(url);
         	break;
     		case 'remove':
 			$('#renameModal').hide();

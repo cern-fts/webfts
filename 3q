@@ -227,11 +227,11 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 
 		if (index.slice(-1) == "/"){
 			icon ="glyphicon glyphicon-folder-close";
-			t_row.push("<tr title=\'folder\' value='" + index.slice(0,-1).trim() + "' ondblclick=\"getNextFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + index.slice(0,-1).trim() + "','" + filter + "')\">");
+			t_row.push("<tr data-type="folder" value='" + index.slice(0,-1).trim() + "' ondblclick=\"getNextFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + index.slice(0,-1).trim() + "','" + filter + "')\">");
 			t_row.push('<td title="' + index + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(index.slice(0,-1).trim()) + '</td>');
 		} else {
 			icon ="glyphicon glyphicon-file";	
-			t_row.push('<tr title=\'file\' value="' + index + '">');
+			t_row.push('<tr data-type="file" value="' + index + '">');
 			t_row.push('<td title="' + index + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(index) + '</td>');
 		}		
 		$.each(value, function(e_index, e_value){
@@ -310,10 +310,7 @@ function getSelected(container){
         var selectedList = [];
         var selectedEle = $("#" + container + " tbody").finderSelect('selected');
         for (var i = 0; i < selectedEle.length; i++){
-		if (selectedEle[i].attributes.title.value == "folder")
-                	selectedList.push(selectedEle[i].attributes.value.value+"/");
-		else 
-			selectedList.push(selectedEle[i].attributes.value.value);
+                selectedList.push(selectedEle[i].attributes.title.value);
         }
         return selectedList;
 }
@@ -810,11 +807,11 @@ function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTabl
 		var filePath = cur.path.substring(cur.path.lastIndexOf("/")+1, cur.path.lenght); 
 		if (cur.is_dir == true){
 			icon ="glyphicon glyphicon-folder-close";
-			t_row.push("<tr  title=\'folder\' value='" + cur.path  + "' ondbclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + cur.path.trim() + "','" + filter + "','" + CSName + "')\">");
+			t_row.push("<tr value='" + cur.path  + "' onclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + cur.path.trim() + "','" + filter + "','" + CSName + "')\">");
 			t_row.push('<td title="' + filePath + '\/"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
 		} else {
 			icon ="glyphicon glyphicon-file";	
-			t_row.push('<tr title=\'file\' value="' + cur.path + '">');
+			t_row.push('<tr value="' + cur.path + '">');
 			t_row.push('<td title="' + filePath + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
 		}
 		t_row.push('<td>&nbsp;-&nbsp;</td>');

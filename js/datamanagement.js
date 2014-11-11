@@ -1,6 +1,6 @@
 function createFolder(basePath, folder, side){
         var urlEndp = sessionStorage.ftsRestEndpoint + "/dm/mkdir";
-	var newurl= basePath+folder;
+	var newurl= basePath+"/"+folder;
 	var theData = {};
         theData["surl"] = encodeURI(newurl); 
 	dataString= JSON.stringify(theData);
@@ -31,11 +31,10 @@ function createFolder(basePath, folder, side){
         });
 }
 
-function removeFolder(basePath, folder, side){
+function removeFolder(endpoint, side){
         var urlEndp = sessionStorage.ftsRestEndpoint + "/dm/rmdir";
-        var newurl= basePath+folder;
         var theData = {};
-        theData["surl"] = encodeURI(newurl);
+        theData["surl"] = encodeURI(endpoint);
         dataString= JSON.stringify(theData);
         console.log(dataString);
         $.support.cors = true;
@@ -58,7 +57,7 @@ function removeFolder(basePath, folder, side){
                         $('#load-'+side).trigger("click");
                 },
                 error : function(jqXHR, textStatus, errorThrown) {
-                        showError(jqXHR, textStatus, errorThrown, "Error removing the folder: "+ newurl );
+                        showError(jqXHR, textStatus, errorThrown, "Error removing the folder: "+ endpoint );
                         hideDatamanagementModal();
                 }
         });
