@@ -22,7 +22,10 @@ function createFolder(basePath, folder, side){
                 success : function(data1, status) {
                         console.log("folder created");
 			hideDatamanagementModal();
-			$('#load-'+side).trigger("click");
+			if (side == 'left')
+			   refreshFiles();
+			else
+                           $('#load-'+side).trigger("click");
                 },
                 error : function(jqXHR, textStatus, errorThrown) {
                         showError(jqXHR, textStatus, errorThrown, "Error creating the folder: "+ newurl );
@@ -54,7 +57,10 @@ function removeFolder(endpoint, side){
                 success : function(data1, status) {
                         console.log("folder removed");
                         hideDatamanagementModal();
-                        $('#load-'+side).trigger("click");
+			if (side == 'left')
+                           refreshFiles();
+                        else
+                           $('#load-'+side).trigger("click");
                 },
                 error : function(jqXHR, textStatus, errorThrown) {
                         showError(jqXHR, textStatus, errorThrown, "Error removing the folder: "+ endpoint );
@@ -87,7 +93,10 @@ function removeFile(endpoint, side){
                 success : function(data1, status) {
                         console.log("file removed");
                         hideDatamanagementModal();
-                        $('#load-'+side).trigger("click");
+			if (side == 'left')
+                           refreshFiles();
+                        else
+                           $('#load-'+side).trigger("click");
                 },
                 error : function(jqXHR, textStatus, errorThrown) {
                         showError(jqXHR, textStatus, errorThrown, "Error removing the file : "+ endpoint );
@@ -120,7 +129,10 @@ function rename(base, old, newname, side){
                 success : function(data1, status) {
                         console.log("file renamed");
                         hideDatamanagementModal();
-                        $('#load-'+side).trigger("click");
+			 if (side == 'left')
+                           refreshFiles();
+                        else
+                           $('#load-'+side).trigger("click");
                 },
                 error : function(jqXHR, textStatus, errorThrown) {
                         showError(jqXHR, textStatus, errorThrown, "Error renaming the file : "+ old );

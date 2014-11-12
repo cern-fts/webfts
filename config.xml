@@ -3,7 +3,7 @@
 	<jobToList>100</jobToList>
 	<endpointListUrl>https://webfts.cern.ch/endpointList</endpointListUrl> 
 	<proxyCertHours>12</proxyCertHours>
-        <cernboxBaseUrl>root://eosdevbox.cern.ch/eos/devbox/user/</cernboxBaseUrl>
+        <cernboxBaseUrl>root://eosuser.cern.ch/eos/user/</cernboxBaseUrl>
 	<VOs>
 		<VO>atlas</VO>
 		<VO>biomed</VO>

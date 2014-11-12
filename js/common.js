@@ -118,7 +118,7 @@ function showDataManagementModal(type, url, side, container){
 			$('#renameModal').hide();
 			$('#removeModal').hide();
 			$('#createFolderModal').show();
-			if (sessionStorage.leftCSIndex && sessionStorage.leftCSIndex > 0)
+			if (side=='left' && sessionStorage.leftCSIndex && sessionStorage.leftCSIndex > 0)
 				$('#createFolderEndpoint').val("dropbox://www.dropbox.com");
 			else
 				$('#createFolderEndpoint').val(url);
@@ -127,14 +127,20 @@ function showDataManagementModal(type, url, side, container){
 			$('#renameModal').hide();
 			$('#createFolderModal').hide();
 			$('#removeModal').show();
-			$('#removeEndpoint').val(url+'/'+getSelected(container)[0]);
+			if (side == 'left' && sessionStorage.leftCSIndex && sessionStorage.leftCSIndex > 0)
+				$('#removeEndpoint').val("dropbox://www.dropbox.com"+'/'+getSelected(container)[0]);
+			else
+				$('#removeEndpoint').val(url+'/'+getSelected(container)[0]);
         	break;
 		case 'rename':
 			$('#createFolderModal').hide();
 			$('#removeModal').hide();
 			$('#renameModal').show();	
 			$('#oldname').val(getSelectedFiles(container)[0]);
-			$('#basePath').val(url);
+			if (side == 'left' && sessionStorage.leftCSIndex && sessionStorage.leftCSIndex > 0)
+				$('#basePath').val("dropbox://www.dropbox.com");
+			else
+				$('#basePath').val(url);
     		break;
 	  }
 	}
