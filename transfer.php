@@ -59,9 +59,9 @@ $( document ).ready(function() {
            imagePosition: "left",
            selectText: "Select storage",
            onSelected: function (data) {
-	       $('#leftCSName').val(data.selectedData.text.toLowerCase());
-               getStorageOption(data, 'leftStorageLogin', 'leftCSLoginForm', 'leftStorageContent', 'leftLoginIndicator', 'leftCSName', 'leftEndpoint', 'load-left', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter');
-               if (setSession) {
+               getStorageOption(data, 'leftStorageLogin', 'leftCSLoginForm', 'leftStorageContent', 'leftLoginIndicator', 'leftCSName', 'leftEndpoint', 'load-left', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter','left');
+               $('#leftCSName').val(data.selectedData.text.toLowerCase());
+		if (setSession) {
                         sessionStorage.leftCSIndex=data.selectedIndex;
                 }
            }
@@ -69,21 +69,21 @@ $( document ).ready(function() {
 
 
 	var ddDataRight = [
-		              {
-		                 text: "Grid SE",
-		                 value: 1,
-		                 selected: true,
-		                 description: "Grid Storage Element",
-		                 imageSrc: "img/grid_storage.png"
-		             },
-			     {
-                         	text: "CERNBox",
-                         	value: 2,
-                         	selected: false,
-                         	description: "CERNBox Service (Beta)",
-                         	imageSrc: "img/CERNBox-icon.png"
-                     	     },
-		         ];
+	             {
+	                text: "Grid SE",
+                 	value: 1,
+		        selected: true,
+		        description: "Grid Storage Element",
+		        imageSrc: "img/grid_storage.png"
+		     },
+		     {
+                      	text: "CERNBox",
+                       	value: 2,
+                       	selected: false,
+                       	description: "CERNBox Service (Beta)",
+                       	imageSrc: "img/CERNBox-icon.png"
+                      },
+		        ];
 		
 	$('#rightStorageSelect').ddslick({
 	   data: ddDataRight,
@@ -112,13 +112,12 @@ $( document ).ready(function() {
 					},	
                 		});	
 			}	
-		   getStorageOption(data, 'rightStorageLogin', 'rightCSLoginForm', 'rightStorageContent', 'rightLoginIndicator', 'rightCSName', 'rightEndpoint', 'load-right', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter');
+		   getStorageOption(data, 'rightStorageLogin', 'rightCSLoginForm', 'rightStorageContent', 'rightLoginIndicator', 'rightCSName', 'rightEndpoint', 'load-right', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter','right');
 		   if (setSession) {
                        	sessionStorage.rightCSIndex=data.selectedIndex;
                	   }
 	   }
 	});  
-	//$('#rightStorageSelect').prop('disabled', true);
 
 	setSession= true;
 
@@ -175,12 +174,9 @@ $( document ).ready(function() {
                         $('#load-right').trigger("click");
                  }  
 	  }
-
-
 	}
 
 	//$('#leftStorageLogin').hide();
-	//$('#rightStorageLogin').hide();
 
 	checkCSState('leftStorageSelect', 'leftStorageContent', 'leftCSLoginForm', 'leftLoginIndicator', 'leftStorageLogin', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter', 'leftEndpoint', 'leftCSName');	
 	console.log( "ready!" );	

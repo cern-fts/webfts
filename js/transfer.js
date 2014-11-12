@@ -680,12 +680,12 @@ function loadEPList(ep, availableURLs){
 	});
 }
 
-function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginIndicator, CSName, inputTextbox, loadButton, container, containerTable, indicator, stateText, filter){
+function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginIndicator, CSName, inputTextbox, loadButton, container, containerTable, indicator, stateText, filter,side){
 	$('#' + loginDiv).hide();
 	$('#' + contentDiv).show();
 	
 	if (currentSelect.selectedIndex > 0){
-		if ($('#' + CSName).val() == "dropbox") {
+		if (side == "left") {
 			$('#' + inputTextbox).prop('readonly', true);
 			$('#' + loadButton).prop("disabled",true);
 		
