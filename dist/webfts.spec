@@ -42,6 +42,7 @@ service httpd restart
 
 %files
 %config(noreplace) /etc/httpd/conf.d/%{name}.conf
+%config(noreplace) /var/www/%{name}/config.xml
 %defattr(-,root,root,-)
 /var/www/%{name}
 
