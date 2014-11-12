@@ -44,3 +44,13 @@ service httpd restart
 %config(noreplace) /etc/httpd/conf.d/%{name}.conf
 %defattr(-,root,root,-)
 /var/www/%{name}
+
+%changelog
+* Thu Nov 13 2014 Andrea Manzi <amanzi@cern.ch> - 2.1.0-1
+- cernbox support
+- added voname to proxy
+* Tue Aug 27 2014 Andrea Manzi <amanzi@cern.ch> - 2.0.0-1
+- dropbox support
+* Tue Jul 22 2014 Andrea Manzi <amanzi@cern.ch> - 1.4.0-1
+- added support for LFC registration, overwrite and checksums
+- added resubmission of failed files only
