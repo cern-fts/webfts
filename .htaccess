@@ -1,0 +1,18 @@
+# SSO Auth
+<IfModule mod_shib>
+Require shibboleth
+AuthType shibboleth
+ShibRequireSession Off
+ShibExportAssertion On
+</IfModule>
+<IfModule auth_mellon_module>
+AuthType "Mellon"
+MellonEnable "info"
+MellonEndpointPath /mellon
+MellonSamlResponseDump On
+MellonSPentityId "https://%{SERVER_NAME}/"
+MellonSPMetadataFile /var/www/webfts/metadata-mellon.xml
+MellonSPCertFile /etc/grid-security/sp-cert.pem
+MellonSPPrivateKeyFile /etc/grid-security/sp-key.pem
+MellonIdPMetadataFile /etc/shibboleth/dev-FederationMetadata.xml
+</IfModule>
