@@ -797,7 +797,7 @@ function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTabl
 	if (data.path != "/"){
 		var previousUrl = getCSPreviousPath(data.path);		
 		var row = [];
-		row.push("<tr value='previous' onclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + previousUrl + "','" + filter + "','" + CSName +"')\">" + 
+		row.push("<tr value='previous' ondblclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + previousUrl + "','" + filter + "','" + CSName +"')\">" + 
 		   "<td><i class='glyphicon glyphicon-circle-arrow-up'/>&nbsp;..</td><td></td><td></td><td></td></tr>");
 		$('#' + containerTable +' > tbody:last').append(row.join(""));
 	}	
@@ -810,7 +810,7 @@ function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTabl
 		var filePath = cur.path.substring(cur.path.lastIndexOf("/")+1, cur.path.lenght); 
 		if (cur.is_dir == true){
 			icon ="glyphicon glyphicon-folder-close";
-			t_row.push("<tr  title=\'folder\' value='" + cur.path  + "' ondbclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + cur.path.trim() + "','" + filter + "','" + CSName + "')\">");
+			t_row.push("<tr  title=\'folder\' value='" + cur.path  + "' ondblclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + cur.path.trim() + "','" + filter + "','" + CSName + "')\">");
 			t_row.push('<td title="' + filePath + '\/"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
 		} else {
 			icon ="glyphicon glyphicon-file";	
