@@ -101,9 +101,12 @@ $('#renameButton').keypress(function(event){
                                        class="pagination-centered" src="img/ajax-loader.gif" /></li>
                           </ul>
                  </div>
-		<div class="modal-content" id="errorModal">
-                        <div class="modal-body">
-				<input id="errorString" type="text" class="form-control"   value="" disabled=true/>
+		<div class="modal-content alert alert-danger " id="errorModal">
+			<div class="modal-header text-center">
+				<i class="glyphicon glyphicon-warning-sign"/>
+			</div>
+                        <div class="modal-body text-center">
+				<input id="errorString" type="text" class="form-control"   value="" disabled="true" align="center"/>
 			</div>
                         <div class="modal-footer ">
                                 <div class="controls center">

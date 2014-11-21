@@ -3,7 +3,7 @@ var EXISTING_PROXY_DETECTED = "Your current proxy is valid for ";
 var VO_DETECTED = "for the VO ";
 var NO_URL_DETECTED = "No Endpoint detected, please load an endpoint!";
 var NO_FILE_SELECTED = "No file/folder selected, please select one file/folder!"
-var MULTIPLE_FILE_SELECTED = "Multiple file/folder selection is not supported, please select only one file/folder";
+var MULTIPLE_FILE_SELECTED = "Multiple selections is not supported, please select only one file/folder";
 
 function showRemainingProxyTime(timeText,vo){
 	$('#proxyTimeSpan').text(EXISTING_PROXY_DETECTED + timeText + " ");
