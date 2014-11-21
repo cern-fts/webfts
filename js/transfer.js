@@ -165,7 +165,7 @@ function clearContentTable(containerTable, container, indicator, stateText){
 
 function getPermissionsString(oNumber){	
 	var dirString = "-";
-	if (oNumber<100000){
+	if (oNumber<100000 && oNumber !=  0){
 		dirString ="d";	
 	} 
 	var perString ="";
