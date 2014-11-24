@@ -45,31 +45,6 @@ function executeTransfer(container, origFolder, destFolder, CSLeftSelect){
 }
 
 
-//TO REMOVE CAUSE UNUSED
-function protocolValidation(o,d){
-	var ori = document.getElementById(o).value.trim().split(':')[0];
-	var des = document.getElementById(d).value.trim().split(':')[0];
-	
-	if (ori == des)
-		return true;
-	else if (ori == "srm" || des == "srm")
-		return true;
-	else
-		return false;
-	
-	var selectedFiles = getSelectedFiles(container);
-    	if (selectedFiles.length > 0){
-    	
-    	var optionSelected = $('#' + CSLeftSelect).data('ddslick'); 
-    	if (optionSelected.selectedIndex > 0){
-    		runDataTransfer($('#delegation_id').val(), getCSDataTransfer(origFolder, destFolder, selectedFiles, optionSelected.selectedData.text.toLowerCase()));
-    	} else {
-    		runDataTransfer($('#delegation_id').val(), getDataTransfer(origFolder, destFolder, selectedFiles));
-    	}	
-    }
-    return false;
-}
-
 function getDataTransfer(origFolder, destFolder, selectedFiles) {
 	
 	var theData = {};
@@ -288,8 +263,20 @@ function renderFolderContent(tableId, countId, container, indicator, stateText){
 }
 
 function selectAllFiles(container){ 
-	$("#" + container + " tbody").finderSelect('highlightAll');
+	//$("#" + container + " tbody").finderSelect('highlightAll');
+	//$("#" + container + " tbody").finderSelect("update");
+      
+    	//Recusively filter the jquery object to get results.
+        $("#" + container + " tbody").filter(function (i, v) {
+        	var $t = $(this);
+        	var $r = $t.children()[0].title;
+        	if ($r == "folder") {
+                  return false;
+        	}
+       		return true;
+        }).finderSelect('highlightAll');
 	$("#" + container + " tbody").finderSelect("update");
+
 }
 
 function selectNoneFiles(container){ 

@@ -4,7 +4,7 @@ $('#dataManagement').modal({
           show: false,
           backdrop: 'static',
           keyboard: false
- });
+});
 
 $( "#createFolderButton" ).click(function() {
         createFolder($('#createFolderEndpoint').val(), $('#createFolderPath').val(),$('#sideModal').val());
@@ -24,29 +24,28 @@ $( "#renameButton" ).click(function() {
         $('#loading-indicator').show();
 });
 
-//enable operaion via pressing enter
+//enable operation via pressing enter
 
-$('#createFolderButton').keypress(function(event){
+$('#createFolderModal').keypress(function(event){
      if(event.keyCode == 13){
-	 createFolder($('#createFolderEndpoint').val(), $('#createFolderPath').val(),$('#sideModal').val());
-     }
+     		$( "#createFolderButton" ).trigger("click");
+	}
 });
 
-$('#removeButton').keypress(function(event){
+$('#removeModal').keypress(function(event){
      if(event.keyCode == 13){
-	removeFile( $('#removeEndpoint').val(),$('#sideModal').val());
-    }
+    		$( "#removeButton" ).trigger("click");
+	}
 });
 
-$('#renameButton').keypress(function(event){
+$('#renameModal').keypress(function(event){
      if(event.keyCode == 13){
-	 createFolder($('#createFolderEndpoint').val(), $('#createFolderPath').val(),$('#sideModal').val());
-     }
+     		$( "#renameButton" ).trigger("click");
+	}
+
 });
-
-
-
 </script>
+
 <div class="modal fade" id="dataManagement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<input id="sideModal" type="hidden" class="form-control"   value="" disabled="true" />
         <div class="modal-dialog">

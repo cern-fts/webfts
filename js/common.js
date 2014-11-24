@@ -113,13 +113,17 @@ function showDataManagementModal(type, url, side, container){
 	else  {	  
 	    $('#errorModal').hide();
 	    $('#sideModal').val(side);
+	    //add slash at the end of the url
+	    if (url.slice(-1) != "/")
+		url = url+ "/";
+
 	    switch(type) {
     		case 'create':
 			$('#renameModal').hide();
 			$('#removeModal').hide();
 			$('#createFolderModal').show();
 			if (side=='left' && sessionStorage.leftCSIndex && sessionStorage.leftCSIndex > 0)
-				$('#createFolderEndpoint').val("dropbox://www.dropbox.com");
+				$('#createFolderEndpoint').val("dropbox://www.dropbox.com/");
 			else
 				$('#createFolderEndpoint').val(url);
         	break;
@@ -128,9 +132,9 @@ function showDataManagementModal(type, url, side, container){
 			$('#createFolderModal').hide();
 			$('#removeModal').show();
 			if (side == 'left' && sessionStorage.leftCSIndex && sessionStorage.leftCSIndex > 0)
-				$('#removeEndpoint').val("dropbox://www.dropbox.com"+'/'+getSelected(container)[0]);
+				$('#removeEndpoint').val("dropbox://www.dropbox.com/"+getSelected(container)[0]);
 			else
-				$('#removeEndpoint').val(url+'/'+getSelected(container)[0]);
+				$('#removeEndpoint').val(url+getSelected(container)[0]);
         	break;
 		case 'rename':
 			$('#createFolderModal').hide();
@@ -138,7 +142,7 @@ function showDataManagementModal(type, url, side, container){
 			$('#renameModal').show();	
 			$('#oldname').val(getSelectedFiles(container)[0]);
 			if (side == 'left' && sessionStorage.leftCSIndex && sessionStorage.leftCSIndex > 0)
-				$('#basePath').val("dropbox://www.dropbox.com");
+				$('#basePath').val("dropbox://www.dropbox.co/m");
 			else
 				$('#basePath').val(url);
     		break;

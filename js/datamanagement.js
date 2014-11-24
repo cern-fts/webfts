@@ -1,6 +1,6 @@
 function createFolder(basePath, folder, side){
         var urlEndp = sessionStorage.ftsRestEndpoint + "/dm/mkdir";
-	var newurl= basePath+"/"+folder;
+	var newurl= basePath+folder;
 	var theData = {};
         theData["surl"] = encodeURI(newurl); 
 	dataString= JSON.stringify(theData);
@@ -108,8 +108,8 @@ function removeFile(endpoint, side){
 function rename(base, old, newname, side){
         var urlEndp = sessionStorage.ftsRestEndpoint + "/dm/rename";
         var theData = {};
-        theData["old"] = encodeURI(base+"/"+old);
-	theData["new"] = encodeURI(base+"/"+newname);
+        theData["old"] = encodeURI(base+old);
+	theData["new"] = encodeURI(base+newname);
         dataString= JSON.stringify(theData);
         console.log(dataString);
         $.support.cors = true;
