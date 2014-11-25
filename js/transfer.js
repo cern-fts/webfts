@@ -235,7 +235,7 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 
 function getInitialRowContent(endpointInput, container, containerTable, indicator, stateText, filter){
 	if (getPreviousUrl(($('#' + endpointInput).val()).trim()) != null){
-		return "<tr value='previous' ondblclick=\"getPreviousFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + filter + "')\">" + 
+		return "<tr title='../' value='previous' ondblclick=\"getPreviousFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + filter + "')\">" + 
 			   "<td><i class='glyphicon glyphicon-circle-arrow-up'/>&nbsp;..</td><td></td><td></td><td></td></tr>";
 	} else {
 		return null;
@@ -252,34 +252,33 @@ function renderFolderContent(tableId, countId, container, indicator, stateText){
     			$(element[i]).removeClass(options.selectClass);
     			$(element[i]).addClass(options.unSelectClass);
     		}
-    		//Do not select folders
-    		//if ((element[i].firstChild.title == "") || (element[i].firstChild.title.indexOf('/') != -1 )){
-    		//	$(element[i]).removeClass(options.selectClass);
-    		//	$(element[i]).addClass(options.unSelectClass);
-    		//}
+    		//Do not select previous url button
+    		if (element[i].firstChild.title == ""){
+    			$(element[i]).removeClass(options.selectClass);
+    			$(element[i]).addClass(options.unSelectClass);
+    		}
     	}
     	});
 	clearContentTable(tableId, container, indicator, stateText);
 }
 
 function selectAllFiles(container){ 
-	//$("#" + container + " tbody").finderSelect('highlightAll');
-	//$("#" + container + " tbody").finderSelect("update");
-      
     	//Recusively filter the jquery object to get results.
-        $("#" + container + " tbody").filter(function (i, v) {
+        var files = $("#" + container + "  tbody").find("tr").filter(function (i,v) {
         	var $t = $(this);
-        	var $r = $t.children()[0].title;
-        	if ($r == "folder") {
-                  return false;
+		var $r = $t.children()[0].title;
+        	if ($r.indexOf('/') !== -1 ) {
+			return true;
         	}
-       		return true;
-        }).finderSelect('highlightAll');
-	$("#" + container + " tbody").finderSelect("update");
+       		return false;
 
+        }).hide();
+	$("#" + container + " tbody").finderSelect('highlightAll');
+	$("#" + container + " tbody").finderSelect("update");
 }
 
 function selectNoneFiles(container){ 
+	$("#" + container + " tbody").find("tr").show();
 	$("#" + container + " tbody").finderSelect('unHighlightAll');
 	$("#" + container + " tbody").finderSelect("update");
 }
@@ -288,7 +287,8 @@ function getSelectedFiles(container){
 	var selectedList = [];
 	var selectedEle = $("#" + container + " tbody").finderSelect('selected');
 	for (var i = 0; i < selectedEle.length; i++){
-		selectedList.push(selectedEle[i].attributes.value.value);  		
+		 if (selectedEle[i].attributes.title.value == "file")
+			selectedList.push(selectedEle[i].attributes.value.value);  		
 	}
 	return selectedList;
 }
@@ -784,7 +784,7 @@ function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTabl
 	if (data.path != "/"){
 		var previousUrl = getCSPreviousPath(data.path);		
 		var row = [];
-		row.push("<tr value='previous' ondblclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + previousUrl + "','" + filter + "','" + CSName +"')\">" + 
+		row.push("<tr title='../' value='previous' ondblclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + previousUrl + "','" + filter + "','" + CSName +"')\">" + 
 		   "<td><i class='glyphicon glyphicon-circle-arrow-up'/>&nbsp;..</td><td></td><td></td><td></td></tr>");
 		$('#' + containerTable +' > tbody:last').append(row.join(""));
 	}	

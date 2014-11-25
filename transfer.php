@@ -379,7 +379,7 @@ $('#checksum').popover();
 							<div class="btn-group ">
 								<button type="button"  id="selectAllLeft" class="btn btn-sm"
 									onclick="selectAllFiles('leftEndpointContent')">Select
-									All</button>
+									All Files</button>
 								<button type="button"  id="selectNoneLeft" class="btn btn-sm"
 									onclick="selectNoneFiles('leftEndpointContent')">None</button>
 							</div>
@@ -615,7 +615,7 @@ $('#checksum').popover();
 							<div class="btn-group" id="id7">
 								<button type="button"  id="selectAllRight" class="btn btn-sm"
 									onclick="selectAllFiles('rightEndpointContent')">Select
-									All</button>
+									All Files</button>
 								<button type="button"  id="selectNoneRight" class="btn btn-sm"
 									onclick="selectNoneFiles('rightEndpointContent')">None</button>
 							</div>
