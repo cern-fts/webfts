@@ -26,9 +26,11 @@ function createFolder(basePath, folder, side){
 			   refreshFiles();
 			else
                            $('#load-'+side).trigger("click");
+			$('#createFolderPath').val("");
                 },
                 error : function(jqXHR, textStatus, errorThrown) {
                         showError(jqXHR, textStatus, errorThrown, "Error creating the folder: "+ newurl );
+			 $('#createFolderPath').val("");
 			hideDatamanagementModal();
                 }
         });
