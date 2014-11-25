@@ -99,8 +99,8 @@ function showDataManagementModal(type, url, side, container){
                   $('#createFolderModal').hide();
 		  $('#errorString').val(NO_URL_DETECTED); 
 	          $('#errorModal').show();
-	} else if (type != 'create' && getSelectedFiles(container).length != 1) {
-		if (getSelectedFiles(container).length ==0) {
+	} else if (type != 'create' && getSelected(container).length != 1) {
+		if (getSelected(container).length ==0) {
 		  $('#errorString').val(NO_FILE_SELECTED);				
 		} else {
 		  $('#errorString').val(MULTIPLE_FILE_SELECTED);
@@ -123,7 +123,7 @@ function showDataManagementModal(type, url, side, container){
 			$('#removeModal').hide();
 			$('#createFolderModal').show();
 			if (side=='left' && sessionStorage.leftCSIndex && sessionStorage.leftCSIndex > 0)
-				$('#createFolderEndpoint').val("dropbox://www.dropbox.com/");
+				$('#createFolderEndpoint').val("dropbox://www.dropbox.com"+url);
 			else
 				$('#createFolderEndpoint').val(url);
         	break;
@@ -140,9 +140,9 @@ function showDataManagementModal(type, url, side, container){
 			$('#createFolderModal').hide();
 			$('#removeModal').hide();
 			$('#renameModal').show();	
-			$('#oldname').val(getSelectedFiles(container)[0]);
+			$('#oldname').val(getSelected(container)[0]);
 			if (side == 'left' && sessionStorage.leftCSIndex && sessionStorage.leftCSIndex > 0)
-				$('#basePath').val("dropbox://www.dropbox.co/m");
+				$('#basePath').val("dropbox://www.dropbox.com/"+url);
 			else
 				$('#basePath').val(url);
     		break;
