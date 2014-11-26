@@ -151,15 +151,29 @@ $( document ).ready(function() {
 					</br>
 					For your convinience, during the tour you could either use the <strong>next/back</strong> buttons or your arrow buttons on your keyboard!"
 		data-position='bottom-middle-aligned'>
-		<div class="container-top-inner" >
-			<div class="row">
+		
+		<div class= "loginBar">
+			<div class="row-fluid">
+				<div class='pull-left'>
+					<ul class="nav">
+						<script> 
+							$(function(){
+								$("#userAuth").load("userAuth.php");
+							});
+						</script>
+						<div id="userAuth"></div>
+					</ul>
+				</div>
 				<script> 
 					$(function(){
-					   $("#userAuth").load("userAuth.php"); 
+						$("#ssoAuth").load("ssoAuth.php");
 					});
 				</script>
-				<div id="userAuth"></div>
+				<div id="ssoAuth"></div>
 			</div>
+		</div>
+
+		<div class="container-top-inner" >
 			
 			<div class="masthead">
 				<h3 class="text-muted">WebFTS (Beta version)  <small><em>Symplifying power</em></small></h3>			
@@ -179,13 +193,13 @@ $( document ).ready(function() {
 						data-intro="<h3><strong>Start from here:</strong></h3><h4>Do you have a valid certificate on your browser? Submit your transfer more quickly and easily than ever, only by defining the endpoints of your choice for each particular transfer!</h4>" 
 						data-position='bottom'>
 						<a href="submit.php"><i class="glyphicon glyphicon-chevron-left"></i><i class="glyphicon glyphicon-chevron-right"></i>&nbsp;Submit a transfer</a>
-					</li>				
+					</li>
 				</ul>
 			</div>
 		</div>
 		<img src="paraFiles/img/shadow-bottom.png" alt=' ' class='divider' >
 	</div>
-		
+
 	<!--Parallax scrolling starts-->
 	<div class="container-central">			
 			<div class='main border-element'>

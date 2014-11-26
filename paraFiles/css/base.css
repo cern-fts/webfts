@@ -76,7 +76,9 @@ small{
 }
 
 .navbar-left {
-  color: #fff;
+  /*color: #fff;*/
+  color: #9FB8E3;
+  margin-top: 8px; 
 }
 
 

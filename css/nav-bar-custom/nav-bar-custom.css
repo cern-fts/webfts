@@ -19,7 +19,8 @@ body {
 
 
 .navbar-left {
-  color: #fff;
+  /*color: #fff;*/
+  color: #9FB8E3;
 }
 
 
@@ -37,6 +38,32 @@ body {
   z-index: 200;
 }
 
+.loginBar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height: 30px;
+    background-color: #09101C;
+    border-color: #fff
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom:33px;
+    z-index: 9999999;
+    font: #ffffff;
+}
+
+.button_log{
+    margin-right: 10px;
+    margin-top: 5px;
+    color: #9FB8E3 !important;
+    
+}
+a.button_log:hover{
+  color: #fff !important;
+  font-weight: bold;
+  cursor: pointer;
+}
   
 .container-top-inner {
   background-color: #132036;
