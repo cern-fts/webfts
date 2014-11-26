@@ -26,7 +26,7 @@
 		$sxml = new SimpleXMLElement($assert);
 		$sxml->registerXPathNamespace('saml2', 'urn:oasis:names:tc:SAML:2.0:assertion');
 		$name = $sxml->xpath('//saml2:Assertion/saml2:AttributeStatement/saml2:Attribute[@Name="http://schemas.xmlsoap.org/claims/DisplayName"]/saml2:AttributeValue/text()');
-		if(!$name[0]) {
+		if($name[0]) {
 			echo "<a class=\"button_log pull-right\" href=\"https://login-dev.cern.ch/adfs/ls/?wa=wsignout1.0\"><span class=\"glyphicon glyphicon-log-out\" aria-hidden=\"true\"> LogOut </span></a>";
 			echo "<span class=\"button_log pull-right\">You are authenticated as <strong>$name[0]</strong></span>";
 		} else {
