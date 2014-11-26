@@ -3,10 +3,13 @@ var supportText = "Please, try again and contact support if the error persists";
 function getConfig(){
 	$.get("../config.xml", function(data){
 	    $(data).find('config').each(function() {
+		sessionStorage.stsAddress=$(this).find('stsAddress').text();
+		sessionStorage.ssoLogout=$(this).find('ssoLogout').text();
+		sessionStorage.ssoLogin=$(this).find('ssoLogin').text();
 		sessionStorage.ftsRestEndpoint=$(this).find('ftsAddress').text();
 		sessionStorage.jobsToList=$(this).find('jobToList').text();
-	    	sessionStorage.endpointsUrl=$(this).find('endpointListUrl').text();
-	    	sessionStorage.proxyCertHours=$(this).find('proxyCertHours').text();
+		sessionStorage.endpointsUrl=$(this).find('endpointListUrl').text();
+		sessionStorage.proxyCertHours=$(this).find('proxyCertHours').text();
 		sessionStorage.cernboxBaseUrl=$(this).find('cernboxBaseUrl').text();
 		});
 	});
