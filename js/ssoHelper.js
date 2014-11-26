@@ -76,3 +76,21 @@ function ssoGetPrivateKey(soap) {
 	var key = $(soap).find('wst\\:BinarySecret');
 	return key ? key.text() : undefined;
 }
+
+//
+// This function generates Authorization header for AJAX requests to REST API
+// cert - BASE64-encoded certificate
+// key  - BASE64-encoded private key
+// hash - Optional hash algorithm name
+//
+function ssoAuthString(cert, key, hash) {
+	// Authorization: Signed-Cert hash="sha256-or-whatever", ts="ISO-timestamp", cert="base64-certificate", sign="base64-signature"
+	var ts = (new Date).toISOString();
+	var pkey = new RSAKey();
+	pkey.readPrivateKeyFromASN1HexString(b64utohex(b63tob64u(key)));
+	var sig = new KJUR.crypto.Signature({"alg": (hash ? hash.toUpperCase() : "SHA256") + "withRSA"});
+	sig.init({"key" : pkey});
+	sig.updateHex(b64utohex(b64tob64u(cert)));
+	sig.updateString(ts);
+	return "Signed-Cert hash=\"" + hash.toUpperCase() + "\" ts=\"" + ts + "\" cert=\"" + cert + "\" sign=\"" + b64utob64(hextob64u(sig.sign())) + "\"";
+}
