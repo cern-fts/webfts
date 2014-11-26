@@ -76,7 +76,6 @@ function ssoGetPrivateKey(soap) {
 	var key = $(soap).find('wst\\:BinarySecret');
 	return key ? key.text() : undefined;
 }
-
 //
 // This function generates Authorization header for AJAX requests to REST API
 // cert - BASE64-encoded certificate
