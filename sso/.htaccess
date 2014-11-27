@@ -1,6 +1,6 @@
 # SSO Auth
 Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
-Header set Refresh "0; url=/ssoAuth.php"
+Header set Refresh "0; url=/"
 <IfModule mod_shib>
 Require shibboleth
 AuthType shibboleth
