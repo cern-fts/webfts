@@ -84,12 +84,13 @@ function ssoGetPrivateKey(soap) {
 //
 function ssoAuthString(cert, key, hash) {
 	// Authorization: Signed-Cert hash="sha256-or-whatever", ts="ISO-timestamp", cert="base64-certificate", sign="base64-signature"
+	hash = hash ? hash.toUpperCase() : "SHA256";
 	var ts = (new Date).toISOString();
 	var pkey = new RSAKey();
 	pkey.readPrivateKeyFromASN1HexString(b64utohex(b64tob64u(key)));
-	var sig = new KJUR.crypto.Signature({"alg": (hash ? hash.toUpperCase() : "SHA256") + "withRSA"});
+	var sig = new KJUR.crypto.Signature({"alg": hash + "withRSA"});
 	sig.init({"key" : pkey});
 	sig.updateHex(b64utohex(b64tob64u(cert)));
 	sig.updateString(ts);
-	return "Signed-Cert hash=\"" + hash.toUpperCase() + "\" ts=\"" + ts + "\" cert=\"" + cert + "\" sign=\"" + b64utob64(hextob64u(sig.sign())) + "\"";
+	return "Signed-Cert hash=\"" + hash + "\" ts=\"" + ts + "\" cert=\"" + cert + "\" sign=\"" + b64utob64(hextob64u(sig.sign())) + "\"";
 }
