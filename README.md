@@ -14,7 +14,7 @@ adaptively optimised data transfers.
 
 For more details and the user guide please check the FTS3 site:
 
-https://fts3-service.web.cern.ch/documentation/webfts
+http://fts3-service.web.cern.ch/documentation/webfts
 
 while for the installation guide please check the FTS3 trac wiki:
 
