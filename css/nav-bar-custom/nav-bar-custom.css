@@ -17,6 +17,9 @@ body {
   z-index: 280;
 }
 
+#delegateBtn{
+  margin-top: 30px;
+}
 
 .navbar-left {
   /*color: #fff;*/

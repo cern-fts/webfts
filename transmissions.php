@@ -77,6 +77,28 @@
 </script>
 </head>
 <body>
+
+	<div class= "loginBar">
+		<div class="row-fluid">
+			<div class='pull-left'>
+				<ul class="nav">
+					<script> 
+						$(function(){
+							$("#userAuth").load("userAuth.php");
+						});
+					</script>
+				<div id="userAuth"></div>
+				</ul>
+			</div>
+			<script> 
+				$(function(){
+					$("#ssoAuth").load("ssoAuth.php");
+				});
+			</script>
+			<div id="ssoAuth"></div>
+		</div>
+	</div>	
+
 	<div class='container-top-outer'>
 		<div class="container-top-inner">
 			<div class="row">
