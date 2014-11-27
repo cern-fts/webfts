@@ -66,7 +66,7 @@ function ssoSoapReq(assert, sts, key) {
 //
 function ssoGetCertificate(soap) {
 	var cert = $(soap).find('wsse\\:BinarySecurityToken');
-	return cert ? cert.text() : undefined;
+	return cert ? hextob64(b64tohex(cert.text())) : undefined;
 }
 //
 // This function extracts BASE64-encoded private key from STS response
@@ -74,7 +74,7 @@ function ssoGetCertificate(soap) {
 //
 function ssoGetPrivateKey(soap) {
 	var key = $(soap).find('wst\\:BinarySecret');
-	return key ? key.text() : undefined;
+	return key ? hextob64(b64tohex(key.text())) : undefined;
 }
 //
 // This function generates Authorization header for AJAX requests to REST API
