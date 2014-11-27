@@ -86,11 +86,10 @@ function ssoAuthString(cert, key, hash) {
 	// Authorization: Signed-Cert hash="sha256-or-whatever", ts="ISO-timestamp", cert="base64-certificate", sign="base64-signature"
 	hash = hash ? hash.toUpperCase() : "SHA256";
 	var ts = (new Date).toISOString();
-	var pkey = new RSAKey();
-	pkey.readPrivateKeyFromASN1HexString(b64utohex(b64tob64u(key)));
+	var pkey = KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex(key));
 	var sig = new KJUR.crypto.Signature({"alg": hash + "withRSA"});
-	sig.init({"key" : pkey});
-	sig.updateHex(b64utohex(b64tob64u(cert)));
+	sig.init(pkey);
+	sig.updateHex(b64tohex(cert));
 	sig.updateString(ts);
-	return "Signed-Cert hash=\"" + hash + "\" ts=\"" + ts + "\" cert=\"" + cert + "\" sign=\"" + b64utob64(hextob64u(sig.sign())) + "\"";
+	return "Signed-Cert hash=\"" + hash + "\" ts=\"" + ts + "\" cert=\"" + hextob64(b64tohex(cert)) + "\" sign=\"" + hextob64(sig.sign()) + "\"";
 }
