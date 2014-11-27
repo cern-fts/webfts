@@ -13,7 +13,7 @@ function xmlToString(xml) {
 function ssoErrorString(xml) {
 	var error = $(xml).find("error");
 	if(error[0]) return "SSO error: " + error.text();
-	error = $(xml).find('soap11\\:Fault');
+	error = $(xml).find('soap11\\:Fault, Fault');
 	if(error[0]) return "STS Error: " + error.text();
 	return undefined;
 }
@@ -53,11 +53,11 @@ function ssoSoapReq(assert, sts, key) {
 </soap:Envelope>'));
 	var as = $(assert).find('Assertion');
 	if(!as[0]) return undefined;
-	soap.find('wsu\\:Created').text((new Date).toISOString());
-	soap.find('wsa\\:To').text(sts);
-	soap.find('wsse\\:Security').append(as);
-	soap.find('wsse\\:Reference').attr('URI', '#' + as.attr('ID'));
-	if(key) soap.find('wst\\:RequestSecurityToken').append('<wst:UseKey xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512">' + key + '</wst:UseKey>');
+	soap.find('wsu\\:Created, Created').text((new Date).toISOString());
+	soap.find('wsa\\:To, To').text(sts);
+	soap.find('wsse\\:Security, Security').append(as);
+	soap.find('wsse\\:Reference, Reference').attr('URI', '#' + as.attr('ID'));
+	if(key) soap.find('wst\\:RequestSecurityToken, RequestSecurityToken').append('<wst:UseKey xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512">' + key + '</wst:UseKey>');
 	return xmlToString(soap);
 }
 //
@@ -65,7 +65,7 @@ function ssoSoapReq(assert, sts, key) {
 // soap - XML object returned from AJAX request to STS
 //
 function ssoGetCertificate(soap) {
-	var cert = $(soap).find('wsse\\:BinarySecurityToken');
+	var cert = $(soap).find('wsse\\:BinarySecurityToken, BinarySecurityToken');
 	return cert ? hextob64(b64tohex(cert.text())) : undefined;
 }
 //
@@ -73,7 +73,7 @@ function ssoGetCertificate(soap) {
 // soap - XML object returned from AJAX request to STS
 //
 function ssoGetPrivateKey(soap) {
-	var key = $(soap).find('wst\\:BinarySecret');
+	var key = $(soap).find('wst\\:BinarySecret, BinarySecret');
 	return key ? hextob64(b64tohex(key.text())) : undefined;
 }
 //
