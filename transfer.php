@@ -4,7 +4,54 @@
 
 <script>
 $( document ).ready(function() {
-	getDelegationID("delegation_id", true);
+	
+	$.get("ssoGetAssertion.php", function(data) {
+
+        // Let's check if we really got an assertion
+
+        var err = ssoErrorString(data);
+        if(err) {
+                alert(err);
+                return;
+        }
+
+        // We will now wrap fetched assertion in SOAP envelope
+        // Third parameter to this function is an optional public key from our side (BASE64-encoded)
+
+        var req = ssoSoapReq(data, sessionStorage.stsAddress);
+
+        // We will now send our SOAP request to STS
+
+        if(req) {
+                $.ajax({url: "/sts",
+                type: "POST",
+                contentType: "text/xml; charset=utf-8",
+                headers: {SOAPAction: sessionStorage.stsAddress},
+                data: req}).done(
+                function(data) {
+
+                        // Let's check if STS was happy with our assertion
+
+                        var err = ssoErrorString(data);
+                        if(err) {
+                                alert(err);
+                                return;
+                        }
+
+                        // This function returns BASE64-encoded string of generated certificate
+
+                        var cert = ssoGetCertificate(data);
+
+                        // This function returns BASE64-encoded string of generated private key
+
+                        var key = ssoGetPrivateKey(data);
+		
+			getDelegationIDSTS("delegation_id", true, cert, key);
+
+                });
+        	}
+	});
+	
 
 	renderFolderContent("leftEndpointContentTable", "leftSelectedCount", "leftEndpointContent", "left-loading-indicator", "left-ep-text");
 	renderFolderContent("rightEndpointContentTable", "rightSelectedCount", "rightEndpointContent", "right-loading-indicator", "right-ep-text");

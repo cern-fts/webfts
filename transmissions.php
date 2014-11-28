@@ -46,6 +46,7 @@
 <script src="js/lib/js/oids.js"></script>
 <script src="js/lib/js/asn11.js"></script>
 
+<script src="js/lib/kjur-jsrsasign/ext/rng.js"></script>
 <script src="js/lib/kjur-jsrsasign/ext/jsbn2.js"></script>
 <script src="js/lib/kjur-jsrsasign/ext/prng4.js"></script>
 <script src="js/lib/kjur-jsrsasign/ext/rsa.js"></script>

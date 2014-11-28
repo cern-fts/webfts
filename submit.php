@@ -42,6 +42,7 @@
 <script src="js/dropboxHelper.js"></script>
 
 <script src="js/lib/yahoo/yahoo-min.js"></script>
+<!--
 <script src="js/lib/glibs/core-min.js"></script>
 <script src="js/lib/glibs/enc-base64-min.js"></script>
 <script src="js/lib/glibs/sha1.js"></script>
@@ -52,6 +53,7 @@
 <script src="js/lib/js/oids.js"></script>
 <script src="js/lib/js/asn11.js"></script>
 
+<script src="js/lib/kjur-jsrsasign/ext/jsbn.js"></script>
 <script src="js/lib/kjur-jsrsasign/ext/jsbn2.js"></script>
 <script src="js/lib/kjur-jsrsasign/ext/prng4.js"></script>
 <script src="js/lib/kjur-jsrsasign/ext/rsa.js"></script>
@@ -68,6 +70,11 @@
 <script src="js/lib/kjur-jsrsasign/crypto-1.1.min.js"></script>
 <script src="js/lib/kjur-jsrsasign/base64x-1.1.min.js"></script>
 <script src="js/lib/kjur-jsrsasign/keyutil-1.0.min.js"></script>
+-->
+<script src="js/ssoHelper.js"></script>
+<script src="js/jsrsasign-latest-all-min.js"></script>
+
+
 
 <!-- <script src="js/lib/js/js-rsa-pem.js"></script>  -->
 <script src="js/jquery.ddslick.min.js"></script>
