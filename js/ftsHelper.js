@@ -278,7 +278,7 @@ function getDelegationIDSTS(fieldName, delegationNeeded, cert, key){
                                 hideUserReport();
                                 getUserJobs(data1.delegation_id);
                         }
-                        isDelegated(data1.delegation_id, delegationNeeded);
+                        isDelegated(data1.delegation_id, delegationNeeded, header);
                 },
                 error : function(jqXHR, textStatus, errorThrown) {
                         showError(jqXHR, textStatus, errorThrown, "Error connecting to the FTS server to obtain the user credentials. Check if you have installed a valid copy of the CERN ROOT CA certificate."+ supportText);
@@ -312,8 +312,8 @@ function getDelegationID(fieldName, delegationNeeded){
 	});
 }
 
-function isDelegated(delegationID, showModal){
-	return checkAndTransfer(delegationID, null, showModal);
+function isDelegated(delegationID, showModal, authzheader){
+	return checkAndTransfer(delegationID, null, showModal, authzheader);
 }
 
 function runDataTransfer(delegationID, transferData){
@@ -345,13 +345,15 @@ function removeDelegation(delegationID, showRemoveDelegationMessage){
 }
 
 //Check if there is a valid delegation done. Otherwise, do it 
-function checkAndTransfer(delegationID, transferData, showModal){
+function checkAndTransfer(delegationID, transferData, showModal, authzheader){
 	var urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID;
+	
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
 		type : "GET",
 		dataType : 'json',
+		headers : { Authorization : authzheader },
 		xhrFields : {
 			withCredentials : true
 		},
