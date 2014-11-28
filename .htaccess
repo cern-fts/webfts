@@ -11,8 +11,8 @@ MellonEnable "info"
 MellonEndpointPath /mellon
 MellonSamlResponseDump On
 MellonSPentityId "https://%{SERVER_NAME}/"
-MellonSPMetadataFile /var/www/webfts/metadata-mellon.xml
-MellonSPCertFile /etc/grid-security/sp-cert.pem
-MellonSPPrivateKeyFile /etc/grid-security/sp-key.pem
-MellonIdPMetadataFile /etc/shibboleth/dev-FederationMetadata.xml
+MellonSPMetadataFile /etc/mellon/sp-metadata.xml
+MellonSPCertFile /etc/mellon/sp-cert.pem
+MellonSPPrivateKeyFile /etc/mellon/sp-key.pem
+MellonIdPMetadataFile /etc/mellon/dev-FederationMetadata.xml
 </IfModule>
