@@ -258,6 +258,34 @@ function getSKID(dom, skid){
 	} 
 }
 
+//Check delegation ID, save it and check if there is a valid proxy
+function getDelegationIDSTS(fieldName, delegationNeeded, cert, key){
+        var urlEndp = sessionStorage.ftsRestEndpoint + "/whoami";
+	var header = ssoAuthString(cert, key);
+        $.support.cors = true;
+        $.ajax({
+                url : urlEndp,
+                type : "GET",
+                dataType : 'json',
+		headers : { Authorization: header},
+                xhrFields : {
+                        withCredentials : true
+                },
+                success : function(data1, status) {
+                        console.log("Delegation obtained");
+                        $('input[id='+fieldName+']').val(data1.delegation_id);
+                        if (!delegationNeeded){
+                                hideUserReport();
+                                getUserJobs(data1.delegation_id);
+                        }
+                        isDelegated(data1.delegation_id, delegationNeeded);
+                },
+                error : function(jqXHR, textStatus, errorThrown) {
+                        showError(jqXHR, textStatus, errorThrown, "Error connecting to the FTS server to obtain the user credentials. Check if you have installed a valid copy of the CERN ROOT CA certificate."+ supportText);
+                }
+        });
+}
+
 //Check delegation ID, save it and check if there is a valid proxy 
 function getDelegationID(fieldName, delegationNeeded){
 	var urlEndp = sessionStorage.ftsRestEndpoint + "/whoami";

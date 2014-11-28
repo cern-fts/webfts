@@ -91,5 +91,5 @@ function ssoAuthString(cert, key, hash) {
 	sig.init(pkey);
 	sig.updateHex(b64tohex(cert));
 	sig.updateString(ts);
-	return "Signed-Cert hash=\"" + hash + "\" ts=\"" + ts + "\" cert=\"" + hextob64(b64tohex(cert)) + "\" sign=\"" + hextob64(sig.sign()) + "\"";
+	return "Signed-Cert hash=\"" + hash.toLowerCase() + "\" ts=\"" + ts + "\" cert=\"" + hextob64(b64tohex(cert)) + "\" sign=\"" + hextob64(sig.sign()) + "\"";
 }
