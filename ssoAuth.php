@@ -2,6 +2,9 @@
 	if ($('#ssoalert').text() !== "") {
 		alert($('#ssoalert').text());
 	}
+	if(!sessionStorage.ssoLogin || !sessionStorage.ssoLogout) {
+		getConfig();
+	}
 	$('#ssologin').attr({'href':sessionStorage.ssoLogin});
 	$('#ssologout').attr({'href':sessionStorage.ssoLogout});
 </script>
