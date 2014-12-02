@@ -365,7 +365,8 @@ function checkAndTransfer(delegationID, transferData, showModal, authzheader){
 				showNoProxyMessages();
 				if (stscredentials) {
 					//dostsdelegation
-					doDelegate(delegationID, $("#pemPkey").val(),$("#userDN").val(), $("#clientCERT").val(), "" , authzheader);
+					var pkey = KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex($("#pemPkey").val()));
+					doDelegate(delegationID, pkey,$("#userDN").val(), $("#clientCERT").val(), "" , authzheader);
 				}
 				else if (showModal){
 					showDelegateModal();
