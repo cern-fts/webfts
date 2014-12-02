@@ -11,7 +11,8 @@ $( document ).ready(function() {
 
         var err = ssoErrorString(data);
         if(err) {
-                alert(err);
+		console.log(err);
+		getDelegationID("delegation_id", true);
                 return;
         }
 
@@ -34,18 +35,16 @@ $( document ).ready(function() {
 
                         var err = ssoErrorString(data);
                         if(err) {
-                                alert(err);
+				console.log(err);
+				getDelegationID("delegation_id", true);
                                 return;
                         }
 
                         // This function returns BASE64-encoded string of generated certificate
-
                         var cert = ssoGetCertificate(data);
-
                         // This function returns BASE64-encoded string of generated private key
-
                         var key = ssoGetPrivateKey(data);
-		
+			
 			getDelegationIDSTS("delegation_id", true, cert, key);
 
                 });
