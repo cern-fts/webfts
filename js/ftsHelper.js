@@ -274,6 +274,7 @@ function getDelegationIDSTS(fieldName, delegationNeeded, cert, key){
                 success : function(data1, status) {
                         console.log("Delegation obtained");
                         $('input[id='+fieldName+']').val(data1.delegation_id);
+			$("#userDN").val(data1.user_dn);
                         if (!delegationNeeded){
                                 hideUserReport();
                                 getUserJobs(data1.delegation_id);
@@ -347,13 +348,14 @@ function removeDelegation(delegationID, showRemoveDelegationMessage){
 //Check if there is a valid delegation done. Otherwise, do it 
 function checkAndTransfer(delegationID, transferData, showModal, authzheader){
 	var urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID;
-	
+	stscredentials = authzheader ? true : false;
+	header = authzheader ? { Authorization : authzheader } : "";
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
 		type : "GET",
 		dataType : 'json',
-		headers : { Authorization : authzheader },
+		headers : header,  
 		xhrFields : {
 			withCredentials : true
 		},
@@ -361,7 +363,11 @@ function checkAndTransfer(delegationID, transferData, showModal, authzheader){
 		success : function(data2, status) {
 			if (data2 == null){
 				showNoProxyMessages();
-				if (showModal){
+				if (stscredentials) {
+					//dostsdelegation
+					doDelegate(delegationID, $("#pemPkey").val(),$("#userDN").val(), $("#clientCERT").val(), "" , authzheader);
+				}
+				else if (showModal){
 					showDelegateModal();
 				}	
 			} else {
@@ -405,13 +411,17 @@ function checkAndTransfer(delegationID, transferData, showModal, authzheader){
 }
 
 //Do delegation of credentials
-function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
+function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo, authzheader){
 	var urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID + "/request";
+	stscredentials = authzheader ? true : false;
+        header = authzheader ? { Authorization : authzheader } : "";
+	console.log("USER DN "+ userDN);
 	$.support.cors = true;
 	// Call 3: Asking for a new proxy certificate is needed
 	$.ajax({
 		url : urlEndp,
 		type : "GET",
+		headers : header,
 		xhrFields : {
 			withCredentials : true
 		},
@@ -419,12 +429,12 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 		success : function(data3, status) {
 			var x509Proxy = signRequest(data3, userPrivateKeyPEM, userDN, userCERT); 
 			x509Proxy += "" + userCERT;
-			//console.log(x509Proxy);
 			urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID + '/credential';
 			// Call 4: Delegating the signed new proxy certificate
 			$.ajax({
 				url : urlEndp,									
 				type : "POST",
+				headers : header,
 				contentType : "text/plain; charset=UTF-8", 
 				dataType : 'text',
 				data: x509Proxy,

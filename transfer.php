@@ -44,6 +44,8 @@ $( document ).ready(function() {
                         var cert = ssoGetCertificate(data);
                         // This function returns BASE64-encoded string of generated private key
                         var key = ssoGetPrivateKey(data);
+			$("#pemPkey").val(key);
+			$("#clientCERT").val(cert);
 			
 			getDelegationIDSTS("delegation_id", true, cert, key);
 
