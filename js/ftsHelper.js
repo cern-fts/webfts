@@ -25,7 +25,7 @@ function showError(jqXHR, textStatus, errorThrown, message) {
 		message += ". Reason: " + jqXHR.status + ": " + jqXHR.responseText;
 		
 	if (message != null)
-		showUserError(message);	
+		showUserError(message);
 	return message;
 }
 
@@ -91,8 +91,8 @@ function removeTransfer(jobID){
 		xhrFields : {
 			withCredentials : true
 		},
-		success : function(data1, status) {						
-			showUserSuccess("Transfer removed successfully");	
+		success : function(data1, status) {
+			showUserSuccess("Transfer removed successfully");
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			showError(jqXHR, textStatus, errorThrown, "Error removing the transfer. "+ supportText);
@@ -138,7 +138,7 @@ function ftsTransfer(theData) {
 		error : function(xhr, textStatus, errorThrown) {
 			showError(xhr, textStatus, errorThrown, "Error submitting the transfer. " + supportText);
 		}
-	});	
+	});
 	return false;
 }
 
@@ -164,8 +164,8 @@ function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {
 		//console.log(oIssuer);
 		
 		var rsakey = new RSAKey();
-		//The replace is because other wise something like this was 
-		//found "01 00 01" and only the last part, "01", was converted. 
+		//The replace is because other wise something like this was
+		//found "01 00 01" and only the last part, "01", was converted.
 		//It was returning 1 instead of 65537
 		rsakey.setPublic(pos.modulus.replace(/ /g, ''), pos.exponent.replace(/ /g, ''));
 
@@ -222,7 +222,7 @@ function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {
 		var cert = new KJUR.asn1.x509.Certificate({
 			'tbscertobj' : tbsc,
 			'rsaprvkey' : userPrivateKey,
-			'prvkey' : userPrivateKey,			
+			'prvkey' : userPrivateKey,
 			'rsaprvpas' : "empty"
 		});
 
@@ -255,12 +255,12 @@ function getSKID(dom, skid){
 		//2.5.29.35authorityKeyIdentifierX.509 extensionOCTET STRING(1 elem)Offset: 654Length: 2+24(encapsulates)Value:(1 elem)SEQUENCE(1 elem)Offset: 656Length: 2+22(constructed)Value:(1 elem)[0](20 byte) 98CC92D04630368CB0ED980D7251A9474CAABE21
 		var ext = dom.textContent.substring(n2, n2 + 300);
 		var n3 = ext.indexOf("20 byte");
-		return ext.substring(n3 + 9, n3 + 49);		
+		return ext.substring(n3 + 9, n3 + 49);
 	}
 	if (dom.childNodes.length > 0){
-		for (var i=0; i<dom.childNodes.length; i++){				
+		for (var i=0; i<dom.childNodes.length; i++){
 			getAKI(dom.childNodes[i]);
-		}	
+		}
 	} 
 }
 
@@ -330,10 +330,10 @@ function runDataTransfer(delegationID, transferData){
 function getAuthzHeader(){
 	var authzheader;
 	if (sessionStorage.userCert && sessionStorage.userCert != "")
-        {
-                authzheader = ssoAuthString(sessionStorage.userCert,sessionStorage.userKey);
+	{
+		authzheader = ssoAuthString(sessionStorage.userCert,sessionStorage.userKey);
 	}
-        header = authzheader ? { Authorization : authzheader } : "";
+	header = authzheader ? { Authorization : authzheader } : "";
 	return header;
 }
 
@@ -346,8 +346,8 @@ function removeDelegation(delegationID, showRemoveDelegationMessage){
 		//type : "DELETE" <-- use directly this is not working
 		data: {"_method":"delete"},
 		dataType:'script', 
-		headers : header,
 		type : "POST",
+		headers : header,
 		xhrFields : {
 			withCredentials : true
 		},
@@ -490,7 +490,7 @@ function getVOMSCredentials(delegationID, user_vo){
 	var uvo = '["' + user_vo + '"]';
 	var header = getAuthzHeader();
 	$.ajax({
-		url : urlEndp,									
+		url : urlEndp,
 		type : "POST",
 		headers : header,
 		contentType : "text/plain; charset=UTF-8", 
@@ -503,7 +503,6 @@ function getVOMSCredentials(delegationID, user_vo){
 		xhrFields : {
 			withCredentials : true
 		},
-				
 		success : function(data4, status) {
 			hideDelegateModal();
 			isDelegated(delegationID, true); //To update remaining proxy time
