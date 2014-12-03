@@ -4,11 +4,12 @@
 
 <script>
 $( document ).ready(function() {
-	
+  //trying to check if a cert from STS has been already stored in the session,
+  //otherwise it tries to get one, if it fails goes back to old delegation method	
+  if (!sessionStorage.userCert) {
 	$.get("ssoGetAssertion.php", function(data) {
 
         // Let's check if we really got an assertion
-
         var err = ssoErrorString(data);
         if(err) {
 		console.log(err);
@@ -44,17 +45,24 @@ $( document ).ready(function() {
                         var cert = ssoGetCertificate(data);
                         // This function returns BASE64-encoded string of generated private key
                         var pkey = ssoGetPrivateKey(data);
+<<<<<<< HEAD
 
 			// Reformat certificate into a proper PEM
 			$("#clientCERT").val("-----BEGIN CERTIFICATE-----\r\n" + cert.match(/.{1,64}/g).join("\r\n") + "\r\n-----END CERTIFICATE-----\r\n");
 			// Recode private key from PKCS#8 to PKCS#1
 			$("#pemPkey").val(KEYUTIL.getPEM(KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex(pkey)), "PKCS1PRV"));
 
+=======
+			//storing in keuy and cert in the session with proper format
+			sessionStorage.userCert = cert;
+			sessionStorage.userKey = pkey;
+>>>>>>> 88f0ecf3652012790d6d04460d8d55183cf88ad3
 			getDelegationIDSTS("delegation_id", true, cert, pkey);
 
                 });
         	}
 	});
+   } else  getDelegationIDSTS("delegation_id", true, sessionStorage.userCert, sessionStorage.userKey);
 	
 
 	renderFolderContent("leftEndpointContentTable", "leftSelectedCount", "leftEndpointContent", "left-loading-indicator", "left-ep-text");

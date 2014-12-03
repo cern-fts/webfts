@@ -2,11 +2,6 @@
 	if ($('#ssoalert').text() !== "") {
 		alert($('#ssoalert').text());
 	}
-	if(!sessionStorage.ssoLogin || !sessionStorage.ssoLogout) {
-		getConfig();
-	}
-	$('#ssologin').attr({'href':sessionStorage.ssoLogin});
-	$('#ssologout').attr({'href':sessionStorage.ssoLogout});
 </script>
 <?php
 	if(isset($_SERVER['Shib-Assertion-01']) && $_SERVER['Shib-Assertion-Count'] == '01') { // Shibboleth way
@@ -26,19 +21,19 @@
 			echo "<div id='ssoalert' style='display:none;'><span><strong>Failed to fetch an assertion from Mellon</strong></span></div>";
 		}
 	} else $assert = false;
-
+	$conf = simplexml_load_file("config.xml");
 	if($assert) {
 		$sxml = new SimpleXMLElement($assert);
 		$sxml->registerXPathNamespace('saml2', 'urn:oasis:names:tc:SAML:2.0:assertion');
 		$name = $sxml->xpath('//saml2:Assertion/saml2:AttributeStatement/saml2:Attribute[@Name="http://schemas.xmlsoap.org/claims/DisplayName"]/saml2:AttributeValue/text()');
 		if($name[0]) {
-			echo "<a class='button_log pull-right' id='ssologout'><span class='glyphicon glyphicon-log-out' aria-hidden='true'> LogOut </span></a>";
+			echo "<a class='button_log pull-right' id='ssologout' href='" . $conf->ssoLogout . "'><span class='glyphicon glyphicon-log-out' aria-hidden='true'> LogOut </span></a>";
 			echo "<span class='button_log pull-right'>You are authenticated as <strong>$name[0]</strong></span>";
 		} else {
 			echo "<div id='ssoalert' style='display: none;'><span><strong>SSO response is not SAML2</strong></span></div>";
-			echo "<a class='button_log pull-right' id='ssologin'><span class='glyphicon glyphicon-log-in' aria-hidden='true'> LogIn</span></a>";
+			echo "<a class='button_log pull-right' id='ssologin' href='" . $conf->ssoLogin . "'><span class='glyphicon glyphicon-log-in' aria-hidden='true'> LogIn </span></a>";
 		}
 	} else {
-		echo "<a class='button_log pull-right' id='ssologin'><span class='glyphicon glyphicon-log-in' aria-hidden='true'> LogIn</span></a>";
+		echo "<a class='button_log pull-right' id='ssologin' href='" . $conf->ssoLogin . "'><span class='glyphicon glyphicon-log-in' aria-hidden='true'> LogIn </span></a>";
 	}
 ?>
