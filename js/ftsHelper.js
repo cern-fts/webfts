@@ -123,32 +123,30 @@ function ftsTransfer(theData) {
 			withCredentials : true
 		},
 		success : function(x, status, xhr) {
-			console.log("OK: " + JSON.stringify(x));			
+			console.log("OK: " + JSON.stringify(x));
 			console.log("    Status: " + status);
 			showUserSuccess("Transfer sent successfully");
 		},
 		error : function(xhr, textStatus, errorThrown) {
-			showError(xhr, textStatus, errorThrown, "Error submitting the transfer. " + supportText);			
+			showError(xhr, textStatus, errorThrown, "Error submitting the transfer. " + supportText);
 		}
 	});	
 	return false;
 }
 
-function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {	
+function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {
 	var Re = new RegExp(",","g");
 	userDN = userDN.replace(Re,"/");
 	var subject = userDN + '/CN=proxy';
 	
 	var reHex = /^\s*(?:[0-9A-Fa-f][0-9A-Fa-f]\s*)+$/;
 	try {
-		var derServer = reHex.test(sCert) ? Hex.decode(sCert) : Base64E
-				.unarmor(sCert);
+		var derServer = reHex.test(sCert) ? Hex.decode(sCert) : Base64E.unarmor(sCert);
 
-		var derUser = reHex.test(userCERT) ? Hex.decode(userCERT) : Base64E
-				.unarmor(userCERT);
-		
+		var derUser = reHex.test(userCERT) ? Hex.decode(userCERT) : Base64E.unarmor(userCERT);
+
 		var asn1 = ASN11.decode(derServer);
-		var pos = asn1.getCSRPubKey(); 
+		var pos = asn1.getCSRPubKey();
 		//console.log(sCert);
 		
 		var ct = new X509();
@@ -260,31 +258,31 @@ function getSKID(dom, skid){
 
 //Check delegation ID, save it and check if there is a valid proxy
 function getDelegationIDSTS(fieldName, delegationNeeded, cert, key){
-        var urlEndp = sessionStorage.ftsRestEndpoint + "/whoami";
+	var urlEndp = sessionStorage.ftsRestEndpoint + "/whoami";
 	var header = ssoAuthString(cert, key);
-        $.support.cors = true;
-        $.ajax({
-                url : urlEndp,
-                type : "GET",
-                dataType : 'json',
+	$.support.cors = true;
+	$.ajax({
+		url : urlEndp,
+		type : "GET",
+		dataType : 'json',
 		headers : { Authorization: header},
-                xhrFields : {
-                        withCredentials : true
-                },
-                success : function(data1, status) {
-                        console.log("Delegation obtained");
-                        $('input[id='+fieldName+']').val(data1.delegation_id);
+		xhrFields : {
+			withCredentials : true
+		},
+		success : function(data1, status) {
+			console.log("Delegation obtained");
+			$('input[id='+fieldName+']').val(data1.delegation_id);
 			$("#userDN").val(data1.user_dn);
-                        if (!delegationNeeded){
-                                hideUserReport();
-                                getUserJobs(data1.delegation_id);
-                        }
-                        isDelegated(data1.delegation_id, delegationNeeded, header);
-                },
-                error : function(jqXHR, textStatus, errorThrown) {
-                        showError(jqXHR, textStatus, errorThrown, "Error connecting to the FTS server to obtain the user credentials. Check if you have installed a valid copy of the CERN ROOT CA certificate."+ supportText);
-                }
-        });
+			if (!delegationNeeded){
+				hideUserReport();
+				getUserJobs(data1.delegation_id);
+			}
+			isDelegated(data1.delegation_id, delegationNeeded, header);
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			showError(jqXHR, textStatus, errorThrown, "Error connecting to the FTS server to obtain the user credentials. Check if you have installed a valid copy of the CERN ROOT CA certificate."+ supportText);
+		}
+	});
 }
 
 //Check delegation ID, save it and check if there is a valid proxy 
@@ -299,9 +297,9 @@ function getDelegationID(fieldName, delegationNeeded){
 			withCredentials : true
 		},
 		success : function(data1, status) {
-			console.log("Delegation obtained");	
+			console.log("Delegation obtained");
 			$('input[id='+fieldName+']').val(data1.delegation_id);
-			if (!delegationNeeded){				
+			if (!delegationNeeded){
 				hideUserReport();
 				getUserJobs(data1.delegation_id);
 			}
@@ -337,7 +335,7 @@ function removeDelegation(delegationID, showRemoveDelegationMessage){
 			if (showRemoveDelegationMessage)
 				console.log("delegation removed correctly");
 			showDelegateModal();
-			showNoProxyMessages();			
+			showNoProxyMessages();
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			showError(jqXHR, textStatus, errorThrown, "Error removing the existing delegation. "+ supportText);
@@ -355,7 +353,7 @@ function checkAndTransfer(delegationID, transferData, showModal, authzheader){
 		url : urlEndp,
 		type : "GET",
 		dataType : 'json',
-		headers : header,  
+		headers : header,
 		xhrFields : {
 			withCredentials : true
 		},
@@ -365,19 +363,18 @@ function checkAndTransfer(delegationID, transferData, showModal, authzheader){
 				showNoProxyMessages();
 				if (stscredentials) {
 					//dostsdelegation
-					var pkey = KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex($("#pemPkey").val()));
-					doDelegate(delegationID, pkey,$("#userDN").val(), $("#clientCERT").val(), "" , authzheader);
+					doDelegate(delegationID, $("#pemPkey").val(), $("#userDN").val(), $("#clientCERT").val(), "" , authzheader);
 				}
 				else if (showModal){
 					showDelegateModal();
-				}	
+				}
 			} else {
 				var noOffset = function(s) {
 					  var day= s.slice(0,-5).split(/\D/).map(function(itm){
 					    return parseInt(itm, 10) || 0;
 					  });
 					  day[1]-= 1;
-					  day= new Date(Date.UTC.apply(Date, day));  
+					  day= new Date(Date.UTC.apply(Date, day));
 					  var offsetString = s.slice(-5);
 					  var offset = parseInt(offsetString,10)/100;
 					  if (offsetString.slice(0,1)=="+") offset*=-1;
@@ -389,7 +386,7 @@ function checkAndTransfer(delegationID, transferData, showModal, authzheader){
 				// in operations with dates.
 				// More info:
 				//	http://stackoverflow.com/questions/5802461/javascript-which-browsers-support-parsing-of-iso-8601-date-string-with-date-par
-				remainingTime = noOffset(data2.termination_time) - (new Date().getTime());	
+				remainingTime = noOffset(data2.termination_time) - (new Date().getTime());
 				if (remainingTime < 3600000) { //3600000 = milliseconds in an hour
 					showNoProxyMessages();
 					if (showModal){
@@ -399,10 +396,10 @@ function checkAndTransfer(delegationID, transferData, showModal, authzheader){
 					var vo = data2.voms_attrs[0];
 					showRemainingProxyTime(millisecondsToStr(remainingTime),vo);
 					sessionStorage.remainingProxyLifetime=remainingTime;
-					if (transferData != null){				
+					if (transferData != null){
 						ftsTransfer(transferData);
-					} 
-				}						
+					}
+				}
 			}	
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
@@ -428,12 +425,12 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo, 
 		},
 		
 		success : function(data3, status) {
-			var x509Proxy = signRequest(data3, userPrivateKeyPEM, userDN, userCERT); 
+			var x509Proxy = signRequest(data3, userPrivateKeyPEM, userDN, userCERT);
 			x509Proxy += "" + userCERT;
 			urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID + '/credential';
 			// Call 4: Delegating the signed new proxy certificate
 			$.ajax({
-				url : urlEndp,									
+				url : urlEndp,
 				type : "POST",
 				headers : header,
 				contentType : "text/plain; charset=UTF-8", 
@@ -449,13 +446,13 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo, 
 						
 				success : function(data4, status) {
 					if (user_vo == null || user_vo == ""){
-						hideDelegateModal(); 
+						hideDelegateModal();
 						isDelegated(delegationID, true); //To update remaining proxy time
-					} else {	
+					} else {
 						getVOMSCredentials(delegationID, user_vo);
 					}	
 				},
-				error : function(jqXHR, textStatus,	errorThrown) {		
+				error : function(jqXHR, textStatus, errorThrown) {
 					var derror = "Error delegating the user credentials. " + supportText;
 					var emessage = showError(jqXHR, textStatus, errorThrown, derror);
 					showDelegateError(emessage);
@@ -491,7 +488,7 @@ function getVOMSCredentials(delegationID, user_vo){
 			hideDelegateModal();
 			isDelegated(delegationID, true); //To update remaining proxy time
 		},
-		error : function(jqXHR, textStatus,	errorThrown) {
+		error : function(jqXHR, textStatus, errorThrown) {
 			removeDelegation(delegationID, false);
 			var verror = "Error obtaining VOMS credentials. " + supportText;
 			var emessage = showError(jqXHR, textStatus, errorThrown, verror);
@@ -511,8 +508,8 @@ function getEndpointContent(endpointInput, container, containerTable, indicator,
 			withCredentials : true
 		},
 		
-		success : function(data2, status) {		
-			loadFolder(endpointInput, container, containerTable, data2, indicator, stateText, filter);			
+		success : function(data2, status) {
+			loadFolder(endpointInput, container, containerTable, data2, indicator, stateText, filter);
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			showError(jqXHR, textStatus, errorThrown, "Error connecting to the endpoint: it is not available, the folder does not exist or it has been selected a wrong protocol or address. "  + supportText);
