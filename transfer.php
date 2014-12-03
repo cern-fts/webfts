@@ -43,11 +43,13 @@ $( document ).ready(function() {
                         // This function returns BASE64-encoded string of generated certificate
                         var cert = ssoGetCertificate(data);
                         // This function returns BASE64-encoded string of generated private key
-                        var key = ssoGetPrivateKey(data);
-			$("#pemPkey").val(key);
+                        var pkey = ssoGetPrivateKey(data);
+
 			$("#clientCERT").val(cert);
-			
-			getDelegationIDSTS("delegation_id", true, cert, key);
+			// Recode private key from PKCS#8 to PKCS#1
+			$("#pemPkey").val(KEYUTIL.getPEM(KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex(key)), "PKCS1PRV"));
+
+			getDelegationIDSTS("delegation_id", true, cert, pkey);
 
                 });
         	}
