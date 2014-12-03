@@ -21,16 +21,12 @@
 <link rel="stylesheet" type="text/css" href="/css/nav-bar-custom/nav-bar-custom.css">
 <!-- <link rel="stylesheet" href="/paraFiles/css/base.css"/> -->
 
-<!--
--->
 <link href="site-tour/introJs/introjs.css" rel="stylesheet">
-<!--
--->
 
-<script src="js/bootstrap.min.js"></script> 
-<script src="js/jquery.finderSelect.min.js"></script>
 <script src="js/jquery-ui.min.js"></script>
+<script src="js/jquery.finderSelect.min.js"></script>
 <script src="js/jquery.ddslick.min.js"></script>
+<script src="js/bootstrap.min.js"></script> 
 <script src="js/common.js"></script>  
 
 <!--[if lte IE 9]><link rel="stylesheet" href="css/style-ie9.css" /><![endif]-->

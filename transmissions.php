@@ -21,28 +21,29 @@
 <link rel="stylesheet" type="text/css" href="/css/nav-bar-custom/nav-bar-custom.css">
 <!-- <link rel="stylesheet" href="/paraFiles/css/base.css"/> -->
 
-
 <!-- General Site tour styles -->
 <link href="/site-tour/introJs/introjs.css" rel="stylesheet">
 <link href="/site-tour/introJs/example/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
 
 <script src="js/bootstrap.min.js"></script>
-<script src="js/ftsHelper.js"></script>
-<script src="js/jobs.js"></script>
 <script src="js/common.js"></script>  
 
-<script src="js/RSAGenerator.js"></script>
-<script src="js/lib/yahoo/yahoo-min.js"></script>
-<script src="js/lib/glibs/core-min.js"></script>
-<script src="js/lib/glibs/enc-base64-min.js"></script>
-<script src="js/lib/glibs/sha1.js"></script>
+<script src="js/ssoHelper.js"></script>
+<script src="js/ftsHelper.js"></script>
+<script src="js/jobs.js"></script>
 
 <script src="js/lib/js/hex.js"></script>
 <script src="js/lib/js/base64E.js"></script>
 <script src="js/lib/js/oids.js"></script>
 <script src="js/lib/js/asn11.js"></script>
+<script src="js/jsrsasign-latest-all-min.js"></script>
 
 <!--
+<script src="js/RSAGenerator.js"></script>
+<script src="js/lib/yahoo/yahoo-min.js"></script>
+<script src="js/lib/glibs/core-min.js"></script>
+<script src="js/lib/glibs/enc-base64-min.js"></script>
+<script src="js/lib/glibs/sha1.js"></script>
 <script src="js/lib/kjur-jsrsasign/ext/jsbn.js"></script>
 <script src="js/lib/kjur-jsrsasign/ext/jsbn2.js"></script>
 <script src="js/lib/kjur-jsrsasign/ext/prng4.js"></script>
@@ -61,11 +62,10 @@
 <script src="js/lib/kjur-jsrsasign/base64x-1.1.min.js"></script>
 <script src="js/lib/kjur-jsrsasign/keyutil-1.0.min.js"></script>
 -->
-<script src="js/ssoHelper.js"></script>
-<script src="js/jsrsasign-latest-all-min.js"></script>
 
 <!--[if lte IE 9]><link rel="stylesheet" href="css/style-ie9.css" /><![endif]-->
 <!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+
 <script> 
 	$( document ).ready(function() {
                 if(!sessionStorage.ftsRestEndpoint)
