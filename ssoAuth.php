@@ -21,7 +21,7 @@
 			echo "<div id='ssoalert' style='display:none;'><span><strong>Failed to fetch an assertion from Mellon</strong></span></div>";
 		}
 	} else $assert = false;
-	$conf = simplexml_load_file("config.xml");
+	$conf = simplexml_load_file('config.xml');
 	if($assert) {
 		$sxml = new SimpleXMLElement($assert);
 		$sxml->registerXPathNamespace('saml2', 'urn:oasis:names:tc:SAML:2.0:assertion');
