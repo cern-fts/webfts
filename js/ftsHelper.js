@@ -31,10 +31,12 @@ function showError(jqXHR, textStatus, errorThrown, message) {
 
 function getUserJobs(delegationId){
 	var urlE = sessionStorage.ftsRestEndpoint + "/jobs?dlg_id=" + delegationId + "&state_in=SUBMITTED,ACTIVE,FINISHED,FAILED,CANCELED&limit="+ sessionStorage.jobsToList;
+	var header = getAuthzHeader();
 	$.support.cors = true;
 	$.ajax({
 		url : urlE,
 		type : "GET",
+		headers : header,
 		dataType : 'json',
 		xhrFields : {
 			withCredentials : true
@@ -51,10 +53,12 @@ function getUserJobs(delegationId){
 
 function getJobTranfers(jobId, isResubmit, overwrite, compare_checksum,resubmitAll){
 	var urlE = sessionStorage.ftsRestEndpoint + "/jobs/" + jobId + "/files";
+	var header = getAuthzHeader();
 	$.support.cors = true;
 	$.ajax({
 		url : urlE,
 		type : "GET",
+		headers : header,
 		dataType : 'json',
 		xhrFields : {
 			withCredentials : true
@@ -75,11 +79,13 @@ function getJobTranfers(jobId, isResubmit, overwrite, compare_checksum,resubmitA
 
 function removeTransfer(jobID){
 	var urlEndp = sessionStorage.ftsRestEndpoint + "/jobs/" + jobID;
+	var header = getAuthzHeader();
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
 		//type : "DELETE" <-- use directly this is not working
 		data: {"_method":"delete"},
+		headers : header,
 		dataType:'script', 
 		type : "POST",
 		xhrFields : {
@@ -108,10 +114,12 @@ function getUTCDate(time) {
 function ftsTransfer(theData) {
 	var urlE = sessionStorage.ftsRestEndpoint + "/jobs";
 	theData = JSON.stringify(theData);
+	var header = getAuthzHeader();
 	$.support.cors = true;
 	outPut = $.ajax({
 		url : urlE,
 		type : "POST",
+		headers : header,
 		data : theData,
 		contentType : "application/json", 
 		dataType : 'json',
@@ -277,7 +285,7 @@ function getDelegationIDSTS(fieldName, delegationNeeded, cert, key){
 				hideUserReport();
 				getUserJobs(data1.delegation_id);
 			}
-			isDelegated(data1.delegation_id, delegationNeeded, header);
+			isDelegated(data1.delegation_id, delegationNeeded);
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			showError(jqXHR, textStatus, errorThrown, "Error connecting to the FTS server to obtain the user credentials. Check if you have installed a valid copy of the CERN ROOT CA certificate."+ supportText);
@@ -311,22 +319,34 @@ function getDelegationID(fieldName, delegationNeeded){
 	});
 }
 
-function isDelegated(delegationID, showModal, authzheader){
-	return checkAndTransfer(delegationID, null, showModal, authzheader);
+function isDelegated(delegationID, showModal){
+	return checkAndTransfer(delegationID, null, showModal);
 }
 
 function runDataTransfer(delegationID, transferData){
 	return checkAndTransfer(delegationID, transferData, true);
 }
 
+function getAuthzHeader(){
+	var authzheader;
+	if (sessionStorage.userCert && sessionStorage.userCert != "")
+        {
+                authzheader = ssoAuthString(sessionStorage.userCert,sessionStorage.userKey);
+	}
+        header = authzheader ? { Authorization : authzheader } : "";
+	return header;
+}
+
 function removeDelegation(delegationID, showRemoveDelegationMessage){
 	var urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID;
+	var header = getAuthzHeader();
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
 		//type : "DELETE" <-- use directly this is not working
 		data: {"_method":"delete"},
 		dataType:'script', 
+		headers : header,
 		type : "POST",
 		xhrFields : {
 			withCredentials : true
@@ -344,10 +364,9 @@ function removeDelegation(delegationID, showRemoveDelegationMessage){
 }
 
 //Check if there is a valid delegation done. Otherwise, do it 
-function checkAndTransfer(delegationID, transferData, showModal, authzheader){
+function checkAndTransfer(delegationID, transferData, showModal){
 	var urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID;
-	stscredentials = authzheader ? true : false;
-	header = authzheader ? { Authorization : authzheader } : "";
+	var header = getAuthzHeader();
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
@@ -361,9 +380,11 @@ function checkAndTransfer(delegationID, transferData, showModal, authzheader){
 		success : function(data2, status) {
 			if (data2 == null){
 				showNoProxyMessages();
-				if (stscredentials) {
+				if (sessionStorage.userCert) {
 					//dostsdelegation
-					doDelegate(delegationID, $("#pemPkey").val(), $("#userDN").val(), $("#clientCERT").val(), "" , authzheader);
+					cert="-----BEGIN CERTIFICATE-----\r\n" + sessionStorage.userCert.match(/.{1,64}/g).join("\r\n") + "\r\n-----END CERTIFICATE-----\r\n";
+                        		key = KEYUTIL.getPEM(KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex(sessionStorage.userKey)), "PKCS1PRV");
+					doDelegate(delegationID, key, $("#userDN").val(), cert, "");
 				}
 				else if (showModal){
 					showDelegateModal();
@@ -409,11 +430,9 @@ function checkAndTransfer(delegationID, transferData, showModal, authzheader){
 }
 
 //Do delegation of credentials
-function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo, authzheader){
+function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 	var urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID + "/request";
-	stscredentials = authzheader ? true : false;
-        header = authzheader ? { Authorization : authzheader } : "";
-	console.log("USER DN "+ userDN);
+	var header = getAuthzHeader();
 	$.support.cors = true;
 	// Call 3: Asking for a new proxy certificate is needed
 	$.ajax({
@@ -469,10 +488,11 @@ function getVOMSCredentials(delegationID, user_vo){
 	var urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID + "/voms";
 	$.support.cors = true;
 	var uvo = '["' + user_vo + '"]';
-	
+	var header = getAuthzHeader();
 	$.ajax({
 		url : urlEndp,									
 		type : "POST",
+		headers : header,
 		contentType : "text/plain; charset=UTF-8", 
 		dataType : 'text',
 		data: uvo,
@@ -499,10 +519,12 @@ function getVOMSCredentials(delegationID, user_vo){
 
 function getEndpointContent(endpointInput, container, containerTable, indicator, stateText, filter){
         urlEndp = sessionStorage.ftsRestEndpoint + "/dm/list?surl=" + ($('#' + endpointInput).val()).trim();
+	var header = getAuthzHeader();
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
 		type : "GET",
+		headers : header,
 		dataType : 'json',
 		xhrFields : {
 			withCredentials : true

@@ -1,7 +1,56 @@
 <script>
 $( document ).ready(function() {	
-	getDelegationID("delegation_id", false);	
-	//getDelegationID("delegation_id", true);
+  
+  //trying to check if a cert from STS has been already stored in the session,
+  //otherwise it tries to get one, if it fails goes back to old delegation method  
+  if (!sessionStorage.userCert) {
+        $.get("ssoGetAssertion.php", function(data) {
+
+        // Let's check if we really got an assertion
+        var err = ssoErrorString(data);
+        if(err) {
+                console.log(err);
+                getDelegationID("delegation_id", false);
+                return;
+        }
+
+        // We will now wrap fetched assertion in SOAP envelope
+        // Third parameter to this function is an optional public key from our side (BASE64-encoded)
+
+        var req = ssoSoapReq(data, sessionStorage.stsAddress);
+
+        // We will now send our SOAP request to STS
+
+        if(req) {
+                $.ajax({url: "/sts",
+                type: "POST",
+                contentType: "text/xml; charset=utf-8",
+                headers: {SOAPAction: sessionStorage.stsAddress},
+                data: req}).done(
+                function(data) {
+
+                        // Let's check if STS was happy with our assertion
+
+                        var err = ssoErrorString(data);
+                        if(err) {
+                                console.log(err);
+                                getDelegationID("delegation_id", false);
+                                return;
+                        }
+
+                        // This function returns BASE64-encoded string of generated certificate
+                        var cert = ssoGetCertificate(data);
+                        // This function returns BASE64-encoded string of generated private key
+                        var pkey = ssoGetPrivateKey(data);
+                        //storing in keuy and cert in the session with proper format
+                        sessionStorage.userCert = cert;
+                        sessionStorage.userKey = pkey;
+                        getDelegationIDSTS("delegation_id", false, cert, pkey);
+
+                });
+                }
+        });
+   } else  getDelegationIDSTS("delegation_id", false, sessionStorage.userCert, sessionStorage.userKey);
 	
 	//Reload page every 5 minutes (5 * 60 * 1000)
 	var intervalID = window.setInterval(reloadJobs, 300000);
@@ -42,11 +91,7 @@ $(function(){
 	<small id="serverSuccessText"></small>
 </div>
 <div id="idjobsTable">
-<!-- 		data-step="1" 
-		data-intro="<h4>In this area are going to be displayed all your submitted jobs! Check the live status of your submittions whenever you want!</br><strong>Are you ready to start?</strong></h4>"
-		data-position="bottom-middle-aligned">
- -->	<table class="table table-bordered table-condensed table-hover" id="jobResultsTable">
-	<!-- <table class="table table-condensed" id="jobResultsTable" style="border-collapse:collapse;"> -->
+ 	<table class="table table-bordered table-condensed table-hover" id="jobResultsTable">
 		<thead>
 			<tr>
 				<th>Job ID
