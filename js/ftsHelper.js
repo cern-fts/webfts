@@ -378,11 +378,10 @@ function checkAndTransfer(delegationID, transferData, showModal){
 		success : function(data2, status) {
 			if (data2 == null){
 				showNoProxyMessages();
-				if (sessionStorage.userCert) {
-					//dostsdelegation
-					cert="-----BEGIN CERTIFICATE-----\r\n" + sessionStorage.userCert.match(/.{1,64}/g).join("\r\n") + "\r\n-----END CERTIFICATE-----\r\n";
-                        		key = KEYUTIL.getPEM(KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex(sessionStorage.userKey)), "PKCS1PRV");
-					doDelegate(delegationID, key, $("#userDN").val(), cert, "");
+				if (sessionStorage.userCert && sessionStorage.userCert != "") {
+					var cert="-----BEGIN CERTIFICATE-----\r\n" + sessionStorage.userCert.match(/.{1,64}/g).join("\r\n") + "\r\n-----END CERTIFICATE-----\r\n";
+					var pkey = KEYUTIL.getPEM(KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex(sessionStorage.userKey)), "PKCS1PRV");
+					doDelegate(delegationID, pkey, $("#userDN").val(), cert, "");
 				}
 				else if (showModal){
 					showDelegateModal();
@@ -408,9 +407,15 @@ function checkAndTransfer(delegationID, transferData, showModal){
 				remainingTime = noOffset(data2.termination_time) - (new Date().getTime());
 				if (remainingTime < 3600000) { //3600000 = milliseconds in an hour
 					showNoProxyMessages();
-					if (showModal){
-						showDelegateModal();
-					}
+	                                if (sessionStorage.userCert && sessionStorage.userCert != "") {
+                                        	var cert="-----BEGIN CERTIFICATE-----\r\n" + sessionStorage.userCert.match(/.{1,64}/g).join("\r\n") + "\r\n-----END CERTIFICATE-----\r\n";
+                                        	var pkey = KEYUTIL.getPEM(KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex(sessionStorage.userKey)), "PKCS1PRV");
+                                        	doDelegate(delegationID, pkey, $("#userDN").val(), cert, "");
+                                	}
+                                	else if (showModal){
+                                        	showDelegateModal();
+                                	}
+
 				} else {
 					var vo = data2.voms_attrs[0];
 					showRemainingProxyTime(millisecondsToStr(remainingTime),vo);
