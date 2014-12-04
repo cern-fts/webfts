@@ -93,3 +93,12 @@ function ssoAuthString(cert, key, hash) {
 	sig.updateString(ts);
 	return "Signed-Cert hash=\"" + hash.toLowerCase() + "\" ts=\"" + ts + "\" cert=\"" + hextob64(b64tohex(cert)) + "\" sign=\"" + hextob64(sig.sign()) + "\"";
 }
+//
+// This function returns the remaining validity window in seconds for SAML2 assertion
+//
+function ssoAssertionTimeLeft(assert) {
+	var as = $(assert).find('Assertion');
+	if(!as[0]) return undefined;
+	var nva = Date.parse(as.find('SubjectConfirmationData').attr('NotOnOrAfter'));
+	return (nva - (new Date).getTime()) / 1000;
+}

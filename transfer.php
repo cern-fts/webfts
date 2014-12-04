@@ -19,7 +19,6 @@ $( document ).ready(function() {
 
         // We will now wrap fetched assertion in SOAP envelope
         // Third parameter to this function is an optional public key from our side (BASE64-encoded)
-
         var req = ssoSoapReq(data, sessionStorage.stsAddress);
 
         // We will now send our SOAP request to STS
