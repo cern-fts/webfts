@@ -380,9 +380,9 @@ function checkAndTransfer(delegationID, transferData, showModal){
 				showNoProxyMessages();
 				if (sessionStorage.userCert) {
 					//dostsdelegation
-					cert="-----BEGIN CERTIFICATE-----\r\n" + sessionStorage.userCert.match(/.{1,64}/g).join("\r\n") + "\r\n-----END CERTIFICATE-----\r\n";
-                        		key = KEYUTIL.getPEM(KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex(sessionStorage.userKey)), "PKCS1PRV");
-					doDelegate(delegationID, key, $("#userDN").val(), cert, "");
+					var cert="-----BEGIN CERTIFICATE-----\r\n" + sessionStorage.userCert.match(/.{1,64}/g).join("\r\n") + "\r\n-----END CERTIFICATE-----\r\n";
+					var pkey = KEYUTIL.getPEM(KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex(sessionStorage.userKey)), "PKCS1PRV");
+					doDelegate(delegationID, pkey, $("#userDN").val(), cert, "");
 				}
 				else if (showModal){
 					showDelegateModal();
