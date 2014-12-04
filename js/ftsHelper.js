@@ -147,11 +147,9 @@ function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {
 	userDN = userDN.replace(Re,"/");
 	var subject = userDN + '/CN=proxy';
 	
-	var reHex = /^\s*(?:[0-9A-Fa-f][0-9A-Fa-f]\s*)+$/;
 	try {
-		var derServer = reHex.test(sCert) ? Hex.decode(sCert) : Base64E.unarmor(sCert);
-
-		var derUser = reHex.test(userCERT) ? Hex.decode(userCERT) : Base64E.unarmor(userCERT);
+		var derServer = Base64E.unarmor(sCert);
+		var derUser = Base64E.unarmor(userCERT);
 
 		var asn1 = ASN11.decode(derServer);
 		var pos = asn1.getCSRPubKey();

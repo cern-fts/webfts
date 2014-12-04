@@ -23,20 +23,19 @@
 <link href="css/validation.css" rel="stylesheet" >
 
 <!-- custom slideshow styles -->
-<link rel="stylesheet" type="text/css" href="css/carousel styles/custom-carousel.css">
+<link rel="stylesheet" href="css/carousel styles/custom-carousel.css">
 
 <!-- General Site tour styles -->
-<link href="site-tour/introJs/introjs.css" rel="stylesheet">
+<link rel="stylesheet" href="site-tour/introJs/introjs.css">
 
 <!-- custom site-tour styles -->
-<link rel="stylesheet" type="text/css" href="css/site-tour-styles/custom-site-tour.css">
+<link rel="stylesheet" href="css/site-tour-styles/custom-site-tour.css">
 
 <!-- custom nav-bar styles -->
-<link rel="stylesheet" type="text/css" href="/css/nav-bar-custom/nav-bar-custom.css">
+<link rel="stylesheet" href="/css/nav-bar-custom/nav-bar-custom.css">
 
 <!-- <link rel='stylesheet' href='paraFiles/css/diffBrsStyles/tryFire_scratch.css' type='text/css'>-->
 <!-- <link href="/site-tour/introJs/example/assets/css/bootstrap-responsive.min.css" rel="stylesheet"> -->
-
 
 <!--Parallax scripts start-->
 <script type="text/javascript" src='paraFiles/js/jquery.stellar.min.js'></script>
@@ -49,14 +48,8 @@
 <script type="text/javascript" src='/site-tour/scroll-to-top.js'></script>
 <script type="text/javascript" src='/js/disableScalability.js'></script>
 
-
-
-<!-- JQuery -->
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.validate.min.js"></script>
-
 <!-- Browser Compatibility styles -->
-<link rel="stylesheet" href="/paraFiles/css/base.css"/>
+<link rel="stylesheet" href="/paraFiles/css/base.css">
 
 <!-- Browser Compatibility starts to apply different stylesheets-->
 <script type="text/javascript">
