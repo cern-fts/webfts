@@ -6,7 +6,7 @@
 $( document ).ready(function() {
   //trying to check if a cert from STS has been already stored in the session,
   //otherwise it tries to get one, if it fails goes back to old delegation method	
-  if (!sessionStorage.userCert) {
+    if (!sessionStorage.userCert) {
 	$.get("ssoGetAssertion.php", function(data) {
 
         // Let's check if we really got an assertion
@@ -17,12 +17,16 @@ $( document ).ready(function() {
                 return;
         }
 
+	// We will now generate an RSA keypair *** THIS DOES NOT WORK WITH STS YET ***
+//	var kp = KEYUTIL.generateKeypair("RSA", 2048);
+//	sessionStorage.userKey = hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["prvKeyObj"], "PKCS8PRV")));
+
         // We will now wrap fetched assertion in SOAP envelope
         // Third parameter to this function is an optional public key from our side (BASE64-encoded)
+//	var req = ssoSoapReq(data, sessionStorage.stsAddress, hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["pubKeyObj"]))));
         var req = ssoSoapReq(data, sessionStorage.stsAddress);
 
         // We will now send our SOAP request to STS
-
         if(req) {
                 $.ajax({url: "/sts",
                 type: "POST",
@@ -41,18 +45,23 @@ $( document ).ready(function() {
                         }
 
                         // This function returns BASE64-encoded string of generated certificate
-                        var cert = ssoGetCertificate(data);
-                        // This function returns BASE64-encoded string of generated private key
-                        var pkey = ssoGetPrivateKey(data);
-			//storing in keuy and cert in the session with proper format
+			var cert = ssoGetCertificate(data);
 			sessionStorage.userCert = cert;
-			sessionStorage.userKey = pkey;
+
+                        // This function returns BASE64-encoded string of generated private key
+			var pkey = ssoGetPrivateKey(data);
+			if(pkey) { // STS provided us a key
+				sessionStorage.userKey = pkey;
+			} else { // Use our own key
+				pkey = sessionStorage.userKey;
+			}
+
 			getDelegationIDSTS("delegation_id", true, cert, pkey);
 
                 });
         	}
 	});
-   } else  getDelegationIDSTS("delegation_id", true, sessionStorage.userCert, sessionStorage.userKey);
+    } else  getDelegationIDSTS("delegation_id", true, sessionStorage.userCert, sessionStorage.userKey);
 	
 
 	renderFolderContent("leftEndpointContentTable", "leftSelectedCount", "leftEndpointContent", "left-loading-indicator", "left-ep-text");

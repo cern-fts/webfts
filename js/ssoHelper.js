@@ -23,7 +23,7 @@ function ssoErrorString(xml) {
 // sts    - STS endpoint URI
 // key    - Optional public key (BASE64-encoded)
 //
-function ssoSoapReq(assert, sts, key) {
+function ssoSoapReq(assert, sts, pubkey) {
 	var soap = $($.parseXML('<?xml version="1.0" encoding="UTF-8"?>\
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sbf="urn:liberty:sb" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\
 <soap:Header xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
@@ -57,7 +57,11 @@ function ssoSoapReq(assert, sts, key) {
 	soap.find('wsa\\:To, To').text(sts);
 	soap.find('wsse\\:Security, Security').append(as);
 	soap.find('wsse\\:Reference, Reference').attr('URI', '#' + as.attr('ID'));
-	if(key) soap.find('wst\\:RequestSecurityToken, RequestSecurityToken').append('<wst:UseKey xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512">' + key + '</wst:UseKey>');
+	if(pubkey) {
+		parent = soap.find('wst\\:RequestSecurityToken, RequestSecurityToken');
+		parent.append('<wst:KeyType xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512">http://docs.oasis-open.org/ws-sx/ws-trust/200512/PublicKey</wst:KeyType>');
+		parent.append('<wst:UseKey xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512"><wsse:BinarySecurityToken xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">' + pubkey + '</wsse:BinarySecurityToken></wst:UseKey>');
+	}
 	return xmlToString(soap);
 }
 //

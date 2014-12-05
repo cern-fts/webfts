@@ -14,13 +14,16 @@ $( document ).ready(function() {
                 return;
         }
 
+        // We will now generate an RSA keypair *** THIS DOES NOT WORK WITH STS YET ***
+//        var kp = KEYUTIL.generateKeypair("RSA", 2048);
+//        sessionStorage.userKey = hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["prvKeyObj"], "PKCS8PRV")));
+
         // We will now wrap fetched assertion in SOAP envelope
         // Third parameter to this function is an optional public key from our side (BASE64-encoded)
-
+//        var req = ssoSoapReq(data, sessionStorage.stsAddress, hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["pubKeyObj"]))));
         var req = ssoSoapReq(data, sessionStorage.stsAddress);
 
         // We will now send our SOAP request to STS
-
         if(req) {
                 $.ajax({url: "/sts",
                 type: "POST",
@@ -40,11 +43,16 @@ $( document ).ready(function() {
 
                         // This function returns BASE64-encoded string of generated certificate
                         var cert = ssoGetCertificate(data);
+                        sessionStorage.userCert = cert;
+
                         // This function returns BASE64-encoded string of generated private key
                         var pkey = ssoGetPrivateKey(data);
-                        //storing in keuy and cert in the session with proper format
-                        sessionStorage.userCert = cert;
-                        sessionStorage.userKey = pkey;
+                        if(pkey) { // STS provided us a key
+                                sessionStorage.userKey = pkey;
+                        } else { // Use our own key
+                                pkey = sessionStorage.userKey;
+                        }
+
                         getDelegationIDSTS("delegation_id", false, cert, pkey);
 
                 });
@@ -54,7 +62,7 @@ $( document ).ready(function() {
 	
 	//Reload page every 5 minutes (5 * 60 * 1000)
 	var intervalID = window.setInterval(reloadJobs, 300000);
-});	
+});
 
 $(function(){
 	   $("#modal_content").load("modal.html"); 
