@@ -25,7 +25,7 @@ function ssoErrorString(xml) {
 //
 function ssoSoapReq(assert, sts, pubkey) {
 	var soap = $($.parseXML('<?xml version="1.0" encoding="UTF-8"?>\
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sbf="urn:liberty:sb" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
 <soap:Header xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
 <wsa:Action xmlns:wsa="http://www.w3.org/2005/08/addressing">http://docs.oasis-open.org/ws-sx/ws-trust/200512/RST/Issue</wsa:Action>\
 <wsa:MessageID xmlns:wsa="http://www.w3.org/2005/08/addressing">urn:uuid:99999999-0000-0000-0000-000000000000</wsa:MessageID>\
@@ -39,7 +39,7 @@ function ssoSoapReq(assert, sts, pubkey) {
 </wsse:Security>\
 </soap:Header>\
 <soap:Body xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
-<wst:RequestSecurityToken Context="urn:uuid:00000000-0000-0000-0000-000000000000" wsu:Id="test0987654321" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\
+<wst:RequestSecurityToken Context="urn:uuid:00000000-0000-0000-0000-000000000000" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512">\
 <wst:RequestType xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512">http://docs.oasis-open.org/ws-sx/ws-trust/200512/RST/Issue</wst:RequestType>\
 <wst:TokenType xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512">http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-tokenprofile-1.0#X509v3</wst:TokenType>\
 <wst:Claims Dialect="http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV2.0" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512">\
