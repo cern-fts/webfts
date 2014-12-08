@@ -1,0 +1,1 @@
+phpunit webfts.php --debug

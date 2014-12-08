@@ -1,0 +1,17 @@
+installation:
+
+yum install php-phpunit-PHPUnit-Selenium
+yum install firefox
+yum install xorg-x11-server-Xvfb
+wget http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar -O /usr/local/bin/selenium-server-standalone-2.44.0.jar
+
+to run
+
+Xvfb :10 -ac &
+java -DDISPLAY=localhost:10 -jar /usr/local/bin/selenium-server-standalone-2.44.0.jar &
+
+test running
+
+phpunit webfts.php
+
+

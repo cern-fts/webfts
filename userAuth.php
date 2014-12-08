@@ -1,8 +1,8 @@
-<script>
-if ($('#sslalert').text() !== "") {
-		alert($( "#dialog" ).text());
-	}
-</script>	
+#<script>
+#if ($('#sslalert').text() !== "") {
+#		alert($( "#dialog" ).text());
+#	}
+#</script>	
 		<div id="dialog" title="User Certificate Needed"  style="display: none;" >WebFTS needs a valid user certificate installed in your browser.</div>
 		<div class="navbar-left">
 				<?php
