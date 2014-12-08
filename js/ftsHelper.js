@@ -83,11 +83,11 @@ function removeTransfer(jobID){
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
-		//type : "DELETE" <-- use directly this is not working
-		data: {"_method":"delete"},
+		type : "DELETE", // use directly this is not working
+//		data: {"_method":"delete"},
+//		dataType: 'script',
+//		type : "POST",
 		headers : header,
-		dataType:'script', 
-		type : "POST",
 		xhrFields : {
 			withCredentials : true
 		},
@@ -341,10 +341,10 @@ function removeDelegation(delegationID, showRemoveDelegationMessage){
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
-		//type : "DELETE" <-- use directly this is not working
-		data: {"_method":"delete"},
-		dataType:'script', 
-		type : "POST",
+		type : "DELETE", // use directly this is not working
+//		data: {"_method":"delete"},
+//		dataType: 'script',
+//		type : "POST",
 		headers : header,
 		xhrFields : {
 			withCredentials : true
