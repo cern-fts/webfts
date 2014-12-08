@@ -5,7 +5,7 @@
 <script>
 $( document ).ready(function() {
   //trying to check if a cert from STS has been already stored in the session,
-  //otherwise it tries to get one, if it fails goes back to old delegation method	
+  //otherwise it tries to get one, if it fails goes back to old delegation method
     if (!sessionStorage.userCert) {
 	$.get("ssoGetAssertion.php", function(data) {
 
@@ -24,7 +24,7 @@ $( document ).ready(function() {
         // We will now wrap fetched assertion in SOAP envelope
         // Third parameter to this function is an optional public key from our side (BASE64-encoded)
 //	var req = ssoSoapReq(data, sessionStorage.stsAddress, hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["pubKeyObj"]))));
-        var req = ssoSoapReq(data, sessionStorage.stsAddress);
+	var req = ssoSoapReq(data, sessionStorage.stsAddress);
 
         // We will now send our SOAP request to STS
         if(req) {
@@ -61,8 +61,7 @@ $( document ).ready(function() {
                 });
         	}
 	});
-    } else  getDelegationIDSTS("delegation_id", true, sessionStorage.userCert, sessionStorage.userKey);
-	
+    } else getDelegationIDSTS("delegation_id", true, sessionStorage.userCert, sessionStorage.userKey);
 
 	renderFolderContent("leftEndpointContentTable", "leftSelectedCount", "leftEndpointContent", "left-loading-indicator", "left-ep-text");
 	renderFolderContent("rightEndpointContentTable", "rightSelectedCount", "rightEndpointContent", "right-loading-indicator", "right-ep-text");
@@ -227,17 +226,17 @@ $( document ).ready(function() {
 	  }
 
 	 if (sessionStorage.seEndpointRight) {
-		 $('#rightEndpoint').val(sessionStorage.seEndpointRight);
-		 if (sessionStorage.seEndpointRight !== "") {
+		$('#rightEndpoint').val(sessionStorage.seEndpointRight);
+		if (sessionStorage.seEndpointRight !== "") {
                         $('#load-right').trigger("click");
-                 }  
+                }
 	  }
 	}
 
 	//$('#leftStorageLogin').hide();
 
 	checkCSState('leftStorageSelect', 'leftStorageContent', 'leftCSLoginForm', 'leftLoginIndicator', 'leftStorageLogin', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter', 'leftEndpoint', 'leftCSName');	
-	console.log( "ready!" );	
+	console.log( "ready!" );
 });
 
 

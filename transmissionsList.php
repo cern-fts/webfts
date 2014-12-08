@@ -1,8 +1,8 @@
 <script>
-$( document ).ready(function() {	
-  
+$( document ).ready(function() {
+
   //trying to check if a cert from STS has been already stored in the session,
-  //otherwise it tries to get one, if it fails goes back to old delegation method  
+  //otherwise it tries to get one, if it fails goes back to old delegation method
   if (!sessionStorage.userCert) {
         $.get("ssoGetAssertion.php", function(data) {
 
@@ -14,14 +14,14 @@ $( document ).ready(function() {
                 return;
         }
 
-        // We will now generate an RSA keypair *** THIS DOES NOT WORK WITH STS YET ***
-//        var kp = KEYUTIL.generateKeypair("RSA", 2048);
-//        sessionStorage.userKey = hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["prvKeyObj"], "PKCS8PRV")));
+	// We will now generate an RSA keypair *** THIS DOES NOT WORK WITH STS YET ***
+//	var kp = KEYUTIL.generateKeypair("RSA", 2048);
+//	sessionStorage.userKey = hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["prvKeyObj"], "PKCS8PRV")));
 
-        // We will now wrap fetched assertion in SOAP envelope
-        // Third parameter to this function is an optional public key from our side (BASE64-encoded)
-//        var req = ssoSoapReq(data, sessionStorage.stsAddress, hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["pubKeyObj"]))));
-        var req = ssoSoapReq(data, sessionStorage.stsAddress);
+	// We will now wrap fetched assertion in SOAP envelope
+	// Third parameter to this function is an optional public key from our side (BASE64-encoded)
+//	var req = ssoSoapReq(data, sessionStorage.stsAddress, hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["pubKeyObj"]))));
+	var req = ssoSoapReq(data, sessionStorage.stsAddress);
 
         // We will now send our SOAP request to STS
         if(req) {
@@ -58,14 +58,14 @@ $( document ).ready(function() {
                 });
                 }
         });
-   } else  getDelegationIDSTS("delegation_id", false, sessionStorage.userCert, sessionStorage.userKey);
-	
+   } else getDelegationIDSTS("delegation_id", false, sessionStorage.userCert, sessionStorage.userKey);
+
 	//Reload page every 5 minutes (5 * 60 * 1000)
 	var intervalID = window.setInterval(reloadJobs, 300000);
 });
 
 $(function(){
-	   $("#modal_content").load("modal.html"); 
+	$("#modal_content").load("modal.html"); 
 });
 </script>
 <div class="row">
