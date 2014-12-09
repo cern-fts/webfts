@@ -11,7 +11,7 @@ $(document).ready(function(){
 jQuery.validator.addMethod("checkCert", function (value, element) {
     return value.substring(0,31)=="-----BEGIN RSA PRIVATE KEY-----";
 }, "The private key must start with -----BEGIN RSA PRIVATE KEY-----");
-$(function(event) {											
+$(function(event) {
 	 $('#pinfo-form').validate(
 	  {
 	  rules: {
@@ -29,39 +29,39 @@ $(function(event) {
       },
 	  success: function(element) {
 	    element.text('OK!').addClass('valid').closest('.control-group').removeClass('has-error');
-	  }											 
+	  }
 	 });
-}); 
+});
 
 $("#pinfo-form").submit(function(event){
-	  event.preventDefault();	
+	  event.preventDefault();
 	  if ($("#pinfo-form").valid()){
-		$("#delegating-indicator").show(); 	
+		$("#delegating-indicator").show();
 		doDelegate($("#delegation_id").val(), $("#pemPkey").val(),
-				$("#userDN").val(), $("#clientCERT").val(), $("#userVO").val());		
+				$("#userDN").val(), $("#clientCERT").val(), $("#userVO").val());
 		$("#pemPkey").val("");
-		$("#userVO").val("");    
-	  }	
+		$("#userVO").val("");
+	  }
 	  return false;
 });
 
 $( "#delegateButton" ).click(function() {
 	$( "#pinfo-form" ).submit();
 });
-		
+
 $('#popoverDelegate').popover();
 
 //To prevent the modal window to be closed by pressing ESC or clicking outside
 $('#delegationModal').modal({
- 	  show: false,	
+ 	  show: false,
  	  backdrop: 'static',
  	  keyboard: false
  });
-	
+
 	//To do the validation of the form even on paste
 $("#pemPkey").bind('input propertychange', function(){
 	$("#pinfo-form").valid();
-});	
+});
 </script>
 <div class="modal fade" id="delegationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 	<div class="modal-dialog">
@@ -90,7 +90,7 @@ $("#pemPkey").bind('input propertychange', function(){
 					</div>
 					<div class="alert alert-danger" id="serverDelegateAlert"
 						style="display: none">
-						<small id="delegateDelegateErrorText"></small>						
+						<small id="delegateDelegateErrorText"></small>
 					</div>
 					<div class="row control-group">
 						<label class="control-label" for="privateKey">Private Key</label>
