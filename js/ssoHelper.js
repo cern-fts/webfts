@@ -21,9 +21,11 @@ function ssoErrorString(xml) {
 // This function returns XML SOAP string that should be sent to STS service.
 // assert - XML object returned from AJAX request to ssoGetAssertion.php
 // sts    - STS endpoint URI
-// key    - Optional public key (BASE64-encoded)
+// pubkey - Optional public key (BASE64-encoded)
+// fqan   - List of FQANs to request in proxy certificate (empty list for non-VOMS proxy)
+// time   - Proxy certificate lifetime
 //
-function ssoSoapReq(assert, sts, pubkey) {
+function ssoSoapReq(assert, sts, pubkey, fqan, time) {
 	var soap = $($.parseXML('<?xml version="1.0" encoding="UTF-8"?>\
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
 <soap:Header xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
@@ -61,6 +63,14 @@ function ssoSoapReq(assert, sts, pubkey) {
 		parent = soap.find('wst\\:RequestSecurityToken, RequestSecurityToken');
 		parent.append('<wst:KeyType xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512">http://docs.oasis-open.org/ws-sx/ws-trust/200512/PublicKey</wst:KeyType>');
 		parent.append('<wst:UseKey xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512"><wsse:BinarySecurityToken xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">' + pubkey + '</wsse:BinarySecurityToken></wst:UseKey>');
+		if(fqan) { // Request a proxy certificate instead of a normal one
+			soap.find('wst\\:TokenType, TokenType').text('urn:glite.org:sts:GridProxy');
+			time = time ? time : 86400;
+			var list = "";
+			for(var i in fqan) list += '<gridProxy:FQAN xmlns:gridProxy="urn:glite.org:sts:proxy">' + fqan[i] + '</gridProxy:FQAN>';
+			if(list) list = '<gridProxy:VomsAttributeCertificates xmlns:gridProxy="urn:glite.org:sts:proxy">' + list + '</gridProxy:VomsAttributeCertificates>';
+			parent.append('<gridProxy:GridProxyRequest xmlns:gridProxy="urn:glite.org:sts:proxy" lifetime="' + time + '">' + list + '</gridProxy:GridProxyRequest>');
+		}
 	}
 	return xmlToString(soap);
 }

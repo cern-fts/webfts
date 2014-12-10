@@ -20,7 +20,7 @@ $( document ).ready(function() {
 
 	// We will now wrap fetched assertion in SOAP envelope
 	// Third parameter to this function is an optional public key from our side (BASE64-encoded)
-//	var req = ssoSoapReq(data, sessionStorage.stsAddress, hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["pubKeyObj"]))));
+//	var req = ssoSoapReq(data, sessionStorage.stsAddress, hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["pubKeyObj"]))), []);
 	var req = ssoSoapReq(data, sessionStorage.stsAddress);
 
         // We will now send our SOAP request to STS
@@ -67,19 +67,27 @@ $( document ).ready(function() {
 $(function(){
 	$("#modal_content").load("modal.html"); 
 });
+
+function refresh(){
+	if (!sessionStorage.userCert){
+		getDelegationID("delegation_id", false);
+	}
+	else {
+		getDelegationIDSTS("delegation_id", false, sessionStorage.userCert, sessionStorage.userKey);
+	}
+}
 </script>
 <div class="row">
 <div>&nbsp;</div>
+<input type="hidden" id="userDN" value="">
 <?php
 	foreach($_SERVER as $h=>$v){
-		if ($h == "SSL_CLIENT_S_DN")
-			echo "<input type=\"hidden\" id=\"userDN\" value=\"$v\">";
-		else if ($h == "SSL_CLIENT_CERT")
+		if ($h == "SSL_CLIENT_CERT")
 			echo "<input type=\"hidden\" id=\"clientCERT\" value=\"$v\">";
 	}
 ?>
 
-<input type="hidden" id="delegation_id" value="">		
+<input type="hidden" id="delegation_id" value="">
 <!-- <ul class="pagination pagination pagination-sm"> -->
 <!-- 	<li class="disabled"><a href="#">&laquo;</a></li> -->
 <!-- 	<li class="active"><a href="#">1</a></li> -->
@@ -104,9 +112,9 @@ $(function(){
 			<tr>
 				<th>Job ID
 					<div class="btn-group pull-right">
-						<button type="button" class="btn btn-xs btn-primary" onclick="getDelegationID('delegation_id', false)">
+						<button type="button" class="btn btn-xs btn-primary" onclick="refresh()">
 							<i class="glyphicon glyphicon-refresh"/>&nbsp;Refresh
-						</button>					
+						</button>
 					</div>
 				</th>
 				<th>Submit Time</th>

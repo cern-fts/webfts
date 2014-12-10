@@ -23,7 +23,7 @@ $( document ).ready(function() {
 
         // We will now wrap fetched assertion in SOAP envelope
         // Third parameter to this function is an optional public key from our side (BASE64-encoded)
-//	var req = ssoSoapReq(data, sessionStorage.stsAddress, hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["pubKeyObj"]))));
+//	var req = ssoSoapReq(data, sessionStorage.stsAddress, hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["pubKeyObj"]))), []);
 	var req = ssoSoapReq(data, sessionStorage.stsAddress);
 
         // We will now send our SOAP request to STS
@@ -337,11 +337,10 @@ $('#checksum').popover();
 <div class="row">
 	<div id="modal_content"></div>
 	<div id="warning_modal_content"></div>
+	<input type="hidden" id="userDN" value="">
 	<?php
 		foreach($_SERVER as $h=>$v){
-			if ($h == "SSL_CLIENT_S_DN")
-				echo "<input type=\"hidden\" id=\"userDN\" value=\"$v\">";
-			else if ($h == "SSL_CLIENT_CERT")
+			if ($h == "SSL_CLIENT_CERT")
 				echo "<input type=\"hidden\" id=\"clientCERT\" value=\"$v\">";
 		}
 	?>
