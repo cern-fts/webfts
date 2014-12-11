@@ -87,7 +87,12 @@ function getPopoverText(transfer){
 
 function reloadJobs(){
 	console.log("reloading...");
-	getDelegationID("delegation_id", false);
+	if (!sessionStorage.userCert){
+                getDelegationID("delegation_id", false);
+        }
+        else {
+                getDelegationIDSTS("delegation_id", false, sessionStorage.userCert, sessionStorage.userKey);
+        }
 }
 
 function getColumn(columnName){
