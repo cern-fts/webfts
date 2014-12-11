@@ -14,11 +14,8 @@ $( document ).ready(function() {
 		console.log("refreshing sso");
 		//we have to refresh the assertion
 		var currenturl = document.URL;
-		var i = currenturl.lastIndexOf('/')+1;
-		currentpage = currenturl.substring(i);
-		console.log("Page " + currentpage);
-		var newWin = window.open();
-		newWin.location =sessionStorage.ssoLogin+currentpage
+		currentpage = currenturl.substring(currenturl.lastIndexOf('/')+1);
+		window.open(sessionStorage.ssoLogin+currentpage,"_self");
 	}
 	
         // Let's check if we really got an assertion
