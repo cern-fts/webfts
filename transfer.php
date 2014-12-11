@@ -6,7 +6,7 @@
 $( document ).ready(function() {
   	//trying to check if a cert from STS has been already stored in the session,
   	//otherwise it tries to get one, if it fails goes back to old delegation method
-    	getDelegation();
+    	getDelegation(true);
 
 	
 	renderFolderContent("leftEndpointContentTable", "leftSelectedCount", "leftEndpointContent", "left-loading-indicator", "left-ep-text");

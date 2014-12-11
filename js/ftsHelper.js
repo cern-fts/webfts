@@ -109,6 +109,19 @@ function getUTCDate(time) {
 			+ "Z";
 }
 
+function parseUTCDate(str) {
+	var ud = /(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)Z/.exec(str);
+	if(!ud) return null;
+	var date = new Date(0);
+	date.setUTCFullYear("20" + ud[1]);
+	date.setUTCMonth(ud[2] - 1);
+	date.setUTCDate(ud[3]);
+	date.setUTCHours(ud[4]);
+	date.setUTCMinutes(ud[5]);
+	date.setUTCSeconds(ud[6]);
+	return date;
+}
+
 // Call to make the transfer between two endpoints
 function ftsTransfer(theData) {
 	var urlE = sessionStorage.ftsRestEndpoint + "/jobs";
@@ -139,6 +152,16 @@ function ftsTransfer(theData) {
 		}
 	});
 	return false;
+}
+
+function certValid(cert) {
+	var ct = new X509();
+	ct.readCertPEM(cert);
+	var now = (new Date).getTime();
+	var nb = parseUTCDate(ct.getNotBefore()).getTime();
+	var na = parseUTCDate(ct.getNotAfter()).getTime();
+	if(now < nb || now > na) return -1;
+	return (na - now) / 1000;
 }
 
 function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {
@@ -205,8 +228,8 @@ function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {
 		tbsc.appendExtension(new KJUR.asn1.x509.KeyUsage({'bin':'101', 'critical':true}));
 
 		var s = KEYUTIL.getPEM(rsakey);
-	    	var sHashHex = getSubjectKeyIdentifier(derUser);
-	    	var paramAKI = {'kid': {'hex': sHashHex }, 'issuer': oIssuer, 'critical': false};
+		var sHashHex = getSubjectKeyIdentifier(derUser);
+		var paramAKI = {'kid': {'hex': sHashHex }, 'issuer': oIssuer, 'critical': false};
 		tbsc.appendExtension(new KJUR.asn1.x509.AuthorityKeyIdentifier(paramAKI));
 		
 		// Sign and get PEM certificate with CA private key
@@ -406,15 +429,13 @@ function checkAndTransfer(delegationID, transferData, showModal){
 				remainingTime = noOffset(data2.termination_time) - (new Date().getTime());
 				if (remainingTime < 3600000) { //3600000 = milliseconds in an hour
 					showNoProxyMessages();
-	                                if (sessionStorage.userCert && sessionStorage.userCert != "") {
-                                        	var cert="-----BEGIN CERTIFICATE-----\r\n" + sessionStorage.userCert.match(/.{1,64}/g).join("\r\n") + "\r\n-----END CERTIFICATE-----\r\n";
-                                        	var pkey = KEYUTIL.getPEM(KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex(sessionStorage.userKey)), "PKCS1PRV");
-                                        	doDelegate(delegationID, pkey, $("#userDN").val(), cert, "");
-                                	}
-                                	else if (showModal){
-                                        	showDelegateModal();
-                                	}
-
+					if (sessionStorage.userCert && sessionStorage.userCert != "") {
+						var cert="-----BEGIN CERTIFICATE-----\r\n" + sessionStorage.userCert.match(/.{1,64}/g).join("\r\n") + "\r\n-----END CERTIFICATE-----\r\n";
+						var pkey = KEYUTIL.getPEM(KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex(sessionStorage.userKey)), "PKCS1PRV");
+						doDelegate(delegationID, pkey, $("#userDN").val(), cert, "");
+					} else if (showModal) {
+						showDelegateModal();
+					}
 				} else {
 					var vo = data2.voms_attrs[0];
 					showRemainingProxyTime(millisecondsToStr(remainingTime),vo);

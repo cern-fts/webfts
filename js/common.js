@@ -89,11 +89,11 @@ function getUrlVars(){
     return vars;
 }
 
-function getDelegation() {
-	if (!sessionStorage.userCert) {
+function getDelegation(delegationNeeded) {
+    if (!sessionStorage.userCert || sessionStorage.userCert =="") {
         $.get("ssoGetAssertion.php", function(data) {
-
-        //chcking assertion lifetime 
+	console.log("getting assertion");
+        //checking assertion lifetime 
         if (ssoAssertionTimeLeft(data) < 60) {
                 console.log("refreshing sso");
                 //we have to refresh the assertion
@@ -106,7 +106,7 @@ function getDelegation() {
         var err = ssoErrorString(data);
         if(err) {
                 console.log(err);
-                getDelegationID("delegation_id", true);
+                getDelegationID("delegation_id", delegationNeeded);
                 return;
         }
         // We will now generate an RSA keypair *** THIS DOES NOT WORK WITH STS YET ***
@@ -127,31 +127,30 @@ function getDelegation() {
                 headers: {SOAPAction: sessionStorage.stsAddress},
                 data: req,
                 success : function(data2, status) {
-                        var err = ssoErrorString(data);
+                        var err = ssoErrorString(data2);
                         if(err) {
                                 console.log(err);
-                                getDelegationID("delegation_id", true);
+                                getDelegationID("delegation_id", delegationNeeded);
                                 return;
                         }
                         // This function returns BASE64-encoded string of generated certificate
-                        var cert = ssoGetCertificate(data);
+                        var cert = ssoGetCertificate(data2);
                         sessionStorage.userCert = cert;
                         // This function returns BASE64-encoded string of generated private key
-                        var pkey = ssoGetPrivateKey(data);
+                        var pkey = ssoGetPrivateKey(data2);
                         if(pkey) { // STS provided us a key
                                 sessionStorage.userKey = pkey;
                         } else { // Use our own key
                                 pkey = sessionStorage.userKey;
                         }
-                        getDelegationIDSTS("delegation_id", true, cert, pkey);
+                        getDelegationIDSTS("delegation_id", delegationNeeded, cert, pkey);
                 },
                 error : function(jqXHR, textStatus, errorThrown) {
                         showError(jqXHR, textStatus, errorThrown, "Error contacting STS to request credendials");
-                        clearContentTable(containerTable, container, indicator, stateText);
                         }
                 });
             }
         });
-    } else getDelegationIDSTS("delegation_id", true, sessionStorage.userCert, sessionStorage.userKey);
+    } else getDelegationIDSTS("delegation_id", delegationNeeded, sessionStorage.userCert, sessionStorage.userKey);
 }
 

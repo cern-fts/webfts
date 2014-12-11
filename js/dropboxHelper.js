@@ -1,4 +1,4 @@
-function Dropbox(){ 
+function Dropbox(){
 	this.dropboxEndpoint = "https://www.dropbox.com/1";
 	/*this.dropboxApi = "https://api.dropbox.com/1";
 	this.dropboxApiContent = "https://api-content.dropbox.com/1";*/
