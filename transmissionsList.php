@@ -5,6 +5,16 @@ $( document ).ready(function() {
   //otherwise it tries to get one, if it fails goes back to old delegation method
   if (!sessionStorage.userCert) {
         $.get("ssoGetAssertion.php", function(data) {
+	
+	//chcking assertion lifetime
+        if (ssoAssertionTimeLeft(data) < 60) {
+                //we have to refresh the assertion
+                var currenturl = document.URL;
+                var i = currenturl.lastIndexOf('/')+1;
+                currentpage = currenturl.substring(i);
+                var newWin = window.open();
+                newWin.location =sessionStorage.ssoLogin+currentpage
+        }
 
         // Let's check if we really got an assertion
         var err = ssoErrorString(data);

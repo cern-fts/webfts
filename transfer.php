@@ -9,6 +9,18 @@ $( document ).ready(function() {
     if (!sessionStorage.userCert) {
 	$.get("ssoGetAssertion.php", function(data) {
 
+	//chcking assertion lifetime 
+	if (ssoAssertionTimeLeft(data) < 60) {
+		console.log("refreshing sso");
+		//we have to refresh the assertion
+		var currenturl = document.URL;
+		var i = currenturl.lastIndexOf('/')+1;
+		currentpage = currenturl.substring(i);
+		console.log("Page " + currentpage);
+		var newWin = window.open();
+		newWin.location =sessionStorage.ssoLogin+currentpage
+	}
+	
         // Let's check if we really got an assertion
         var err = ssoErrorString(data);
         if(err) {
