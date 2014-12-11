@@ -6,10 +6,12 @@ function Dropbox(){
 	this.getCSAccess = function(loginDiv, contentDiv, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName){
 		//Step 1: check if the user has asked for access
 		var urlE = sessionStorage.ftsRestEndpoint + "/cs/access_request/dropbox";
+		var header = getAuthzHeader();
 		$.support.cors = true;
 		$.ajax({
 			url : urlE,
 			type : "GET",
+			headers : header,
 			dataType : 'json',
 			xhrFields : {
 				withCredentials : true
@@ -21,6 +23,7 @@ function Dropbox(){
 				$.ajax({
 					url : urlE,
 					type : "GET",
+					headers : header,
 					dataType : 'json',
 					xhrFields : {
 						withCredentials : true
@@ -51,10 +54,12 @@ function Dropbox(){
 	this.getRequestTokens = function (){		
 		var urlEndp = sessionStorage.ftsRestEndpoint + "/cs/access_request/dropbox/request";
 		var ep = this.dropboxEndpoint;
+		var header = getAuthzHeader();
 		$.support.cors = true;
 		$.ajax({
 			url : urlEndp,
 			type : "GET",
+			headers : header,
 			//dataType : 'json',
 			xhrFields : {
 				withCredentials : true
@@ -72,11 +77,13 @@ function Dropbox(){
 	
 	this.getAccessTokens = function (loginDiv, contentDiv, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName){		
 		var urlEndp = sessionStorage.ftsRestEndpoint + "/cs/access_grant/dropbox";
+		var header = getAuthzHeader();
 		$.support.cors = true;
 		$.ajax({
 			url : urlEndp,
 			//dataType : 'text',
 			type : "GET",
+			headers : header,
 			//dataType : 'json',
 			xhrFields : {
 				withCredentials : true
@@ -97,10 +104,12 @@ function Dropbox(){
 			urlEndp += "null";
 		else
 			urlEndp += encodeURIComponent(path);*/
+		var header = getAuthzHeader();
 		$.support.cors = true;
 		$.ajax({
 			url : urlEndp,
 			type : "GET",
+			headers : header,
 			dataType : 'json',
 			processData : false,
 			xhrFields : {

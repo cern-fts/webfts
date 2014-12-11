@@ -88,3 +88,70 @@ function getUrlVars(){
     }
     return vars;
 }
+
+function getDelegation() {
+	if (!sessionStorage.userCert) {
+        $.get("ssoGetAssertion.php", function(data) {
+
+        //chcking assertion lifetime 
+        if (ssoAssertionTimeLeft(data) < 60) {
+                console.log("refreshing sso");
+                //we have to refresh the assertion
+                var currenturl = document.URL;
+                currentpage = currenturl.substring(currenturl.lastIndexOf('/')+1);
+                window.open(sessionStorage.ssoLogin+currentpage,"_self");
+        }
+        
+        // Let's check if we really got an assertion
+        var err = ssoErrorString(data);
+        if(err) {
+                console.log(err);
+                getDelegationID("delegation_id", true);
+                return;
+        }
+        // We will now generate an RSA keypair *** THIS DOES NOT WORK WITH STS YET ***
+//      var kp = KEYUTIL.generateKeypair("RSA", 2048);
+//      sessionStorage.userKey = hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["prvKeyObj"], "PKCS8PRV")));
+
+        // We will now wrap fetched assertion in SOAP envelope
+        // Third parameter to this function is an optional public key from our side (BASE64-encoded)
+//      var req = ssoSoapReq(data, sessionStorage.stsAddress, hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["pubKeyObj"]))), []);
+        var req = ssoSoapReq(data, sessionStorage.stsAddress);
+
+        // We will now send our SOAP request to STS
+        if(req) {
+                $.ajax({
+                url: "/sts",
+                type: "POST",
+                contentType: "text/xml; charset=utf-8",
+                headers: {SOAPAction: sessionStorage.stsAddress},
+                data: req,
+                success : function(data2, status) {
+                        var err = ssoErrorString(data);
+                        if(err) {
+                                console.log(err);
+                                getDelegationID("delegation_id", true);
+                                return;
+                        }
+                        // This function returns BASE64-encoded string of generated certificate
+                        var cert = ssoGetCertificate(data);
+                        sessionStorage.userCert = cert;
+                        // This function returns BASE64-encoded string of generated private key
+                        var pkey = ssoGetPrivateKey(data);
+                        if(pkey) { // STS provided us a key
+                                sessionStorage.userKey = pkey;
+                        } else { // Use our own key
+                                pkey = sessionStorage.userKey;
+                        }
+                        getDelegationIDSTS("delegation_id", true, cert, pkey);
+                },
+                error : function(jqXHR, textStatus, errorThrown) {
+                        showError(jqXHR, textStatus, errorThrown, "Error contacting STS to request credendials");
+                        clearContentTable(containerTable, container, indicator, stateText);
+                        }
+                });
+            }
+        });
+    } else getDelegationIDSTS("delegation_id", true, sessionStorage.userCert, sessionStorage.userKey);
+}
+
