@@ -83,9 +83,6 @@ function removeTransfer(jobID){
 	$.ajax({
 		url : urlEndp,
 		type : "DELETE", // use directly this is not working
-//		data: {"_method":"delete"},
-//		dataType: 'script',
-//		type : "POST",
 		headers : header,
 		xhrFields : {
 			withCredentials : true
@@ -120,6 +117,14 @@ function parseUTCDate(str) {
 	date.setUTCMinutes(ud[5]);
 	date.setUTCSeconds(ud[6]);
 	return date;
+}
+
+function getCertForDelegation(){
+ 	return "-----BEGIN CERTIFICATE-----\r\n" + sessionStorage.userCert.match(/.{1,64}/g).join("\r\n") + "\r\n-----END CERTIFICATE-----\r\n";
+}
+
+function getKeyForDelegation(){
+	return KEYUTIL.getPEM(KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex(sessionStorage.userKey)), "PKCS1PRV");
 }
 
 // Call to make the transfer between two endpoints
@@ -364,9 +369,6 @@ function removeDelegation(delegationID, showRemoveDelegationMessage){
 	$.ajax({
 		url : urlEndp,
 		type : "DELETE", // use directly this is not working
-//		data: {"_method":"delete"},
-//		dataType: 'script',
-//		type : "POST",
 		headers : header,
 		xhrFields : {
 			withCredentials : true
@@ -374,7 +376,14 @@ function removeDelegation(delegationID, showRemoveDelegationMessage){
 		success : function(data1, status) {
 			if (showRemoveDelegationMessage)
 				console.log("delegation removed correctly");
-			showDelegateModal();
+                        if (sessionStorage.userCert && sessionStorage.userCert != "") {
+                               var cert = getCertForDelegation();
+                               var pkey = getKeyForDelegation();
+                               doDelegate(delegationID, pkey, $("#userDN").val(), cert, "");
+                         }
+                         else if (showModal){
+                               showDelegateModal();
+                         }
 			showNoProxyMessages();
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
@@ -401,8 +410,8 @@ function checkAndTransfer(delegationID, transferData, showModal){
 			if (data2 == null){
 				showNoProxyMessages();
 				if (sessionStorage.userCert && sessionStorage.userCert != "") {
-					var cert="-----BEGIN CERTIFICATE-----\r\n" + sessionStorage.userCert.match(/.{1,64}/g).join("\r\n") + "\r\n-----END CERTIFICATE-----\r\n";
-					var pkey = KEYUTIL.getPEM(KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex(sessionStorage.userKey)), "PKCS1PRV");
+					var cert = getCertForDelegation();
+					var pkey = getKeyForDelegation();
 					doDelegate(delegationID, pkey, $("#userDN").val(), cert, "");
 				}
 				else if (showModal){
@@ -428,14 +437,15 @@ function checkAndTransfer(delegationID, transferData, showModal){
 				//	http://stackoverflow.com/questions/5802461/javascript-which-browsers-support-parsing-of-iso-8601-date-string-with-date-par
 				remainingTime = noOffset(data2.termination_time) - (new Date().getTime());
 				if (remainingTime < 3600000) { //3600000 = milliseconds in an hour
-					showNoProxyMessages();
-					if (sessionStorage.userCert && sessionStorage.userCert != "") {
-						var cert="-----BEGIN CERTIFICATE-----\r\n" + sessionStorage.userCert.match(/.{1,64}/g).join("\r\n") + "\r\n-----END CERTIFICATE-----\r\n";
-						var pkey = KEYUTIL.getPEM(KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex(sessionStorage.userKey)), "PKCS1PRV");
-						doDelegate(delegationID, pkey, $("#userDN").val(), cert, "");
-					} else if (showModal) {
-						showDelegateModal();
-					}
+					  showNoProxyMessages();
+                                	  if (sessionStorage.userCert && sessionStorage.userCert != "") {
+                                           	var cert = getCertForDelegation();
+                                          	var pkey = getKeyForDelegation();
+                                       	   	doDelegate(delegationID, pkey, $("#userDN").val(), cert, "");
+                                	   }
+                                           else if (showModal){
+                                        	showDelegateModal();
+                                	   }
 				} else {
 					var vo = data2.voms_attrs[0];
 					showRemainingProxyTime(millisecondsToStr(remainingTime),vo);
