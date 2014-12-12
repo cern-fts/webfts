@@ -167,6 +167,8 @@ function resubmitJob(jobId, overwrite, checksum, resubmitAll){
 }
 
 function rerunTransfer(data, overwrite, checksum, resubmitAll){	 
+	var dropbox = false;
+	var dropboxSuffix = "dropbox://";
 	var lfcregistration = false;
 	var lfcSuffix = "lfc://";
 	var theData = {};
@@ -177,21 +179,31 @@ function rerunTransfer(data, overwrite, checksum, resubmitAll){
 		files["sources"] = [];
 		var dLists = [];
 		dLists[0] = data[i].source_surl.trim();
+		if (dLists[0].slice(0, dropboxSuffix.length) == dropboxSuffix)
+			dropbox = true;
 		if (!resubmitAll && (data[i].file_state.trim() === "FINISHED")) 
 			continue;	
 		files["sources"] = dLists;
 		files["destinations"] = [];
 		var dListd = [];
 		dListd[0] = data[i].dest_surl.trim();
+		if (dListd[0].slice(0, dropboxSuffix.length) == dropboxSuffix)
+                        dropbox = true;
 		if (dListd[0].slice(0, lfcSuffix.length) == lfcSuffix)
 			lfcregistration = true;
 		files["destinations"] = dListd;
 		theData["files"].push(files);		
 	}
 	theData["params"] = {};
-        theData["params"].verify_checksum = Boolean(checksum);
-        theData["params"].overwrite = Boolean(overwrite);
-	theData["params"].multihop = lfcregistration;
+	if (dropbox) {
+		theData["params"].credential = "dropbox";
+		theData["params"].verify_checksum = false;
+		theData["params"].multihop = false;
+	} else  {
+        	theData["params"].verify_checksum = Boolean(checksum);
+		theData["params"].multihop = lfcregistration;
+	}
+	theData["params"].overwrite = Boolean(overwrite);
 	runDataTransfer($('#delegation_id').val(), theData);
     return false;
 }
