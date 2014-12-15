@@ -2,6 +2,10 @@
 	if ($('#ssoalert').text() !== "") {
 		alert($('#ssoalert').text());
 	}
+	$("#ssologout").click(function() {
+		sessionStorage.userCert ="";
+		sessionStorage.userKey = "";
+	});
 </script>
 <?php
 	if(isset($_SERVER['Shib-Assertion-01']) && $_SERVER['Shib-Assertion-Count'] == '01') { // Shibboleth way
