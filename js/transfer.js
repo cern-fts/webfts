@@ -45,31 +45,6 @@ function executeTransfer(container, origFolder, destFolder, CSLeftSelect){
 }
 
 
-//TO REMOVE CAUSE UNUSED
-function protocolValidation(o,d){
-	var ori = document.getElementById(o).value.trim().split(':')[0];
-	var des = document.getElementById(d).value.trim().split(':')[0];
-	
-	if (ori == des)
-		return true;
-	else if (ori == "srm" || des == "srm")
-		return true;
-	else
-		return false;
-	
-	var selectedFiles = getSelectedFiles(container);
-    	if (selectedFiles.length > 0){
-    	
-    	var optionSelected = $('#' + CSLeftSelect).data('ddslick'); 
-    	if (optionSelected.selectedIndex > 0){
-    		runDataTransfer($('#delegation_id').val(), getCSDataTransfer(origFolder, destFolder, selectedFiles, optionSelected.selectedData.text.toLowerCase()));
-    	} else {
-    		runDataTransfer($('#delegation_id').val(), getDataTransfer(origFolder, destFolder, selectedFiles));
-    	}	
-    }
-    return false;
-}
-
 function getDataTransfer(origFolder, destFolder, selectedFiles) {
 	
 	var theData = {};
@@ -165,7 +140,7 @@ function clearContentTable(containerTable, container, indicator, stateText){
 
 function getPermissionsString(oNumber){	
 	var dirString = "-";
-	if (oNumber<100000){
+	if (oNumber<100000 && oNumber !=  0){
 		dirString ="d";	
 	} 
 	var perString ="";
@@ -227,11 +202,11 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 
 		if (index.slice(-1) == "/"){
 			icon ="glyphicon glyphicon-folder-close";
-			t_row.push("<tr value='" + index.slice(0,-1).trim() + "' onclick=\"getNextFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + index.slice(0,-1).trim() + "','" + filter + "')\">");
+			t_row.push("<tr title=\'folder\' value='" + index.slice(0,-1).trim() + "' ondblclick=\"getNextFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + index.slice(0,-1).trim() + "','" + filter + "')\">");
 			t_row.push('<td title="' + index + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(index.slice(0,-1).trim()) + '</td>');
 		} else {
 			icon ="glyphicon glyphicon-file";	
-			t_row.push('<tr value="' + index + '">');
+			t_row.push('<tr title=\'file\' value="' + index + '">');
 			t_row.push('<td title="' + index + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(index) + '</td>');
 		}		
 		$.each(value, function(e_index, e_value){
@@ -260,7 +235,7 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 
 function getInitialRowContent(endpointInput, container, containerTable, indicator, stateText, filter){
 	if (getPreviousUrl(($('#' + endpointInput).val()).trim()) != null){
-		return "<tr value='previous' onclick=\"getPreviousFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + filter + "')\">" + 
+		return "<tr title='../' value='previous' ondblclick=\"getPreviousFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + filter + "')\">" + 
 			   "<td><i class='glyphicon glyphicon-circle-arrow-up'/>&nbsp;..</td><td></td><td></td><td></td></tr>";
 	} else {
 		return null;
@@ -277,8 +252,8 @@ function renderFolderContent(tableId, countId, container, indicator, stateText){
     			$(element[i]).removeClass(options.selectClass);
     			$(element[i]).addClass(options.unSelectClass);
     		}
-    		//Do not select folders
-    		if ((element[i].firstChild.title == "") || (element[i].firstChild.title.indexOf('/') != -1 )){
+    		//Do not select previous url button
+    		if (element[i].firstChild.title == ""){
     			$(element[i]).removeClass(options.selectClass);
     			$(element[i]).addClass(options.unSelectClass);
     		}
@@ -288,11 +263,22 @@ function renderFolderContent(tableId, countId, container, indicator, stateText){
 }
 
 function selectAllFiles(container){ 
+    	//Recusively filter the jquery object to get results.
+        var files = $("#" + container + "  tbody").find("tr").filter(function (i,v) {
+        	var $t = $(this);
+		var $r = $t.children()[0].title;
+        	if ($r.indexOf('/') !== -1 ) {
+			return true;
+        	}
+       		return false;
+
+        }).hide();
 	$("#" + container + " tbody").finderSelect('highlightAll');
 	$("#" + container + " tbody").finderSelect("update");
 }
 
 function selectNoneFiles(container){ 
+	$("#" + container + " tbody").find("tr").show();
 	$("#" + container + " tbody").finderSelect('unHighlightAll');
 	$("#" + container + " tbody").finderSelect("update");
 }
@@ -301,9 +287,22 @@ function getSelectedFiles(container){
 	var selectedList = [];
 	var selectedEle = $("#" + container + " tbody").finderSelect('selected');
 	for (var i = 0; i < selectedEle.length; i++){
-		selectedList.push(selectedEle[i].attributes.value.value);  		
+		 if (selectedEle[i].attributes.title.value == "file")
+			selectedList.push(selectedEle[i].attributes.value.value);  		
 	}
 	return selectedList;
+}
+
+function getSelected(container){
+        var selectedList = [];
+        var selectedEle = $("#" + container + " tbody").finderSelect('selected');
+        for (var i = 0; i < selectedEle.length; i++){
+		if (selectedEle[i].attributes.title.value == "folder")
+                	selectedList.push(selectedEle[i].attributes.value.value+"/");
+		else 
+			selectedList.push(selectedEle[i].attributes.value.value);
+        }
+        return selectedList;
 }
 
 function getEPContent(endpointInput, container, containerTable, indicator, stateText, filter){	
@@ -659,7 +658,6 @@ function testEP(availableURLs){
 }
 
 function getDomain(url){
-	 //httpg://duck-03.biocomp.unibo.it:8444/srm/manag?SFN=/dteam
 	var d = url.split(":");
 	var comp = d[1].split(".");
 	var dom = "";
@@ -670,7 +668,6 @@ function getDomain(url){
 }
 
 function getHost(url){
-	 //httpg://duck-03.biocomp.unibo.it:8444/srm/manag?SFN=/dteam
 	var d = url.split(":");
 	return d[1].substring(2, d[1].length);
 }
@@ -682,36 +679,53 @@ function loadEPList(ep, availableURLs){
 	});
 }
 
-function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginIndicator, CSName, inputTextbox, loadButton, container, containerTable, indicator, stateText, filter){
+function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginIndicator, CSName, inputTextbox, loadButton, container, containerTable, indicator, stateText, filter,side){
 	$('#' + loginDiv).hide();
 	$('#' + contentDiv).show();
 	
-	if (currentSelect.selectedIndex > 0){ 
+	if (currentSelect.selectedIndex > 0){
+		if (side == "left") {
+			$('#' + inputTextbox).prop('readonly', true);
+			$('#' + loadButton).prop("disabled",true);
 		
-		$('#' + inputTextbox).prop('readonly', true);
-		$('#' + loadButton).prop("disabled",true);
+			$('#lfcregistration').prop("disabled",true);
+			$('#checksum').prop("disabled",true);
+			$('#lfcendpoint').prop("disabled",true);
 		
-		$('#lfcregistration').prop("disabled",true);
-		$('#checksum').prop("disabled",true);
-		$('#lfcendpoint').prop("disabled",true);
-		
-		if ((getUrlVars()["service"] != currentSelect.selectedData.text.toLowerCase()) &&
+			if ((getUrlVars()["service"] != currentSelect.selectedData.text.toLowerCase()) &&
 				($('#' + CSName).val().toLowerCase() != currentSelect.selectedData.text.toLowerCase())){
-			//clearContentTable(containerTable, container, indicator, stateText);
-			$('#' + loginDiv).show();
-			$('#' + contentDiv).hide();
-			$('#' + loginIndicator).hide();
-			$('#' + loginForm).show();
-		} else{
-			if (getUrlVars().length > 1){
-				var factory = new CSFactory();
-				var cs = factory.createCS(getUrlVars()["service"]);		
-				cs.getCSAccess(loginDiv, contentDiv, "/", container, containerTable, indicator, stateText, filter, inputTextbox, CSName);
-			} else {
-				getCSFolderContent(loginDiv, contentDiv, currentSelect.selectedData.text.toLowerCase(), inputTextbox, container, containerTable, indicator, stateText, "/", filter, CSName);
-			}	
-		}		
-	} else {		
+				//clearContentTable(containerTable, container, indicator, stateText);
+				$('#' + loginDiv).show();
+				$('#' + contentDiv).hide();
+				$('#' + loginIndicator).hide();
+				$('#' + loginForm).show();
+			} else{
+				if (getUrlVars().length > 1){
+					var factory = new CSFactory();
+					var cs = factory.createCS(getUrlVars()["service"]);		
+					cs.getCSAccess(loginDiv, contentDiv, "/", container, containerTable, indicator, stateText, filter, inputTextbox, CSName);
+				} else {
+					getCSFolderContent(loginDiv, contentDiv, currentSelect.selectedData.text.toLowerCase(), inputTextbox, container, containerTable, indicator, stateText, "/", filter, CSName);
+				}	
+			}
+		//CERNBOX		
+		} else	{ 
+			$('#' + inputTextbox).prop('readonly', true);
+                	$('#' + loadButton).prop("disabled",true);
+                	$('#lfcregistration').prop("disabled",true);
+                	$('#checksum').prop("disabled",true);
+                	$('#lfcendpoint').prop("disabled",true);
+			//creating the path
+			var pathFirst= sessionStorage.clientCN.substring(0,1);
+			
+			path = sessionStorage.cernboxBaseUrl+pathFirst+"/"+sessionStorage.clientCN;
+			console.log(path);
+
+			$('#' + inputTextbox).val(path);
+			$('#' + loadButton).click();
+			$("#" + stateText).text(($('#' + inputTextbox).val()).trim());
+		}
+	}  else {		
 		if ((getUrlVars()["service"] != null) || ($('#' + CSName).val() != "Grid SE")){
 			clearContentTable(containerTable, container, indicator, stateText);				
 			$('#' + inputTextbox).val('');
@@ -721,7 +735,7 @@ function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginI
 		$('#' + loadButton).prop("disabled",false);
 		$('#lfcregistration').prop("disabled",false);
                 $('#checksum').prop("disabled",false);
-		$('#lfcendpoint').prop("disabled",false)
+		$('#lfcendpoint').prop("disabled",false);
 	}
 	$('#' + CSName).val(currentSelect.selectedData.text.toLowerCase());
 }
@@ -734,6 +748,7 @@ function getLoginCS(CSName, loginDiv, contentDiv, loginForm, loadingPanel, path,
 	//cs.getAuthRequest();			
 	cs.getCSAccess(loginDiv, contentDiv, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName);
 }
+
 
 function showRemoteLoader(loginForm, loadingPanel){
 	$('#' + loginForm).hide();
@@ -763,14 +778,13 @@ function checkCSState(combo, storageDiv, loginForm, loadingLoginPanel, loginPane
 }
 
 function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName){
-//function loadFolder(endpointInput, container, containerTable, elements, indicator, stateText, filter){
 	$('#' + endpointInput).val(data.path); 
 
 	clearContentTable(containerTable, container, indicator, stateText);	
 	if (data.path != "/"){
 		var previousUrl = getCSPreviousPath(data.path);		
 		var row = [];
-		row.push("<tr value='previous' onclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + previousUrl + "','" + filter + "','" + CSName +"')\">" + 
+		row.push("<tr title='../' value='previous' ondblclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + previousUrl + "','" + filter + "','" + CSName +"')\">" + 
 		   "<td><i class='glyphicon glyphicon-circle-arrow-up'/>&nbsp;..</td><td></td><td></td><td></td></tr>");
 		$('#' + containerTable +' > tbody:last').append(row.join(""));
 	}	
@@ -783,11 +797,11 @@ function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTabl
 		var filePath = cur.path.substring(cur.path.lastIndexOf("/")+1, cur.path.lenght); 
 		if (cur.is_dir == true){
 			icon ="glyphicon glyphicon-folder-close";
-			t_row.push("<tr value='" + cur.path  + "' onclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + cur.path.trim() + "','" + filter + "','" + CSName + "')\">");
+			t_row.push("<tr  title=\'folder\' value='" + cur.path  + "' ondblclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + cur.path.trim() + "','" + filter + "','" + CSName + "')\">");
 			t_row.push('<td title="' + filePath + '\/"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
 		} else {
 			icon ="glyphicon glyphicon-file";	
-			t_row.push('<tr value="' + cur.path + '">');
+			t_row.push('<tr title=\'file\' value="' + cur.path + '">');
 			t_row.push('<td title="' + filePath + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
 		}
 		t_row.push('<td>&nbsp;-&nbsp;</td>');

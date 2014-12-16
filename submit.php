@@ -19,13 +19,7 @@
 
 <link rel="stylesheet" href="/paraFiles/css/diffBrsStyles/submitBaseStyles.css"/>
 <link rel="stylesheet" type="text/css" href="/css/nav-bar-custom/nav-bar-custom.css">
-<!-- <link rel="stylesheet" href="/paraFiles/css/base.css"/> -->
-
-<!--
--->
 <link href="site-tour/introJs/introjs.css" rel="stylesheet">
-<!--
--->
 
 <script src="js/bootstrap.min.js"></script> 
 <script src="js/jquery.finderSelect.min.js"></script>
@@ -40,7 +34,7 @@
 <script src="js/transfer.js"></script>
 <script src="js/CSFactory.js"></script>
 <script src="js/dropboxHelper.js"></script>
-
+<script src="js/datamanagement.js"></script>
 <script src="js/lib/yahoo/yahoo-min.js"></script>
 <script src="js/lib/glibs/core-min.js"></script>
 <script src="js/lib/glibs/enc-base64-min.js"></script>

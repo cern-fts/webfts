@@ -1,10 +1,6 @@
-<!--Add IntroJs styles -->
+<!-A-dd IntroJs styles -->
 <link href="/site-tour/introJs/introjs.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/site-tour-styles/custom-site-tour.css">
-<!-- <link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet"> -->
-<link href="/site-tour/introJs/example/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
-
-
 
 <script>
 $( document ).ready(function() {
@@ -63,43 +59,80 @@ $( document ).ready(function() {
            imagePosition: "left",
            selectText: "Select storage",
            onSelected: function (data) {
-               getStorageOption(data, 'leftStorageLogin', 'leftCSLoginForm', 'leftStorageContent', 'leftLoginIndicator', 'leftCSName', 'leftEndpoint', 'load-left', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter');
-               if (setSession) {
+               getStorageOption(data, 'leftStorageLogin', 'leftCSLoginForm', 'leftStorageContent', 'leftLoginIndicator', 'leftCSName', 'leftEndpoint', 'load-left', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter','left');
+               $('#leftCSName').val(data.selectedData.text.toLowerCase());
+		if (setSession) {
                         sessionStorage.leftCSIndex=data.selectedIndex;
                 }
            }
         });
 
-        setSession= true;
-
-        //reload from session
-        if (sessionStorage.leftCSIndex) {
-                var i = parseInt(sessionStorage.leftCSIndex);
-                $('#leftStorageSelect').ddslick('select', {index: i});
-        }
-
 
 	var ddDataRight = [
-		              {
-		                 text: "Grid SE",
-		                 value: 1,
-		                 selected: true,
-		                 description: "Grid Storage Element",
-		                 imageSrc: "img/grid_storage.png"
-		             }
-		         ];
+	             {
+	                text: "Grid SE",
+                 	value: 1,
+		        selected: true,
+		        description: "Grid Storage Element",
+		        imageSrc: "img/grid_storage.png"
+		     },
+		     {
+                      	text: "CERNBox",
+                       	value: 2,
+                       	selected: false,
+                       	description: "CERNBox Service (Beta)",
+                       	imageSrc: "img/CERNBox-icon.png"
+                      },
+		        ];
 		
 	$('#rightStorageSelect').ddslick({
-		   data: ddDataRight,
-		   width: "100%",
-		   imagePosition: "left",
-		   selectText: "Select storage",
-		   onSelected: function (data) {
-			   //As for the moment we consider only one...
-			   //getStorageOption(data);
-		   }
+	   data: ddDataRight,
+	   width: "100%",
+	   imagePosition: "left",
+	   selectText: "Select storage",
+	   onSelected: function (data) {
+		$('#rightCSName').val(data.selectedData.text.toLowerCase());
+		if (!sessionStorage.clientCN) {
+				  $.ajax({
+                    			url: 'getcn.php',
+                    			success: function(data)
+                    			{
+						if (data != "") {
+							sessionStorage.clientCN=data.substring(3).trim();
+						}
+						else {
+							alert("WebFTS could not retrieve your credentials to access CERNBox, are you a CERNBOX user?");
+							return;
+						}
+                    			},
+					error: function(xhr, desc, err) 
+					{ 
+                                           alert("WebFTS could not retrieve your credentials to access CERNBox, are you a CERNBOX user?");
+					   return;
+					},	
+                		});	
+			}	
+		   getStorageOption(data, 'rightStorageLogin', 'rightCSLoginForm', 'rightStorageContent', 'rightLoginIndicator', 'rightCSName', 'rightEndpoint', 'load-right', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter','right');
+		   if (setSession) {
+                       	sessionStorage.rightCSIndex=data.selectedIndex;
+               	   }
+	   }
 	});  
-	$('#rightStorageSelect').prop('disabled', true);
+
+	setSession= true;
+
+        //reload from session
+        if (sessionStorage.leftCSIndex ) {
+                var i = parseInt(sessionStorage.leftCSIndex);
+                $('#leftStorageSelect').ddslick('select', {index: i});
+                 
+        }
+        if (sessionStorage.rightCSIndex) {
+                var i = parseInt(sessionStorage.rightCSIndex);
+                $('#rightStorageSelect').ddslick('select', {index: i});
+        
+        }
+
 
 	loadEndpointsList()
 	
@@ -141,15 +174,19 @@ $( document ).ready(function() {
                         $('#load-right').trigger("click");
                  }  
 	  }
-
-
 	}
 
 	//$('#leftStorageLogin').hide();
-	//$('#rightStorageLogin').hide();
 
 	checkCSState('leftStorageSelect', 'leftStorageContent', 'leftCSLoginForm', 'leftLoginIndicator', 'leftStorageLogin', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter', 'leftEndpoint', 'leftCSName');	
 	console.log( "ready!" );	
+
+	//needed to center buttons
+	$('#dmtoolbarleft').css('display', 'inline-block');
+	$('#dmtoolbarright').css('display', 'inline-block');
+	$('#filtertoolbarleft').css('display', 'inline-block');
+	$('#filtertoolbarright').css('display', 'inline-block');
+
 });
 
 
@@ -159,6 +196,7 @@ $('#lfcendpoint').popover({
     html: true,
     trigger : 'hover'
 });
+
 
 $("#leftEndpointContentTable tbody").on("click", function(e){
 	activateTransferButton('leftEndpointContentTable', 'transfer-from-left', 'right-ep-text');    
@@ -196,15 +234,14 @@ $("#lfcendpoint").on("change", function(e){
 	setLFCendpoint();
 });
 
-// $("#leftShowFilterButton").click(function() {
-// 	$('#leftFilterPanel').toggle();
-// });
-
 $(function(){
 	   $("#modal_content").load("modal.html");
 	   $("#warning_modal_content").load("expirationWarningModal.html");  
 });
 
+$(function(){
+           $("#datamanagement_modal_content").load("dataManagement.html");
+});
 
 function setLFCendpoint(){
 	if (typeof(Storage)!=="undefined") {
@@ -250,6 +287,7 @@ $('#checksum').popover();
 <div class="row">
 	<div id="modal_content"></div>
 	<div id="warning_modal_content"></div>
+	<div id="datamanagement_modal_content"></div>
 	<?php
 		foreach($_SERVER as $h=>$v){
 			if ($h == "SSL_CLIENT_S_DN")
@@ -259,7 +297,7 @@ $('#checksum').popover();
 		}
 	?>
          <legend> 
-	 	</legend>
+	 </legend>
 	<div class="alert alert-danger" id="serverkeyAlert"
 		style="display: none">
 		<button type="button" class="close" data-dismiss="alert"
@@ -293,8 +331,6 @@ $('#checksum').popover();
 				<div class="panel-body">
 					<input type="hidden" id="leftCSName" value="">
 					<form class="form" id="leftCSLoginForm">
-<!-- 						<input type="text" name="leftCSUsername" placeholder="username"> -->
-<!-- 						<input type="password" name="leftCSPassword" placeholder="password"> -->																						
 						<button type="button" id="leftCSLoginBtn" class="btn btn-primary center-block" onclick="getLoginCS( $('#leftCSName').val(), 'leftStorageLogin', 'leftStorageContent', 'leftCSLoginForm', 'leftLoginIndicator', '/', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter', 'leftEndpoint')">Login</button> 						
 					</form>
 					<div id="leftLoginIndicator" style="display: none" class="row">
@@ -306,10 +342,7 @@ $('#checksum').popover();
 				</div>	
 			</div>
 			<div id="leftStorageContent">			
-				<div class="input-group" id="id4"><!-- 
-					data-step="4" 
-					data-intro="<h3><strong>Step 4:</strong></h3><h4>This textfield is going to be enabled only for &quot;<strong>Grid SE</strong>&quot; transfers! At first you have to place here your endpoint and then to press the &quot;load&quot; button in order to load the content of your folder!</h4>"
-					data-position="bottom"> -->
+				<div class="input-group" id="id4">
 					<input id="leftEndpoint" type="text" placeholder="Endpoint path"
 						class="form-control"
 						value="gsiftp://lxfsra10a01.cern.ch/dpm/cern.ch/home/" onchange="setSEpath()" > <span
@@ -319,14 +352,34 @@ $('#checksum').popover();
 							onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter')">Load</button>
 					</span>
 				</div>
-		
+				<div class="panel panel-primary" id="dmpanelleft">
+                                         <div class="panel-heading text-center">
+						<div class="btn-toolbar" id="dmtoolbarleft">
+							<div class="btn-group">
+                                                                <button type="button"  id="createFolderLeft" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('create',$('#leftEndpoint').val(), 'left','leftEndpointContentTable')">Create 
+                                                                        Folder</button>
+                                                        </div>
+							<div class="btn-group">
+                                                                <button type="button"  id="removeLeft" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('remove', $('#leftEndpoint').val(),'left','leftEndpointContentTable')"><i class="glyphicon glyphicon-remove" />&nbsp;Delete
+                                                                        </button>
+                                                        </div>
+							<div class="btn-group">
+                                                                <button type="button"  id="renameLeft" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('rename',$('#leftEndpoint').val(), 'left','leftEndpointContentTable')">Rename
+                                                                        </button>
+                                                        </div>
+                                                </div>
+					</div>
+				</div>
 				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<div class="btn-toolbar">
+					<div class="panel-heading text-center">
+						<div class="btn-toolbari" id="filtertoolbarleft">
 							<div class="btn-group ">
 								<button type="button"  id="selectAllLeft" class="btn btn-sm"
 									onclick="selectAllFiles('leftEndpointContent')">Select
-									All</button>
+									All Files</button>
 								<button type="button"  id="selectNoneLeft" class="btn btn-sm"
 									onclick="selectNoneFiles('leftEndpointContent')">None</button>
 							</div>
@@ -533,27 +586,41 @@ $('#checksum').popover();
 							onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter')">Load</button>
 					</span>
 				</div>
+				 <div class="panel panel-primary" id="dmpanelRight">
+                                         <div class="panel-heading text-center">
+                                                <div class="btn-toolbar" id="dmtoolbarright">
+                                                        <div class="btn-group ">
+                                                                <button type="button"  id="createFolderRight" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('create',$('#rightEndpoint').val(), 'right','rightEndpointContentTable')">Create
+                                                                        Folder</button>
+                                                        </div>
+                                                        <div class="btn-group ">
+                                                                <button type="button"  id="removeRight" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('remove', $('#rightEndpoint').val(),'right','rightEndpointContentTable')"><i class="glyphicon glyphicon-remove" />&nbsp;Delete
+                                                                        </button>
+                                                        </div>
+                                                        <div class="btn-group ">
+                                                                <button type="button"  id="renameRight" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('rename',$('#rightEndpoint').val(), 'right','rightEndpointContentTable')">Rename
+                                                                        </button>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+
 		
 				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<div class="btn-toolbar">
+					<div class="panel-heading text-center">
+						<div class="btn-toolbar" id="filtertoolbarright">
 							<div class="btn-group" id="id7">
-<!-- 								data-step="7" 
-								data-intro="<h3><strong>Selection buttons:</strong></h3>
-											<h4>By clicking one, you can select/unselect all your files.</h4>"
-								data-position="bottom">
- -->								<button type="button"  id="selectAllRight" class="btn btn-sm"
+								<button type="button"  id="selectAllRight" class="btn btn-sm"
 									onclick="selectAllFiles('rightEndpointContent')">Select
-									All</button>
+									All Files</button>
 								<button type="button"  id="selectNoneRight" class="btn btn-sm"
 									onclick="selectNoneFiles('rightEndpointContent')">None</button>
 							</div>
 							<div class="btn-group" id="id8">
-<!-- 								data-step="8" 
-								data-intro="<h3><strong>Refresh button:</strong></h3>
-											<h4>Once you place a new endpoint you can see all the contents of the folder by clicking on this.</h4>"
-								data-position="bottom">
- -->								<button type="button" class="btn btn-sm"
+								<button type="button" class="btn btn-sm"
 									onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter')">
 									<i class="glyphicon glyphicon-refresh" />&nbsp;Refresh
 								</button>

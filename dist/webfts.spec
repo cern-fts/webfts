@@ -1,5 +1,5 @@
 Name:           webfts
-Version:        2.1.0
+Version:        2.2.0
 Release:        1%{?dist}
 Summary:        Web Interface for FTS 
 Group:          Applications/Internet
@@ -41,10 +41,17 @@ service httpd restart
 
 %files
 %config(noreplace) /etc/httpd/conf.d/%{name}.conf
+%config(noreplace) /var/www/%{name}/config.xml
 %defattr(-,root,root,-)
 /var/www/%{name}
 
 %changelog
+=======
+* Thu Nov 27 2014 Andrea Manzi <amanzi@cern.ch> - 2.2.0-1
+- data management support
+* Thu Nov 13 2014 Andrea Manzi <amanzi@cern.ch> - 2.1.0-1
+- cernbox support
+- added voname to proxy
 * Tue Aug 27 2014 Andrea Manzi <amanzi@cern.ch> - 2.0.0-1
 - dropbox support
 * Tue Jul 22 2014 Andrea Manzi <amanzi@cern.ch> - 1.4.0-1
