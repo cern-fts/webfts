@@ -46,7 +46,6 @@ service httpd restart
 /var/www/%{name}
 
 %changelog
-=======
 * Thu Nov 27 2014 Andrea Manzi <amanzi@cern.ch> - 2.2.0-1
 - data management support
 
