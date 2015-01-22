@@ -1,0 +1,40 @@
+<script>
+//To prevent the modal window to be closed by pressing ESC or clicking outside
+$('#vomsModal').modal({
+ 	  show: false,	
+ 	  backdrop: 'static',
+ 	  keyboard: false
+ });
+$(document).ready(function(){
+        $.get("config.xml", function(data){
+                $(data).find('VO').each(function () {
+                        $('#userVORequest').append($("<option></option>").text($(this).text()));
+                });
+        });
+});
+
+ $("#doRequestButton").click(function(e) {
+			getVOMSCredentials($("#delegation_id").val(),$('#userVORequest').val());
+                        $("#vomsModal").modal('hide');
+                });
+
+</script>
+<div class="modal fade" id="vomsModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">	
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+                                    <div class="row control-group">
+                                           <p class="text-center"><label class="control-label" for="privateKey">Virtual Organization</label><small> (VO only if VOMS credentials are required to access the endpoint)</small></p>
+                                           <p class="text-center"><small>Please contact the <a href="mailto:fts-support@cern.ch?subject=Support for new VO&body">support</a> if you wish more Virtual Organizations to be supported</small> </p>
+					    <select class="form-control" id="userVORequest" />
+                                        </div>				
+			</div>
+			<div class="modal-footer ">
+				<div class="controls center">
+					<button type="button" class="btn btn-primary" name="doRequestButton" id="doRequestButton">Request</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>								
+				</div>
+			</div>
+		</div>
+	</div>	<!-- /.modal-dialog -->
+</div> <!-- /.modal -->
