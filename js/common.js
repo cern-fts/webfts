@@ -89,6 +89,11 @@ function getUrlVars(){
     return vars;
 }
 
+function showVOMSModal() {
+       $('#vomsModal').modal('show');
+
+} 
+
 function getDelegation(delegationNeeded) {
     if (!sessionStorage.userCert || sessionStorage.userCert =="") {
         $.get("ssoGetAssertion.php", function(data) {

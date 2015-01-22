@@ -234,8 +234,13 @@ $("#lfcendpoint").on("change", function(e){
 // });
 
 $(function(){
+           $("#warning_modal_content").load("expirationWarningModal.html");
 	   $("#modal_content").load("modal.html");
-	   $("#warning_modal_content").load("expirationWarningModal.html");  
+});
+
+$(function(){
+     	   $("#voms_modal_content").load("vomsRequestModal.html");
+
 });
 
 
@@ -281,8 +286,9 @@ $('#checksum').popover();
 </script>
 <input type="hidden" id="delegation_id" value="">
 <div class="row">
+        <div id="warning_modal_content"></div>
+        <div id="voms_modal_content"></div>
 	<div id="modal_content"></div>
-	<div id="warning_modal_content"></div>
 	<input type="hidden" id="userDN" value="">
 	<?php
 		foreach($_SERVER as $h=>$v){
