@@ -10,7 +10,10 @@ $( document ).ready(function() {
 });
 
 $(function(){
-	$("#modal_content").load("modal.html"); 
+           $("#warning_modal_content").load("expirationWarningModal.html");
+           $("#modal_content").load("modal.html");
+	   $("#voms_modal_content").load("vomsRequestModal.html");
+
 });
 
 function refresh(){
@@ -33,15 +36,8 @@ function refresh(){
 ?>
 
 <input type="hidden" id="delegation_id" value="">
-<!-- <ul class="pagination pagination pagination-sm"> -->
-<!-- 	<li class="disabled"><a href="#">&laquo;</a></li> -->
-<!-- 	<li class="active"><a href="#">1</a></li> -->
-<!-- 	<li><a href="#">2</a></li> -->
-<!-- 	<li><a href="#">3</a></li> -->
-<!-- 	<li><a href="#">4</a></li> -->
-<!-- 	<li><a href="#">5</a></li> -->
-<!-- 	<li><a href="#">&raquo;</a></li> -->
-<!-- </ul> -->
+<div id="warning_modal_content"></div>
+<div id="voms_modal_content"></div>
 <div id="modal_content"></div>
 <div class="alert alert-danger" id="serverkeyAlert" style="display:none" >
 	<button type="button" class="close" data-dismiss="alert" onclick="$('#serverkeyAlert').hide()">&times;</button>
