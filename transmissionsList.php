@@ -39,6 +39,12 @@ function refresh(){
 <div id="warning_modal_content"></div>
 <div id="voms_modal_content"></div>
 <div id="modal_content"></div>
+<div id="load-indicator" style="display: none" class="row">
+                         <ul class="pager">
+                                      <li><label class="text-center">Loading Proxy...</label>&nbsp;<img
+                                       class="pagination-centered" src="img/ajax-loader.gif" /></li>
+                          </ul>
+</div>
 <div class="alert alert-danger" id="serverkeyAlert" style="display:none" >
 	<button type="button" class="close" data-dismiss="alert" onclick="$('#serverkeyAlert').hide()">&times;</button>
 	<small id="serverErrorText"></small>

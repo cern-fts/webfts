@@ -114,6 +114,7 @@ function getDelegation(delegationNeeded) {
                 getDelegationID("delegation_id", delegationNeeded);
                 return;
         }
+	$('#load-indicator').show();
         // We will now generate an RSA keypair *** THIS DOES NOT WORK WITH STS YET ***
 //      var kp = KEYUTIL.generateKeypair("RSA", 2048);
 //      sessionStorage.userKey = hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["prvKeyObj"], "PKCS8PRV")));
@@ -149,9 +150,11 @@ function getDelegation(delegationNeeded) {
                                 pkey = sessionStorage.userKey;
                         }
                         getDelegationIDSTS("delegation_id", delegationNeeded, cert, pkey);
+			$('#load-indicator').hide();
                 },
                 error : function(jqXHR, textStatus, errorThrown) {
                         showError(jqXHR, textStatus, errorThrown, "Error contacting STS to request credendials");
+			$('#load-indicator').hide();
                         }
                 });
             }

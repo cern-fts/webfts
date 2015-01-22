@@ -289,6 +289,12 @@ $('#checksum').popover();
         <div id="warning_modal_content"></div>
         <div id="voms_modal_content"></div>
 	<div id="modal_content"></div>
+	<div id="load-indicator" style="display: none" class="row">
+                         <ul class="pager">
+                                      <li><label class="text-center">Loading Proxy...</label>&nbsp;<img
+                                       class="pagination-centered" src="img/ajax-loader.gif" /></li>
+                          </ul>
+        </div>
 	<input type="hidden" id="userDN" value="">
 	<?php
 		foreach($_SERVER as $h=>$v){
