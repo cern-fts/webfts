@@ -109,8 +109,7 @@ $( document ).ready(function() {
                     			},
 					error: function(xhr, desc, err) 
 					{ 
-                                           alert("WebFTS could not retrieve your credentials to access CERNBox, are you a CERNBOX user?");
-					   return;
+                                           console.log("WebFTS could not retrieve your credentials to access CERNBox, are you a CERNBOX user?");
 					},	
                 		});	
 			}	
