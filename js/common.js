@@ -6,6 +6,8 @@ function showRemainingProxyTime(timeText,vo){
 	$('#proxyTimeSpan').text(EXISTING_PROXY_DETECTED + timeText + " ");
 	if (vo !== "")	
 		$('#proxyTimeSpan').append(VO_DETECTED + vo + " ");	
+	else 
+		$('#proxyTimeSpan').append(" with No VO Extensions");
 	updateProxyButtons('proxyTimeSpan');
 }
 
@@ -41,7 +43,9 @@ function hideDelegateModal(){
 }
 
 function showDelegateModal(){
-	$('#delegationModal').modal('show');
+	//if sso is used do delegation othwrise use the modal
+ 	getDelegation(true);       
+	//$('#delegationModal').modal('show');
 }
 
 function removeExistingDelegation(){

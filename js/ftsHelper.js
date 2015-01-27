@@ -541,7 +541,7 @@ function getVOMSCredentials(delegationID, user_vo){
 			isDelegated(delegationID, true); //To update remaining proxy time
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			removeDelegation(delegationID, false);
+			//removeDelegation(delegationID, false);
 			var verror = "Error obtaining VOMS credentials. " + supportText;
 			var emessage = showError(jqXHR, textStatus, errorThrown, verror);
 			showDelegateError(emessage);
