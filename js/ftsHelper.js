@@ -70,7 +70,7 @@ function getJobTranfers(jobId, isResubmit, overwrite, compare_checksum,resubmitA
 			}
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			showError(jqXHR, textStatus, errorThrown, "Error job details. "+ supportText);
+			showError(jqXHR, textStatus, errorThrown, "Error getting job details. " + supportText);
 		}
 	});
 	
@@ -82,7 +82,7 @@ function removeTransfer(jobID){
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
-		type : "DELETE", // use directly this is not working
+		type : "DELETE", 
 		headers : header,
 		xhrFields : {
 			withCredentials : true
@@ -91,7 +91,7 @@ function removeTransfer(jobID){
 			showUserSuccess("Transfer removed successfully");
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			showError(jqXHR, textStatus, errorThrown, "Error removing the transfer. "+ supportText);
+			showError(jqXHR, textStatus, errorThrown, "Error removing the transfer job. "+ supportText);
 		}
 	});
 }
@@ -150,10 +150,10 @@ function ftsTransfer(theData) {
 		success : function(x, status, xhr) {
 			console.log("OK: " + JSON.stringify(x));
 			console.log("    Status: " + status);
-			showUserSuccess("Transfer sent successfully");
+			showUserSuccess("Transfer job submitted successfully");
 		},
 		error : function(xhr, textStatus, errorThrown) {
-			showError(xhr, textStatus, errorThrown, "Error submitting the transfer. " + supportText);
+			showError(xhr, textStatus, errorThrown, "Error submitting the transfer job. " + supportText);
 		}
 	});
 	return false;
@@ -368,7 +368,7 @@ function removeDelegation(delegationID, showRemoveDelegationMessage){
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
-		type : "DELETE", // use directly this is not working
+		type : "DELETE", 
 		headers : header,
 		xhrFields : {
 			withCredentials : true
