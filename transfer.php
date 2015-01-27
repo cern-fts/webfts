@@ -104,8 +104,7 @@ $( document ).ready(function() {
 							sessionStorage.clientCN=data.substring(3).trim();
 						}
 						else {
-							alert("WebFTS could not retrieve your credentials to access CERNBox, are you a CERNBOX user?");
-							return;
+							console.log("WebFTS could not retrieve your credentials to access CERNBox, are you a CERNBOX user?");
 						}
                     			},
 					error: function(xhr, desc, err) 
@@ -182,7 +181,6 @@ $( document ).ready(function() {
 	//$('#leftStorageLogin').hide();
 
 	checkCSState('leftStorageSelect', 'leftStorageContent', 'leftCSLoginForm', 'leftLoginIndicator', 'leftStorageLogin', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter', 'leftEndpoint', 'leftCSName');	
-	console.log( "ready!" );
 });
 
 
