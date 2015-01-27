@@ -694,7 +694,8 @@ function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginI
 			$('#lfcendpoint').prop("disabled",true);
 		
 			if ((getUrlVars()["service"] != currentSelect.selectedData.text.toLowerCase()) &&
-				($('#' + CSName).val().toLowerCase() != currentSelect.selectedData.text.toLowerCase())){
+				($('#' + CSName).val().toLowerCase() != currentSelect.selectedData.text.toLowerCase()) &&  
+				!sessionStorage.csLogin ){
 				//clearContentTable(containerTable, container, indicator, stateText);
 				$('#' + loginDiv).show();
 				$('#' + contentDiv).hide();
@@ -746,7 +747,6 @@ function getLoginCS(CSName, loginDiv, contentDiv, loginForm, loadingPanel, path,
 
 	var cs = factory.createCS(CSName);
 	showRemoteLoader(loginForm, loadingPanel);		
-	//cs.getAuthRequest();			
 	cs.getCSAccess(loginDiv, contentDiv, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName);
 }
 
@@ -783,7 +783,7 @@ function checkCSState(combo, storageDiv, loginForm, loadingLoginPanel, loginPane
 
 function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName){
 	$('#' + endpointInput).val(data.path); 
-
+	sessionStorage.csLogin=1;
 	clearContentTable(containerTable, container, indicator, stateText);	
 	if (data.path != "/"){
 		var previousUrl = getCSPreviousPath(data.path);		
