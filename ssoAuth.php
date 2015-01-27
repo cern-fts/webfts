@@ -3,8 +3,7 @@
 		alert($('#ssoalert').text());
 	}
 	$("#ssologout").click(function() {
-		sessionStorage.userCert ="";
-		sessionStorage.userKey = "";
+		sessionStorage.clear();
 	});
 </script>
 <?php
