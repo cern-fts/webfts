@@ -44,8 +44,8 @@ function hideDelegateModal(){
 
 function showDelegateModal(){
 	//if sso is used do delegation othwrise use the modal
- 	getDelegation(true);       
-	//$('#delegationModal').modal('show');
+ 	//getDelegation(true);       
+	$('#delegationModal').modal('show');
 }
 
 function removeExistingDelegation(){
