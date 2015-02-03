@@ -136,7 +136,7 @@ function ftsTransfer(theData) {
 	theData = JSON.stringify(theData);
 	var header = getAuthzHeader();
 	var useCredentials =  (header == "");
-	$.support.cors = true;var useCredentials =  (header == "");
+	$.support.cors = true;
 	outPut = $.ajax({
 		url : urlE,
 		type : "POST",
