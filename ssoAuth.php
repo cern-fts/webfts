@@ -27,6 +27,7 @@
 	$conf = simplexml_load_file('config.xml');
 	if($assert) {
 		$sxml = new SimpleXMLElement($assert);
+		//cho "<div id='ssoalert' style='display:none;'><span><strong>$assert</strong></span></div>";
 		$sxml->registerXPathNamespace('saml2', 'urn:oasis:names:tc:SAML:2.0:assertion');
 		$name = $sxml->xpath('//saml2:Assertion/saml2:AttributeStatement/saml2:Attribute[@Name="http://schemas.xmlsoap.org/claims/DisplayName"]/saml2:AttributeValue/text()');
 		if($name[0]) {

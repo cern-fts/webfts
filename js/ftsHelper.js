@@ -31,6 +31,7 @@ function showError(jqXHR, textStatus, errorThrown, message) {
 function getUserJobs(delegationId){
 	var urlE = sessionStorage.ftsRestEndpoint + "/jobs?dlg_id=" + delegationId + "&state_in=SUBMITTED,ACTIVE,FINISHED,FAILED,CANCELED&limit="+ sessionStorage.jobsToList;
 	var header = getAuthzHeader();
+	var useCredentials =  (header == "");
 	$.support.cors = true;
 	$.ajax({
 		url : urlE,
@@ -38,7 +39,7 @@ function getUserJobs(delegationId){
 		headers : header,
 		dataType : 'json',
 		xhrFields : {
-			withCredentials : true
+			withCredentials : useCredentials
 		},
 		success : function(data1, status) {
 			loadJobTable(data1);
@@ -53,6 +54,7 @@ function getUserJobs(delegationId){
 function getJobTranfers(jobId, isResubmit, overwrite, compare_checksum,resubmitAll){
 	var urlE = sessionStorage.ftsRestEndpoint + "/jobs/" + jobId + "/files";
 	var header = getAuthzHeader();
+	var useCredentials =  (header == "");
 	$.support.cors = true;
 	$.ajax({
 		url : urlE,
@@ -60,7 +62,7 @@ function getJobTranfers(jobId, isResubmit, overwrite, compare_checksum,resubmitA
 		headers : header,
 		dataType : 'json',
 		xhrFields : {
-			withCredentials : true
+			withCredentials : useCredentials
 		},
 		success : function(data1, status) {
 			if (isResubmit){
@@ -79,13 +81,14 @@ function getJobTranfers(jobId, isResubmit, overwrite, compare_checksum,resubmitA
 function removeTransfer(jobID){
 	var urlEndp = sessionStorage.ftsRestEndpoint + "/jobs/" + jobID;
 	var header = getAuthzHeader();
+	var useCredentials =  (header == "");
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
 		type : "DELETE", 
 		headers : header,
 		xhrFields : {
-			withCredentials : true
+			withCredentials : useCredentials
 		},
 		success : function(data1, status) {
 			showUserSuccess("Transfer removed successfully");
@@ -132,7 +135,8 @@ function ftsTransfer(theData) {
 	var urlE = sessionStorage.ftsRestEndpoint + "/jobs";
 	theData = JSON.stringify(theData);
 	var header = getAuthzHeader();
-	$.support.cors = true;
+	var useCredentials =  (header == "");
+	$.support.cors = true;var useCredentials =  (header == "");
 	outPut = $.ajax({
 		url : urlE,
 		type : "POST",
@@ -142,10 +146,10 @@ function ftsTransfer(theData) {
 		dataType : 'json',
 		processData : false,
 		beforeSend : function(xhr) {
-			xhr.withCredentials = true;
+			xhr.withCredentials = useCredentials;
 		},
 		xhrFields : {
-			withCredentials : true
+			withCredentials : useCredentials
 		},
 		success : function(x, status, xhr) {
 			console.log("OK: " + JSON.stringify(x));
@@ -299,9 +303,6 @@ function getDelegationIDSTS(fieldName, delegationNeeded, cert, key){
 		type : "GET",
 		dataType : 'json',
 		headers : { Authorization: header},
-		xhrFields : {
-			withCredentials : true
-		},
 		success : function(data1, status) {
 			console.log("Delegation obtained");
 			$('input[id='+fieldName+']').val(data1.delegation_id);
@@ -365,18 +366,19 @@ function getAuthzHeader(){
 function removeDelegation(delegationID, showRemoveDelegationMessage){
 	var urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID;
 	var header = getAuthzHeader();
+	var useCredentials =  (header == "");
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
 		type : "DELETE", 
 		headers : header,
 		xhrFields : {
-			withCredentials : true
+			withCredentials : useCredentials
 		},
 		success : function(data1, status) {
 			if (showRemoveDelegationMessage)
 				console.log("delegation removed correctly");
-                        if (sessionStorage.userCert && sessionStorage.userCert != "") {
+                        if (!useCredentials) {
                                var cert = getCertForDelegation();
                                var pkey = getKeyForDelegation();
                                doDelegate(delegationID, pkey, $("#userDN").val(), cert, "");
@@ -396,6 +398,7 @@ function removeDelegation(delegationID, showRemoveDelegationMessage){
 function checkAndTransfer(delegationID, transferData, showModal){
 	var urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID;
 	var header = getAuthzHeader();
+	var useCredentials =  (header == "");
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
@@ -403,13 +406,13 @@ function checkAndTransfer(delegationID, transferData, showModal){
 		dataType : 'json',
 		headers : header,
 		xhrFields : {
-			withCredentials : true
+			withCredentials : useCredentials
 		},
 		
 		success : function(data2, status) {
 			if (data2 == null){
 				showNoProxyMessages();
-				if (sessionStorage.userCert && sessionStorage.userCert != "") {
+				if (!useCredentials) {
 					var cert = getCertForDelegation();
 					var pkey = getKeyForDelegation();
 					doDelegate(delegationID, pkey, $("#userDN").val(), cert, "");
@@ -438,7 +441,7 @@ function checkAndTransfer(delegationID, transferData, showModal){
 				remainingTime = noOffset(data2.termination_time) - (new Date().getTime());
 				if (remainingTime < 3600000) { //3600000 = milliseconds in an hour
 					  showNoProxyMessages();
-                                	  if (sessionStorage.userCert && sessionStorage.userCert != "") {
+                                	  if (!useCredentials) {
                                            	var cert = getCertForDelegation();
                                           	var pkey = getKeyForDelegation();
                                        	   	doDelegate(delegationID, pkey, $("#userDN").val(), cert, "");
@@ -466,6 +469,7 @@ function checkAndTransfer(delegationID, transferData, showModal){
 function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 	var urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID + "/request";
 	var header = getAuthzHeader();
+	var useCredentials =  (header == "")
 	$.support.cors = true;
 	// Call 3: Asking for a new proxy certificate is needed
 	$.ajax({
@@ -473,7 +477,7 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 		type : "GET",
 		headers : header,
 		xhrFields : {
-			withCredentials : true
+			withCredentials : useCredentials
 		},
 		
 		success : function(data3, status) {
@@ -490,10 +494,10 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 				data: x509Proxy,
 				processData : false,
 				beforeSend : function(xhr) {
-					xhr.withCredentials = true;
+					xhr.withCredentials = useCredentials;
 				},
 				xhrFields : {
-					withCredentials : true
+					withCredentials : useCredentials
 				},
 						
 				success : function(data4, status) {
@@ -522,6 +526,7 @@ function getVOMSCredentials(delegationID, user_vo){
 	$.support.cors = true;
 	var uvo = '["' + user_vo + '"]';
 	var header = getAuthzHeader();
+	var useCredentials =  (header == "");
 	$.ajax({
 		url : urlEndp,
 		type : "POST",
@@ -531,10 +536,10 @@ function getVOMSCredentials(delegationID, user_vo){
 		data: uvo,
 		processData : false,
 		beforeSend : function(xhr) {
-			xhr.withCredentials = true;
+			xhr.withCredentials = useCredentials;
 		},
 		xhrFields : {
-			withCredentials : true
+			withCredentials :  useCredentials
 		},
 		success : function(data4, status) {
 			hideDelegateModal();
@@ -552,6 +557,7 @@ function getVOMSCredentials(delegationID, user_vo){
 function getEndpointContent(endpointInput, container, containerTable, indicator, stateText, filter){
         urlEndp = sessionStorage.ftsRestEndpoint + "/dm/list?surl=" + ($('#' + endpointInput).val()).trim();
 	var header = getAuthzHeader();
+	var useCredentials =  (header == "");
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
@@ -559,7 +565,7 @@ function getEndpointContent(endpointInput, container, containerTable, indicator,
 		headers : header,
 		dataType : 'json',
 		xhrFields : {
-			withCredentials : true
+			withCredentials : useCredentials
 		},
 		
 		success : function(data2, status) {

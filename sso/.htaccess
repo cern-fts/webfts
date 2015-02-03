@@ -16,5 +16,5 @@ MellonSPentityId "https://%{SERVER_NAME}/"
 MellonSPMetadataFile /etc/mellon/sp-metadata.xml
 MellonSPCertFile /etc/mellon/sp-cert.pem
 MellonSPPrivateKeyFile /etc/mellon/sp-key.pem
-MellonIdPMetadataFile /etc/mellon/dev-FederationMetadata.xml
+MellonIdPMetadataFile /etc/mellon/FederationMetadata.xml
 </IfModule>
