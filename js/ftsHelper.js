@@ -333,6 +333,7 @@ function getDelegationID(fieldName, delegationNeeded){
 		success : function(data1, status) {
 			console.log("Delegation obtained");
 			$('input[id='+fieldName+']').val(data1.delegation_id);
+			$("#userDN").val(data1.user_dn);
 			if (!delegationNeeded){
 				hideUserReport();
 				getUserJobs(data1.delegation_id);
