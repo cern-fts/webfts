@@ -95,8 +95,15 @@ function getUrlVars(){
 
 function showVOMSModal() {
        $('#vomsModal').modal('show');
-
 } 
+
+function showRevokeCSModal() {
+       $('#revokeCSAcccessModal').modal('show');
+}
+
+function hideRevokeCSModal() {
+       $('#revokeCSAcccessModal').modal('hide');
+}
 
 function getDelegation(delegationNeeded) {
     if (!sessionStorage.userCert || sessionStorage.userCert =="") {

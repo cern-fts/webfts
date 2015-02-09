@@ -230,11 +230,8 @@ $("#lfcendpoint").on("change", function(e){
 $(function(){
            $("#warning_modal_content").load("expirationWarningModal.html");
 	   $("#modal_content").load("modal.html");
-});
-
-$(function(){
-     	   $("#voms_modal_content").load("vomsRequestModal.html");
-
+	   $("#voms_modal_content").load("vomsRequestModal.html");
+           $("#revoke_access_modal_content").load("revokeCSAccess.html");
 });
 
 
@@ -282,6 +279,7 @@ $('#checksum').popover();
         <div id="warning_modal_content"></div>
         <div id="voms_modal_content"></div>
 	<div id="modal_content"></div>
+	<div id="revoke_access_modal_content"></div>
 	<div id="load-indicator" style="display: none" class="row">
                          <ul class="pager">
                                       <li><label class="text-center">Loading Proxy...</label>&nbsp;<img
@@ -365,7 +363,7 @@ $('#checksum').popover();
 							</div>
 							<div class="btn-group">
 							 	<button type="button" id="leftRemoveCSAccessBtn" class="btn btn-sm"
-									onclick="removeCSAccess( $('#leftCSName').val(), 'leftStorageLogin', 'leftStorageContent','leftCSLoginForm','leftLoginIndicator');" style="display: none">Revoke</button>
+									onclick="showRevokeCSModal();" style="display: none">Revoke</button>
 							</div>
 							<div class="btn-group">
 								<div id="leftFilterPanel">

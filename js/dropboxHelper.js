@@ -118,10 +118,12 @@ function Dropbox(){
 				$('#' + loginDiv).show();
 				$('#' + contentDiv).hide();
 				$('#' + loadingPanel).hide();
+				hideRevokeCSModal();
 
                         },
                         error : function(jqXHR, textStatus, errorThrown) {
                                 showError(jqXHR, textStatus, errorThrown, "Error removing tokens. ");
+				hideRevokeCSModal();
                         }
                 });
         };
