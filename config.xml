@@ -2,7 +2,7 @@
 	<stsAddress>https://sts-dev.cern.ch:8443/sts/wstrust</stsAddress>
 	<ssoLogout>/Shibboleth.sso/Logout?return=/</ssoLogout>
 	<ssoLogin>/Shibboleth.sso/S2Login?target=/</ssoLogin>
-	<ftsAddress>https://fts3cloudy01.cern.ch:8446</ftsAddress>
+	<ftsAddress>https://webfts-dev.cern.ch:8446</ftsAddress>
 	<jobToList>100</jobToList>
 	<endpointListUrl>https://webfts.cern.ch/endpointList</endpointListUrl> 
 	<proxyCertHours>12</proxyCertHours>

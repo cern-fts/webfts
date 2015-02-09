@@ -36,38 +36,14 @@ function executeTransfer(container, origFolder, destFolder, CSLeftSelect){
         if (selectedFiles.length > 0){
     		var optionSelected = $('#' + CSLeftSelect).data('ddslick'); 
 	    	if (optionSelected.selectedIndex > 0){
-  	    		runDataTransfer($('#delegation_id').val(), getCSDataTransfer(origFolder, destFolder, selectedFiles, optionSelected.selectedData.text.toLowerCase()));  	    		    				          } 
-							else {	    	    		    	    	    	    	    					    		    	    		runDataTransfer($('#delegation_id').val(), getDataTransfer(origFolder, destFolder, selectedFiles));
+  	    		runDataTransfer($('#delegation_id').val(), 
+				getCSDataTransfer(origFolder, destFolder, selectedFiles, optionSelected.selectedData.text.toLowerCase()));  	    		    				} 
+		else {	    	    		    	    	    	    	    					    		    	
+	  		runDataTransfer($('#delegation_id').val(), getDataTransfer(origFolder, destFolder, selectedFiles));
 		}
 	
 	}    
 	return false;
-}
-
-
-//TO REMOVE CAUSE UNUSED
-function protocolValidation(o,d){
-	var ori = document.getElementById(o).value.trim().split(':')[0];
-	var des = document.getElementById(d).value.trim().split(':')[0];
-	
-	if (ori == des)
-		return true;
-	else if (ori == "srm" || des == "srm")
-		return true;
-	else
-		return false;
-	
-	var selectedFiles = getSelectedFiles(container);
-    	if (selectedFiles.length > 0){
-    	
-    	var optionSelected = $('#' + CSLeftSelect).data('ddslick'); 
-    	if (optionSelected.selectedIndex > 0){
-    		runDataTransfer($('#delegation_id').val(), getCSDataTransfer(origFolder, destFolder, selectedFiles, optionSelected.selectedData.text.toLowerCase()));
-    	} else {
-    		runDataTransfer($('#delegation_id').val(), getDataTransfer(origFolder, destFolder, selectedFiles));
-    	}	
-    }
-    return false;
 }
 
 function getDataTransfer(origFolder, destFolder, selectedFiles) {
@@ -302,6 +278,7 @@ function getSelectedFiles(container){
 	var selectedEle = $("#" + container + " tbody").finderSelect('selected');
 	for (var i = 0; i < selectedEle.length; i++){
 		selectedList.push(selectedEle[i].attributes.value.value);  		
+	        console.log("selected file: " + selectedEle[i].attributes.value.value);
 	}
 	return selectedList;
 }
@@ -738,6 +715,7 @@ function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginI
 		$('#lfcregistration').prop("disabled",false);
                 $('#checksum').prop("disabled",false);
 		$('#lfcendpoint').prop("disabled",false);
+		$('#leftRemoveCSAccessBtn').hide();
 	}
 	$('#' + CSName).val(currentSelect.selectedData.text.toLowerCase());
 }
@@ -750,9 +728,13 @@ function getLoginCS(CSName, loginDiv, contentDiv, loginForm, loadingPanel, path,
 	cs.getCSAccess(loginDiv, contentDiv, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName);
 }
 
-function getCERNBOXURL() {
-	
+function removeCSAccess(CSName, loginDiv,contentDiv, loginForm,loadingPanel){
+        var factory = new CSFactory();
+
+        var cs = factory.createCS(CSName);
+        cs.removeAccessTokens(loginDiv,  CSName, contentDiv,loginForm,loadingPanel);
 }
+
 
 function showRemoteLoader(loginForm, loadingPanel){
 	$('#' + loginForm).hide();
@@ -819,6 +801,8 @@ function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTabl
 	$("#" + containerTable + " tbody").finderSelect("update");
 	$('#' + loginDiv).hide();
 	$('#' + contentDiv).show();	
+	//showing the revoke accessButton
+        $('#leftRemoveCSAccessBtn').show();
 }
 
 function getCSPreviousPath(path) {
@@ -857,7 +841,8 @@ function getCSDataTransfer(origFolder, destFolder, selectedFiles, CSName) {
 		if (document.getElementById(origFolder).value.trim().lastIndexOf("/", 0) === 0){
 			//Cloud storage
 			var dList = [];
-			dList[0] = encodeURI(CSName + "://www.dropbox.com" + selectedFiles[i]); 
+			dList[0] = encodeURI(CSName + "://www.dropbox.com" + selectedFiles[i]);
+			console.log("Encoded URI: " + dList[0]); 
 			files["sources"] = dList;
 		} else {
 			//Grid SE

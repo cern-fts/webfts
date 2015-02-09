@@ -226,9 +226,6 @@ $("#lfcendpoint").on("change", function(e){
 	setLFCendpoint();
 });
 
-// $("#leftShowFilterButton").click(function() {
-// 	$('#leftFilterPanel').toggle();
-// });
 
 $(function(){
            $("#warning_modal_content").load("expirationWarningModal.html");
@@ -275,7 +272,6 @@ function refreshFiles() {
 
 }
 
-
 $('#overwrite').popover();
 $('#lfcregistration').popover();
 $('#checksum').popover();
@@ -313,19 +309,9 @@ $('#checksum').popover();
 			onclick="$('serverkeyAlertSuccess').hide()">&times;</button>
 		<small id="serverSuccessText"></small>
 	</div>
-	<div class="row" id="id12"><!-- 
-			data-step="12" 
-			data-intro="<h3><strong>Congratulations!</strong></h3><h4>That's all! You have finished with success your file(s) submittion!<br/><strong>Let's see live all your submited jobs and their status! Click on the button below to continue!</strong></h4>"
-			data-position="bottom-middle-aligned"> -->
-		<div class="btn-group-vertical col-xs-5 col-lg-5 col-md-5" id="id5"><!-- 
-			data-step="5" 
-			data-intro="<h3><strong>Step 5:</strong></h3><h4>Here is the area where is going to be displayed your folder's content.</h4>"
-			data-position="bottom"> -->
-			
-				<div class="" id="id3"><!-- 
-					data-step="3" 
-					data-intro="<h3><strong>Step 3:</strong></h3><h4>And actually that's it! You can start submitting your jobs!<br/>Here you can choose the storage type of your desire*!<br/>In case you selected the <strong>Dropbox transfer</strong>, the very first step is to <strong>log-in</strong> with your account in order to use this service!<br/>On the other way, if you choose the <strong>&quot;Grid SE&quot;</strong> you have to define the endpoint for the transfer!</h4><h5>*During this tour you will not be asked to choose something.</h5>"
-					data-position="bottom">-->
+	<div class="row" id="id12"> 
+		<div class="btn-group-vertical col-xs-5 col-lg-5 col-md-5" id="id5"> 
+				<div class="" id="id3"> 
 					<select id="leftStorageSelect"></select>
 				</div>
 			
@@ -334,8 +320,6 @@ $('#checksum').popover();
 				<div class="panel-body">
 					<input type="hidden" id="leftCSName" value="">
 					<form class="form" id="leftCSLoginForm">
-<!-- 						<input type="text" name="leftCSUsername" placeholder="username"> -->
-<!-- 						<input type="password" name="leftCSPassword" placeholder="password"> -->																						
 						<button type="button" id="leftCSLoginBtn" class="btn btn-primary center-block" onclick="getLoginCS( $('#leftCSName').val(), 'leftStorageLogin', 'leftStorageContent', 'leftCSLoginForm', 'leftLoginIndicator', '/', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter', 'leftEndpoint')">Login</button> 						
 					</form>
 					<div id="leftLoginIndicator" style="display: none" class="row">
@@ -347,10 +331,7 @@ $('#checksum').popover();
 				</div>	
 			</div>
 			<div id="leftStorageContent">			
-				<div class="input-group" id="id4"><!-- 
-					data-step="4" 
-					data-intro="<h3><strong>Step 4:</strong></h3><h4>This textfield is going to be enabled only for &quot;<strong>Grid SE</strong>&quot; transfers! At first you have to place here your endpoint and then to press the &quot;load&quot; button in order to load the content of your folder!</h4>"
-					data-position="bottom"> -->
+				<div class="input-group" id="id4"> 
 					<input id="leftEndpoint" type="text" placeholder="Endpoint path"
 						class="form-control"
 						value="gsiftp://lxfsra10a01.cern.ch/dpm/cern.ch/home/" onchange="setSEpath()" > <span
@@ -381,6 +362,10 @@ $('#checksum').popover();
 								<button type="button" id="leftShowFilterButton" class="btn btn-sm"
 									onclick="setFilterPanel('leftFilterPanel', $(this));">Show
 									filters</button>
+							</div>
+							<div class="btn-group">
+							 	<button type="button" id="leftRemoveCSAccessBtn" class="btn btn-sm"
+									onclick="removeCSAccess( $('#leftCSName').val(), 'leftStorageLogin', 'leftStorageContent','leftCSLoginForm','leftLoginIndicator');" style="display: none">Revoke</button>
 							</div>
 							<div class="btn-group">
 								<div id="leftFilterPanel">
@@ -492,10 +477,7 @@ $('#checksum').popover();
 		</div>
 		<div class="btn-group btn-group-vertical  col-xs-2 col-lg-2 col-md-2">
 			<div class="transfer-buttons" id="id11">
-<!-- 				data-step="11" 
-				data-intro="<h3><strong>Step 11:</strong></h3><h4>These are the main buttons for the transfer! Choose your files and then click on one of these buttons accordingly in which direction is going to be the tranfer of your desire!</h4>"
-				data-position="bottom">
- -->				<button type="button" class="btn btn-primary btn-block"
+				<button type="button" class="btn btn-primary btn-block"
 					name="transfer-from-left" id="transfer-from-left"
 					onclick="runTransfer('leftEndpointContentTable', 'leftEndpoint', 'rightEndpoint', 'leftStorageSelect')"
 					disabled>
@@ -511,10 +493,7 @@ $('#checksum').popover();
 			</div>
 				<br>
 			<div class="more-center-options" id="id10">
-<!-- 				data-step="10" 
-				data-intro="<h3><strong>Step 10:</strong></h3><h4>In this area you have the option to enable/disable some of these additional options!</h4>"
-				data-position="right">	
- -->				<table class="table">
+ 				<table class="table">
 				<tr>
 					<td>
 					   <div>
