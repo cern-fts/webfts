@@ -173,7 +173,6 @@ function getDelegation(delegationNeeded) {
                         }
                         getDelegationIDSTS("delegation_id", delegationNeeded, cert, pkey);
 			$('#load-indicator').hide();
-			sessionStorage.ssoLoggedin=1;
                 },
                 error : function(jqXHR, textStatus, errorThrown) {
                         showError(jqXHR, textStatus, errorThrown, "Error contacting STS to request credendials");
