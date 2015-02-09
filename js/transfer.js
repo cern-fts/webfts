@@ -278,7 +278,6 @@ function getSelectedFiles(container){
 	var selectedEle = $("#" + container + " tbody").finderSelect('selected');
 	for (var i = 0; i < selectedEle.length; i++){
 		selectedList.push(selectedEle[i].attributes.value.value);  		
-	        console.log("selected file: " + selectedEle[i].attributes.value.value);
 	}
 	return selectedList;
 }
@@ -698,7 +697,6 @@ function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginI
 			var pathFirst= sessionStorage.clientCN.substring(0,1);
 			
 			path = sessionStorage.cernboxBaseUrl+pathFirst+"/"+sessionStorage.clientCN;
-			console.log(path);
 
 			$('#' + inputTextbox).val(path);
 			$('#' + loadButton).click();
@@ -781,14 +779,16 @@ function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTabl
 		if (cur.path == "/.directory")
 			continue;
 		var filePath = cur.path.substring(cur.path.lastIndexOf("/")+1, cur.path.lenght); 
+		var encodedPath= encodeURI(cur.path.trim());
+		var encodedFilePath = encodeURI(filePath);
 		if (cur.is_dir == true){
 			icon ="glyphicon glyphicon-folder-close";
-			t_row.push("<tr value='" + cur.path  + "' onclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + cur.path.trim() + "','" + filter + "','" + CSName + "')\">");
-			t_row.push('<td title="' + filePath + '\/"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
+			t_row.push("<tr value='" + encodedPath + "' onclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + encodedPath + "','" + filter + "','" + CSName + "')\">");
+			t_row.push('<td title="' + encodedFilePath + '\/"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
 		} else {
 			icon ="glyphicon glyphicon-file";	
-			t_row.push('<tr value="' + cur.path + '">');
-			t_row.push('<td title="' + filePath + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
+			t_row.push('<tr value="' + encodedPath + '">');
+			t_row.push('<td title="' + encodedFilePath + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
 		}
 		t_row.push('<td>&nbsp;-&nbsp;</td>');
 		t_row.push('<td>' + getDropboxDate(cur.modified) + '</td>');
@@ -842,7 +842,6 @@ function getCSDataTransfer(origFolder, destFolder, selectedFiles, CSName) {
 			//Cloud storage
 			var dList = [];
 			dList[0] = encodeURI(CSName + "://www.dropbox.com" + selectedFiles[i]);
-			console.log("Encoded URI: " + dList[0]); 
 			files["sources"] = dList;
 		} else {
 			//Grid SE
