@@ -106,6 +106,17 @@ function hideRevokeCSModal() {
 }
 
 function getDelegation(delegationNeeded) {
+
+    
+    //check if there is a user cert or login
+    if (!sessionStorage.ssoLoggedin ) {
+           if ( $('#clientCERT').val() == "") {
+                      alert("Please provide a user certificate or Login to SSO first to access WebFTS functionalities");
+		      return;
+      		}	
+   }
+
+
     if (!sessionStorage.userCert || sessionStorage.userCert =="") {
         $.get("ssoGetAssertion.php", function(data) {
 	console.log("getting assertion");
@@ -162,6 +173,7 @@ function getDelegation(delegationNeeded) {
                         }
                         getDelegationIDSTS("delegation_id", delegationNeeded, cert, pkey);
 			$('#load-indicator').hide();
+			sessionStorage.ssoLoggedin=1;
                 },
                 error : function(jqXHR, textStatus, errorThrown) {
                         showError(jqXHR, textStatus, errorThrown, "Error contacting STS to request credendials");

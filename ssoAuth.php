@@ -1,4 +1,7 @@
 <script>
+	$("#ssologin").click(function() {
+		sessionStorage.ssoLoggedin=1;
+        });
 	if ($('#ssoalert').text() !== "") {
 		alert($('#ssoalert').text());
 	}
