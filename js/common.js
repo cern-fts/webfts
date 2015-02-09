@@ -106,7 +106,6 @@ function hideRevokeCSModal() {
 }
 
 function getDelegation(delegationNeeded) {
-
     
     //check if there is a user cert or login
     if (!sessionStorage.ssoLoggedin ) {
@@ -116,6 +115,13 @@ function getDelegation(delegationNeeded) {
       		}	
    }
 
+    //check if there is already a cert in the session and if it's still valid, otherwise clean the session object
+    if (sessionStorage.userCert && sessionStorage.userCert !="") {
+		if (!certValid(sessionStorage.userCert)) {
+			sessionStorage.removeKey(userCert);
+			sessionStorage.removeKey(userKey);
+		}else console.log("cert valid");
+    }
 
     if (!sessionStorage.userCert || sessionStorage.userCert =="") {
         $.get("ssoGetAssertion.php", function(data) {
