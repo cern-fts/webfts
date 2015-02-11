@@ -27,6 +27,7 @@
 
 <script src="js/bootstrap.min.js"></script>
 <script src="js/common.js"></script>  
+<script src="js/lib/sha512.js"></script>
 <script src="js/jsrsasign-latest-all-min.js"></script>
 
 <!--[if lte IE 9]><link rel="stylesheet" href="css/style-ie9.css" /><![endif]-->
