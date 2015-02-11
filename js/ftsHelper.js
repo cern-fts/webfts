@@ -168,7 +168,7 @@ function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {
 			'int' : oSerial
 		});
 		tbsc.setSignatureAlgByParam({
-			'name' : 'SHA1withRSA'
+			'name' : 'SHA512withRSA'
 		});
 		tbsc.setIssuerByParam({
 			'str' : userDN
