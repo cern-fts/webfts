@@ -1,0 +1,27 @@
+<script>
+//To prevent the modal window to be closed by pressing ESC or clicking outside
+$('#revokeCSAcccessModal').modal({
+          show: false,
+          backdrop: 'static',
+          keyboard: false
+ });
+$('#revokeAccessButton').click(function(e) {
+	removeCSAccess( $('#leftCSName').val(), 'leftStorageLogin', 'leftStorageContent','leftCSLoginForm','leftLoginIndicator');
+});
+</script>
+
+<div class="modal fade" id="revokeCSAcccessModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+                <div class="modal-content">
+                        <div class="modal-body">
+					Do you want to revoke WebFTS access to your Dropbox data ?
+                        </div>
+			<div class="modal-footer ">
+                                <div class="controls center">
+                                        <button type="button" class="btn btn-primary" name="revokeAccessButton" id="revokeAccessButton">Revoke Access</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>                                                      
+                                </div>
+                        </div>
+                </div>
+	</div>  <!-- /.modal-dialog -->
+</div> <!-- /.modal -->
