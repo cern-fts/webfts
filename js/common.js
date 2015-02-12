@@ -66,6 +66,14 @@ function hideUserReport(){
 	$('#serverkeyAlertSuccess').hide();
 }
 
+function showRevokeCSModal() {
+       $('#revokeCSAcccessModal').modal('show');
+}
+
+function hideRevokeCSModal() {
+       $('#revokeCSAcccessModal').modal('hide');
+}
+
 function getQueryParams(qs) {
     qs = qs.split("+").join(" ");
 

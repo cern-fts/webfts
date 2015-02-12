@@ -236,12 +236,11 @@ $("#lfcendpoint").on("change", function(e){
 
 $(function(){
 	   $("#modal_content").load("modal.html");
-	   $("#warning_modal_content").load("expirationWarningModal.html");  
+	   $("#warning_modal_content").load("expirationWarningModal.html");
+	   $("#revoke_access_modal_content").load("revokeCSAccess.html");
+	   $("#datamanagement_modal_content").load("dataManagement.html"); 
 });
 
-$(function(){
-           $("#datamanagement_modal_content").load("dataManagement.html");
-});
 
 function setLFCendpoint(){
 	if (typeof(Storage)!=="undefined") {
@@ -288,6 +287,7 @@ $('#checksum').popover();
 	<div id="modal_content"></div>
 	<div id="warning_modal_content"></div>
 	<div id="datamanagement_modal_content"></div>
+	<div id="revoke_access_modal_content"></div>
 	<?php
 		foreach($_SERVER as $h=>$v){
 			if ($h == "SSL_CLIENT_S_DN")
@@ -393,6 +393,10 @@ $('#checksum').popover();
 								<button type="button" id="leftShowFilterButton" class="btn btn-sm"
 									onclick="setFilterPanel('leftFilterPanel', $(this));">Show
 									filters</button>
+							</div>
+							<div class="btn-group">
+							 	<button type="button" id="leftRemoveCSAccessBtn" class="btn btn-sm"
+									onclick="showRevokeCSModal();" style="display: none">Revoke</button>
 							</div>
 							<div class="btn-group">
 								<div id="leftFilterPanel">

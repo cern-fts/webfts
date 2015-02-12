@@ -1,5 +1,5 @@
 Name:           webfts
-Version:        2.2.0
+Version:        2.2.1
 Release:        1%{?dist}
 Summary:        Web Interface for FTS 
 Group:          Applications/Internet
@@ -46,6 +46,9 @@ service httpd restart
 /var/www/%{name}
 
 %changelog
+* Fri Feb 13 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.1-1
+- moved to sha512
+- added dropbox revoke tokens button
 * Thu Nov 27 2014 Andrea Manzi <amanzi@cern.ch> - 2.2.0-1
 - data management support
 

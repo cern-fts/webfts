@@ -693,7 +693,7 @@ function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginI
 			$('#lfcendpoint').prop("disabled",true);
 		
 			if ((getUrlVars()["service"] != currentSelect.selectedData.text.toLowerCase()) &&
-				($('#' + CSName).val().toLowerCase() != currentSelect.selectedData.text.toLowerCase())){
+				($('#' + CSName).val().toLowerCase() != currentSelect.selectedData.text.toLowerCase()) && !sessionStorage.csLogin ){
 				//clearContentTable(containerTable, container, indicator, stateText);
 				$('#' + loginDiv).show();
 				$('#' + contentDiv).hide();
@@ -736,6 +736,7 @@ function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginI
 		$('#lfcregistration').prop("disabled",false);
                 $('#checksum').prop("disabled",false);
 		$('#lfcendpoint').prop("disabled",false);
+		$('#leftRemoveCSAccessBtn').hide();
 	}
 	$('#' + CSName).val(currentSelect.selectedData.text.toLowerCase());
 }
@@ -748,6 +749,13 @@ function getLoginCS(CSName, loginDiv, contentDiv, loginForm, loadingPanel, path,
 	//cs.getAuthRequest();			
 	cs.getCSAccess(loginDiv, contentDiv, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName);
 }
+
+function removeCSAccess(CSName, loginDiv,contentDiv, loginForm,loadingPanel){
+        var factory = new CSFactory();
+
+        var cs = factory.createCS(CSName);
+        cs.removeAccessTokens(loginDiv,  CSName, contentDiv,loginForm,loadingPanel);
+ }
 
 
 function showRemoteLoader(loginForm, loadingPanel){
@@ -780,6 +788,7 @@ function checkCSState(combo, storageDiv, loginForm, loadingLoginPanel, loginPane
 function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTable, indicator, stateText, filter, endpointInput, CSName){
 	$('#' + endpointInput).val(data.path); 
 
+	sessionStorage.csLogin=1;
 	clearContentTable(containerTable, container, indicator, stateText);	
 	if (data.path != "/"){
 		var previousUrl = getCSPreviousPath(data.path);		
@@ -795,14 +804,16 @@ function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTabl
 		if (cur.path == "/.directory")
 			continue;
 		var filePath = cur.path.substring(cur.path.lastIndexOf("/")+1, cur.path.lenght); 
+		var encodedPath= encodeURI(cur.path.trim());
+		var encodedFilePath = encodeURI(filePath);
 		if (cur.is_dir == true){
 			icon ="glyphicon glyphicon-folder-close";
-			t_row.push("<tr  title=\'folder\' value='" + cur.path  + "' ondblclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + cur.path.trim() + "','" + filter + "','" + CSName + "')\">");
-			t_row.push('<td title="' + filePath + '\/"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
+			t_row.push("<tr  title=\'folder\' value='" + encodedPath  + "' ondblclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + encodedPath + "','" + filter + "','" + CSName + "')\">");
+			t_row.push('<td title="' + encodedFilePath + '\/"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
 		} else {
 			icon ="glyphicon glyphicon-file";	
-			t_row.push('<tr title=\'file\' value="' + cur.path + '">');
-			t_row.push('<td title="' + filePath + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
+			t_row.push('<tr title=\'file\' value="' + encodedPath + '">');
+			t_row.push('<td title="' + encodedFilePath + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
 		}
 		t_row.push('<td>&nbsp;-&nbsp;</td>');
 		t_row.push('<td>' + getDropboxDate(cur.modified) + '</td>');
@@ -815,6 +826,7 @@ function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTabl
 	$("#" + containerTable + " tbody").finderSelect("update");
 	$('#' + loginDiv).hide();
 	$('#' + contentDiv).show();	
+	$('#leftRemoveCSAccessBtn').show();
 }
 
 function getCSPreviousPath(path) {
