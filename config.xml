@@ -1,5 +1,5 @@
 <config>
-	<ftsAddress>https://webfts-dev.cern.ch:8446</ftsAddress>
+	<ftsAddress>https://webfts.cern.ch:8443</ftsAddress>
 	<jobToList>100</jobToList>
 	<endpointListUrl>https://webfts.cern.ch/endpointList</endpointListUrl> 
 	<proxyCertHours>12</proxyCertHours>
