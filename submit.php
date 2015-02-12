@@ -41,6 +41,7 @@
 <script src="js/transfer.js"></script>
 <script src="js/CSFactory.js"></script>
 <script src="js/dropboxHelper.js"></script>
+<script src="js/datamanagement.js"></script>
 
 <script>
 $( document ).ready(function() {

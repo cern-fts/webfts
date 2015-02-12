@@ -37,7 +37,7 @@
 <script src="js/lib/base64E.js"></script>
 <script src="js/lib/oids.js"></script>
 <script src="js/lib/asn11.js"></script>
-
+<script src="js/datamanagement.js"></script>
 <script src="js/ftsHelper.js"></script>
 <script src="js/jobs.js"></script>
 
