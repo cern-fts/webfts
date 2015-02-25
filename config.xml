@@ -1,5 +1,5 @@
 <config>
-	<stsAddress>https://sts-dev.cern.ch:8443/sts/wstrust</stsAddress>
+	<stsAddress>https://sts-dev-003.cern.ch:8443/sts/wstrust</stsAddress>
 	<ssoLogout>/Shibboleth.sso/Logout?return=/</ssoLogout>
 	<ssoLogin>/Shibboleth.sso/S2Login?target=/</ssoLogin>
 	<ftsAddress>https://webfts-dev.cern.ch:8446</ftsAddress>
