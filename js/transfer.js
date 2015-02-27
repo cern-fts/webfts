@@ -199,15 +199,17 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 	$.each(elements, function(index, value){
 		var icon = "";
 		var t_row = [];
+		var encodedFolder= encodeURI(index.slice(0,-1).trim());
+                var encodedFile = encodeURI(index);
 
 		if (index.slice(-1) == "/"){
 			icon ="glyphicon glyphicon-folder-close";
-			t_row.push("<tr title=\'folder\' value='" + index.slice(0,-1).trim() + "' ondblclick=\"getNextFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + index.slice(0,-1).trim() + "','" + filter + "')\">");
-			t_row.push('<td title="' + index + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(index.slice(0,-1).trim()) + '</td>');
+			t_row.push("<tr title=\'folder\' value='" + encodedFolder + "' ondblclick=\"getNextFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + encodedFolder + "','" + filter + "')\">");
+			t_row.push('<td title="' + encodedFolder + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(encodedFolder) + '</td>');
 		} else {
 			icon ="glyphicon glyphicon-file";	
-			t_row.push('<tr title=\'file\' value="' + index + '">');
-			t_row.push('<td title="' + index + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(index) + '</td>');
+			t_row.push('<tr title=\'file\' value="' + encodedFile + '">');
+			t_row.push('<td title="' + encodedFile + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(encodedFile) + '</td>');
 		}		
 		$.each(value, function(e_index, e_value){
 			if (e_index == 'mode'){

@@ -7,7 +7,7 @@ $('#dataManagement').modal({
 });
 
 $( "#createFolderButton" ).click(function() {
-        createFolder($('#createFolderEndpoint').val(), $('#createFolderPath').val(),$('#sideModal').val());
+        createFolder($('#createFolderEndpoint').val(), encodeURI($('#createFolderPath').val()),$('#sideModal').val());
 	$('#loading-indicator').show();
 });
 
@@ -20,7 +20,7 @@ $( "#removeButton" ).click(function() {
 });
 
 $( "#renameButton" ).click(function() {
-        rename( $('#basePath').val(),$('#oldname').val(),$('#newname').val(),$('#sideModal').val());
+        rename( $('#basePath').val(),$('#oldname').val(),encodeURI($('#newname').val()),$('#sideModal').val());
         $('#loading-indicator').show();
 });
 
