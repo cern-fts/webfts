@@ -21,7 +21,7 @@ http://fts3-service.web.cern.ch/documentation/webfts
 
 Installation and Configuration
 ------------------------------
-For the installation and configuration guide please check the docs.
+For the installation and configuration guide please check the [docs](docs/README.md).
 
 Support
 -------
