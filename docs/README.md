@@ -24,7 +24,7 @@ Regarding the WebFTS conf, it's avaialble on the config.xml file:
 * endpointListUrl : the file containing the list of endpoint used for autocompletion
 * proxyCertHours : the validity of the proxy certs created by WebFTS
 * cernboxBaseUrl : the cernbox base url ( only if the installation is done at CERN))
-* VOs : list of supported VOMS VOs ( the same VO or subset of the VOs supported by FTS REST)
+* VOs : list of supported VOMS VOs ( the same VOs or a subset of the VOs supported by FTS REST)
 
 In addition FTS REST should be configured to send teh CORS headers needed for WebFTS AJAX calls. An example of cross domain conf file can be found at [cross-domain.conf] (../conf/cross-domain.conf)
 
