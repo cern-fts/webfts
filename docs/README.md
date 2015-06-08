@@ -28,6 +28,7 @@ Regarding the WebFTS conf, it's avaialble on the config.xml file:
 
 In addition FTS REST should be configured to send teh CORS headers needed for WebFTS AJAX calls. An example of cross domain conf file can be found at [cross-domain.conf] (../conf/cross-domain.conf)
 
+Further configuration is needed in oder to support Dropbox integration, please contact the support for this
 
 
 
