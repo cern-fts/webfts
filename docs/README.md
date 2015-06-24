@@ -35,7 +35,7 @@ WebFTS Dropbox app configuration
 
 In order to access the user's Dropbox area and run transfers we need to configure the FTS REST server as follows:
 
-* The gfal2-plugin-dropbox and  fts-rest-cloud-storage packages ( from the FTS staging [repo](http://grid-deployment.web.cern.ch/grid-deployment/dms/fts3/repos/el6/x86_64/) ) needs to be installed in order to perform the I/O towards dropbox and the mamagement of the new storage type
+* The gfal2-plugin-dropbox and  fts-rest-cloud-storage packages ( from the FTS staging [repo](http://grid-deployment.web.cern.ch/grid-deployment/dms/fts3/repos/el6/x86_64/) ) needs to be installed in order to perform the I/O towards dropbox and the management of the new storage type
 * configure FTS with the WebFTS Dropbox app credentials:
   * fts-config-set --dropbox APP_KEY APP_SECRET https://www.dropbox.com/1 
   * please contact the support to get both APP_KEY and APP_SECRET
