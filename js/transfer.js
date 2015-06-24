@@ -199,6 +199,9 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 	$.each(elements, function(index, value){
 		var icon = "";
 		var t_row = [];
+		var perm_td = "";
+		var mtime_td = "";
+		var size_td = "";
 		var encodedFolder= encodeURI(index.slice(0,-1).trim());
                 var encodedFile = encodeURI(index);
 
@@ -213,22 +216,28 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 		}		
 		$.each(value, function(e_index, e_value){
 			if (e_index == 'mode'){
-				t_row.push('<td>' + getPermissionsString(parseInt(e_value, 10).toString(8)) + '</td>'); //to octal
+				perm_td = '<td>' + getPermissionsString(parseInt(e_value, 10).toString(8)) +'</td>'; //to octal
 			} else if (e_index == 'mtime'){
 				var fdate = new Date(e_value*1000);
 				e_value = getFileDate(fdate);				
-				t_row.push('<td>' + e_value + '</td>');
+				mtime_td= '<td>' + e_value + '</td>';
 			} else if (e_index == 'size'){				
 				if (t_row[1].indexOf("folder") != -1){
 					//The number of a folder means the number of elements. Not need to be converted
-					t_row.push('<td id=' + e_value + '> - </td>');
+					size_td = '<td id=' + e_value + '> - </td>';
 				} 
 				else 
 				{
-					t_row.push('<td id=' + e_value + '>' + getReadableFileSizeString(e_value) + '</td>');							}	
-			}																});
+					size_td = '<td id=' + e_value + '>' + getReadableFileSizeString(e_value) + '</td>';							
+				}	
+		  	}
+		});
+		t_row.push(perm_td);
+		t_row.push(mtime_td);
+                t_row.push(size_td);
 		t_row.push('</tr>');
-	        $('#' + containerTable +' > tbody:last').append(t_row.join(""));									});
+	        $('#' + containerTable +' > tbody:last').append(t_row.join(""));									
+		});
  	$("#" + stateText).text(($('#' + endpointInput).val()).trim());
         $("#" + containerTable + " tbody").finderSelect("update");
       
