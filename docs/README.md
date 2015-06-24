@@ -30,7 +30,7 @@ In addition FTS REST should be configured to send teh CORS headers needed for We
 
 Further configuration is needed in oder to support Dropbox integration
 
-Dropbox connector configuration
+WebFTS Dropbox app configuration
 ------------------------------
 
 In order to access the user's Dropbox area and run transfers we need to configure the FTS REST server as follows:
