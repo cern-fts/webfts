@@ -27,7 +27,7 @@ function showError(jqXHR, textStatus, errorThrown, message) {
 }
 
 function getUserJobs(delegationId){
-	var urlE = sessionStorage.ftsRestEndpoint + "/jobs?dlg_id=" + delegationId + "&state_in=SUBMITTED,ACTIVE,FINISHED,FAILED,CANCELED&limit="+ sessionStorage.jobsToList;
+	var urlE = sessionStorage.ftsRestEndpoint + "/jobs?dlg_id=" + delegationId + "&state_in=SUBMITTED,ACTIVE,FINISHED,FAILED,CANCELED,FINISHEDDIRTY&limit="+ sessionStorage.jobsToList;
 	$.support.cors = true;
 	$.ajax({
 		url : urlE,
