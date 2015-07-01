@@ -1,5 +1,5 @@
 Name:           webfts
-Version:        2.2.3
+Version:        2.2.4
 Release:        1%{?dist}
 Summary:        Web Interface for FTS 
 Group:          Applications/Internet
@@ -47,6 +47,8 @@ service httpd restart
 /var/www/%{name}
 
 %changelog
+* Wed Jul 1 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.4-1
+- correct handling of FINISHEDDIRTY status
 * Wed Jun 25 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.3-1
 - fix for file Attributes columns wrongly ordered
 * Fri Feb 27 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.2-1
