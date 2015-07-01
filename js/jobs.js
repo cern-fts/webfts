@@ -95,11 +95,11 @@ function getColumn(columnName){
 }
 
 function isErrorState(job_state){
-	return job_state=="FAILED" || job_state=="CANCELED";
+	return job_state=="FAILED" || job_state=="CANCELED" || job_state=="FINISHEDDIRTY";
 }
 
 function isFinalState(job_state){
-	return isErrorState(job_state) || job_state=="FINISHED";
+	return isErrorState(job_state) || job_state=="FINISHED" || job_state=="FINISHEDDIRTY";
 }
 
 function getRowColor(job_state){
@@ -107,6 +107,8 @@ function getRowColor(job_state){
 		return "danger";		
 	} else if (job_state=="FINISHED"){
 		return "success";
+	} else if (job_state=="FINISHEDDIRTY"){
+		return "active";
 	} else {
 		return "warning";
 	}
