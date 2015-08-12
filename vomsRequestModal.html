@@ -14,7 +14,8 @@ $(document).ready(function(){
 });
 
  $("#doRequestButton").click(function(e) {
-			getVOMSCredentials($("#delegation_id").val(),$('#userVORequest').val());
+			//getVOMSCredentials($("#delegation_id").val(),$('#userVORequest').val());
+			getVOMSCredentialFromSTS ($('#userVORequest').val()) 
                         $("#vomsModal").modal('hide');
                 });
 

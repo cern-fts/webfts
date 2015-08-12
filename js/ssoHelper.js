@@ -63,14 +63,14 @@ function ssoSoapReq(assert, sts, pubkey, fqan, time) {
 		parent = soap.find('wst\\:RequestSecurityToken, RequestSecurityToken');
 		parent.append('<wst:KeyType xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512">http://docs.oasis-open.org/ws-sx/ws-trust/200512/PublicKey</wst:KeyType>');
 		parent.append('<wst:UseKey xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512"><wsse:BinarySecurityToken xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">' + pubkey + '</wsse:BinarySecurityToken></wst:UseKey>');
-		if(fqan) { // Request a proxy certificate instead of a normal one
-			soap.find('wst\\:TokenType, TokenType').text('urn:glite.org:sts:GridProxy');
-			time = time ? time : 86400;
-			var list = "";
-			for(var i in fqan) list += '<gridProxy:FQAN xmlns:gridProxy="urn:glite.org:sts:proxy">' + fqan[i] + '</gridProxy:FQAN>';
-			if(list) list = '<gridProxy:VomsAttributeCertificates xmlns:gridProxy="urn:glite.org:sts:proxy">' + list + '</gridProxy:VomsAttributeCertificates>';
-			parent.append('<gridProxy:GridProxyRequest xmlns:gridProxy="urn:glite.org:sts:proxy" lifetime="' + time + '">' + list + '</gridProxy:GridProxyRequest>');
-		}
+	}
+	if(fqan) { // Request a proxy certificate instead of a normal one
+                parent = soap.find('wst\\:RequestSecurityToken, RequestSecurityToken');
+		soap.find('wst\\:TokenType, TokenType').text('urn:glite.org:sts:GridProxy');
+		time = time ? time : 86400;
+		var gridProxy = '<gridProxy:FQAN xmlns:gridProxy="urn:glite.org:sts:proxy">' + fqan + '</gridProxy:FQAN>';
+		gridProxy = '<gridProxy:VomsAttributeCertificates xmlns:gridProxy="urn:glite.org:sts:proxy">' + gridProxy + '</gridProxy:VomsAttributeCertificates>';
+		parent.append('<gridProxy:GridProxyRequest xmlns:gridProxy="urn:glite.org:sts:proxy" lifetime="' + time + '">' + gridProxy + '</gridProxy:GridProxyRequest>');
 	}
 	return xmlToString(soap);
 }
@@ -115,4 +115,57 @@ function ssoAssertionTimeLeft(assert) {
 	if(!as[0]) return undefined;
 	var nva = Date.parse(as.find('SubjectConfirmationData').attr('NotOnOrAfter'));
 	return (nva - (new Date).getTime()) / 1000;
+}
+
+//
+// This function request a VOMS proxy certificate to STS
+//
+function getVOMSCredentialFromSTS (fqan) {
+
+  $.get("ssoGetAssertion.php", function(data) {
+       	console.log("getting assertion");
+		//if (ssoAssertionTimeLeft(data) < 60) {
+        	//        console.log("refreshing sso");
+	        //	var currenturl = document.URL;
+	        //        currentpage = currenturl.substring(currenturl.lastIndexOf('/')+1);
+        	//        window.open(sessionStorage.ssoLogin+currentpage,"_self");
+        	//}	
+	var err = ssoErrorString(data);
+        if(err) {
+                console.log(err);
+                return;
+        }
+
+        $('#load-indicator').show();
+	console.log("Trying to get a proxy cert for VO " + fqan)
+ 	var req = ssoSoapReq(data, sessionStorage.stsAddress, null, fqan+":/"+fqan);
+	  if(req) {
+                $.ajax({
+                url: "/sts",
+                type: "POST",
+                contentType: "text/xml; charset=utf-8",
+                headers: {SOAPAction: sessionStorage.stsAddress},
+                data: req,
+                success : function(data2, status) {
+                        var err = ssoErrorString(data2);
+                        if(err) {
+                                console.log(err);
+   			 	showUserError("Error contacting STS to request proxy credentials");
+				$('#load-indicator').hide();
+                                return;
+                        }
+			var cert = ssoGetCertificate(data2);
+			//TO DO: parse the response to get the user cert + proxy + key to pass to FTS
+			//var proxy = ssoGetProxy(data2)
+			//var key = ssoGetPrivateKey(data2)
+			console.log(data2)
+                        $('#load-indicator').hide();
+                },
+                error : function(jqXHR, textStatus, errorThrown) {
+                        showError(jqXHR, textStatus, errorThrown, "Error contacting STS to request proxy credentials");
+                        $('#load-indicator').hide();
+                        }
+                });
+            }
+   });
 }
