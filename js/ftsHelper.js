@@ -240,6 +240,9 @@ function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {
 		// 101 to set 'Digital Signature, Key Encipherment'. 0 means disabled 'Non Repudiation'
 		tbsc.appendExtension(new KJUR.asn1.x509.KeyUsage({'bin':'101', 'critical':true}));
 
+		// RFC 3820 extensions
+		tbsc.appendExtension(new ProxyCertInfo({"critical": true, "limited": true, "length": 0 }));
+
 		var s = KEYUTIL.getPEM(rsakey);
 		var sHashHex = getSubjectKeyIdentifier(derUser);
 		var paramAKI = {'kid': {'hex': sHashHex }, 'issuer': oIssuer, 'critical': false};
