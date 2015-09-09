@@ -123,7 +123,11 @@ function parseUTCDate(str) {
 }
 
 function getCertForDelegation(){
- 	return "-----BEGIN CERTIFICATE-----\r\n" + sessionStorage.userCert.match(/.{1,64}/g).join("\r\n") + "\r\n-----END CERTIFICATE-----\r\n";
+	if (sessionStorage.userProxy) 
+		return "-----BEGIN CERTIFICATE-----\r\n" + sessionStorage.userProxy.match(/.{1,64}/g).join("\r\n") + "\r\n-----END CERTIFICATE-----\r\n" + 
+			"-----BEGIN CERTIFICATE-----\r\n" + sessionStorage.userCert.match(/.{1,64}/g).join("\r\n") + "\r\n-----END CERTIFICATE-----\r\n";
+	else 
+ 		return "-----BEGIN CERTIFICATE-----\r\n" + sessionStorage.userCert.match(/.{1,64}/g).join("\r\n") + "\r\n-----END CERTIFICATE-----\r\n";
 }
 
 function getKeyForDelegation(){

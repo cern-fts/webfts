@@ -75,11 +75,20 @@ function ssoSoapReq(assert, sts, pubkey, fqan, time) {
 	return xmlToString(soap);
 }
 //
+//// This function extracts BASE64-encoded proxy from STS response
+//// soap - XML object returned from AJAX request to STS
+////
+function ssoGetProxy(soap) {
+        var cert = $(soap).find("wsse\\:BinarySecurityToken[wsu\\:Id='#VOMSSecurityToken'], BinarySecurityToken");
+        return cert ? hextob64(b64tohex(cert.text())) : undefined;
+
+}
+//
 // This function extracts BASE64-encoded certificate from STS response
 // soap - XML object returned from AJAX request to STS
 //
 function ssoGetCertificate(soap) {
-	var cert = $(soap).find('wsse\\:BinarySecurityToken, BinarySecurityToken');
+	var cert = $(soap).find("wsse\\:BinarySecurityToken[wsu\\:Id='#X509SecurityToken'], BinarySecurityToken");
 	return cert ? hextob64(b64tohex(cert.text())) : undefined;
 }
 //
@@ -96,8 +105,7 @@ function ssoGetPrivateKey(soap) {
 // key  - BASE64-encoded private key
 // hash - Optional hash algorithm name
 //
-function ssoAuthString(cert, key, hash) {
-	// Authorization: Signed-Cert hash="sha256-or-whatever", ts="ISO-timestamp", cert="base64-certificate", sign="base64-signature"
+/*function ssoAuthString(cert,  key, hash) {	// Authorization: Signed-Cert hash="sha256-or-whatever", ts="ISO-timestamp", cert="base64-certificate", sign="base64-signature"
 	hash = hash ? hash.toUpperCase() : "SHA256";
 	var ts = (new Date).toISOString();
 	var pkey = KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex(key));
@@ -105,8 +113,39 @@ function ssoAuthString(cert, key, hash) {
 	sig.init(pkey);
 	sig.updateHex(b64tohex(cert));
 	sig.updateString(ts);
-	return "Signed-Cert hash=\"" + hash.toLowerCase() + "\" ts=\"" + ts + "\" cert=\"" + hextob64(b64tohex(cert)) + "\" sign=\"" + hextob64(sig.sign()) + "\"";
-}
+	var header = "Signed-Cert hash=\"" + hash.toLowerCase() + "\" ts=\"" + ts + "\" cert=\"" + hextob64(b64tohex(cert)) + "\" sign=\"" + hextob64(sig.sign()) + "\"";
+	console.log(header);
+	return header;
+}*/
+//
+//// This function generates Authorization header for AJAX requests to REST API
+//// cert - BASE64-encoded certificate
+//// key  - BASE64-encoded private key
+//// hash - Optional hash algorithm name
+////
+function ssoAuthString(cert,  key,  hash) {
+          // Authorization: Signed-Cert hash="sha256-or-whatever", ts="ISO-timestamp", cert="base64-certificate", sign="base64-signature"
+          hash = hash ? hash.toUpperCase() : "SHA256";
+          var ts = (new Date).toISOString();
+          var pkey = KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex(key));
+          var sig = new KJUR.crypto.Signature({"alg": hash + "withRSA"});
+	  var header = '';
+          sig.init(pkey);
+	  if(sessionStorage.userProxy) {
+	          sig.updateHex(b64tohex(sessionStorage.userProxy));
+		  sig.updateString(ts);
+		  header = "Signed-Cert hash=\"" + hash.toLowerCase() + "\" ts=\"" + ts + "\" cert=\"" + hextob64(b64tohex(cert)) + "\" sign=\"" + hextob64(sig.sign())  + "\" prx=\"" + hextob64(b64tohex(sessionStorage.userProxy)) + "\"" ;
+		   
+          }
+	  else {
+		  sig.updateHex(b64tohex(cert));
+		  sig.updateString(ts);
+                  header = "Signed-Cert hash=\"" + hash.toLowerCase() + "\" ts=\"" + ts + "\" cert=\"" + hextob64(b64tohex(cert)) + "\" sign=\"" + hextob64(sig.sign())  + "\"" ;
+
+       	  }
+          console.log(header);
+          return header;
+}                                                       
 //
 // This function returns the remaining validity window in seconds for SAML2 assertion
 //
@@ -124,12 +163,16 @@ function getVOMSCredentialFromSTS (fqan) {
 
   $.get("ssoGetAssertion.php", function(data) {
        	console.log("getting assertion");
-		//if (ssoAssertionTimeLeft(data) < 60) {
-        	//        console.log("refreshing sso");
-	        //	var currenturl = document.URL;
-	        //        currentpage = currenturl.substring(currenturl.lastIndexOf('/')+1);
-        	//        window.open(sessionStorage.ssoLogin+currentpage,"_self");
-        	//}	
+	
+	if (ssoAssertionTimeLeft(data) < 60) {
+        	
+		console.log("refreshing sso");
+	     	var currenturl = document.URL;
+	        currentpage = currenturl.substring(currenturl.lastIndexOf('/')+1);
+                window.open(sessionStorage.ssoLogin+currentpage,"_self");
+	
+        }	
+	
 	var err = ssoErrorString(data);
         if(err) {
                 console.log(err);
@@ -138,7 +181,15 @@ function getVOMSCredentialFromSTS (fqan) {
 
         $('#load-indicator').show();
 	console.log("Trying to get a proxy cert for VO " + fqan)
- 	var req = ssoSoapReq(data, sessionStorage.stsAddress, null, fqan+":/"+fqan);
+        //We will now generate an RSA keypair *** 
+        var kp = KEYUTIL.generateKeypair("RSA", 2048);
+	sessionStorage.userKey = hextob64(KEYUTIL.getPEM(kp["prvKeyObj"], "PKCS8PRV"));
+        //sessionStorage.userKey = hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["prvKeyObj"], "PKCS8PRV")));
+	
+	// We will now wrap fetched assertion in SOAP envelope
+	// Third parameter to this function is an optional public key from our side (BASE64-encoded)
+	var req = ssoSoapReq(data, sessionStorage.stsAddress, hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["pubKeyObj"]))), fqan+":/"+fqan);
+ 	//var req = ssoSoapReq(data, sessionStorage.stsAddress, null, fqan+":/"+fqan);
 	  if(req) {
                 $.ajax({
                 url: "/sts",

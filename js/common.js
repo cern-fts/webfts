@@ -144,13 +144,13 @@ function getDelegation(delegationNeeded) {
         }
 	$('#load-indicator').show();
         // We will now generate an RSA keypair *** THIS DOES NOT WORK WITH STS YET ***
-//      var kp = KEYUTIL.generateKeypair("RSA", 2048);
-//      sessionStorage.userKey = hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["prvKeyObj"], "PKCS8PRV")));
+	var kp = KEYUTIL.generateKeypair("RSA", 2048);
+        sessionStorage.userKey = hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["prvKeyObj"], "PKCS8PRV")));
 
         // We will now wrap fetched assertion in SOAP envelope
         // Third parameter to this function is an optional public key from our side (BASE64-encoded)
-//      var req = ssoSoapReq(data, sessionStorage.stsAddress, hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["pubKeyObj"]))), []);
-        var req = ssoSoapReq(data, sessionStorage.stsAddress);
+        var req = ssoSoapReq(data, sessionStorage.stsAddress, hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["pubKeyObj"]))),'atlas:/atlas');
+        //var req = ssoSoapReq(data, sessionStorage.stsAddress);
 
         // We will now send our SOAP request to STS
         if(req) {
@@ -168,8 +168,11 @@ function getDelegation(delegationNeeded) {
                                 return;
                         }
                         // This function returns BASE64-encoded string of generated certificate
-                        var cert = ssoGetCertificate(data2);
+                       	console.log(data2)
+			var proxy = ssoGetProxy(data2);
+			var cert = ssoGetCertificate(data2);
                         sessionStorage.userCert = cert;
+			sessionStorage.userProxy = proxy;
                         // This function returns BASE64-encoded string of generated private key
                         var pkey = ssoGetPrivateKey(data2);
                         if(pkey) { // STS provided us a key
