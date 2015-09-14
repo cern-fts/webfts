@@ -1,0 +1,3 @@
+[submodule "js/proxy.js"]
+	path = js/proxy.js
+	url = https://github.com/cern-it-sdc-id/proxy.js
