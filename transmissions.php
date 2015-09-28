@@ -19,7 +19,6 @@
 <link rel="stylesheet" href="css/site-tour-styles/custom-site-tour.css">
 <link rel="stylesheet" href="/paraFiles/css/diffBrsStyles/submitBaseStyles.css"/>
 <link rel="stylesheet" href="/css/nav-bar-custom/nav-bar-custom.css">
-<!-- <link rel="stylesheet" href="/paraFiles/css/base.css"/> -->
 
 <!-- General Site tour styles -->
 <link href="/site-tour/introJs/introjs.css" rel="stylesheet">
@@ -27,15 +26,16 @@
 
 <script src="js/bootstrap.min.js"></script>
 <script src="js/common.js"></script>  
-<script src="js/lib/sha512.js"></script>
-<script src="js/jsrsasign-latest-all-min.js"></script>
-
-<!--[if lte IE 9]><link rel="stylesheet" href="css/style-ie9.css" /><![endif]-->
-<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
-
-<script src="js/lib/base64E.js"></script>
-<script src="js/lib/oids.js"></script>
-<script src="js/lib/asn11.js"></script>
+<script src="js/proxy.js/glib/sha512.js"></script>
+<script src="js/proxy.js/jsrsasign-latest-all-min.js"></script>
+<script src="js/proxy.js/asn11.js"></script>
+<script src="js/proxy.js/yahoo-min.js"></script>
+<script src="js/proxy.js/proxy.js"></script>
+<script src="js/proxy.js/proxy-util.js"></script>
+<script src="js/proxy.js/ProxyCertInfo.js"></script>
+<script src="js/proxy.js/base64E.js"></script>
+<script src="js/proxy.js/glib/core-min.js"></script>
+<script src="js/proxy.js/glib/enc-base64-min.js"></script>
 
 <script src="js/ssoHelper.js"></script>
 <script src="js/ftsHelper.js"></script>
