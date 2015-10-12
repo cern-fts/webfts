@@ -191,7 +191,13 @@ function getDelegationIDSTS(fieldName, delegationNeeded, cert, key){
 		success : function(data1, status) {
 			console.log("Delegation obtained");
 			$('input[id='+fieldName+']').val(data1.delegation_id);
-			$("#userDN").val(data1.user_dn);
+			userdn = "";
+			for (var i=0; i<data1.dn.length; i++){
+				if (userdn.length < data1.dn[i].length) {
+					userdn = data1.dn[i]
+				}
+                	}
+			$("#userDN").val(userdn);
 			if (!delegationNeeded){
 				hideUserReport();
 				getUserJobs(data1.delegation_id);
