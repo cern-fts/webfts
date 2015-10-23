@@ -204,7 +204,7 @@ $( document ).ready(function() {
 								</div>
 								<br/>
 								<div>
-                                                                        <p class="text">Please report any issues to the FTS3 <a href="mailto:fts-support@cern.ch">support</a> </p>
+                                                                        <p class="text">Please report any issues to the FTS3 <a onclick="window.open(this.href,'_blank');return false;" href="mailto:fts-support@cern.ch">support</a> </p>
 	                                                        </div>
 							</div>
 							<div class='col-md-6 col-sm-6 center-left-block col-md-offset-1 col-sm-offset-1 text-center' id='front-right-block'>
