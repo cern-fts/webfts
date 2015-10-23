@@ -200,8 +200,12 @@ $( document ).ready(function() {
 									<div id="divRss" class="jumbotron-fluid" ></div>
 									
 				    				<div class='jumbotron-fluid' id='readMore'>
-										<a class="btn btn-info btn-responsive"  onclick="window.open(this.href,'_blank');return false;" href="http://fts3-service.web.cern.ch/documentation/releases"><strong>Read more...</strong></a>
-									</div>			
+									<a class="btn btn-info btn-responsive"  onclick="window.open(this.href,'_blank');return false;" href="http://fts3-service.web.cern.ch/documentation/releases"><strong>Read more...</strong></a>
+								</div>
+								<br/>
+								<div>
+                                                                        <p class="text">Please report any issues to the FTS3 <a href="mailto:fts-support@cern.ch">support</a> </p>
+	                                                        </div>
 							</div>
 							<div class='col-md-6 col-sm-6 center-left-block col-md-offset-1 col-sm-offset-1 text-center' id='front-right-block'>
 								<div class="carousel-cust-container border-element">
