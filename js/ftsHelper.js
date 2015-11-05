@@ -457,7 +457,8 @@ function getVOMSCredentials(delegationID, user_vo){
 }
 
 function getEndpointContent(endpointInput, container, containerTable, indicator, stateText, filter){
-        urlEndp = sessionStorage.ftsRestEndpoint + "/dm/list?surl=" + ($('#' + endpointInput).val()).trim();
+        encodedEndpoint = encodeURIComponent(($('#' + endpointInput).val()).trim())
+        urlEndp = sessionStorage.ftsRestEndpoint + "/dm/list?surl=" + encodedEndpoint;
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
