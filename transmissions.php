@@ -38,6 +38,7 @@
 <script src="js/proxy.js/glib/enc-base64-min.js"></script>
 
 <script src="kipper/js/ssoHelper.js"></script>
+<script src="kipper/js/certHelper.js"></script>
 <script src="kipper/client.js"></script>
 <script src="js/ftsHelper.js"></script>
 <script src="js/jobs.js"></script>
