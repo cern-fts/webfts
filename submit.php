@@ -38,7 +38,8 @@
 <script src="js/proxy.js/glib/core-min.js"></script>
 <script src="js/proxy.js/glib/enc-base64-min.js"></script>
 
-<script src="js/ssoHelper.js"></script>
+<script src="kipper/js/ssoHelper.js"></script>
+<script src="kipper/client.js"></script>
 <script src="js/ftsHelper.js"></script>
 <script src="js/transfer.js"></script>
 <script src="js/CSFactory.js"></script>
@@ -72,7 +73,7 @@ $( document ).ready(function() {
 			</div>
 			<script> 
 				$(function(){
-					$("#ssoAuth").load("ssoAuth.php");
+					$("#ssoAuth").load("kipper/php/ssoAuth.php");
 				});
 			</script>
 			<div id="ssoAuth"></div>

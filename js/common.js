@@ -124,72 +124,44 @@ function getDelegation(delegationNeeded) {
     }
 
     if (!sessionStorage.userCert || sessionStorage.userCert =="") {
-        $.get("ssoGetAssertion.php", function(data) {
-	console.log("getting assertion");
-        //checking assertion lifetime 
-        if (ssoAssertionTimeLeft(data) < 60) {
-                console.log("refreshing sso");
-                //we have to refresh the assertion
-                var currenturl = document.URL;
-                currentpage = currenturl.substring(currenturl.lastIndexOf('/')+1);
-                window.open(sessionStorage.ssoLogin+currentpage,"_self");
-        }
-        
-        // Let's check if we really got an assertion
-        var err = ssoErrorString(data);
-        if(err) {
-                console.log(err);
-                getDelegationID("delegation_id", delegationNeeded);
-                return;
-        }
-	$('#load-indicator').show();
-        // We will now generate an RSA keypair *** THIS DOES NOT WORK WITH STS YET ***
-	var kp = KEYUTIL.generateKeypair("RSA", 2048);
-        sessionStorage.userKey = hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["prvKeyObj"], "PKCS8PRV")));
+	var jqxhr  = getAssertion(sessionStorage.ssoLogin);
+        jqxhr.complete(function(data){
+	        // Let's check if we really got an assertion
+        	var err = ssoErrorString(data);
+	        if(err) 
+		{
+        		console.log(err);
+			getDelegationID("delegation_id", delegationNeeded);
+		}
+		else {	
+	        	var kp = KEYUTIL.generateKeypair("RSA", 2048);
+	        	// We will now wrap fetched assertion in SOAP envelope
+        		var req = ssoSoapReq(data.responseXML, sessionStorage.stsAddress, hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["pubKeyObj"]))),'atlas:/atlas');
 
-        // We will now wrap fetched assertion in SOAP envelope
-        // Third parameter to this function is an optional public key from our side (BASE64-encoded)
-        var req = ssoSoapReq(data, sessionStorage.stsAddress, hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["pubKeyObj"]))),'atlas:/atlas');
-        //var req = ssoSoapReq(data, sessionStorage.stsAddress);
-
-        // We will now send our SOAP request to STS
-        if(req) {
-                $.ajax({
-                url: "/sts",
-                type: "POST",
-                contentType: "text/xml; charset=utf-8",
-                headers: {SOAPAction: sessionStorage.stsAddress},
-                data: req,
-                success : function(data2, status) {
-                        var err = ssoErrorString(data2);
-                        if(err) {
-                                console.log(err);
-                                getDelegationID("delegation_id", delegationNeeded);
-                                return;
-                        }
-                        // This function returns BASE64-encoded string of generated certificate
-                       	console.log(data2)
-			var proxy = ssoGetProxy(data2);
-			var cert = ssoGetCertificate(data2);
-                        sessionStorage.userCert = cert;
-			sessionStorage.userProxy = proxy;
-                        // This function returns BASE64-encoded string of generated private key
-                        var pkey = ssoGetPrivateKey(data2);
-                        if(pkey) { // STS provided us a key
-                                sessionStorage.userKey = pkey;
-                        } else { // Use our own key
-                                pkey = sessionStorage.userKey;
-                        }
-                        getDelegationIDSTS("delegation_id", delegationNeeded, cert, pkey);
-			$('#load-indicator').hide();
-                },
-                error : function(jqXHR, textStatus, errorThrown) {
-                        showError(jqXHR, textStatus, errorThrown, "Error contacting STS to request credendials");
-			$('#load-indicator').hide();
-                        }
-                });
-            }
-        });
-    } else getDelegationIDSTS("delegation_id", delegationNeeded, sessionStorage.userCert, sessionStorage.userKey);
+        		if (req == null) {
+				console.log("failed to generate the SOAP request")
+				getDelegationID("delegation_id", delegationNeeded);
+			}
+			else {
+		        	$('#load-indicator').show();
+		        	jqxhr  = getCredentials(req,sessionStorage.stsAddress);
+				jqxhr.complete(function(creds){
+			 	if (creds == null) {
+					alert("Error contacting STS to request credendials");
+					$('#load-indicator').hide();
+					getDelegationID("delegation_id", delegationNeeded);	
+		
+	        		}else {
+					sessionStorage.userProxy = ssoGetProxy(creds.responseXML);
+					sessionStorage.userCert = ssoGetCertificate(creds.responseXML);
+                                        sessionStorage.userKey = hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["prvKeyObj"], "PKCS8PRV")));
+		        	        getDelegationIDSTS("delegation_id", delegationNeeded, sessionStorage.userCert, sessionStorage.userKey);
+					$('#load-indicator').hide();
+	       	    		}
+			});
+			}
+		}
+		});
+	} else getDelegationIDSTS("delegation_id", delegationNeeded, sessionStorage.userCert, sessionStorage.userKey);
 }
 

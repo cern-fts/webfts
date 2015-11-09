@@ -1,3 +1,6 @@
 [submodule "js/proxy.js"]
 	path = js/proxy.js
 	url = https://github.com/cern-it-sdc-id/proxy.js
+[submodule "kipper"]
+	path = kipper
+	url = https://amanzi@gitlab.cern.ch/sts/kipper.git

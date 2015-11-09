@@ -159,7 +159,7 @@ $( document ).ready(function() {
 				</div>
 				<script> 
 					$(function(){
-						$("#ssoAuth").load("ssoAuth.php");
+						$("#ssoAuth").load("kipper/php/ssoAuth.php");
 					});
 				</script>
 				<div id="ssoAuth"></div>
