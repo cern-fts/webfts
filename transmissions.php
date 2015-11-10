@@ -22,7 +22,6 @@
 
 <!-- General Site tour styles -->
 <link href="/site-tour/introJs/introjs.css" rel="stylesheet">
-<link href="/site-tour/introJs/example/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
 
 <script src="js/bootstrap.min.js"></script>
 <script src="js/common.js"></script>  

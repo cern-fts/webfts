@@ -124,13 +124,22 @@ function getDelegation(delegationNeeded) {
     }
 
     if (!sessionStorage.userCert || sessionStorage.userCert =="") {
-	var jqxhr  = Kipper.getAssertion(sessionStorage.ssoLogin);
+	$('#load-indicator').show();
+	var jqxhr  = Kipper.getAssertion();
         jqxhr.complete(function(data){
+                if (Kipper.ssoAssertionTimeLeft(data.responseXML) < 60) {
+                //we have to refresh the assertion, for instance reloading the login page
+                     $('#load-indicator').hide();
+                     alert("The session has expired please Logout and Login again from SSO")
+                     return null
+                }
+                
 	        // Let's check if we really got an assertion
-        	var err = Kipper.ssoErrorString(data);
+        	var err = Kipper.ssoErrorString(data.responseXML);
 	        if(err) 
 		{
         		console.log(err);
+		        $('#load-indicator').hide();
 			getDelegationID("delegation_id", delegationNeeded);
 		}
 		else {	
@@ -140,10 +149,11 @@ function getDelegation(delegationNeeded) {
 
         		if (req == null) {
 				console.log("failed to generate the SOAP request")
+				$('#load-indicator').hide();
 				getDelegationID("delegation_id", delegationNeeded);
+				
 			}
 			else {
-		        	$('#load-indicator').show();
 		        	jqxhr  = Kipper.getCredentials(req,sessionStorage.stsAddress);
 				jqxhr.complete(function(creds){
 			 	if (creds == null) {

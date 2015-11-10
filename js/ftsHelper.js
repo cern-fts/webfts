@@ -51,7 +51,6 @@ function httpHeaderAuthString(cert,  key,  hash) {
                   header = "Signed-Cert hash=\"" + hash.toLowerCase() + "\" ts=\"" + ts + "\" cert=\"" + hextob64(b64tohex(cert)) + "\" sign=\"" + hextob64(sig.sign())  + "\"" ;
 
           }
-          console.log(header);
           return header;
 }
 
@@ -552,7 +551,6 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 
 			var x509Proxy = signRequest(data3, userPrivateKeyPEM, userDN, userCERT); 
 			x509Proxy +=  userCERT;
-			console.log(x509Proxy);
 
 			urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID + '/credential';
 			// Call 4: Delegating the signed new proxy certificate
