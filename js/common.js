@@ -124,10 +124,10 @@ function getDelegation(delegationNeeded) {
     }
 
     if (!sessionStorage.userCert || sessionStorage.userCert =="") {
-	var jqxhr  = getAssertion(sessionStorage.ssoLogin);
+	var jqxhr  = Kipper.getAssertion(sessionStorage.ssoLogin);
         jqxhr.complete(function(data){
 	        // Let's check if we really got an assertion
-        	var err = ssoErrorString(data);
+        	var err = Kipper.ssoErrorString(data);
 	        if(err) 
 		{
         		console.log(err);
@@ -136,7 +136,7 @@ function getDelegation(delegationNeeded) {
 		else {	
 	        	var kp = KEYUTIL.generateKeypair("RSA", 2048);
 	        	// We will now wrap fetched assertion in SOAP envelope
-        		var req = ssoSoapReq(data.responseXML, sessionStorage.stsAddress, hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["pubKeyObj"]))),'atlas:/atlas');
+        		var req = Kipper.ssoSoapReq(data.responseXML, sessionStorage.stsAddress, hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["pubKeyObj"]))),'atlas:/atlas');
 
         		if (req == null) {
 				console.log("failed to generate the SOAP request")
@@ -144,7 +144,7 @@ function getDelegation(delegationNeeded) {
 			}
 			else {
 		        	$('#load-indicator').show();
-		        	jqxhr  = getCredentials(req,sessionStorage.stsAddress);
+		        	jqxhr  = Kipper.getCredentials(req,sessionStorage.stsAddress);
 				jqxhr.complete(function(creds){
 			 	if (creds == null) {
 					alert("Error contacting STS to request credendials");
@@ -152,8 +152,8 @@ function getDelegation(delegationNeeded) {
 					getDelegationID("delegation_id", delegationNeeded);	
 		
 	        		}else {
-					sessionStorage.userProxy = ssoGetProxy(creds.responseXML);
-					sessionStorage.userCert = ssoGetCertificate(creds.responseXML);
+					sessionStorage.userProxy = Kipper.ssoGetProxy(creds.responseXML);
+					sessionStorage.userCert = Kipper.ssoGetCertificate(creds.responseXML);
                                         sessionStorage.userKey = hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["prvKeyObj"], "PKCS8PRV")));
 		        	        getDelegationIDSTS("delegation_id", delegationNeeded, sessionStorage.userCert, sessionStorage.userKey);
 					$('#load-indicator').hide();

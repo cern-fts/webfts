@@ -12,7 +12,9 @@
 <link href="css/bootstrap-theme.min.css" rel="stylesheet">
 <link href="css/justified-nav.css" rel="stylesheet">
 <link href="css/validation.css" rel="stylesheet">
+<script src="kipper/js/ssoHelper.js"></script>
 <script src="kipper/js/certHelper.js"></script>
+<script src="kipper/kipper.js"></script>
 
 
 <script src="js/jquery.min.js"></script>

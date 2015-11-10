@@ -25,6 +25,36 @@ function showError(jqXHR, textStatus, errorThrown, message) {
 	return message;
 }
 
+//
+//// This function generates Authorization header for AJAX requests to REST API
+//// cert - BASE64-encoded certificate
+//// key  - BASE64-encoded private key
+//// hash - Optional hash algorithm name
+////
+function httpHeaderAuthString(cert,  key,  hash) {
+          // Authorization: Signed-Cert hash="sha256-or-whatever", ts="ISO-timestamp", cert="base64-certificate", sign="base64-signature", prx="base64-certificate"
+          hash = hash ? hash.toUpperCase() : "SHA256";
+          var ts = (new Date).toISOString();
+          var pkey = KEYUTIL.getKeyFromPlainPrivatePKCS8Hex(b64tohex(key));
+          var sig = new KJUR.crypto.Signature({"alg": hash + "withRSA"});
+          var header = '';
+          sig.init(pkey);
+          if(sessionStorage.userProxy) {
+                  sig.updateHex(b64tohex(sessionStorage.userProxy));
+                  sig.updateString(ts);
+                  header = "Signed-Cert hash=\"" + hash.toLowerCase() + "\" ts=\"" + ts + "\" cert=\"" + hextob64(b64tohex(cert)) + "\" sign=\"" + hextob64(sig.sign())  + "\" prx=\"" + hextob64(b64tohex(sessionStorage.userProxy)) + "\"" ;
+
+          }
+          else {
+                  sig.updateHex(b64tohex(cert));
+                  sig.updateString(ts);
+                  header = "Signed-Cert hash=\"" + hash.toLowerCase() + "\" ts=\"" + ts + "\" cert=\"" + hextob64(b64tohex(cert)) + "\" sign=\"" + hextob64(sig.sign())  + "\"" ;
+
+          }
+          console.log(header);
+          return header;
+}
+
 function getUserJobs(delegationId){
 	var urlE = sessionStorage.ftsRestEndpoint + "/jobs?dlg_id=" + delegationId + "&state_in=SUBMITTED,ACTIVE,FINISHED,FAILED,CANCELED&limit="+ sessionStorage.jobsToList;
 	var header = getAuthzHeader();
@@ -178,7 +208,7 @@ function certValid(cert) {
 //Check delegation ID, save it and check if there is a valid proxy
 function getDelegationIDSTS(fieldName, delegationNeeded, cert, key){
 	var urlEndp = sessionStorage.ftsRestEndpoint + "/whoami";
-	var header = ssoAuthString(cert, key);
+	var header = httpHeaderAuthString(cert, key);
 	$.support.cors = true;
 	$.ajax({
 		url : urlEndp,
@@ -246,7 +276,7 @@ function getAuthzHeader(){
 	var authzheader;
 	if (sessionStorage.userCert && sessionStorage.userCert != "")
 	{
-		authzheader = ssoAuthString(sessionStorage.userCert,sessionStorage.userKey);
+		authzheader = httpHeaderAuthString(sessionStorage.userCert,sessionStorage.userKey);
 	}
 	header = authzheader ? { Authorization : authzheader } : "";
 	return header;
