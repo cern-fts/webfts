@@ -5,7 +5,7 @@ Summary:        Web Interface for FTS
 Group:          Applications/Internet
 License:        ASL 2.0
 URL:            https://github.com/cern-it-sdc-id/webfts
-Source:         %{name}.tar.gz
+Source:         %{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArchitectures: noarch
 
