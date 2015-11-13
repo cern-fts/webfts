@@ -458,7 +458,7 @@ function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {
 
                 // RFC 3820 extensions
 		tbsc.appendExtension(new ProxyJS.ProxyCertInfo({
-		   "critical": true, "limited": false,
+		   "critical": true, "limited": false, "length": "10"
 		}));
 		
 		// Sign and get PEM certificate with CA private key
