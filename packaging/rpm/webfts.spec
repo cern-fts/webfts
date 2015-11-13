@@ -47,6 +47,9 @@ service httpd restart
 /var/www/%{name}
 
 %changelog
+* Fri Nov 6 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.5-1
+- correct escaping url when list endpoints
+- fix reload of SE endpoints
 * Fri Jun 27 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.4-1
 - fix for FINISHEDDIRTY jobs not displayed
 * Wed Jun 25 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.3-1
