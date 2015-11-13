@@ -1,4 +1,3 @@
-<!-A-dd IntroJs styles -->
 <link href="/site-tour/introJs/introjs.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/site-tour-styles/custom-site-tour.css">
 
@@ -160,12 +159,15 @@ $( document ).ready(function() {
 		sessionStorage.lfcendpoint="";
 		$('#lfcendpoint').val("lfc://");
 	   }
-	 //reloading the endpoint only if SE GRid
-         if (sessionStorage.seEndpointLeft && (parseInt(sessionStorage.leftCSIndex) ==0) ) {
-		 $('#leftEndpoint').val(sessionStorage.seEndpointLeft);
-		 if (sessionStorage.seEndpointLeft !== "") {
-			$('#load-left').trigger("click");	
-		 }
+	 //reloading the endpoint only if SE grid
+         if (sessionStorage.seEndpointLeft) {
+		 if ( parseInt(sessionStorage.leftCSIndex) ==1 ) {}
+		 else {
+			 $('#leftEndpoint').val(sessionStorage.seEndpointLeft);
+			 if (sessionStorage.seEndpointLeft !== "") {
+				$('#load-left').trigger("click");	
+			 }
+	  	}
 	  }
 
 	 if (sessionStorage.seEndpointRight) {
