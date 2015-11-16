@@ -4,7 +4,11 @@ Release:        1%{?dist}
 Summary:        Web Interface for FTS 
 Group:          Applications/Internet
 License:        ASL 2.0
-URL:            https://github.com/cern-it-sdc-id/webfts
+URL:            https://gitlab.cern.ch/fts/webfts
+# The source for this package was pulled from upstream's vcs.  Use the
+# following commands to generate the tarball:
+#  git clone https://gitlab.cern.ch/fts/webfts.git webfts-2.2.5
+#  tar --exclude-vcs -zcvf webfts-2.2.5.tar.gz webfts-2.2.5
 Source:         %{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArchitectures: noarch
@@ -26,7 +30,6 @@ mkdir -p -m0755 %{buildroot}/var/www
 mkdir -p -m0755 %{buildroot}/var/www/%{name}
 
 cp -rp %{name}-%{version}/* %{buildroot}/var/www/%{name}
-
 
 mkdir -p -m0755 %{buildroot}/etc
 mkdir -p -m0755 %{buildroot}/etc/httpd
