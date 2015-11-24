@@ -51,7 +51,8 @@ service httpd restart
 
 %changelog
 * Tue Nov 24 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.6-1
-- fix for endpoints content  not ordered
+- fix endpoints content not ordered
+- fix resubmission with dropbox
 * Fri Nov 6 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.5-1
 - correct escaping url when list endpoints
 - fix reload of SE endpoints
