@@ -1,10 +1,14 @@
 Name:           webfts
-Version:        2.2.5
+Version:        2.2.6
 Release:        1%{?dist}
 Summary:        Web Interface for FTS 
 Group:          Applications/Internet
 License:        ASL 2.0
-URL:            https://github.com/cern-it-sdc-id/webfts
+URL:            https://gitlab.cern.ch/fts/webfts
+# The source for this package was pulled from upstream's vcs.  Use the
+# following commands to generate the tarball:
+#  git clone https://gitlab.cern.ch/fts/webfts.git webfts-2.2.6
+#  tar --exclude-vcs -zcvf webfts-2.2.6.tar.gz webfts-2.2.6
 Source:         %{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArchitectures: noarch
@@ -27,7 +31,6 @@ mkdir -p -m0755 %{buildroot}/var/www/%{name}
 
 cp -rp %{name}-%{version}/* %{buildroot}/var/www/%{name}
 
-
 mkdir -p -m0755 %{buildroot}/etc
 mkdir -p -m0755 %{buildroot}/etc/httpd
 mkdir -p -m0755 %{buildroot}/etc/httpd/conf.d
@@ -47,6 +50,9 @@ service httpd restart
 /var/www/%{name}
 
 %changelog
+* Tue Nov 24 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.6-1
+- fix endpoints content not ordered
+- fix resubmission with dropbox
 * Fri Nov 6 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.5-1
 - correct escaping url when list endpoints
 - fix reload of SE endpoints
