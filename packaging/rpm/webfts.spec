@@ -1,5 +1,5 @@
 Name:           webfts
-Version:        2.2.6
+Version:        2.2.7
 Release:        1%{?dist}
 Summary:        Web Interface for FTS 
 Group:          Applications/Internet
@@ -50,6 +50,8 @@ service httpd restart
 /var/www/%{name}
 
 %changelog
+* Fri Nov 27 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.7-1
+- fix text typos
 * Tue Nov 24 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.6-1
 - fix endpoints content not ordered
 - fix resubmission with dropbox

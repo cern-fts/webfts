@@ -74,7 +74,7 @@
 			</div>
 
 			<div class="masthead">
-				<h3 class="text-muted">WebFTS  (Beta version)  <small><em>Symplifying power</em></small></h3>
+				<h3 class="text-muted">WebFTS  (Beta version)  <small><em>Simplifying power</em></small></h3>
 				<ul class="nav nav-justified">
 					<li><a href="index.php"><i class="glyphicon glyphicon-home"></i>&nbsp;Home</a></li>
 					<li class="active"><a href="#"><i class="glyphicon glyphicon-tasks"></i>&nbsp;My jobs</a></li>
