@@ -43,7 +43,6 @@ function httpHeaderAuthString(cert,  key,  hash) {
                   sig.updateHex(b64tohex(sessionStorage.userProxy));
                   sig.updateString(ts);
                   header = "Signed-Cert hash=\"" + hash.toLowerCase() + "\" ts=\"" + ts + "\" cert=\"" + hextob64(b64tohex(cert)) + "\" sign=\"" + hextob64(sig.sign())  + "\" prx=\"" + hextob64(b64tohex(sessionStorage.userProxy)) + "\"" ;
-
           }
           else {
                   sig.updateHex(b64tohex(cert));

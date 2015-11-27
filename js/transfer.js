@@ -572,7 +572,6 @@ function applyTestingFilter(uArray){
 			continue;
 		var ele = getFilter(epurl);		
 		if (found_set[ele]){
-			console.log(ele + " is already in the set");
 		} else {
 			found_set[ele] = true;
 			newArray.push(epurl);
