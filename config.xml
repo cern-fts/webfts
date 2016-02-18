@@ -6,6 +6,7 @@
 	<cernboxBaseUrl>root://eosdevbox.cern.ch/eos/devbox/user/</cernboxBaseUrl>
 	<VOs>
 		<VO>atlas</VO>
+		<VO>auger</VO>
 		<VO>biomed</VO>
 		<VO>bitface</VO>
 		<VO>cms</VO>
