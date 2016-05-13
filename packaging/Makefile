@@ -1,5 +1,5 @@
-NAME=webfts
-SPEC=rpm/$(NAME).spec
+NAME=webfts-kipper
+SPEC=rpm/webfts.spec
 VERSION=${shell grep '^Version:' $(SPEC) | awk '{print $$2}' }
 # Leave blank. To be overriden by CI tools.
 RELEASE=
