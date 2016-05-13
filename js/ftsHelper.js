@@ -385,7 +385,6 @@ function checkAndTransfer(delegationID, transferData, showModal){
 function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {	
 	var Re = new RegExp(",","g");
 	userDN = userDN.replace(Re,"/");
-	//var subject = userDN + '/CN=proxy';
         var subject = userDN +  "/CN=" + Number(new Date());
 	
 	var reHex = /^\s*(?:[0-9A-Fa-f][0-9A-Fa-f]\s*)+$/;

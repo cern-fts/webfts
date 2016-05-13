@@ -147,7 +147,6 @@ function getDelegation(delegationNeeded) {
 	        	var kp = KEYUTIL.generateKeypair("RSA", 2048);
 	        	// We will now wrap fetched assertion in SOAP envelope
         		var req = Kipper.ssoSoapReq(data.responseXML, sessionStorage.stsAddress, hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["pubKeyObj"]))),voString);
-
         		if (req == null) {
 				console.log("failed to generate the SOAP request")
 				$('#load-indicator').hide();
