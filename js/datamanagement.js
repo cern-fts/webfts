@@ -1,6 +1,8 @@
 function createFolder(basePath, folder, side){
         var urlEndp = sessionStorage.ftsRestEndpoint + "/dm/mkdir";
 	var newurl= basePath+folder;
+        var header = getAuthzHeader();
+        var useCredentials =  (header == "");
 	var theData = {};
         theData["surl"] = encodeURI(newurl); 
 	dataString= JSON.stringify(theData);
@@ -9,12 +11,13 @@ function createFolder(basePath, folder, side){
         $.ajax({
                 url : urlEndp,
 		type : "POST",
+		headers : header,
 		contentType : "application/json",
                 dataType : "json",
 		data: dataString,
                 processData : false,
 		beforeSend : function(xhr) {
-                        xhr.withCredentials = true;
+                        xhr.withCredentials = useCredentials;
                 },
                 xhrFields : {
                         withCredentials : true
@@ -41,17 +44,20 @@ function removeFolder(endpoint, side){
         var theData = {};
         theData["surl"] = encodeURI(endpoint);
         dataString= JSON.stringify(theData);
+	var header = getAuthzHeader();
+        var useCredentials =  (header == "");
         console.log(dataString);
         $.support.cors = true;
         $.ajax({
                 url : urlEndp,
                 type : "POST",
+		headers : header,
                 contentType : "application/json",
                 dataType : "json",
                 data: dataString,
                 processData : false,
                 beforeSend : function(xhr) {
-                        xhr.withCredentials = true;
+                        xhr.withCredentials = useCredentials;
                 },
                 xhrFields : {
                         withCredentials : true
@@ -77,17 +83,20 @@ function removeFile(endpoint, side){
         var theData = {};
         theData["surl"] = encodeURI(endpoint);
         dataString= JSON.stringify(theData);
+	var header = getAuthzHeader();
+        var useCredentials =  (header == "");
         console.log(dataString);
         $.support.cors = true;
         $.ajax({
                 url : urlEndp,
                 type : "POST",
+		headers : header,
                 contentType : "application/json",
                 dataType : "json",
                 data: dataString,
                 processData : false,
                 beforeSend : function(xhr) {
-                        xhr.withCredentials = true;
+                        xhr.withCredentials = useCredentials;
                 },
                 xhrFields : {
                         withCredentials : true
@@ -113,17 +122,20 @@ function rename(base, old, newname, side){
         theData["old"] = encodeURI(base+old);
 	theData["new"] = encodeURI(base+newname);
         dataString= JSON.stringify(theData);
+        var header = getAuthzHeader();
+        var useCredentials =  (header == "");
         console.log(dataString);
         $.support.cors = true;
         $.ajax({
                 url : urlEndp,
                 type : "POST",
+		headers : header,
                 contentType : "application/json",
                 dataType : "json",
                 data: dataString,
                 processData : false,
                 beforeSend : function(xhr) {
-                        xhr.withCredentials = true;
+                        xhr.withCredentials = useCredentials;
                 },
                 xhrFields : {
                         withCredentials : true
