@@ -173,7 +173,7 @@ $( document ).ready(function() {
 		<div class="container-top-inner" >
 			
 			<div class="masthead">
-				<h3 class="text-muted">WebFTS (Beta version)  <small><em>Symplifying power</em></small></h3>			
+				<h3 class="text-muted">WebFTS (Beta version)  <small><em>Simplifying power</em></small></h3>			
 				<ul class="nav nav-justified" >
 					<li class="active" 
 						data-step="2" 
@@ -182,7 +182,7 @@ $( document ).ready(function() {
 						<a href="#"><i class="glyphicon glyphicon-home"></i>&nbsp;Home</a>
 					</li>
 					<li data-step="4" 
-						data-intro="<h3><strong>Check your submitted jobs:</strong></h3><h4>Check in real time the progress of your transfered jobs!<strong></br>Explore the 'Submit a transfer' page</strong></h4>"
+						data-intro="<h3><strong>Check your submitted jobs:</strong></h3><h4>Check in real time the progress of your transferred jobs!<strong></br>Explore the 'Submit a transfer' page</strong></h4>"
 						data-position='bottom'>
 						<a href="transmissions.php"><i class="glyphicon glyphicon-tasks"></i>&nbsp;My jobs</a>
 					</li>
@@ -211,8 +211,12 @@ $( document ).ready(function() {
 									<div id="divRss" class="jumbotron-fluid" ></div>
 									
 				    				<div class='jumbotron-fluid' id='readMore'>
-										<a class="btn btn-info btn-responsive"  onclick="window.open(this.href,'_blank');return false;" href="http://fts3-service.web.cern.ch/documentation/releases"><strong>Read more...</strong></a>
-									</div>			
+									<a class="btn btn-info btn-responsive"  onclick="window.open(this.href,'_blank');return false;" href="http://fts3-service.web.cern.ch/documentation/releases"><strong>Read more...</strong></a>
+								</div>
+								<br/>
+								<div>
+                                                                        <p class="text">Please report any issues to the FTS3 <a onclick="window.open(this.href,'_blank');return false;" href="mailto:fts-support@cern.ch">support</a> </p>
+	                                                        </div>
 							</div>
 							<div class='col-md-6 col-sm-6 center-left-block col-md-offset-1 col-sm-offset-1 text-center' id='front-right-block'>
 								<div class="carousel-cust-container border-element">
@@ -222,13 +226,13 @@ $( document ).ready(function() {
 										    <div class="item active">
 										    	<img src="img/slideshow/1FTS.png" rel="nofollow" target="_blank" title="" class="vglnk" alt=" " />
 										    	<div class="carousel-caption">
-										        	<p><h3>Many millions of files transfered across continents daily</h3></p>
+										        	<p><h3>Many millions of files transferred across continents daily</h3></p>
 										    	</div>
 										    </div>
 										    <div class="item">
 											    <img src="img/slideshow/2.png" rel="nofollow" target="_blank" title="" class="vglnk" alt=" " />
 											    <div class="carousel-caption">
-			   								    	<p><h3>Around 15 Petabytes of data transfered each month!</h3></p>
+			   								    	<p><h3>Around 15 Petabytes of data transferred each month!</h3></p>
 											    </div>
 										    </div>
 										    <div class="item">

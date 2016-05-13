@@ -12,13 +12,23 @@ The “transfer engine” used is FTS3, the service responsible for distributing
 WLCG infrastructure. This provides WebFTS with reliable, multi-protocol (gridftp, srm, http, xrootd), 
 adaptively optimised data transfers.
 
+User Guide
+----------
+
 For more details and the user guide please check the FTS3 site:
 
-https://fts3-service.web.cern.ch/documentation/webfts
+http://fts3-service.web.cern.ch/documentation/webfts
 
-while for the installation guide please check the FTS3 trac wiki:
+Installation and Configuration
+------------------------------
+For the installation and configuration guide please check the [docs](docs/README.md).
 
-https://svnweb.cern.ch/trac/fts3/wiki/WEBFTS#HowtodeployWEBFTS
+Support
+-------
+
+Please contact <fts-support@cern.ch> (Support list for the file transfer service)
+
+
 
 
 

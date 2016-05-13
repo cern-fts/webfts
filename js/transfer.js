@@ -200,34 +200,45 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 	$.each(elements, function(index, value){
 		var icon = "";
 		var t_row = [];
+		var perm_td = "";
+		var mtime_td = "";
+		var size_td = "";
+		var encodedFolder= encodeURI(index.slice(0,-1).trim());
+                var encodedFile = encodeURI(index);
 
 		if (index.slice(-1) == "/"){
 			icon ="glyphicon glyphicon-folder-close";
-			t_row.push("<tr value='" + index.slice(0,-1).trim() + "' onclick=\"getNextFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + index.slice(0,-1).trim() + "','" + filter + "')\">");
-			t_row.push('<td title="' + index + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(index.slice(0,-1).trim()) + '</td>');
+			t_row.push("<tr title=\'folder\' value='" + encodedFolder + "' ondblclick=\"getNextFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + encodedFolder + "','" + filter + "')\">");
+			t_row.push('<td title="' + encodedFolder + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(encodedFolder) + '</td>');
 		} else {
 			icon ="glyphicon glyphicon-file";	
-			t_row.push('<tr value="' + index + '">');
-			t_row.push('<td title="' + index + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(index) + '</td>');
+			t_row.push('<tr title=\'file\' value="' + encodedFile + '">');
+			t_row.push('<td title="' + encodedFile + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(encodedFile) + '</td>');
 		}		
 		$.each(value, function(e_index, e_value){
 			if (e_index == 'mode'){
-				t_row.push('<td>' + getPermissionsString(parseInt(e_value, 10).toString(8)) + '</td>'); //to octal
+				perm_td = '<td>' + getPermissionsString(parseInt(e_value, 10).toString(8)) +'</td>'; //to octal
 			} else if (e_index == 'mtime'){
 				var fdate = new Date(e_value*1000);
 				e_value = getFileDate(fdate);				
-				t_row.push('<td>' + e_value + '</td>');
+				mtime_td= '<td>' + e_value + '</td>';
 			} else if (e_index == 'size'){				
 				if (t_row[1].indexOf("folder") != -1){
 					//The number of a folder means the number of elements. Not need to be converted
-					t_row.push('<td id=' + e_value + '> - </td>');
+					size_td = '<td id=' + e_value + '> - </td>';
 				} 
 				else 
 				{
-					t_row.push('<td id=' + e_value + '>' + getReadableFileSizeString(e_value) + '</td>');							}	
-			}																});
+					size_td = '<td id=' + e_value + '>' + getReadableFileSizeString(e_value) + '</td>';							
+				}	
+		  	}
+		});
+		t_row.push(perm_td);
+		t_row.push(mtime_td);
+                t_row.push(size_td);
 		t_row.push('</tr>');
-	        $('#' + containerTable +' > tbody:last').append(t_row.join(""));									});
+	        $('#' + containerTable +' > tbody:last').append(t_row.join(""));									
+		});
  	$("#" + stateText).text(($('#' + endpointInput).val()).trim());
         $("#" + containerTable + " tbody").finderSelect("update");
       
@@ -236,7 +247,7 @@ function loadFolder(endpointInput, container, containerTable, elements, indicato
 
 function getInitialRowContent(endpointInput, container, containerTable, indicator, stateText, filter){
 	if (getPreviousUrl(($('#' + endpointInput).val()).trim()) != null){
-		return "<tr value='previous' onclick=\"getPreviousFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + filter + "')\">" + 
+		return "<tr title='../' value='previous' ondblclick=\"getPreviousFolderContent('" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + filter + "')\">" + 
 			   "<td><i class='glyphicon glyphicon-circle-arrow-up'/>&nbsp;..</td><td></td><td></td><td></td></tr>";
 	} else {
 		return null;
@@ -253,8 +264,8 @@ function renderFolderContent(tableId, countId, container, indicator, stateText){
     			$(element[i]).removeClass(options.selectClass);
     			$(element[i]).addClass(options.unSelectClass);
     		}
-    		//Do not select folders
-    		if ((element[i].firstChild.title == "") || (element[i].firstChild.title.indexOf('/') != -1 )){
+    		//Do not select previous url button
+    		if (element[i].firstChild.title == ""){
     			$(element[i]).removeClass(options.selectClass);
     			$(element[i]).addClass(options.unSelectClass);
     		}
@@ -264,11 +275,22 @@ function renderFolderContent(tableId, countId, container, indicator, stateText){
 }
 
 function selectAllFiles(container){ 
+    	//Recusively filter the jquery object to get results.
+        var files = $("#" + container + "  tbody").find("tr").filter(function (i,v) {
+        	var $t = $(this);
+		var $r = $t.children()[0].title;
+        	if ($r.indexOf('/') !== -1 ) {
+			return true;
+        	}
+       		return false;
+
+        }).hide();
 	$("#" + container + " tbody").finderSelect('highlightAll');
 	$("#" + container + " tbody").finderSelect("update");
 }
 
 function selectNoneFiles(container){ 
+	$("#" + container + " tbody").find("tr").show();
 	$("#" + container + " tbody").finderSelect('unHighlightAll');
 	$("#" + container + " tbody").finderSelect("update");
 }
@@ -277,9 +299,22 @@ function getSelectedFiles(container){
 	var selectedList = [];
 	var selectedEle = $("#" + container + " tbody").finderSelect('selected');
 	for (var i = 0; i < selectedEle.length; i++){
-		selectedList.push(selectedEle[i].attributes.value.value);  		
+		 if (selectedEle[i].attributes.title.value == "file")
+			selectedList.push(selectedEle[i].attributes.value.value);  		
 	}
 	return selectedList;
+}
+
+function getSelected(container){
+        var selectedList = [];
+        var selectedEle = $("#" + container + " tbody").finderSelect('selected');
+        for (var i = 0; i < selectedEle.length; i++){
+		if (selectedEle[i].attributes.title.value == "folder")
+                	selectedList.push(selectedEle[i].attributes.value.value+"/");
+		else 
+			selectedList.push(selectedEle[i].attributes.value.value);
+        }
+        return selectedList;
 }
 
 function getEPContent(endpointInput, container, containerTable, indicator, stateText, filter){	
@@ -669,8 +704,7 @@ function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginI
 			$('#lfcendpoint').prop("disabled",true);
 		
 			if ((getUrlVars()["service"] != currentSelect.selectedData.text.toLowerCase()) &&
-				($('#' + CSName).val().toLowerCase() != currentSelect.selectedData.text.toLowerCase()) &&  
-				!sessionStorage.csLogin ){
+				($('#' + CSName).val().toLowerCase() != currentSelect.selectedData.text.toLowerCase()) && !sessionStorage.csLogin ){
 				//clearContentTable(containerTable, container, indicator, stateText);
 				$('#' + loginDiv).show();
 				$('#' + contentDiv).hide();
@@ -767,7 +801,7 @@ function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTabl
 	if (data.path != "/"){
 		var previousUrl = getCSPreviousPath(data.path);		
 		var row = [];
-		row.push("<tr value='previous' onclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + previousUrl + "','" + filter + "','" + CSName +"')\">" + 
+		row.push("<tr title='../' value='previous' ondblclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + previousUrl + "','" + filter + "','" + CSName +"')\">" + 
 		   "<td><i class='glyphicon glyphicon-circle-arrow-up'/>&nbsp;..</td><td></td><td></td><td></td></tr>");
 		$('#' + containerTable +' > tbody:last').append(row.join(""));
 	}	
@@ -782,11 +816,11 @@ function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTabl
 		var encodedFilePath = encodeURI(filePath);
 		if (cur.is_dir == true){
 			icon ="glyphicon glyphicon-folder-close";
-			t_row.push("<tr value='" + encodedPath + "' onclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + encodedPath + "','" + filter + "','" + CSName + "')\">");
+			t_row.push("<tr  title=\'folder\' value='" + encodedPath  + "' ondblclick=\"getCSFolderContent('" + loginDiv + "','" + contentDiv + "','" + CSName.toLowerCase() + "','" + endpointInput + "','" + container + "','" + containerTable + "','" + indicator + "','" + stateText + "','" + encodedPath + "','" + filter + "','" + CSName + "')\">");
 			t_row.push('<td title="' + encodedFilePath + '\/"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
 		} else {
 			icon ="glyphicon glyphicon-file";	
-			t_row.push('<tr value="' + encodedPath + '">');
+			t_row.push('<tr title=\'file\' value="' + encodedPath + '">');
 			t_row.push('<td title="' + encodedFilePath + '"><i class="' + icon + '"/>&nbsp;' + getPrintableFileName(filePath.trim()) + '</td>');
 		}
 		t_row.push('<td>&nbsp;-&nbsp;</td>');
@@ -800,8 +834,7 @@ function loadCSFolder(loginDiv, contentDiv, data, path, container, containerTabl
 	$("#" + containerTable + " tbody").finderSelect("update");
 	$('#' + loginDiv).hide();
 	$('#' + contentDiv).show();	
-	//showing the revoke accessButton
-        $('#leftRemoveCSAccessBtn').show();
+	$('#leftRemoveCSAccessBtn').show();
 }
 
 function getCSPreviousPath(path) {

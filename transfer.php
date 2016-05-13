@@ -1,4 +1,3 @@
-<!--Add IntroJs styles -->
 <link href="/site-tour/introJs/introjs.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/site-tour-styles/custom-site-tour.css">
 
@@ -161,12 +160,15 @@ $( document ).ready(function() {
 		sessionStorage.lfcendpoint="";
 		$('#lfcendpoint').val("lfc://");
 	   }
-	 //reloading the endpoint only if SE GRid
-         if (sessionStorage.seEndpointLeft && (parseInt(sessionStorage.leftCSIndex) ==0) ) {
-		 $('#leftEndpoint').val(sessionStorage.seEndpointLeft);
-		 if (sessionStorage.seEndpointLeft !== "") {
-			$('#load-left').trigger("click");	
-		 }
+	 //reloading the endpoint only if SE grid
+         if (sessionStorage.seEndpointLeft) {
+		 if ( parseInt(sessionStorage.leftCSIndex) ==1 ) {}
+		 else {
+			 $('#leftEndpoint').val(sessionStorage.seEndpointLeft);
+			 if (sessionStorage.seEndpointLeft !== "") {
+				$('#load-left').trigger("click");	
+			 }
+	  	}
 	  }
 
 	 if (sessionStorage.seEndpointRight) {
@@ -180,6 +182,14 @@ $( document ).ready(function() {
 	//$('#leftStorageLogin').hide();
 
 	checkCSState('leftStorageSelect', 'leftStorageContent', 'leftCSLoginForm', 'leftLoginIndicator', 'leftStorageLogin', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter', 'leftEndpoint', 'leftCSName');	
+	console.log( "ready!" );	
+
+	//needed to center buttons
+	$('#dmtoolbarleft').css('display', 'inline-block');
+	$('#dmtoolbarright').css('display', 'inline-block');
+	$('#filtertoolbarleft').css('display', 'inline-block');
+	$('#filtertoolbarright').css('display', 'inline-block');
+
 });
 
 
@@ -189,6 +199,7 @@ $('#lfcendpoint').popover({
     html: true,
     trigger : 'hover'
 });
+
 
 $("#leftEndpointContentTable tbody").on("click", function(e){
 	activateTransferButton('leftEndpointContentTable', 'transfer-from-left', 'right-ep-text');    
@@ -226,12 +237,12 @@ $("#lfcendpoint").on("change", function(e){
 	setLFCendpoint();
 });
 
-
 $(function(){
            $("#warning_modal_content").load("expirationWarningModal.html");
 	   $("#modal_content").load("modal.html");
 	   $("#voms_modal_content").load("vomsRequestModal.html");
-           $("#revoke_access_modal_content").load("revokeCSAccess.html");
+	   $("#revoke_access_modal_content").load("revokeCSAccess.html");
+	   $("#datamanagement_modal_content").load("dataManagement.html"); 
 });
 
 
@@ -287,6 +298,7 @@ $('#checksum').popover();
                           </ul>
         </div>
 	<input type="hidden" id="userDN" value="">
+	<div id="datamanagement_modal_content"></div>
 	<?php
 		foreach($_SERVER as $h=>$v){
 			if ($h == "SSL_CLIENT_CERT")
@@ -339,14 +351,34 @@ $('#checksum').popover();
 							onclick="getEPContent('leftEndpoint', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter')">Load</button>
 					</span>
 				</div>
-		
+				<div class="panel panel-primary" id="dmpanelleft">
+                                         <div class="panel-heading text-center">
+						<div class="btn-toolbar" id="dmtoolbarleft">
+							<div class="btn-group">
+                                                                <button type="button"  id="createFolderLeft" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('create',$('#leftEndpoint').val(), 'left','leftEndpointContentTable')">Create 
+                                                                        Folder</button>
+                                                        </div>
+							<div class="btn-group">
+                                                                <button type="button"  id="removeLeft" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('remove', $('#leftEndpoint').val(),'left','leftEndpointContentTable')"><i class="glyphicon glyphicon-remove" />&nbsp;Delete
+                                                                        </button>
+                                                        </div>
+							<div class="btn-group">
+                                                                <button type="button"  id="renameLeft" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('rename',$('#leftEndpoint').val(), 'left','leftEndpointContentTable')">Rename
+                                                                        </button>
+                                                        </div>
+                                                </div>
+					</div>
+				</div>
 				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<div class="btn-toolbar">
+					<div class="panel-heading text-center">
+						<div class="btn-toolbari" id="filtertoolbarleft">
 							<div class="btn-group ">
 								<button type="button"  id="selectAllLeft" class="btn btn-sm"
 									onclick="selectAllFiles('leftEndpointContent')">Select
-									All</button>
+									All Files</button>
 								<button type="button"  id="selectNoneLeft" class="btn btn-sm"
 									onclick="selectNoneFiles('leftEndpointContent')">None</button>
 							</div>
@@ -551,27 +583,41 @@ $('#checksum').popover();
 							onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter')">Load</button>
 					</span>
 				</div>
+				 <div class="panel panel-primary" id="dmpanelRight">
+                                         <div class="panel-heading text-center">
+                                                <div class="btn-toolbar" id="dmtoolbarright">
+                                                        <div class="btn-group ">
+                                                                <button type="button"  id="createFolderRight" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('create',$('#rightEndpoint').val(), 'right','rightEndpointContentTable')">Create
+                                                                        Folder</button>
+                                                        </div>
+                                                        <div class="btn-group ">
+                                                                <button type="button"  id="removeRight" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('remove', $('#rightEndpoint').val(),'right','rightEndpointContentTable')"><i class="glyphicon glyphicon-remove" />&nbsp;Delete
+                                                                        </button>
+                                                        </div>
+                                                        <div class="btn-group ">
+                                                                <button type="button"  id="renameRight" class="btn btn-sm"
+                                                                        onclick="showDataManagementModal('rename',$('#rightEndpoint').val(), 'right','rightEndpointContentTable')">Rename
+                                                                        </button>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+
 		
 				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<div class="btn-toolbar">
+					<div class="panel-heading text-center">
+						<div class="btn-toolbar" id="filtertoolbarright">
 							<div class="btn-group" id="id7">
-<!-- 								data-step="7" 
-								data-intro="<h3><strong>Selection buttons:</strong></h3>
-											<h4>By clicking one, you can select/unselect all your files.</h4>"
-								data-position="bottom">
- -->								<button type="button"  id="selectAllRight" class="btn btn-sm"
+								<button type="button"  id="selectAllRight" class="btn btn-sm"
 									onclick="selectAllFiles('rightEndpointContent')">Select
-									All</button>
+									All Files</button>
 								<button type="button"  id="selectNoneRight" class="btn btn-sm"
 									onclick="selectNoneFiles('rightEndpointContent')">None</button>
 							</div>
 							<div class="btn-group" id="id8">
-<!-- 								data-step="8" 
-								data-intro="<h3><strong>Refresh button:</strong></h3>
-											<h4>Once you place a new endpoint you can see all the contents of the folder by clicking on this.</h4>"
-								data-position="bottom">
- -->								<button type="button" class="btn btn-sm"
+								<button type="button" class="btn btn-sm"
 									onclick="getEPContent('rightEndpoint', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter')">
 									<i class="glyphicon glyphicon-refresh" />&nbsp;Refresh
 								</button>

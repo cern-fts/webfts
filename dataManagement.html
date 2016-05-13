@@ -1,0 +1,118 @@
+<script>
+//To prevent the modal window to be closed by pressing ESC or clicking outside
+$('#dataManagement').modal({
+          show: false,
+          backdrop: 'static',
+          keyboard: false
+});
+
+$( "#createFolderButton" ).click(function() {
+        createFolder($('#createFolderEndpoint').val(), encodeURI($('#createFolderPath').val()),$('#sideModal').val());
+	$('#loading-indicator').show();
+});
+
+$( "#removeButton" ).click(function() {
+	if ($('#removeEndpoint').val().slice(-1) == "/")
+        	removeFolder( $('#removeEndpoint').val(),$('#sideModal').val());
+	else    
+		removeFile( $('#removeEndpoint').val(),$('#sideModal').val());
+	$('#loading-indicator').show();
+});
+
+$( "#renameButton" ).click(function() {
+        rename( $('#basePath').val(),$('#oldname').val(),encodeURI($('#newname').val()),$('#sideModal').val());
+        $('#loading-indicator').show();
+});
+
+//enable operation via pressing enter
+
+$('#createFolderModal').keypress(function(event){
+     if(event.keyCode == 13){
+     		$( "#createFolderButton" ).trigger("click");
+	}
+});
+
+$('#removeModal').keypress(function(event){
+     if(event.keyCode == 13){
+    		$( "#removeButton" ).trigger("click");
+	}
+});
+
+$('#renameModal').keypress(function(event){
+     if(event.keyCode == 13){
+     		$( "#renameButton" ).trigger("click");
+	}
+
+});
+</script>
+
+<div class="modal fade" id="dataManagement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<input id="sideModal" type="hidden" class="form-control"   value="" disabled="true" />
+        <div class="modal-dialog">
+                <div class="modal-content" id="createFolderModal">
+                        <div class="modal-body">
+					Do you want to create a folder at the following Endpoint?
+                        </div>
+                        <input id="createFolderEndpoint" type="text" class="form-control"   value="" disabled="true"/> 
+			<div class="modal-body">
+                                        Please Enter the name of the folder to create
+                        </div>
+                        <input id="createFolderPath" type="text" class="form-control"   value=""/>
+			<div class="modal-footer ">
+                                <div class="controls center">
+                                        <button type="button" class="btn btn-primary" name="createFolderButton" id="createFolderButton">Create Folder</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>                                                      
+                                </div>
+                        </div>
+                </div>
+		 <div class="modal-content" id="removeModal">
+                        <div class="modal-body">
+                                        Do you want to remove the file/folder?
+                        </div>
+			<input id="removeEndpoint" type="text" class="form-control"   value="" disabled="true"/>
+                        <div class="modal-footer ">
+                                <div class="controls center">
+                                        <button type="button" class="btn btn-primary" name="removeButton" id="removeButton">Remove</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>                                                      
+                                </div>
+                        </div>
+                </div>
+		<div class="modal-content" id="renameModal">
+                        <div class="modal-body">
+                                        Do you want to rename the following file/folder?
+                        </div>
+			<input id="oldname" type="text" class="form-control"   value="" disabled="true"/>
+			<div class="modal-body">
+                                        Please Enter the new name
+                        </div>
+			<input id="basePath" type="hidden" class="form-control"   value=""/>
+			<input id="newname" type="text" class="form-control"   value=""/>
+                        <div class="modal-footer ">
+                                <div class="controls center">
+                                        <button type="button" class="btn btn-primary" name="renameButton" id="renameButton">Rename</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>                                                      
+                                </div>
+                        </div>
+                </div>
+		 <div id="loading-indicator" style="display: none" class="row">
+                         <ul class="pager">
+                                      <li><label class="text-center"> Loading...</label>&nbsp;<img
+                                       class="pagination-centered" src="img/ajax-loader.gif" /></li>
+                          </ul>
+                 </div>
+		<div class="modal-content alert alert-danger " id="errorModal">
+			<div class="modal-header text-center">
+				<i class="glyphicon glyphicon-warning-sign"/>
+			</div>
+                        <div class="modal-body text-center">
+				<input id="errorString" type="text" class="form-control"   value="" disabled="true" align="center"/>
+			</div>
+                        <div class="modal-footer ">
+                                <div class="controls center">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>                              
+                                </div>
+                        </div>
+                </div>
+
+        </div>  <!-- /.modal-dialog -->
+</div> <!-- /.modal -->

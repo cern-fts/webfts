@@ -115,8 +115,8 @@ function removeTransfer(jobID){
 		xhrFields : {
 			withCredentials : useCredentials
 		},
-		success : function(data1, status) {
-			showUserSuccess("Transfer removed successfully");
+		success : function(data1, status) {						
+			showUserSuccess("Transfer job removed successfully");	
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			showError(jqXHR, textStatus, errorThrown, "Error removing the transfer job. "+ supportText);
@@ -637,7 +637,11 @@ function getEndpointContent(endpointInput, container, containerTable, indicator,
 		},
 		
 		success : function(data2, status) {
-			loadFolder(endpointInput, container, containerTable, data2, indicator, stateText, filter);
+			ordered = {}
+                        Object.keys(data2).sort().forEach(function(key) {
+                                ordered[key] = data2[key];
+                        });
+			loadFolder(endpointInput, container, containerTable, ordered, indicator, stateText, filter);			
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			showError(jqXHR, textStatus, errorThrown, "Error connecting to the endpoint: it is not available, the folder does not exist or it has been selected a wrong protocol or address. "  + supportText);

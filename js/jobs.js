@@ -100,11 +100,11 @@ function getColumn(columnName){
 }
 
 function isErrorState(job_state){
-	return job_state=="FAILED" || job_state=="CANCELED";
+	return job_state=="FAILED" || job_state=="CANCELED" || job_state=="FINISHEDDIRTY";
 }
 
 function isFinalState(job_state){
-	return isErrorState(job_state) || job_state=="FINISHED";
+	return isErrorState(job_state) || job_state=="FINISHED" || job_state=="FINISHEDDIRTY";
 }
 
 function getRowColor(job_state){
@@ -112,6 +112,8 @@ function getRowColor(job_state){
 		return "danger";		
 	} else if (job_state=="FINISHED"){
 		return "success";
+	} else if (job_state=="FINISHEDDIRTY"){
+		return "active";
 	} else {
 		return "warning";
 	}
@@ -170,7 +172,9 @@ function rerunTransfer(data, overwrite, checksum, resubmitAll){
 	var dropbox = false;
 	var dropboxSuffix = "dropbox://";
 	var lfcregistration = false;
+	var dropboxTransfer = false;
 	var lfcSuffix = "lfc://";
+	var dropboxSuffix = "dropbox://www.dropbox.com";
 	var theData = {};
 	var resubmitAll= (resubmitAll ==='true');
 	theData["files"] = [];       	      	  
@@ -183,6 +187,8 @@ function rerunTransfer(data, overwrite, checksum, resubmitAll){
 			dropbox = true;
 		if (!resubmitAll && (data[i].file_state.trim() === "FINISHED")) 
 			continue;	
+		if (dLists[0].slice(0, dropboxSuffix.length) == dropboxSuffix)
+                        dropboxTransfer = true;
 		files["sources"] = dLists;
 		files["destinations"] = [];
 		var dListd = [];
@@ -191,6 +197,8 @@ function rerunTransfer(data, overwrite, checksum, resubmitAll){
                         dropbox = true;
 		if (dListd[0].slice(0, lfcSuffix.length) == lfcSuffix)
 			lfcregistration = true;
+		if (dListd[0].slice(0, dropboxSuffix.length) == dropboxSuffix)
+			dropboxTransfer = true;
 		files["destinations"] = dListd;
 		theData["files"].push(files);		
 	}

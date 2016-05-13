@@ -123,8 +123,8 @@ function Dropbox(){
                         },
                         error : function(jqXHR, textStatus, errorThrown) {
                                 showError(jqXHR, textStatus, errorThrown, "Error removing tokens. ");
-				hideRevokeCSModal();
-                        }
+                        	hideRevokeCSModal();
+			}
                 });
         };
 

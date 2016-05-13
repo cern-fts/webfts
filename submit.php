@@ -40,12 +40,14 @@
 <script src="kipper/js/ssoHelper.js"></script>
 <script src="kipper/js/certHelper.js"></script>
 <script src="kipper/kipper.js"></script>
-
+<script src="js/lib/base64E.js"></script>
+<script src="js/lib/oids.js"></script>
+<script src="js/lib/asn11.js"></script>
 <script src="js/ftsHelper.js"></script>
 <script src="js/transfer.js"></script>
 <script src="js/CSFactory.js"></script>
 <script src="js/dropboxHelper.js"></script>
-
+<script src="js/datamanagement.js"></script>
 <script>
 $( document ).ready(function() {
         if(!sessionStorage.ftsRestEndpoint)

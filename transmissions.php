@@ -22,7 +22,6 @@
 
 <!-- General Site tour styles -->
 <link href="/site-tour/introJs/introjs.css" rel="stylesheet">
-
 <script src="js/bootstrap.min.js"></script>
 <script src="js/common.js"></script>  
 <script src="js/proxy.js/glib/sha512.js"></script>
@@ -41,7 +40,6 @@
 
 <script src="js/ftsHelper.js"></script>
 <script src="js/jobs.js"></script>
-
 <script> 
 	$( document ).ready(function() {
                 if(!sessionStorage.ftsRestEndpoint)
@@ -94,7 +92,7 @@
 			</div>
 
 			<div class="masthead">
-				<h3 class="text-muted">WebFTS  (Beta version)  <small><em>Symplifying power</em></small></h3>
+				<h3 class="text-muted">WebFTS  (Beta version)  <small><em>Simplifying power</em></small></h3>
 				<ul class="nav nav-justified">
 					<li><a href="index.php"><i class="glyphicon glyphicon-home"></i>&nbsp;Home</a></li>
 					<li class="active"><a href="#"><i class="glyphicon glyphicon-tasks"></i>&nbsp;My jobs</a></li>
