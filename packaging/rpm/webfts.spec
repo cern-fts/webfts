@@ -1,5 +1,5 @@
-Name:           webfts
-Version:        2.2.7
+Name:           webfts-kipper
+Version:        1.0.0
 Release:        1%{?dist}
 Summary:        Web Interface for FTS 
 Group:          Applications/Internet
@@ -18,7 +18,7 @@ Requires:	php
 
 
 %description
-The package provides the WEB Interface for the FTS3 service
+The package provides the WEB Interface for the FTS3 service integrated with Kipper and FedIdentity
 
 %prep
 %setup -c -n %{name}
@@ -50,30 +50,5 @@ service httpd restart
 /var/www/%{name}
 
 %changelog
-* Fri Nov 27 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.7-1
-- fix text typos
-* Tue Nov 24 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.6-1
-- fix endpoints content not ordered
-- fix resubmission with dropbox
-* Fri Nov 6 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.5-1
-- correct escaping url when list endpoints
-- fix reload of SE endpoints
-* Fri Jun 27 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.4-1
-- fix for FINISHEDDIRTY jobs not displayed
-* Wed Jun 25 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.3-1
-- fix for file Attributes columns wrongly ordered
-* Fri Feb 27 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.2-1
-- fix for XSS vulnerability
-* Fri Feb 13 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.1-1
-- moved to sha512
-- added dropbox revoke tokens button
-* Thu Nov 27 2014 Andrea Manzi <amanzi@cern.ch> - 2.2.0-1
-- data management support
-* Thu Nov 13 2014 Andrea Manzi <amanzi@cern.ch> - 2.1.0-1
-- cernbox support
-- added voname to proxy
-* Tue Aug 27 2014 Andrea Manzi <amanzi@cern.ch> - 2.0.0-1
-- dropbox support
-* Tue Jul 22 2014 Andrea Manzi <amanzi@cern.ch> - 1.4.0-1
-- added support for LFC registration, overwrite and checksums
-- added resubmission of failed files only
+* Fri May 13 2016 Andrea Manzi <amanzi@cern.ch> - 1.0.0
+- WebFTS + kipper first release
