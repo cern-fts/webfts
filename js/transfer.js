@@ -382,7 +382,7 @@ function filterBySize(jo, inputs, hideFolders){
     //Recusively filter the jquery object to get results.
     jo.filter(function (i, v) {
     	var $t = $(this);
-    	if ($t.children()[0].title.indexOf('/') !== -1 && hideFolders) {
+    	if ($t.attr('title') == 'folder' && hideFolders) {
              return false;
         } else {
         	if (inputs[0].value !== ""){
@@ -414,13 +414,20 @@ function filterByTime(jo, inputs, hideFolders){
     //Recusively filter the jquery object to get results.
     jo.filter(function (i, v) {
     	var $t = $(this);
-    	if ($t.children()[0].title.indexOf('/') !== -1 && hideFolders) {
+    	if ($t.attr('title') == 'folder' && hideFolders) {
              return false;
         } else {
+		var $filedate =  $t.children()[2].textContent
+                var $tokens= $filedate.split(" ")
+                for (var i=0; i<$tokens.length; i++){
+                     if ($tokens[i].indexOf(':') > -1) {
+                           $filedate = $filedate.replace($tokens[i],new Date().getFullYear())
+                     }
+                }
         	if (inputs[0].value !== ""){
-        		if (Date.parse(inputs[0].value.trim()) <= Date.parse($t.children()[2].textContent)){
+        		if (Date.parse(inputs[0].value.trim()) <= Date.parse($filedate)){
         			if (inputs[1].value != ""){
-        				if (Date.parse(inputs[1].value.trim()) >= Date.parse($t.children()[2].textContent)){
+        				if (Date.parse(inputs[1].value.trim()) >= Date.parse($filedate)){
         					return true;
     					}
         				return false;
@@ -428,7 +435,7 @@ function filterByTime(jo, inputs, hideFolders){
         			return true;
         		}           	
         	} else if (inputs[1].value !== ""){
-        		if (Date.parse($t.children()[2].textContent) <= Date.parse(inputs[1].value.trim())){        			
+        		if (Date.parse($filedate) <= Date.parse(inputs[1].value.trim())){        			
         				return true;        			
         		}           	
         	} else {
@@ -446,8 +453,8 @@ function filterFolders(jo,hideFolders){
     //Recusively filter the jquery object to get results.
     jo.filter(function (i, v) {
     	var $t = $(this);
-    	var $r = $t.children()[0].textContent; 
-        if ($r.indexOf('/') !== -1 && hideFolders) {
+    	var $r = $t.attr('title'); 
+        if ($r == 'folder' && hideFolders) {
                   return false;
         }        
         return true;
@@ -460,7 +467,7 @@ function filterByName(jo, data, hideFolders){
     //Recusively filter the jquery object to get results.
     jo.filter(function (i, v) {
     	var $t = $(this);
-    	if ($t.children()[0].title.indexOf('/') !== -1 && hideFolders) {
+    	if ($t.attr('title') == 'folder' && hideFolders) {
              return false;
         } else { 
         	if (isRegEx(data.toString())){
@@ -538,17 +545,10 @@ function getReadableFileSizeString(fileSizeInBytes) {
 };
 
 function getFileDate(fdate){
-	//day month hour if it is within the last year
-	//day month year if older than one year
-	
 	var currentDate = new Date();
-	var diff = currentDate - fdate;
-	var days = Math.round(diff/(1000*60*60*24));
-	
-	if (days >= 365){
+	if (fdate.getFullYear().toString() != currentDate.getFullYear().toString()) {
 		return pad(fdate.getUTCDate().toString(), 2) + " " +months[fdate.getUTCMonth()] + " "
 		       + fdate.getFullYear().toString().substr(2,2);
-		
 	} else {
 		return pad(fdate.getUTCDate().toString(), 2) + " " +months[fdate.getUTCMonth()] + " " 
 			   + pad(fdate.getUTCHours().toString(), 2) + ":" + pad(fdate.getUTCMinutes().toString(), 2);
