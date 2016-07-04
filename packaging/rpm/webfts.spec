@@ -1,5 +1,5 @@
 Name:           webfts
-Version:        2.2.7
+Version:        2.2.8
 Release:        1%{?dist}
 Summary:        Web Interface for FTS 
 Group:          Applications/Internet
@@ -7,8 +7,8 @@ License:        ASL 2.0
 URL:            https://gitlab.cern.ch/fts/webfts
 # The source for this package was pulled from upstream's vcs.  Use the
 # following commands to generate the tarball:
-#  git clone https://gitlab.cern.ch/fts/webfts.git webfts-2.2.6
-#  tar --exclude-vcs -zcvf webfts-2.2.6.tar.gz webfts-2.2.6
+#  git clone https://gitlab.cern.ch/fts/webfts.git webfts-2.2.8
+#  tar --exclude-vcs -zcvf webfts-2.2.8.tar.gz webfts-2.2.8
 Source:         %{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArchitectures: noarch
@@ -50,6 +50,8 @@ service httpd restart
 /var/www/%{name}
 
 %changelog
+* Mon Jul 04 2016 Andrea Manzi <amanzi@cern.ch> - 2.2.8-1
+- fix date filter and displayed date
 * Fri Nov 27 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.7-1
 - fix text typos
 * Tue Nov 24 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.6-1
