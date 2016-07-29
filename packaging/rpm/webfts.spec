@@ -1,5 +1,5 @@
 Name:           webfts
-Version:        2.2.8
+Version:        2.2.9
 Release:        1%{?dist}
 Summary:        Web Interface for FTS 
 Group:          Applications/Internet
@@ -50,6 +50,8 @@ service httpd restart
 /var/www/%{name}
 
 %changelog
+* Fri Jul 29 2016 Andrea Manzi <amanzi@cern.ch> - 2.2.9-1
+- fix selectAll Files
 * Mon Jul 04 2016 Andrea Manzi <amanzi@cern.ch> - 2.2.8-1
 - fix date filter and displayed date
 * Fri Nov 27 2015 Andrea Manzi <amanzi@cern.ch> - 2.2.7-1

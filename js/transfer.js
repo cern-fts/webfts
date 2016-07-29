@@ -277,8 +277,7 @@ function selectAllFiles(container){
     	//Recusively filter the jquery object to get results.
         var files = $("#" + container + "  tbody").find("tr").filter(function (i,v) {
         	var $t = $(this);
-		var $r = $t.children()[0].title;
-        	if ($r.indexOf('/') !== -1 ) {
+        	if ($t.attr('title') == 'folder') {
 			return true;
         	}
        		return false;
