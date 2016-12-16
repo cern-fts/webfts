@@ -76,7 +76,7 @@ $( document ).ready(function() {
 					</div>
 					
 					<div class="masthead">
-						<h3 class="text-muted">WebFTS (Beta version)  <small><em>Simplifying power</em></small></h3>
+						<h3 class="text-muted">WebFTS <small><em>Simplifying power</em></small></h3>
 						<ul class="nav nav-justified">
 							<li><a href="index.php"><i class="glyphicon glyphicon-home"></i>&nbsp;Home</a></li>
 							<li><a href="transmissions.php"><i class="glyphicon glyphicon-tasks"></i>&nbsp;My jobs</a></li>

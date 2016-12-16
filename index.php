@@ -162,7 +162,7 @@ $( document ).ready(function() {
 			</div>
 			
 			<div class="masthead">
-				<h3 class="text-muted">WebFTS (Beta version)  <small><em>Simplifying power</em></small></h3>			
+				<h3 class="text-muted">WebFTS  <small><em>Simplifying power</em></small></h3>			
 				<ul class="nav nav-justified" >
 					<li class="active" 
 						data-step="2" 
