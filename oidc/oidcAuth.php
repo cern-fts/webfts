@@ -30,5 +30,5 @@
  *  limitations under the License.
 **/
  $conf = simplexml_load_file('config.xml');
- echo "<a class='button_log pull-right' id='oidclogin' href='" .  $conf->login_url . '&client_id=' . $conf->client_id . '&redirect_uri=' . $conf->redirect_uri . '&scope=' . $conf->scope . "'><span class='glyphicon glyphicon-log-in' aria-hidden='true'> CILogon LogIn </span></a>";
+ echo "<a class='button_log pull-right' id='oidclogin' href='" .  $conf->login_url . '&client_id=' . $conf->client_id . '&redirect_uri=' . $conf->redirect_uri . '&scope=' . $conf->scope . '&state=test' . "'><span class='glyphicon glyphicon-log-in' aria-hidden='true'> CILogon LogIn </span></a>";
 ?>

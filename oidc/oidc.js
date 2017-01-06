@@ -36,6 +36,7 @@ OIDC.getCertificate = function (code){
         theData["client_secret"] = sessionStorage.oidc_client_secret;
         theData["code"] = code;
         theData["redirect_uri"] = sessionStorage.oidc_redirect_uri;
+        theData["state"]= 'test';
         jsondata = JSON.stringify(theData);
         $.support.cors = true;
 	return  $.ajax({
