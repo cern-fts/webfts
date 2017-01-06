@@ -12,7 +12,7 @@
 <link href="css/bootstrap-theme.min.css" rel="stylesheet">
 <link href="css/justified-nav.css" rel="stylesheet">
 <link href="css/validation.css" rel="stylesheet">
-
+<script src="oidc/oidc.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.validate.min.js"></script>
 </head>
@@ -159,6 +159,12 @@ $( document ).ready(function() {
 					});
 				</script>
 				<div id="userAuth"></div>
+                                <script> 
+				$(function(){
+					$("#oidcAuth").load("oidc/oidcAuth.php");
+				});
+				</script>
+				<div id="oidcAuth"></div> 
 			</div>
 			
 			<div class="masthead">

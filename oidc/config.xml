@@ -1,0 +1,6 @@
+<config>
+	<client_id>myproxy:oa4mp,2012:/client_id/259c55932e9052c3faa96837d676efc0</client_id>
+	<redirect_uri>https://webfts-dev.cern.ch/oidc_redirect</redirect_uri>
+	<login_url>https://cilogon.org/authorize/?response_type=code</login_url>
+	<scope>openid+profile+email+org.cilogon.userinfo+edu.uiuc.ncsa.myproxy.getcert</scope>
+</config>
