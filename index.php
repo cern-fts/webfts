@@ -12,14 +12,11 @@
 <link href="css/bootstrap-theme.min.css" rel="stylesheet">
 <link href="css/justified-nav.css" rel="stylesheet">
 <link href="css/validation.css" rel="stylesheet">
-<script src="oidc/oidc.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.validate.min.js"></script>
 </head>
-
-<!-- <link href="assets/css/bootstrap-responsive.css" rel="stylesheet"> -->
+q
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximun-scale=1, user-scalable=no">
-<!-- <link href="css/justified-nav.css" rel="stylesheet"> -->
 <link href="css/validation.css" rel="stylesheet" >
 
 <!-- custom slideshow styles -->
@@ -34,8 +31,6 @@
 <!-- custom nav-bar styles -->
 <link rel="stylesheet" type="text/css" href="/css/nav-bar-custom/nav-bar-custom.css">
 
-<!-- <link rel='stylesheet' href='paraFiles/css/diffBrsStyles/tryFire_scratch.css' type='text/css'>-->
-<!-- <link href="/site-tour/introJs/example/assets/css/bootstrap-responsive.min.css" rel="stylesheet"> -->
 
 
 <!--Parallax scripts start-->
@@ -49,12 +44,10 @@
 <script type="text/javascript" src='/site-tour/scroll-to-top.js'></script>
 <script type="text/javascript" src='/js/disableScalability.js'></script>
 
-
-
 <!-- JQuery -->
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.validate.min.js"></script>
-
+<script src="oidc/oidc.js"></script>
 <!-- Browser Compatibility styles -->
 <link rel="stylesheet" href="/paraFiles/css/base.css"/>
 
