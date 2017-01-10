@@ -37,20 +37,18 @@ OIDC.getCertificate = function (code){
         theData["code"] = code;
         theData["redirect_uri"] = sessionStorage.oidc_redirect_uri;
         theData["state"]= 'test';
-        jsondata = JSON.stringify(theData);
-        $.support.cors = true;
 	return  $.ajax({
 		url : url,
 		type : "POST",
-		data : jsondata,
-		processData : false,
+		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                data : theData,
 		success : function(x, status, xhr) {
 			console.log("OK: " + JSON.stringify(x));			
 			console.log("    Status: " + status);
 		},
 		error : function(xhr, textStatus, errorThrown) {
 		        console.log("    Status: " + textStatus);
-                        console.log("OK: " + JSON.stringify(xhr));
+                        console.log("ERROR: " + JSON.stringify(xhr));
 		}
 
 	});	
