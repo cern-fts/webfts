@@ -37,14 +37,46 @@ OIDC.getCertificate = function (code){
         theData["code"] = code;
         theData["redirect_uri"] = sessionStorage.oidc_redirect_uri;
         theData["state"]= 'test';
-	return  $.ajax({
+	$.ajax({
 		url : url,
 		type : "POST",
 		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 data : theData,
-		success : function(x, status, xhr) {
-			console.log("OK: " + JSON.stringify(x));			
-			console.log("    Status: " + status);
+		success : function(resp, status) {
+			var json =  JSON.parse(resp)
+                        var kp = KEYUTIL.generateKeypair("RSA", 2048);
+			var csri = new KJUR.asn1.csr.CertificationRequestInfo();
+			csri.setSubjectByParam({'str': '/C=US/O=Test/CN=example.com'});
+			csri.setSubjectPublicKeyByGetKey( kp["pubKeyObj"]);
+			
+			var csr = new KJUR.asn1.csr.CertificationRequest({'csrinfo': csri});
+			csr.sign("SHA256withRSA", kp["prvKeyObj"]);
+			certPEM = csr.getPEMString();
+			certPEM = certPEM.replace("-----END CERTIFICATE REQUEST-----","");
+			certPEM = certPEM.replace("-----BEGIN CERTIFICATE REQUEST-----","");
+			console.log(certPEM)
+			var postData = {};
+			postData["client_id"] =  sessionStorage.oidc_client_id;
+			postData["client_secret"] = sessionStorage.oidc_client_secret;
+			postData["access_token"] = json["access_token"];
+			postData["certreq"] = certPEM;
+			postData["state"]= 'test';
+			var postUrl = "https://webfts-dev.cern.ch/oidcgetcert"; 
+			$.ajax({
+                               url : postUrl,
+			       type : "POST",
+                               headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                               data : postData,
+			       success : function(cert, status, xhr) {
+	                           console.log("OK: " + cert);
+				   alert(cert);
+			       },
+                               error : function(xhr, textStatus, errorThrown) {
+                                   console.log("    Status: " + textStatus);
+                                   console.log("ERROR: " + JSON.stringify(xhr));
+                               }
+			 });
+	
 		},
 		error : function(xhr, textStatus, errorThrown) {
 		        console.log("    Status: " + textStatus);
