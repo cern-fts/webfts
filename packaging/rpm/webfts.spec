@@ -1,5 +1,5 @@
 Name:           webfts
-Version:        2.2.10
+Version:        2.2.11
 Release:        1%{?dist}
 Summary:        Web Interface for FTS 
 Group:          Applications/Internet
@@ -50,6 +50,8 @@ service httpd restart
 /var/www/%{name}
 
 %changelog
+* Wed Jan 18 2017 Andrea Manzi <amanzi@cern.ch> - 2.2.11-1
+- change default port
 * Fri Dec 16 2016 Andrea Manzi <amanzi@cern.ch> - 2.2.10-1
 - removed beta version
 * Fri Jul 29 2016 Andrea Manzi <amanzi@cern.ch> - 2.2.9-1
