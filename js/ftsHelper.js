@@ -228,7 +228,10 @@ function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {
 		//In case blank new lines...
 		return pemCert.replace(/^\s*$[\n\r]{1,}/gm, "\n");
 	} catch (e) {
+                var derror = "Error delegating the user credentials: " + e;
+                showDelegateError(derror);
 		console.log("ERROR signing the CSR response: " + e);
+                return "";
 	}
 }
 
@@ -384,7 +387,8 @@ function doDelegate(delegationID, userPrivateKeyPEM, userDN, userCERT, user_vo){
 		},
 		
 		success : function(data3, status) {
-			var x509Proxy = signRequest(data3, userPrivateKeyPEM, userDN, userCERT); 
+			var x509Proxy = signRequest(data3, userPrivateKeyPEM, userDN, userCERT);
+                        if ( x509Proxy =="" ) { return;}
 			x509Proxy += "" + userCERT;
 			//console.log(x509Proxy);
 			urlEndp = sessionStorage.ftsRestEndpoint + "/delegation/" + delegationID + '/credential';
