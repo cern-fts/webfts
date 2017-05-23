@@ -51,6 +51,8 @@ OIDC.getCertificate = function (code){
 			
 			var csr = new KJUR.asn1.csr.CertificationRequest({'csrinfo': csri});
 			csr.sign("SHA256withRSA", kp["prvKeyObj"]);
+			sessionStorage.prvKey=  hextob64(KEYUTIL.getHexFromPEM(KEYUTIL.getPEM(kp["prvKeyObj"], "PKCS8PRV")));
+			
 			certPEM = csr.getPEMString();
 			certPEM = certPEM.replace("-----END CERTIFICATE REQUEST-----","");
 			certPEM = certPEM.replace("-----BEGIN CERTIFICATE REQUEST-----","");
@@ -69,7 +71,9 @@ OIDC.getCertificate = function (code){
                                data : postData,
 			       success : function(cert, status, xhr) {
 	                           console.log("OK: " + cert);
-				   alert(cert);
+				   sessionStorage.cert = cert;
+				   // similar behavior as an HTTP redirect
+				   window.location.replace("https://webfts-dev.cern.ch");
 			       },
                                error : function(xhr, textStatus, errorThrown) {
                                    console.log("    Status: " + textStatus);

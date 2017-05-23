@@ -3,4 +3,5 @@
 	<redirect_uri>https://webfts-dev.cern.ch/oidc_redirect</redirect_uri>
 	<login_url>https://cilogon.org/authorize/?response_type=code</login_url>
 	<scope>openid+profile+email+org.cilogon.userinfo+edu.uiuc.ncsa.myproxy.getcert</scope>
+        <client_secret>udtbwkqwwKx8KVa_rJi_HD6smpNiVP5aOpHaRgSd77zPouyGsfEwgDNBepjtP2e0NxDx71r72bVeCvoXeoyV3Q</client_secret>
 </config>

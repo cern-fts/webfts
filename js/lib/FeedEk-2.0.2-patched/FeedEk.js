@@ -21,14 +21,20 @@
         $("#" + id).empty().append('<img src="js/lib/FeedEk-2.0.2-patched/loader.gif" />');
 
         $.ajax({
-            url: "https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=" + def.MaxCount + "&output=json&q=" + encodeURIComponent(def.FeedUrl) + "&hl=en&callback=?",
+            url: 'https://api.rss2json.com/v1/api.json',
+	    method: 'GET',
+            data: {
+              rss_url: def.FeedUrl,
+              api_key: 'llehy9e1xzodyvu0bpacwc1qwjqnqifknwn7nnoq', // put your api key here
+              count: def.MaxCount,
+            }, 
             dataType: "json",
             success: function (data) {
                 $("#" + id).empty();
-                $.each(data.responseData.feed.entries, function (e, item) {
+                $.each(data.items, function (e, item) {
         	    s += '<li><div class="itemTitle"><a onclick="window.open(this.href,\'_blank\');return false;" href="' + item.link + '" target="' + def.TitleLinkTarget + '">' + item.title + "</a></div>";
                     if (def.ShowPubDate){
-                        dt= new Date(item.publishedDate);
+                        dt= new Date(item.pubDate);
                         if ($.trim(def.DateFormat).length > 0) {
                             try {
                                 moment.lang(def.DateFormatLang);

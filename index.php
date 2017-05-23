@@ -15,7 +15,6 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.validate.min.js"></script>
 </head>
-q
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximun-scale=1, user-scalable=no">
 <link href="css/validation.css" rel="stylesheet" >
 
@@ -112,24 +111,23 @@ else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) <
 
 </script>
 <!-- Browser Compatibility ends-->
-
-<!-- rss feed -->
 <script type="text/javascript" src="js/lib/FeedEk-2.0.2-patched/FeedEk.js"></script>
 
 <script src="js/ftsHelper.js"></script>
 <script>
 $( document ).ready(function() {
-	$('#divRss').FeedEk({
-    		FeedUrl : 'http://fts3-service.web.cern.ch/rss.xml',
-    		MaxCount : 3,
-    		ShowDesc : false,
-    		ShowPubDate: true,
-    		TitleLinkTarget: '_blank',
-  	});
-
-        if(!sessionStorage.ftsRestEndpoint)
+        $('#divRss').FeedEk({
+                FeedUrl : 'http://fts3-service.web.cern.ch/rss.xml',
+                MaxCount : 3,
+                ShowDesc : false,
+                ShowPubDate: true,
+                TitleLinkTarget: '_blank',
+        });
+ 
+     if(!sessionStorage.ftsRestEndpoint)
                 getConfig();
 });
+
 </script>
 
 </head>
@@ -196,7 +194,8 @@ $( document ).ready(function() {
 									<div class="news-title">
 										<span class='glyphicon glyphicon-ok-sign'></span> News<br/>
 									</div>
-									<div id="divRss" class="jumbotron-fluid" ></div>
+									<div id="divRss" class="jumbotron-fluid" >
+ 									</div>
 									
 				    				<div class='jumbotron-fluid' id='readMore'>
 									<a class="btn btn-info btn-responsive"  onclick="window.open(this.href,'_blank');return false;" href="http://fts3-service.web.cern.ch/documentation/releases"><strong>Read more...</strong></a>

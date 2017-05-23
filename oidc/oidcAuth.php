@@ -1,4 +1,7 @@
 <script>
+	if(sessionStorage.cert) {
+		alert(sessionStorage.cert)
+	}
         if(!sessionStorage.oidcLogin) {
             OIDC.getConfig()
 	}
