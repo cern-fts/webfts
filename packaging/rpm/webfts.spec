@@ -50,8 +50,9 @@ service httpd restart
 /var/www/%{name}
 
 %changelog
-* Thu Apr 20 2017 Andrea Manzi <amanzi@cern.ch> - 2.2.12-1
+* Thu May 23 2017 Andrea Manzi <amanzi@cern.ch> - 2.2.12-1
 - fix news feed
+- fix delegation for CA without SKID
 * Wed Jan 18 2017 Andrea Manzi <amanzi@cern.ch> - 2.2.11-1
 - change default port
 * Fri Dec 16 2016 Andrea Manzi <amanzi@cern.ch> - 2.2.10-1
