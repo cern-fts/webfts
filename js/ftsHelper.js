@@ -200,9 +200,10 @@ function signRequest(sCert, userPrivateKeyPEM, userDN, userCERT) {
 
 		var s = KEYUTIL.getPEM(rsakey);
 	    	var sHashHex = getSubjectKeyIdentifier(derUser);
-	    	var paramAKI = {'kid': {'hex': sHashHex }, 'issuer': oIssuer, 'critical': false};
-		tbsc.appendExtension(new KJUR.asn1.x509.AuthorityKeyIdentifier(paramAKI));
-		
+	    	if (sHashHex !== null) {
+                  var paramAKI = {'kid': {'hex': sHashHex }, 'issuer': oIssuer, 'critical': false};
+		  tbsc.appendExtension(new KJUR.asn1.x509.AuthorityKeyIdentifier(paramAKI));
+		} 
 		// Sign and get PEM certificate with CA private key
 		var userPrivateKey = new RSAKey();
 
@@ -250,12 +251,7 @@ function getSKID(dom, skid){
 		var ext = dom.textContent.substring(n2, n2 + 300);
 		var n3 = ext.indexOf("20 byte");
 		return ext.substring(n3 + 9, n3 + 49);		
-	}
-	if (dom.childNodes.length > 0){
-		for (var i=0; i<dom.childNodes.length; i++){				
-			getAKI(dom.childNodes[i]);
-		}	
-	} 
+	} else return null;
 }
 
 //Check delegation ID, save it and check if there is a valid proxy 
