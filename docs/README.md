@@ -20,6 +20,7 @@ The /etc/httpd/conf.d/webfts.conf should be configured in order to set the corre
 Regarding the WebFTS conf, it's avaialble on the config.xml file:
 
 * ftsAddress: the address of the FTS REST server to contact
+* lmtAddress: the address of the LMT proxy service to contact
 * jobToList: the number of jobs to list per user
 * endpointListUrl : the file containing the list of endpoint used for autocompletion
 * proxyCertHours : the validity of the proxy certs created by WebFTS
