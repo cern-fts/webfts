@@ -38,6 +38,7 @@
 <script src="js/lib/asn11.js"></script>
 
 <script src="js/ftsHelper.js"></script>
+<script src="js/lmtHelper.js"></script>
 <script src="js/transfer.js"></script>
 <script src="js/CSFactory.js"></script>
 <script src="js/dropboxHelper.js"></script>
