@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-function AttachProxy(file) {
-  var ws = new WebSocket(sessionStorage.lmtProxyEndpoint);
+function AttachProxy() {
+  var ws = new WebSocket(sessionStorage.lmtWebsocketEndpoint);
   var delegationID = Math.random().toString(36).substring(2, 15) +
     Math.random().toString(36).substring(2, 15);
 
+  var file = this.files[0];
   var filedata = { name: file.name, size: file.size, delegationID: delegationID };
   console.log(filedata);
 

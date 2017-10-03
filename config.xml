@@ -1,6 +1,6 @@
 <config>
 	<ftsAddress>https://webfts.cern.ch:8443</ftsAddress>
-	<lmtAddress>https://lmt.cern.ch:8080</lmtAddress>
+	<lmtWebsocketEndpoint>https://lmt.cern.ch:8080</lmtWebsocketEndpoint>
 	<jobToList>100</jobToList>
 	<endpointListUrl>https://webfts.cern.ch/endpointList</endpointListUrl> 
 	<proxyCertHours>12</proxyCertHours>
