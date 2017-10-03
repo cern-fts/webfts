@@ -689,37 +689,44 @@ function loadEPList(ep, availableURLs){
 	});
 }
 
-function getStorageOption(currentSelect, loginDiv, loginForm, contentDiv, loginIndicator, CSName, inputTextbox, loadButton, container, containerTable, indicator, stateText, filter,side){
+function getStorageOption(currentSelect, localUpload, loginDiv, loginForm, contentDiv, loginIndicator, CSName, inputTextbox, loadButton, container, containerTable, indicator, stateText, filter,side){
 	$('#' + loginDiv).hide();
+	$('#' + localUpload).hide();
 	$('#' + contentDiv).show();
 	
 	if (currentSelect.selectedIndex > 0){
 		if (side == "left") {
-			$('#' + inputTextbox).prop('readonly', true);
-			$('#' + loadButton).prop("disabled",true);
-		
-			$('#lfcregistration').prop("disabled",true);
-			$('#checksum').prop("disabled",true);
-			$('#lfcendpoint').prop("disabled",true);
-		
-			if ((getUrlVars()["service"] != currentSelect.selectedData.text.toLowerCase()) &&
-				($('#' + CSName).val().toLowerCase() != currentSelect.selectedData.text.toLowerCase()) && !sessionStorage.csLogin ){
-				//clearContentTable(containerTable, container, indicator, stateText);
-				$('#' + loginDiv).show();
-				$('#' + contentDiv).hide();
-				$('#' + loginIndicator).hide();
-				$('#' + loginForm).show();
-			} else{
-				if (getUrlVars().length > 1){
-					var factory = new CSFactory();
-					var cs = factory.createCS(getUrlVars()["service"]);		
-					cs.getCSAccess(loginDiv, contentDiv, "/", container, containerTable, indicator, stateText, filter, inputTextbox, CSName);
-				} else {
-					getCSFolderContent(loginDiv, contentDiv, currentSelect.selectedData.text.toLowerCase(), inputTextbox, container, containerTable, indicator, stateText, "/", filter, CSName);
-				}	
-			}
-		//CERNBOX		
-		} else	{ 
+            // Dropbox
+            if (currentSelect.selectedIndex == 1) {
+                $('#' + inputTextbox).prop('readonly', true);
+                $('#' + loadButton).prop("disabled",true);
+
+                $('#lfcregistration').prop("disabled",true);
+                $('#checksum').prop("disabled",true);
+                $('#lfcendpoint').prop("disabled",true);
+
+                if ((getUrlVars()["service"] != currentSelect.selectedData.text.toLowerCase()) &&
+                        ($('#' + CSName).val().toLowerCase() != currentSelect.selectedData.text.toLowerCase()) && !sessionStorage.csLogin ){
+                            //clearContentTable(containerTable, container, indicator, stateText);
+                            $('#' + loginDiv).show();
+                            $('#' + contentDiv).hide();
+                            $('#' + loginIndicator).hide();
+                            $('#' + loginForm).show();
+                        } else{
+                            if (getUrlVars().length > 1){
+                                var factory = new CSFactory();
+                                var cs = factory.createCS(getUrlVars()["service"]);
+                                cs.getCSAccess(loginDiv, contentDiv, "/", container, containerTable, indicator, stateText, filter, inputTextbox, CSName);
+                            } else {
+                                getCSFolderContent(loginDiv, contentDiv, currentSelect.selectedData.text.toLowerCase(), inputTextbox, container, containerTable, indicator, stateText, "/", filter, CSName);
+                            }
+                        }
+            } else {
+                // Local file upload
+                $('#' + localUpload).show();
+            }
+            //CERNBOX
+        } else {
 			$('#' + inputTextbox).prop('readonly', true);
                 	$('#' + loadButton).prop("disabled",true);
                 	$('#lfcregistration').prop("disabled",true);

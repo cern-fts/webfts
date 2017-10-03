@@ -32,6 +32,9 @@ $( document ).ready(function() {
 		}
 	});
 
+    var inputElement = document.getElementById("uploadFiles");
+    inputElement.addEventListener("change", AttachProxy, false);
+
 	var ddDataLeft = [
 	              {
 	                 text: "Grid SE",
@@ -65,7 +68,7 @@ $( document ).ready(function() {
            imagePosition: "left",
            selectText: "Select storage",
            onSelected: function (data) {
-               getStorageOption(data, 'leftStorageLogin', 'leftCSLoginForm', 'leftStorageContent', 'leftLoginIndicator', 'leftCSName', 'leftEndpoint', 'load-left', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter','left');
+           getStorageOption(data, 'leftStorageLocalUpload', 'leftStorageLogin', 'leftCSLoginForm', 'leftStorageContent', 'leftLoginIndicator', 'leftCSName', 'leftEndpoint', 'load-left', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter','left');
                $('#leftCSName').val(data.selectedData.text.toLowerCase());
 		if (setSession) {
                         sessionStorage.leftCSIndex=data.selectedIndex;
@@ -118,7 +121,7 @@ $( document ).ready(function() {
 					},	
                 		});	
 			}	
-		   getStorageOption(data, 'rightStorageLogin', 'rightCSLoginForm', 'rightStorageContent', 'rightLoginIndicator', 'rightCSName', 'rightEndpoint', 'load-right', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter','right');
+        getStorageOption(data, 'leftStorageLocalUpload', 'rightStorageLogin', 'rightCSLoginForm', 'rightStorageContent', 'rightLoginIndicator', 'rightCSName', 'rightEndpoint', 'load-right', 'rightEndpointContent', 'rightEndpointContentTable', 'right-loading-indicator', 'right-ep-text', 'rightEpFilter','right');
 		   if (setSession) {
                        	sessionStorage.rightCSIndex=data.selectedIndex;
                	   }
@@ -336,6 +339,14 @@ $('#checksum').popover();
 				</div>
 			
 			
+            <div id="leftStorageLocalUpload" class="panel panel-primary">
+                <div class="panel-body">
+                    <form class="form" id="leftLocalUploadForm">
+                        <button type="button" id="leftLocalUploadBtn" class="btn btn-primary center-block" onclick="document.getElementById('uploadFiles').click();">Select files..</button>
+                        <input type="file" id="uploadFiles" style="display: none">
+                    </form>
+                </div>
+            </div>
 			<div id="leftStorageLogin" class="panel panel-primary">
 				<div class="panel-body">
 					<input type="hidden" id="leftCSName" value="">
