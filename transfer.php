@@ -47,6 +47,13 @@ $( document ).ready(function() {
 	                 description: "Dropbox",
 	                 imageSrc: "img/Dropbox-icon.png"
 	             },
+	             {
+	                 text: "Local",
+	                 value: 4,
+	                 selected: false,
+	                 description: "Local",
+	                 imageSrc: "img/upload-icon.png"
+	             },
 	         ];
 	         
 	//workaround to make the session loading work
