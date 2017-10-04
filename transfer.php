@@ -54,7 +54,7 @@ $( document ).ready(function() {
 	                 text: "Local",
 	                 value: 4,
 	                 selected: false,
-	                 description: "Local",
+	                 description: "Upload files from local storage",
 	                 imageSrc: "img/upload-icon.png"
 	             },
 	         ];
