@@ -42,6 +42,7 @@ function AttachProxy() {
     switch (controlMsg.action) {
       case 'transfer':
         endpoint = controlMsg.data;
+        runTransferFromURL('leftEndpointContentTable', endpoint, 'rightEndpoint');
         break;
       case 'ready':
         // LMT proxy is ready to start the transfer.

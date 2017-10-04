@@ -30,18 +30,19 @@ function runTransfer(container, origFolder, destFolder, CSLeftSelect){
 }
 
 
-function executeTransfer(container, origFolder, destFolder, CSLeftSelect){		
-	hideUserReport();
-	var selectedFiles = getSelectedFiles(container);
-        if (selectedFiles.length > 0){
-    		var optionSelected = $('#' + CSLeftSelect).data('ddslick'); 
-	    	if (optionSelected.selectedIndex > 0){
-  	    		runDataTransfer($('#delegation_id').val(), getCSDataTransfer(origFolder, destFolder, selectedFiles, optionSelected.selectedData.text.toLowerCase()));  	    		    				          } 
-							else {	    	    		    	    	    	    	    					    		    	    		runDataTransfer($('#delegation_id').val(), getDataTransfer(origFolder, destFolder, selectedFiles));
-		}
-	
-	}    
-	return false;
+function executeTransfer(container, origFolder, destFolder, CSLeftSelect){
+    hideUserReport();
+    var selectedFiles = getSelectedFiles(container);
+    if (selectedFiles.length > 0){
+        var optionSelected = $('#' + CSLeftSelect).data('ddslick');
+        if (optionSelected.selectedIndex == 1){ //Dropbox
+            runDataTransfer($('#delegation_id').val(), getCSDataTransfer(origFolder, destFolder, selectedFiles, optionSelected.selectedData.text.toLowerCase()));}
+        else {
+            runDataTransfer($('#delegation_id').val(), getDataTransfer(origFolder, destFolder, selectedFiles));
+        }
+
+    }
+    return false;
 }
 
 
@@ -78,24 +79,24 @@ function getDataTransfer(origFolder, destFolder, selectedFiles) {
 	return theData;	
 }
 
-function runTransferFromURL(container, url, destFolder){	  
-	hideUserReport();
+function runTransferFromURL(container, url, destFolder) {
+    hideUserReport();
 
-	var theData = {};
-	theData["files"] = [];       	      	  
+    var theData = {};
+    theData["files"] = [];
 
-	var files = {};
-	files["sources"] = [];
-	var sList = [];
-	sList[0] = document.getElementById(url).value.trim();
-	files["sources"] = sList;
-	files["destinations"] = [];
-	files["destinations"] = getFullPath(getFileNameFromURL(document.getElementById(url).value.trim()), document.getElementById(destFolder).value.trim());
-	theData["files"].push(files);
+    var files = {};
+    files["sources"] = [];
+    var sList = [];
+    sList[0] = url;
+    files["sources"] = sList;
+    files["destinations"] = [];
+    files["destinations"] = getFullPath(sList, document.getElementById(destFolder).value.trim());
+    theData["files"].push(files);
 
-	theData["params"] = [];
-	  
-	runDataTransfer($('#delegation_id').val(), theData);
+    theData["params"] = [];
+
+    runDataTransfer($('#delegation_id').val(), theData);
 
     return false;
 }
