@@ -33,7 +33,7 @@ $( document ).ready(function() {
 	});
 
     var inputElement = document.getElementById("uploadFiles");
-    inputElement.addEventListener("change", AttachProxy, false);
+    inputElement.addEventListener("change", uploadFilesHandler, false);
 
 	var ddDataLeft = [
 	              {
@@ -343,7 +343,7 @@ $('#checksum').popover();
                 <div class="panel-body">
                     <form class="form" id="leftLocalUploadForm">
                         <button type="button" id="leftLocalUploadBtn" class="btn btn-primary center-block" onclick="document.getElementById('uploadFiles').click();">Select files..</button>
-                        <input type="file" id="uploadFiles" style="display: none">
+                        <input type="file" id="uploadFiles" style="display: none" multiple>
                     </form>
                 </div>
             </div>

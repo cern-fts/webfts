@@ -79,23 +79,28 @@ function getDataTransfer(origFolder, destFolder, selectedFiles) {
 	return theData;	
 }
 
-function runTransferFromURL(container, url, destFolder) {
+function runTransferFromURLs(container, urls, destFolder) {
     hideUserReport();
 
     var theData = {};
     theData["files"] = [];
 
-    var files = {};
-    files["sources"] = [];
-    var sList = [];
-    sList[0] = url;
-    files["sources"] = sList;
-    files["destinations"] = [];
-    files["destinations"] = getFullPath(sList, document.getElementById(destFolder).value.trim());
-    theData["files"].push(files);
+    for (var i=0; i<urls.length; i++){
+        var files = {};
+        var sList = [];
+        var dList = [];
+        files["sources"] = [];
+        files["destinations"] = [];
+        sList[0] = urls[i];
+        dList[0] = getFullPath(urls[i], document.getElementById(destFolder).value.trim())[0];
+        files["sources"] = sList;
+        files["destinations"] = dList;
+        console.log("files");
+        console.log(files);
+        theData["files"].push(files);
+    }
 
     theData["params"] = [];
-
     runDataTransfer($('#delegation_id').val(), theData);
 
     return false;

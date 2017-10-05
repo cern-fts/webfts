@@ -14,56 +14,72 @@
  * limitations under the License.
  */
 
-function AttachProxy() {
-  var ws = new WebSocket(sessionStorage.lmtWebsocketEndpoint);
-  var delegationID = Math.random().toString(36).substring(2, 15) +
-    Math.random().toString(36).substring(2, 15);
+function uploadFilesHandler() {
+    AttachProxy(this.files)
+}
 
-  var file = this.files[0];
-  var filedata = { name: file.name, size: file.size, delegationID: delegationID };
-  console.log(filedata);
+function AttachProxy(files) {
+    var endpointURLs = [];
+    var fileData = [];
+    var fileID;
+    for (var i=0; i<files.length; i++){
+        var ws = new WebSocket(sessionStorage.lmtWebsocketEndpoint);
+        ws.fileID = i;
+        var file = files[i];
+        var delegationID = Math.random().toString(36).substring(2, 15) +
+            Math.random().toString(36).substring(2, 15);
 
-  var slice_start = 0;
-  var slice_end = filedata.size;
-  var finished = false;
-  var success = false;
-  var error_messages = [];
-  var endpoint;
+        fileData[i] = { name: file.name, size: file.size, delegationID: delegationID };
+        console.log(fileData);
 
-  ws.onopen = function () {
-    ws.send(JSON.stringify(filedata));
-  }
+        var slice_start = 0;
+        var slice_end = fileData.size;
+        var finished = false;
+        var success = false;
+        var error_messages = [];
+        var endpoint;
 
-  ws.onmessage = function (event) {
-    // Parse controlMsg.
-    var controlMsg = JSON.parse(event.data);
-    console.log(event.data);
+        ws.onopen = function () {
+            fileID = this.fileID;
+            this.send(JSON.stringify(fileData[fileID]));
+        }
 
-    switch (controlMsg.action) {
-      case 'transfer':
-        endpoint = controlMsg.data;
-        runTransferFromURL('leftEndpointContentTable', endpoint, 'rightEndpoint');
-        break;
-      case 'ready':
-        // LMT proxy is ready to start the transfer.
-        ws.send(file.slice(slice_start, slice_end));
-        break;
-      case 'finished':
-        // Transfer finished successfully.
-        success = true;
-        break;
-      default:
+        ws.onmessage = function (event) {
+            fileID = this.fileID;
+            // Parse controlMsg.
+            var controlMsg = JSON.parse(event.data);
+            console.log(event.data);
+
+            switch (controlMsg.action) {
+                case 'transfer':
+                    endpoint = controlMsg.data;
+                    endpointURLs.push(endpoint);
+                    if (endpointURLs.length == files.length) {
+                        runTransferFromURLs('leftEndpointContentTable', endpointURLs, 'rightEndpoint');
+                    }
+                    break;
+                case 'ready':
+                    // LMT proxy is ready to start the transfer.
+                    this.send(files[fileID].slice(slice_start, fileData[fileID].size));
+                    break;
+                case 'finished':
+                    // Transfer finished successfully.
+                    success = true;
+                    break;
+                default:
+            }
+        }
+
+        ws.onclose = function () {
+            if (success) {
+                return;
+            }
+
+            if (error_messages.length == 0) {
+                error_messages[0] = { error: 'Unknown upload error' };
+            }
+            console.log(error_messages);
+        }
+
     }
-  }
-
-  ws.onclose = function () {
-    if (success) {
-      return;
-    }
-
-    if (error_messages.length == 0) {
-      error_messages[0] = { error: 'Unknown upload error' };
-    }
-    console.log(error_messages);
-  }
 }
