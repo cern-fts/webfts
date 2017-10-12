@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-function uploadFilesHandler() {
-    AttachProxy(this.files)
-}
 
-// For each file, AttachProxy will open up a WebSocket connection by dialing
+// For each file, localUpload will open up a WebSocket connection by dialing
 // the address defined in sessionsStorage.lmtWebsocketEndpoint and maintain it
 // in an an open state.
 // Once all the transfer URLs have been received from the LMT proxy service,
 // it calls runDataTransfer() to submit the transfer job to FTS.
-function AttachProxy(files) {
+function localUpload(files) {
     var endpointURLs = [];
     var fileData = [];
     var fileID;
@@ -66,7 +63,7 @@ function AttachProxy(files) {
                     if (endpointURLs.length == files.length) {
                         // All the endpoint URLs have been received; submit the
                         // job to FTS
-                        runTransferFromURLs('leftEndpointContentTable', endpointURLs, 'rightEndpoint');
+                        runTransferFromURLs(endpointURLs, 'rightEndpoint');
                     }
                     break;
                 case 'ready':

@@ -32,15 +32,20 @@ function runTransfer(container, origFolder, destFolder, CSLeftSelect){
 
 function executeTransfer(container, origFolder, destFolder, CSLeftSelect){
     hideUserReport();
-    var selectedFiles = getSelectedFiles(container);
-    if (selectedFiles.length > 0){
-        var optionSelected = $('#' + CSLeftSelect).data('ddslick');
-        if (optionSelected.selectedIndex == 1){ //Dropbox
-            runDataTransfer($('#delegation_id').val(), getCSDataTransfer(origFolder, destFolder, selectedFiles, optionSelected.selectedData.text.toLowerCase()));}
-        else {
-            runDataTransfer($('#delegation_id').val(), getDataTransfer(origFolder, destFolder, selectedFiles));
-        }
+    if (sessionStorage.leftCSIndex == 2) { // Local upload
+        localUpload(document.getElementById('uploadFiles').files);
+    }
+    else {
+        var selectedFiles = getSelectedFiles(container);
+        if (selectedFiles.length > 0){
+            var optionSelected = $('#' + CSLeftSelect).data('ddslick');
+            if (optionSelected.selectedIndex == 1){ //Dropbox
+                runDataTransfer($('#delegation_id').val(), getCSDataTransfer(origFolder, destFolder, selectedFiles, optionSelected.selectedData.text.toLowerCase()));}
+            else {
+                runDataTransfer($('#delegation_id').val(), getDataTransfer(origFolder, destFolder, selectedFiles));
+            }
 
+        }
     }
     return false;
 }
@@ -79,24 +84,22 @@ function getDataTransfer(origFolder, destFolder, selectedFiles) {
 	return theData;	
 }
 
-function runTransferFromURLs(container, urls, destFolder) {
+function runTransferFromURLs(sourceURLs, destFolder) {
     hideUserReport();
 
     var theData = {};
     theData["files"] = [];
 
-    for (var i=0; i<urls.length; i++){
+    for (var i=0; i<sourceURLs.length; i++){
         var files = {};
         var sList = [];
         var dList = [];
         files["sources"] = [];
         files["destinations"] = [];
-        sList[0] = urls[i];
-        dList[0] = getFullPath(urls[i], document.getElementById(destFolder).value.trim())[0];
+        sList[0] = sourceURLs[i];
+        dList[0] = getFullPath(sourceURLs[i], document.getElementById(destFolder).value.trim())[0];
         files["sources"] = sList;
         files["destinations"] = dList;
-        console.log("files");
-        console.log(files);
         theData["files"].push(files);
     }
 
@@ -129,7 +132,9 @@ function activateTransferButton(epTable, buttonToActivate, endPoint){
 		else {	lfcRegistrationActivate = false; }
 	}
 			
-	if (((epTable != null) && (getSelectedFiles(epTable).length > 0) &&  lfcRegistrationActivate && ($('#' + endPoint).text().length > 0 )) || ((epTable == null) && ($('#' + endPoint).text().length > 0))){ 
+	if (((epTable != null) && (getSelectedFiles(epTable).length > 0) &&  lfcRegistrationActivate && ($('#' + endPoint).text().length > 0 )) ||
+        ((epTable == null) && ($('#' + endPoint).text().length > 0)) ||
+        ((epTable == 'local') && ($('#' + endPoint).text().length > 0))) {
 		$('#' + buttonToActivate).removeAttr("disabled");
 	} else {
 		$('#' + buttonToActivate).attr('disabled','disabled');
@@ -730,6 +735,7 @@ function getStorageOption(currentSelect, localUpload, loginDiv, loginForm, conte
             } else {
                 // Local file upload
                 $('#' + localUpload).show();
+                $('#' + contentDiv).hide();
             }
             //CERNBOX
         } else {

@@ -32,9 +32,6 @@ $( document ).ready(function() {
 		}
 	});
 
-    var inputElement = document.getElementById("uploadFiles");
-    inputElement.addEventListener("change", uploadFilesHandler, false);
-
 	var ddDataLeft = [
 	              {
 	                 text: "Grid SE",
@@ -244,6 +241,10 @@ $("#lfcendpoint").on("change", function(e){
 	activateTransferButton('leftEndpointContentTable', 'transfer-from-left', 'right-ep-text');
         activateTransferButton('rightEndpointContentTable', 'transfer-from-right', 'left-ep-text');
 	setLFCendpoint();
+});
+
+$("#uploadFiles").on("change", function(e){
+	activateTransferButton('local', 'transfer-from-left', 'right-ep-text');
 });
 
 $(function(){
