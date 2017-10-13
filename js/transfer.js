@@ -97,7 +97,8 @@ function runTransferFromURLs(sourceURLs, destFolder) {
         files["sources"] = [];
         files["destinations"] = [];
         sList[0] = sourceURLs[i];
-        dList[0] = getFullPath(sourceURLs[i], document.getElementById(destFolder).value.trim())[0];
+        var filename = sourceURLs[i].substr(sourceURLs[i].lastIndexOf('/') + 1);
+        dList[0] = getFullPath(filename, document.getElementById(destFolder).value.trim())[0];
         files["sources"] = sList;
         files["destinations"] = dList;
         theData["files"].push(files);
