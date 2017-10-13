@@ -5,6 +5,7 @@ function getConfig(){
 	    $(data).find('config').each(function() {
 		sessionStorage.ftsRestEndpoint=$(this).find('ftsAddress').text();
 		sessionStorage.lmtWebsocketEndpoint=$(this).find('lmtWebsocketEndpoint').text();
+		sessionStorage.lmtHealthCheckEndpoint=$(this).find('lmtHealthCheckEndpoint').text();
 		sessionStorage.jobsToList=$(this).find('jobToList').text();
 	    	sessionStorage.endpointsUrl=$(this).find('endpointListUrl').text();
 	    	sessionStorage.proxyCertHours=$(this).find('proxyCertHours').text();

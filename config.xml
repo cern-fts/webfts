@@ -1,6 +1,7 @@
 <config>
     <ftsAddress>https://webfts.cern.ch:8443</ftsAddress>
     <lmtWebsocketEndpoint>wss://lmt.cern.ch:8080/socket</lmtWebsocketEndpoint>
+    <lmtHealthCheckEndpoint>https://lmt.cern.ch:8080/health-check</lmtHealthCheckEndpoint>
     <jobToList>100</jobToList>
     <endpointListUrl>https://webfts.cern.ch/endpointList</endpointListUrl>
     <proxyCertHours>12</proxyCertHours>

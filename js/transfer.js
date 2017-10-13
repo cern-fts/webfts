@@ -33,7 +33,21 @@ function runTransfer(container, origFolder, destFolder, CSLeftSelect){
 function executeTransfer(container, origFolder, destFolder, CSLeftSelect){
     hideUserReport();
     if (sessionStorage.leftCSIndex == 2) { // Local upload
-        localUpload(document.getElementById('uploadFiles').files);
+        $.support.cors = true;
+        $.ajax({
+            url : sessionStorage.lmtHealthCheckEndpoint,
+            type : "GET",
+            dataType : 'json',
+            xhrFields : {
+                withCredentials : true
+            },
+            success : function(data1, status) {
+                localUpload(document.getElementById('uploadFiles').files);
+            },
+            error : function(jqXHR, textStatus, errorThrown) {
+                showError(jqXHR, textStatus, errorThrown, "Error connecting to LMT.");
+            }
+        });
     }
     else {
         var selectedFiles = getSelectedFiles(container);
