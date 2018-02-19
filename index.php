@@ -34,9 +34,6 @@
 <!-- custom nav-bar styles -->
 <link rel="stylesheet" type="text/css" href="/css/nav-bar-custom/nav-bar-custom.css">
 
-<!-- <link rel='stylesheet' href='paraFiles/css/diffBrsStyles/tryFire_scratch.css' type='text/css'>-->
-<!-- <link href="/site-tour/introJs/example/assets/css/bootstrap-responsive.min.css" rel="stylesheet"> -->
-
 
 <!--Parallax scripts start-->
 <script type="text/javascript" src='paraFiles/js/jquery.stellar.min.js'></script>
@@ -200,7 +197,7 @@ $( document ).ready(function() {
 									<div id="divRss" class="jumbotron-fluid" ></div>
 									
 				    				<div class='jumbotron-fluid' id='readMore'>
-									<a class="btn btn-info btn-responsive"  onclick="window.open(this.href,'_blank');return false;" href="http://fts3-service.web.cern.ch/documentation/releases"><strong>Read more...</strong></a>
+									<a class="btn btn-info btn-responsive"  onclick="window.open(this.href,'_blank');return false;" href="http://fts.web.cern.ch/sites/fts.web.cern.ch/themes/fts-webpage/releases-jekyll/releases/index.html"><strong>Read more...</strong></a>
 								</div>
 								<br/>
 								<div>
