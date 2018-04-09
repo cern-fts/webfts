@@ -43,7 +43,7 @@
 <script src="js/CSFactory.js"></script>
 <script src="js/dropboxHelper.js"></script>
 <script src="js/datamanagement.js"></script>
-
+<script src="js/jobs.js"></script>
 <script>
 $( document ).ready(function() {
     if(!sessionStorage.ftsRestEndpoint)
@@ -55,6 +55,9 @@ $( document ).ready(function() {
 <script>
 $(function(){
     $("#includedContentTransfer").load("transfer.php");
+});
+$(function(){                                                                                                     
+    $("#includedTransmissionsList").load("transmissionsList.php")                                                         
 });
 </script>
 </head>
@@ -80,7 +83,6 @@ $(function(){
                         <h3 class="text-muted">WebFTS <small><em>Simplifying power</em></small></h3>
                         <ul class="nav nav-justified">
                             <li><a href="index.php"><i class="glyphicon glyphicon-home"></i>&nbsp;Home</a></li>
-                            <li><a href="transmissions.php"><i class="glyphicon glyphicon-tasks"></i>&nbsp;My jobs</a></li>
                             <li class="active" id="start2ndTour"><a href="#" href='javascript:void(0);'><i class="glyphicon glyphicon-chevron-left"></i><i class="glyphicon glyphicon-chevron-right"></i>&nbsp;Submit a transfer</a></li>
                         </ul>
                     </div>
@@ -93,6 +95,11 @@ $(function(){
                     <div id="includedContentTransfer"></div>
                 </div>
             </div>
+            <div class="main-back">
+                <div class="row">
+                     <div id="includedTransmissionsList"></div>
+                </div>
+           </div>
     <script type="text/javascript" src="/js/site-tourTransmissions.js"></script>
 </body>
 </html>

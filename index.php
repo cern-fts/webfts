@@ -167,11 +167,6 @@ $( document ).ready(function() {
 						data-position='bottom'>
 						<a href="#"><i class="glyphicon glyphicon-home"></i>&nbsp;Home</a>
 					</li>
-					<li data-step="4" 
-						data-intro="<h3><strong>Check your submitted jobs:</strong></h3><h4>Check in real time the progress of your transferred jobs!<strong></br>Explore the 'Submit a transfer' page</strong></h4>"
-						data-position='bottom'>
-						<a href="transmissions.php"><i class="glyphicon glyphicon-tasks"></i>&nbsp;My jobs</a>
-					</li>
 					<li data-step="3" 
 						data-intro="<h3><strong>Start from here:</strong></h3><h4>Do you have a valid certificate on your browser? Submit your transfer more quickly and easily than ever, only by defining the endpoints of your choice for each particular transfer!</h4>" 
 						data-position='bottom'>
