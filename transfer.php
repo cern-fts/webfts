@@ -39,14 +39,7 @@ $( document ).ready(function() {
 	                 selected: true,
 	                 description: "Grid Storage Element",
 	                 imageSrc: "img/grid_storage.png"
-	             },
-	             {
-	                 text: "Dropbox",
-	                 value: 3,
-	                 selected: false,
-	                 description: "Dropbox",
-	                 imageSrc: "img/Dropbox-icon.png"
-	             },
+                  },
 	             {
 	                 text: "Local",
 	                 value: 4,
@@ -67,7 +60,7 @@ $( document ).ready(function() {
            onSelected: function (data) {
            getStorageOption(data, 'leftStorageLocalUpload', 'leftStorageLogin', 'leftCSLoginForm', 'leftStorageContent', 'leftLoginIndicator', 'leftCSName', 'leftEndpoint', 'load-left', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter','left');
                $('#leftCSName').val(data.selectedData.text.toLowerCase());
-		if (setSession) {
+		            if (setSession) {
                         sessionStorage.leftCSIndex=data.selectedIndex;
                 }
            }
@@ -75,21 +68,21 @@ $( document ).ready(function() {
 
 
 	var ddDataRight = [
-	             {
+	         {
 	                text: "Grid SE",
                  	value: 1,
-		        selected: true,
-		        description: "Grid Storage Element",
-		        imageSrc: "img/grid_storage.png"
+		            selected: true,
+		            description: "Grid Storage Element",
+		            imageSrc: "img/grid_storage.png"
 		     },
 		     {
-                      	text: "CERNBox",
-                       	value: 2,
-                       	selected: false,
-                       	description: "CERNBox Service (Beta)",
-                       	imageSrc: "img/CERNBox-icon.png"
-                      },
-		        ];
+                    text: "CERNBox",
+                    value: 2,
+                    selected: false,
+                    description: "CERNBox Service (Beta)",
+                    imageSrc: "img/CERNBox-icon.png"
+             },
+		  ];
 		
 	$('#rightStorageSelect').ddslick({
 	   data: ddDataRight,
@@ -199,12 +192,12 @@ $( document ).ready(function() {
 });
 
 
-$('#lfcendpoint').popover({
-    content: $('#lfcendpoint').val(),
-    placement: 'auto',
-    html: true,
-    trigger : 'hover'
-});
+//$('#lfcendpoint').popover({
+//    content: $('#lfcendpoint').val(),
+//    placement: 'auto',
+//    html: true,
+//    trigger : 'hover'
+//});
 
 
 $("#leftEndpointContentTable tbody").on("click", function(e){
@@ -348,20 +341,6 @@ $('#checksum').popover();
                     </form>
                 </div>
             </div>
-			<div id="leftStorageLogin" class="panel panel-primary">
-				<div class="panel-body">
-					<input type="hidden" id="leftCSName" value="">
-					<form class="form" id="leftCSLoginForm">
-						<button type="button" id="leftCSLoginBtn" class="btn btn-primary center-block" onclick="getLoginCS( $('#leftCSName').val(), 'leftStorageLogin', 'leftStorageContent', 'leftCSLoginForm', 'leftLoginIndicator', '/', 'leftEndpointContent', 'leftEndpointContentTable', 'left-loading-indicator', 'left-ep-text', 'leftEpFilter', 'leftEndpoint')">Login</button> 						
-					</form>
-					<div id="leftLoginIndicator" style="display: none" class="row">
-						<ul class="pager">
-							<li><label class="text-center"> Connecting...</label>&nbsp;<img
-								class="pagination-centered" src="img/ajax-loader.gif" /></li>
-						</ul>
-					</div>
-				</div>	
-			</div>
 			<div id="leftStorageContent">			
 				<div class="input-group" id="id4">
 					<input id="leftEndpoint" type="text" placeholder="Endpoint path"
@@ -592,7 +571,14 @@ $('#checksum').popover();
 				      		</div>
 					 <div>	
 				    </td>
-			    </tr>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="container-fluid border-element">  
+                        <button class="btn btn-primary" type="button" id="load-transfers" onclick="window.location='#includedTransmissionsList'">Go to your transfers</button>
+                    </div>
+                  </td>
+                </tr>
 			    </table>
 		    </div>
 		</div>

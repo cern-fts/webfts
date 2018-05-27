@@ -7,9 +7,6 @@ $( document ).ready(function() {
 	var intervalID = window.setInterval(reloadJobs, 300000);
 });	
 
-$(function(){
-	   $("#modal_content").load("modal.html"); 
-});
 </script>
 <div class="row">
 <div>&nbsp;</div>
@@ -23,15 +20,6 @@ $(function(){
 ?>
 
 <input type="hidden" id="delegation_id" value="">		
-<!-- <ul class="pagination pagination pagination-sm"> -->
-<!-- 	<li class="disabled"><a href="#">&laquo;</a></li> -->
-<!-- 	<li class="active"><a href="#">1</a></li> -->
-<!-- 	<li><a href="#">2</a></li> -->
-<!-- 	<li><a href="#">3</a></li> -->
-<!-- 	<li><a href="#">4</a></li> -->
-<!-- 	<li><a href="#">5</a></li> -->
-<!-- 	<li><a href="#">&raquo;</a></li> -->
-<!-- </ul> -->
 <div id="modal_content"></div>
 <div class="alert alert-danger" id="serverkeyAlert" style="display:none" >
 	<button type="button" class="close" data-dismiss="alert" onclick="$('#serverkeyAlert').hide()">&times;</button>
@@ -41,12 +29,13 @@ $(function(){
 	<button type="button" class="close" data-dismiss="alert" onclick="$('serverkeyAlertSuccess').hide()">&times;</button>
 	<small id="serverSuccessText"></small>
 </div>
+<div>
+  <div class="container-fluid border-element" align='center'>
+    <button class="btn btn-primary" type="button" id="submit-transfers" onclick="window.location='#includedContentTransfer'">Submit New transfers</button>
+  </div>
+</div>
 <div id="idjobsTable">
-<!-- 		data-step="1" 
-		data-intro="<h4>In this area are going to be displayed all your submitted jobs! Check the live status of your submittions whenever you want!</br><strong>Are you ready to start?</strong></h4>"
-		data-position="bottom-middle-aligned">
- -->	<table class="table table-bordered table-condensed table-hover" id="jobResultsTable">
-	<!-- <table class="table table-condensed" id="jobResultsTable" style="border-collapse:collapse;"> -->
+    <table class="table table-bordered table-condensed table-hover" id="jobResultsTable">
 		<thead>
 			<tr>
 				<th>Job ID
