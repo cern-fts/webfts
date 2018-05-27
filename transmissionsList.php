@@ -34,6 +34,7 @@ $( document ).ready(function() {
     <button class="btn btn-primary" type="button" id="submit-transfers" onclick="window.location='#includedContentTransfer'">Submit New transfers</button>
   </div>
 </div>
+<div>&nbsp;</div>
 <div id="idjobsTable">
     <table class="table table-bordered table-condensed table-hover" id="jobResultsTable">
 		<thead>
