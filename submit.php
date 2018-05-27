@@ -95,7 +95,7 @@ $(function(){
                     <div id="includedContentTransfer"></div>
                 </div>
             </div>
-            <div class="main-back">
+            <div class="main-back-transferlist">
                 <div class="row">
                      <div id="includedTransmissionsList"></div>
                 </div>
