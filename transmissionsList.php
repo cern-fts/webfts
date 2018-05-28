@@ -31,7 +31,7 @@ $( document ).ready(function() {
 </div>
 <div>
   <div class="container-fluid border-element" align='center'>
-    <button class="btn btn-primary" type="button" id="submit-transfers" onclick="window.location='#includedContentTransfer'">Submit New transfers</button>
+    <button class="btn btn-primary" type="button" id="submit-transfers" onclick="window.location='#includedContentTransfer'"><i class="glyphicon glyphicon-chevron-left"></i><i class="glyphicon glyphicon-chevron-right"></i>&nbsp;Submit New transfers</button>
   </div>
 </div>
 <div>&nbsp;</div>

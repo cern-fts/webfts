@@ -576,7 +576,7 @@ $('#checksum').popover();
                                       <td>
                                            <div align="center" class="container-fluid border-element"> 
                                               <span>  
-                                                 <button  class="btn btn-primary" type="button" id="load-transfers" onclick="window.location='#includedTransmissionsList'">Go to your transfers</button>
+                                                 <button  class="btn btn-primary" type="button" id="load-transfers" onclick="window.location='#includedTransmissionsList'"><i class="glyphicon glyphicon-tasks"></i>&nbsp;Go to your transfers</button>
                                              </span>
                                           </div>
                                      </td>
