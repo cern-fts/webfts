@@ -32,7 +32,7 @@ function runTransfer(container, origFolder, destFolder, CSLeftSelect){
 
 function executeTransfer(container, origFolder, destFolder, CSLeftSelect){
     hideUserReport();
-    if (sessionStorage.leftCSIndex == 2) { // Local upload
+    if (sessionStorage.leftCSIndex == 1) { // Local upload
         $.support.cors = true;
         $.ajax({
             url : sessionStorage.lmtHealthCheckEndpoint,
@@ -722,36 +722,9 @@ function getStorageOption(currentSelect, localUpload, loginDiv, loginForm, conte
 	
 	if (currentSelect.selectedIndex > 0){
 		if (side == "left") {
-            // Dropbox
-            if (currentSelect.selectedIndex == 1) {
-                $('#' + inputTextbox).prop('readonly', true);
-                $('#' + loadButton).prop("disabled",true);
-
-                $('#lfcregistration').prop("disabled",true);
-                $('#checksum').prop("disabled",true);
-                $('#lfcendpoint').prop("disabled",true);
-
-                if ((getUrlVars()["service"] != currentSelect.selectedData.text.toLowerCase()) &&
-                        ($('#' + CSName).val().toLowerCase() != currentSelect.selectedData.text.toLowerCase()) && !sessionStorage.csLogin ){
-                            //clearContentTable(containerTable, container, indicator, stateText);
-                            $('#' + loginDiv).show();
-                            $('#' + contentDiv).hide();
-                            $('#' + loginIndicator).hide();
-                            $('#' + loginForm).show();
-                        } else{
-                            if (getUrlVars().length > 1){
-                                var factory = new CSFactory();
-                                var cs = factory.createCS(getUrlVars()["service"]);
-                                cs.getCSAccess(loginDiv, contentDiv, "/", container, containerTable, indicator, stateText, filter, inputTextbox, CSName);
-                            } else {
-                                getCSFolderContent(loginDiv, contentDiv, currentSelect.selectedData.text.toLowerCase(), inputTextbox, container, containerTable, indicator, stateText, "/", filter, CSName);
-                            }
-                        }
-            } else {
                 // Local file upload
                 $('#' + localUpload).show();
                 $('#' + contentDiv).hide();
-            }
             //CERNBOX
         } else {
 			$('#' + inputTextbox).prop('readonly', true);

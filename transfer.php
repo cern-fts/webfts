@@ -571,14 +571,16 @@ $('#checksum').popover();
 				      		</div>
 					 <div>	
 				    </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="container-fluid border-element">  
-                        <button class="btn btn-primary" type="button" id="load-transfers" onclick="window.location='#includedTransmissionsList'">Go to your transfers</button>
-                    </div>
-                  </td>
-                </tr>
+                                </tr>
+                               <tr>
+                                      <td>
+                                           <div align="center" class="container-fluid border-element"> 
+                                              <span>  
+                                                 <button  class="btn btn-primary" type="button" id="load-transfers" onclick="window.location='#includedTransmissionsList'">Go to your transfers</button>
+                                             </span>
+                                          </div>
+                                     </td>
+                              </tr>
 			    </table>
 		    </div>
 		</div>
