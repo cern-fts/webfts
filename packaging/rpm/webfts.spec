@@ -1,5 +1,5 @@
 Name:           webfts
-Version:        2.2.12
+Version:        2.4.0
 Release:        1%{?dist}
 Summary:        Web Interface for FTS 
 Group:          Applications/Internet
