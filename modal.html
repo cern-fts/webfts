@@ -8,6 +8,7 @@ $(document).ready(function(){
         });
 });
 
+
 jQuery.validator.addMethod("checkCert", function (value, element) {
     return value.substring(0,31)=="-----BEGIN RSA PRIVATE KEY-----";
 }, "The private key must start with -----BEGIN RSA PRIVATE KEY-----");
