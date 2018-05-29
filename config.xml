@@ -1,11 +1,11 @@
 <config>
-    <ftsAddress>https://webfts.cern.ch:8443</ftsAddress>
-    <lmtWebsocketEndpoint>wss://lmt.cern.ch:8080/socket</lmtWebsocketEndpoint>
-    <lmtHealthCheckEndpoint>https://lmt.cern.ch:8080/health-check</lmtHealthCheckEndpoint>
+    <ftsAddress>https://webfts-dev-cc7.cern.ch:8443</ftsAddress>
+    <lmtWebsocketEndpoint>wss:///webfts-dev-cc7.cern.ch:80/socket</lmtWebsocketEndpoint>
+    <lmtHealthCheckEndpoint>https:///webfts-dev-cc7.cern.ch:80/health-check</lmtHealthCheckEndpoint>
     <jobToList>100</jobToList>
-    <endpointListUrl>https://webfts.cern.ch/endpointList</endpointListUrl>
+    <endpointListUrl>https:///webfts-dev-cc7.cern.ch/endpointList</endpointListUrl>
     <proxyCertHours>12</proxyCertHours>
-    <cernboxBaseUrl>root://eosdevbox.cern.ch/eos/devbox/user/</cernboxBaseUrl>
+    <cernboxBaseUrl>root://eosuser.cern.ch/eos/user/</cernboxBaseUrl>
     <VOs>
         <VO>atlas</VO>
         <VO>auger</VO>
