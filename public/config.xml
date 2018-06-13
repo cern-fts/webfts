@@ -1,5 +1,5 @@
 <config>
-    <ftsAddress>https://webfts.cern.ch:8443</ftsAddress>
+    <ftsAddress>https://fts3-xdc.cern.ch:8446</ftsAddress>
     <lmtWebsocketEndpoint>wss://lmt.cern.ch:8080/socket</lmtWebsocketEndpoint>
     <lmtHealthCheckEndpoint>https://lmt.cern.ch:8080/health-check</lmtHealthCheckEndpoint>
     <jobToList>100</jobToList>
