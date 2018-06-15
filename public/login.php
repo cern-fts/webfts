@@ -8,10 +8,16 @@ session_start();
 
 $config = include('../config.php');
 
-$provider = $config['oidc_provider'][$_POST['provider']];
-$oidc = new OpenIDConnectClient(
-    $provider['issuer'], $provider['client_id'], $provider['client_secret']
-);
+// TODO This is not DoS-safe, since we store state, before the user is authN'd
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $provider = $config['oidc_provider'][$_POST['provider']];
+    $_SESSION['oidc'] = new OpenIDConnectClient(
+        $provider['issuer'], $provider['client_id'], $provider['client_secret']
+    );
+}
+
+$oidc = $_SESSION['oidc'];
 
 $oidc->addScope('openid');
 $oidc->addScope('profile');
@@ -21,13 +27,9 @@ $oidc->providerConfigParam(array(
     'token_endpoint_auth_methods_supported' => ['client_secret_post']
 ));
 
-// TODO Remove: This is only to allow HTTP testing
-$_SERVER["HTTP_UPGRADE_INSECURE_REQUESTS"] = 0;
-
 try {
     $oidc->authenticate();  // This (might) redirect to IDP
     $oidc->requestClientCredentialsToken();
-    $_SESSION["oidc"] = $oidc;
 
     // TODO Dynamic return location
     header("Location: /index.php");
