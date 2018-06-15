@@ -11,6 +11,7 @@ $config = include('../config.php');
 // TODO This is not DoS-safe, since we store state, before the user is authN'd
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    $_SESSION['provider_num'] = $_POST['provider'];
     $provider = $config['oidc_provider'][$_POST['provider']];
     $_SESSION['oidc'] = new OpenIDConnectClient(
         $provider['issuer'], $provider['client_id'], $provider['client_secret']
