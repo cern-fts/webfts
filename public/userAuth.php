@@ -1,34 +1,19 @@
 <?php
+require __DIR__ . '/../vendor/autoload.php';
+
+use Jumbojett\OpenIDConnectClient;
+
 session_start();
 $config = include('../config.php');
 ?>
 
 <div class="navbar-left btn-group">
-    <form method="post" action="/login.php">
-        <button class="btn btn-primary dropdown-toggle pull-right padding-class-2"
-                type="button" data-toggle="dropdown">
-            Login
-        </button>
-
-        <input id="provider" type="hidden" name="provider" onchange="this.form.submit();">
-        <ul class="dropdown-menu" role="menu">
-            <li role="presentation" class="dropdown-header">Select your IdP</li>
-
-            <?php
-            foreach ($config['oidc_provider'] as $idx => $op) {
-                printf(<<<HTML
-                <li>
-                  <a style="cursor: pointer"
-                     onclick="$('input#provider').val(%u).each(function() {
-                       this.form.submit();
-                     })">
-                    %s
-                  </a>
-                </li>
-HTML
-                     , $idx, $op['description']);
-            }
-            ?>
-        </ul>
-    </form>
+    <?php if(isset($_SESSION['oidc'])
+             && $_SESSION['oidc']->getAccessToken() != null
+             && ($_SESSION['user_info'] = $_SESSION['oidc']->requestUserInfo())
+                                                           ->sub != null) {
+        require '../include/userinfo.php';
+    } else {
+        require '../include/loginbtn.php';
+    }?>
 </div>
