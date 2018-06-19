@@ -2,19 +2,21 @@
 $config = include('../config.php');
 ?>
 
-<form method="post" action="/login.php">
-    <button class="btn btn-primary dropdown-toggle pull-right padding-class-2"
-            type="button" data-toggle="dropdown">
-        Login
-    </button>
+<div class="navbar-left btn-group">
+    <form method="post" action="/login.php">
+        <button class="btn btn-primary dropdown-toggle pull-right padding-class-2"
+                type="button" data-toggle="dropdown">
+            Login
+            <span class="caret"></span>
+        </button>
 
-    <input id="provider" type="hidden" name="provider" onchange="this.form.submit();">
-    <ul class="dropdown-menu" role="menu">
-        <li role="presentation" class="dropdown-header">Select your IdP</li>
+        <input id="provider" type="hidden" name="provider" onchange="this.form.submit();">
+        <ul class="dropdown-menu" role="menu">
+            <li role="presentation" class="dropdown-header">Select your IdP</li>
 
-        <?php
-        foreach ($config['oidc_provider'] as $idx => $op) {
-            printf(<<<HTML
+            <?php
+            foreach ($config['oidc_provider'] as $idx => $op) {
+                printf(<<<HTML
                 <li>
                   <a style="cursor: pointer"
                      onclick="$('input#provider').val(%u).each(function() {
@@ -24,8 +26,9 @@ $config = include('../config.php');
                   </a>
                 </li>
 HTML
-                 , $idx, $op['description']);
-        }
-        ?>
-    </ul>
-</form>
+                     , $idx, $op['description']);
+            }
+            ?>
+        </ul>
+    </form>
+</div>
