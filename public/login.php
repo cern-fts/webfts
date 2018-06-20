@@ -8,14 +8,17 @@ session_start();
 
 $config = include('../config.php');
 
+$provider = null;
 // TODO This is not DoS-safe, since we store state, before the user is authN'd
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['provider'])) {
 
     $_SESSION['provider_num'] = $_POST['provider'];
     $provider = $config['oidc_provider'][$_POST['provider']];
     $_SESSION['oidc'] = new OpenIDConnectClient(
         $provider['issuer'], $provider['client_id'], $provider['client_secret']
     );
+} else {
+    $provider = $config['oidc_provider'][$_SESSION['provider_num']];
 }
 
 $oidc = $_SESSION['oidc'];
