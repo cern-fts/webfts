@@ -25,6 +25,7 @@ $oidc = $_SESSION['oidc'];
 
 $oidc->addScope('openid');
 $oidc->addScope('profile');
+$oidc->addScope('email');
 
 // IAM says it supports client_secret_basic, but it actually doesn't
 $oidc->providerConfigParam(array(
