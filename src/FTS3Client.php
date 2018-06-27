@@ -71,6 +71,44 @@ class FTS3Client {
     }
 
 
+    public function jobs($dlg_id = null,
+                         $fields = null,
+                         $time_window = null,
+                         $limit = null,
+                         $dest_se = null,
+                         $source_se = null,
+                         $state_in = null,
+                         $vo_name = null,
+                         $user_dn = null) {
+        $params = array();
+        if ($dlg_id != null)      { $params["dlg_id"] = $dlg_id; }
+        if ($fields != null)      { $params["fields"] = $fields; }
+        if ($time_window != null) { $params["time_window"] = $time_window; }
+        if ($limit != null)       { $params["limit"] = $limit; }
+        if ($dest_se != null)     { $params["dest_se"] = $dest_se; }
+        if ($source_se != null)   { $params["source_se"] = $source_se; }
+        if ($state_in != null)    { $params["state_in"] = $state_in; }
+        if ($vo_name != null)     { $params["vo_name"] = $vo_name; }
+        if ($user_dn != null)     { $params["user_dn"] = $user_dn; }
+
+        return $this->get("jobs", $params);
+    }
+
+    public function submit_job($data) {
+        return $this->post("jobs", $data);
+    }
+
+    public function delete_job($job_id) {
+        return $this->post("jobs/$job_id", array(
+            "_method" => "delete"  // TODO Why not use HTTP verb DELETE?
+        ));
+    }
+
+    public function job_info($job_id, $field) {
+        return $this->get("jobs/$job_id/$field");
+    }
+
+
     private function get($path, $data = null) {
         if ($data != null) {
             $path = $path . "?" . http_build_query($data);
