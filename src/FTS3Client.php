@@ -33,9 +33,43 @@ class FTS3Client {
         }
     }
 
+
     public function whoami() {
         return $this->get("whoami");
     }
+
+
+    public function dm_list($base, $dir_name) {
+        return $this->get("dm/list", array(
+            "surl" => joinURLs($base, $dir_name)
+        ));
+    }
+
+    public function dm_mkdir($base, $dir_name) {
+        return $this->post("dm/mkdir", array(
+            "surl" => joinURLs($base, $dir_name)
+        ));
+    }
+
+    public function dm_rmdir($base, $dir_name) {
+        return $this->post("dm/rmdir", array(
+            "surl" => joinURLs($base, $dir_name)
+        ));
+    }
+
+    public function dm_unlink($base, $file_name) {
+        return $this->post("dm/unlink", array(
+            "surl" => joinURLs($base, $file_name)
+        ));
+    }
+
+    public function dm_rename($base, $old, $new) {
+        return $this->post("dm/rename", array(
+            "old" => joinURLs($base, $old),
+            "new" => joinURLs($base, $new),
+        ));
+    }
+
 
     private function get($path, $data = null) {
         if ($data != null) {
