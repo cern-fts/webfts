@@ -81,4 +81,16 @@ class FTS3Client {
         }
     }
 }
+
+function joinURLs($component, ...$components) {
+    $url = $component;
+    foreach ($components as $component) {
+        if (!empty($url) && $url[-1] != '/' && $component[0] != '/') {
+            $url .= '/';
+        }
+        $url .= $component;
+    }
+
+    return $url;
+}
 ?>
