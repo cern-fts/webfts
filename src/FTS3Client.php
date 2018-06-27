@@ -37,24 +37,34 @@ class FTS3Client {
         return $this->get("whoami");
     }
 
+    private function get($path, $data = null) {
+        if ($data != null) {
+            $path = $path . "?" . http_build_query($data);
+        }
 
-    private function get($path) {
+        error_log("cURL: GET $this->base_url/$path");
+
         $c = $this->curl_init($path);
         return $this->curl_exec($c);
     }
 
-    private function post($path) {
-        $c = $this->curl_init($path);
+    private function post($path, $data) {
+        error_log("cURL: POST $this->base_url/$path " . json_encode($data));
+        $c = $this->curl_init($path, array("Content-Type: application/json"));
         curl_setopt($c, CURLOPT_POST, true);
+        curl_setopt($c, CURLOPT_POSTFIELDS, json_encode($data));
         return $this->curl_exec($c);
     }
 
-    private function curl_init($path) {
+    private function curl_init($path, $headers = array()) {
         $url = $this->base_url . '/' . $path;
         $c = curl_init($url);
         curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
         if (isset($this->access_token)) {
-            curl_setopt($c, CURLOPT_HTTPHEADER, array("Authorization: Bearer $this->access_token"));
+            curl_setopt($c, CURLOPT_HTTPHEADER,
+                        array_merge(array("Authorization: Bearer $this->access_token",
+                                          "Accept: application/json"),
+                                    $headers));
         }
         return $c;
     }
