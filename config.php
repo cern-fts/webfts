@@ -1,5 +1,7 @@
 <?php
 return array(
+    'fts_url' => 'https://fts3-xdc.cern.ch:8446',
+
     'oidc_provider' => array(
         array(
             'description' => 'Example',
