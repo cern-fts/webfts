@@ -1,9 +1,9 @@
 function createFolder(basePath, folder, side){
-        var urlEndp = sessionStorage.ftsRestEndpoint + "/dm/mkdir";
-	var newurl= basePath+folder;
-	var theData = {};
-        theData["surl"] = encodeURI(newurl); 
-	dataString= JSON.stringify(theData);
+        var urlEndp = "/api/fts3/dir";
+        var theData = {};
+        theData["base"] = encodeURI(basePath);
+        theData["dir_name"] = encodeURI(folder);
+        dataString= JSON.stringify(theData);
 	console.log(dataString);
         $.support.cors = true;
         $.ajax({
@@ -37,7 +37,7 @@ function createFolder(basePath, folder, side){
 }
 
 function removeFolder(endpoint, side){
-        var urlEndp = sessionStorage.ftsRestEndpoint + "/dm/rmdir";
+        var urlEndp = "/api/fts3/dir";
         var theData = {};
         theData["surl"] = encodeURI(endpoint);
         dataString= JSON.stringify(theData);
@@ -45,7 +45,7 @@ function removeFolder(endpoint, side){
         $.support.cors = true;
         $.ajax({
                 url : urlEndp,
-                type : "POST",
+                type : "DELETE",
                 contentType : "application/json",
                 dataType : "json",
                 data: dataString,
@@ -73,7 +73,7 @@ function removeFolder(endpoint, side){
 
 
 function removeFile(endpoint, side){
-	var urlEndp = sessionStorage.ftsRestEndpoint + "/dm/unlink";
+        var urlEndp = "/api/fts3/file";
         var theData = {};
         theData["surl"] = encodeURI(endpoint);
         dataString= JSON.stringify(theData);
@@ -81,7 +81,7 @@ function removeFile(endpoint, side){
         $.support.cors = true;
         $.ajax({
                 url : urlEndp,
-                type : "POST",
+                type : "DELETE",
                 contentType : "application/json",
                 dataType : "json",
                 data: dataString,
@@ -108,10 +108,11 @@ function removeFile(endpoint, side){
 }
 
 function rename(base, old, newname, side){
-        var urlEndp = sessionStorage.ftsRestEndpoint + "/dm/rename";
+        var urlEndp = "/api/fts3/rename";
         var theData = {};
-        theData["old"] = encodeURI(base+old);
-	theData["new"] = encodeURI(base+newname);
+        thedata["base"] = encodeURI(base);
+        theData["old"] = encodeURI(old);
+        theData["new"] = encodeURI(newname);
         dataString= JSON.stringify(theData);
         console.log(dataString);
         $.support.cors = true;
