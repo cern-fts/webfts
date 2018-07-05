@@ -1,14 +1,14 @@
 var supportText = "Please, try again and contact support if the error persists";
 
 function getConfig(){
-  $.get("../config.xml", function(data){
-        sessionStorage.ftsRestEndpoint=$(data).find('ftsAddress').text();
-        sessionStorage.lmtWebsocketEndpoint=$(data).find('lmtWebsocketEndpoint').text();
-        sessionStorage.lmtHealthCheckEndpoint=$(data).find('lmtHealthCheckEndpoint').text();
-        sessionStorage.jobsToList=$(data).find('jobToList').text();
-        sessionStorage.endpointsUrl=$(data).find('endpointListUrl').text();
-        sessionStorage.proxyCertHours=$(data).find('proxyCertHours').text();
-        sessionStorage.cernboxBaseUrl=$(data).find('cernboxBaseUrl').text();
+  $.get("/config.php", function(data) {
+        sessionStorage.ftsRestEndpoint=data.fts_address;
+        sessionStorage.lmtWebsocketEndpoint=data.lmt.websocket_endpoint;
+        sessionStorage.lmtHealthCheckEndpoint=data.lmt.health_check_endpoint;
+        sessionStorage.jobsToList=data.job_to_list;
+        sessionStorage.endpointsUrl=data.endpoint_list_url;
+        sessionStorage.proxyCertHours=data.proxy_cert_hours;
+        sessionStorage.cernboxBaseUrl=data.cernbox_base_url;
 	});
 }
 
