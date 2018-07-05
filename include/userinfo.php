@@ -10,7 +10,7 @@ $name = $_SESSION['user_info']->given_name
 $provider = $config['oidc_provider'][$_SESSION['provider_num']]['description'];
 ?>
 
-<div class="navbar-left btn-group">
+<div class="navbar-left">
     <?php
     echo <<<HTML
     <strong>Logged in as</strong> $name, <strong>via</strong> $provider

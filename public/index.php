@@ -150,13 +150,18 @@ $( document ).ready(function() {
 		data-position='bottom-middle-aligned'>
 		<div class="container-top-inner" >
 			<div class="row">
-				<script> 
-					$(function(){
-					   $("#userAuth").load("userAuth.php"); 
-					});
-				</script>
-				<div id="userAuth"></div>
-			</div>
+				  <script> 
+					 $(function(){
+					     $("#userAuth").load("userAuth.php"); 
+					 });
+				  </script>
+          <div id="userAuth">
+              <div class="navbar-left">
+                  Checking login status
+                  <img class="pagination-centered" src="img/ajax-loader.gif" style="height: 1em;" />
+              </div>
+          </div>
+      </div>
 			
 			<div class="masthead">
 				<h3 class="text-muted">WebFTS  <small><em>Simplifying power</em></small></h3>			

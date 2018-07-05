@@ -67,7 +67,12 @@ $(function(){
     $("#userAuth").load("userAuth.php");
 });
 </script>
-                        <div id="userAuth"></div>
+<div id="userAuth">
+    <div class="navbar-left">
+        Checking login status
+        <img class="pagination-centered" src="img/ajax-loader.gif" style="height: 1em;" />
+    </div>
+</div>
 <script>
 $(function(){
     $("#delegateBtn").load("delegateButton.html");
