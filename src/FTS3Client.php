@@ -1,6 +1,6 @@
 <?php namespace WebFTS;
 
-use Exception;
+use WebFTS\FTS3Exception;
 
 /*
  * FTS3 REST API Client
@@ -145,20 +145,27 @@ class FTS3Client {
         $result = curl_exec($c);
 
         if ($result === false) {
-            throw new Exception("cURL Error: " . curl_error($c));
+            throw new FTS3Exception("cURL Error: " . curl_error($c));
         } else {
             $status = curl_getinfo($c, CURLINFO_RESPONSE_CODE);
 
-            if ($status === 200) {
-                $result = json_decode($result);
+            $parsed_result = json_decode($result);
 
-                if ($result === null) {
-                    throw new Exception("Invalid JSON: $result");
+            if ($status === 200) {
+                if ($parsed_result === null) {
+                    throw new FTS3Exception("Unparsable JSON response from FTS3 server: $result");
                 } else {
-                    return $result;
+                    return $parsed_result;  // Success!
                 }
             } else {
-                throw new Exception("HTTP $status: $result");
+                if ($parsed_result === null) {
+                    throw new FTS3Exception($result, $status);
+                } else {
+                    throw new FTS3Exception(isset($parsed_result->message)
+                                          ? $parsed_result->message
+                                          : $parsed_result,
+                                            $status);
+                }
             }
         }
     }
