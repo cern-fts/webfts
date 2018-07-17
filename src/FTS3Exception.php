@@ -4,7 +4,7 @@ use Exception;
 
 class FTS3Exception extends Exception {
     public function getResponseCode() {
-        $code = getCode();
+        $code = $this->getCode();
 
         return $code != 0 ? $code : 500;
     }
