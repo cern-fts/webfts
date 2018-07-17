@@ -1,6 +1,12 @@
 {
     "require": {
-        "jumbojett/openid-connect-php": "^0.5.0"
+        "jumbojett/openid-connect-php": "^0.5.0",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-zip": "*",
+        "ext-xml": "*",
+        "ext-xmlreader": "*",
+        "ext-xmlwriter": "*"
     },
 
     "autoload": {
