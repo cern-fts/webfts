@@ -248,8 +248,7 @@ $("#uploadFiles").on("change", function(e){
 });
 
 $(function(){
-	   $("#modal_content").load("modal.html");
-	   $("#warning_modal_content").load("expirationWarningModal.html");
+     $("#warning_modal_content").load("expirationWarningModal.html");
 	   $("#revoke_access_modal_content").load("revokeCSAccess.html");
 	   $("#datamanagement_modal_content").load("dataManagement.html"); 
 });

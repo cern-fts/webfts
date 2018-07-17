@@ -73,13 +73,6 @@ $(function(){
         <img class="pagination-centered" src="img/ajax-loader.gif" style="height: 1em;" />
     </div>
 </div>
-<script>
-$(function(){
-    $("#delegateBtn").load("delegateButton.html");
-});
-</script>
-                        <div id="delegateBtn"></div>
-                    </div>
 
                     <div class="masthead">
                         <h3 class="text-muted">WebFTS <small><em>Simplifying power</em></small></h3>
