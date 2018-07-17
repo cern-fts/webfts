@@ -131,7 +131,7 @@ try {
     }
 }
 catch (FTS3Exception $e) {
-    $error = $e->getCode();
+    $error = $e->getResponseCode();
     $result = $e->getMessage();
 }
 
