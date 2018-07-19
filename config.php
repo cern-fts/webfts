@@ -2,6 +2,8 @@
 return array(
     'fts_url' => 'https://fts3-xdc.cern.ch:8446',
 
+    'show_profile_name' => true,
+
     'oidc_provider' => array(
         array(
             'description' => 'Example',

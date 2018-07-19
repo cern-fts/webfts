@@ -24,8 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['provider'])) {
 $oidc = $_SESSION['oidc'];
 
 $oidc->addScope('openid');
-$oidc->addScope('profile');
-$oidc->addScope('email');
+if (isset($config['show_profile_name']) && $config['show_profile_name']) {
+    $oidc->addScope('profile');
+}
 
 // IAM says it supports client_secret_basic, but it actually doesn't
 $oidc->providerConfigParam(array(
