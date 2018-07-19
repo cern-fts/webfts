@@ -110,7 +110,7 @@ function removeFile(endpoint, side){
 function rename(base, old, newname, side){
         var urlEndp = "/api/fts3/rename";
         var theData = {};
-        thedata["base"] = encodeURI(base);
+        theData["base"] = encodeURI(base);
         theData["old"] = encodeURI(old);
         theData["new"] = encodeURI(newname);
         dataString= JSON.stringify(theData);
