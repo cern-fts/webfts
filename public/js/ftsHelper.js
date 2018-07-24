@@ -29,6 +29,7 @@ function showError(jqXHR, textStatus, errorThrown, message) {
 function getUserJobs(delegationId){
     var urlE = "/api/fts3/jobs"
         + "?state_in=SUBMITTED,ACTIVE,FINISHED,FAILED,CANCELED,FINISHEDDIRTY"
+        + "&dlg_id=" + delegationId
         + "&limit="+ sessionStorage.jobsToList;
   $.support.cors = true;
   $.ajax({
