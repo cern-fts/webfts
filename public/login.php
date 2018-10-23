@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['provider'])) {
 $oidc = $_SESSION['oidc'];
 
 $oidc->addScope('openid');
+$oidc->addScope('offline_access');
 if (isset($config['show_profile_name']) && $config['show_profile_name']) {
     $oidc->addScope('profile');
 }
