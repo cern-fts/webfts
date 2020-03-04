@@ -12,7 +12,8 @@
         <VO>biomed</VO>
         <VO>bitface</VO>
         <VO>cms</VO>
-        <VO>dteam</VO>
+	<VO>dteam</VO>
+        <VO>juno</VO>
         <VO>lhcb</VO>
         <VO>ops</VO>
     </VOs>
