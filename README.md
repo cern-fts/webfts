@@ -17,7 +17,7 @@ User Guide
 
 For more details and the user guide please check the FTS3 site:
 
-http://fts3-service.web.cern.ch/documentation/webfts
+https://fts3-docs.web.cern.ch/fts3-docs/docs/webfts.html
 
 Installation and Configuration
 ------------------------------
