@@ -9,7 +9,7 @@ if the installation is done manually it requires:
 
 * the installation of PHP ( yum install php)
 * the copy of the conf/webfts.conf file under /etc/httpd/conf.d/webfts.conf 
-* Disable Scientific Linux enforce (setenforce 0)
+* Disable Security Enhanced Linux enforce (setenforce 0)
 
 
 Configuration
